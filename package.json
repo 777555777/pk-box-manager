@@ -6,14 +6,16 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "deno run generate-sprites && vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"generate-ball-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate_sprites.ts --input-dir=project-data/images/balls --output-dir=. --ts-name=balls --tile-size=30 --column-amount=8 --max-images=50",
-		"generate-pokemon-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate_sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=. --ts-name=pokemon --tile-size=96 --column-amount=15 --max-images=300"
+		"generate-sprites": "deno run generate-ball-sprites && deno run generate-pokemon-sprites && deno run generate-form-sprites",
+		"generate-ball-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/balls --output-dir=static/spritesheets --ts-dir=src/lib/models --name=balls --tile-size=30 --column-amount=8 --max-images=50",
+		"generate-pokemon-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/normal --output-dir=static/spritesheets --name=pokemon --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300",
+		"generate-form-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=static/spritesheets --name=forms --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

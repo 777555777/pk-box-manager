@@ -3,7 +3,8 @@ import { parseArgs } from 'jsr:@std/cli/parse-args'
 interface Config {
 	inputDir: string
 	outputSpritesheetDir: string
-	tsName: string
+	tsDir: string
+	name: string
 	tileSize: number
 	columnAmount: number
 	maxImagesPerSheet: number
@@ -11,7 +12,7 @@ interface Config {
 
 // Extraction of cli-parameters to global values
 // prettier-ignore
-const { inputDir, outputSpritesheetDir, tsName, tileSize, columnAmount, maxImagesPerSheet } = parseArguments()
+const { inputDir, outputSpritesheetDir, tsDir, name, tileSize, columnAmount, maxImagesPerSheet } = parseArguments()
 
 main()
 
@@ -55,7 +56,7 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 		// 10 => 20
 		// 20 => 30
 		const batch = files.slice(i, i + maxImagesPerSheet)
-		const outputFile = `${outputSpritesheetDir}/spritesheet_${sheetIndex}.png`
+		const outputFile = `${outputSpritesheetDir}/spritesheet-${name}-${sheetIndex}.png`
 		spriteSheetFileNames.push(outputFile)
 
 		console.log(`Generating ${outputFile} with ${batch.length} Images...`)
@@ -103,24 +104,33 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 
 	// Write TypeScript file
 	const tsContent = `// Automatically generated file!
-export const ${firstToUpper(tsName)} = ${JSON.stringify(tsFileData, null, 2)} as const;
+export const ${firstToUpper(name)} = ${JSON.stringify(tsFileData, null, 2)} as const;
 
-export type ${firstToUpper(tsName)}Type = keyof typeof ${firstToUpper(tsName)};
+export type ${firstToUpper(name)}Type = keyof typeof ${firstToUpper(name)};
 `
 
-	await Deno.writeTextFile(`${tsName}-models.ts`, tsContent)
-	console.log(`Saved: ${tsName}-models.ts`)
+	await Deno.writeTextFile(`${tsDir}/${name}-models.ts`, tsContent)
+	console.log(`Saved: ${tsDir}/${name}-models.ts`)
 }
 
 // CLI-Setup:
 function parseArguments(): Config {
 	const flags = parseArgs(Deno.args, {
-		string: ['input-dir', 'output-dir', 'ts-name', 'tile-size', 'column-amount', 'max-images'],
+		string: [
+			'input-dir',
+			'output-dir',
+			'ts-dir',
+			'name',
+			'tile-size',
+			'column-amount',
+			'max-images'
+		],
 		boolean: ['help'],
 		default: {
 			'input-dir': '.',
 			'output-dir': '.',
-			'ts-name': 'dynamic',
+			'ts-dir': '.',
+			name: 'dynamic',
 			'tile-size': '30',
 			'column-amount': '8',
 			'max-images': '64'
@@ -134,7 +144,8 @@ function parseArguments(): Config {
 	return {
 		inputDir: flags['input-dir'],
 		outputSpritesheetDir: flags['output-dir'],
-		tsName: flags['ts-name'],
+		tsDir: flags['ts-dir'],
+		name: flags['name'],
 		tileSize: validateNumber(flags['tile-size'], 'tile-size'),
 		columnAmount: validateNumber(flags['column-amount'], 'column-amount'),
 		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images')
@@ -155,12 +166,13 @@ function showHelp() {
 Liest einen Ordner mit Bildern (Sprites), die alle die gleiche Größe und das Format .png haben müssen.
 Erzeugt daraus eine oder mehrere Spritesheet PNG-Dateien, abhängig von den eingegebenen Parametern.
 
-Verwendung: deno generate_sprites.ts --input-dir=./images --output-dir=. --ts-name=pokemon --tile-size=96 --column-amount=15 --max-images=300"
+Verwendung: deno generate-sprites.ts --input-dir=./images --output-dir=. --name=pokemon --tile-size=96 --column-amount=15 --max-images=300"
 
 Optionen:
 	--input-dir <Pfad>    Eingabeverzeichnis (Standard: .)
 	--output-dir <Pfad>   Ausgabeverzeichnis für das Spritesheet (Standard: .)
-	--ts-name <Name>   	  Ausgabe der TypeScript-Datei (Standard: dynamic)
+	--ts-dir <Pfad>       Ausgabeverzeichnis für die TypeScript Datei (Standard: .)
+	--name <Name>   	  Naming für Datein und TS Inhalte, nur ein Wort verwenden! (Standard: dynamic)
 	--tile-size <Zahl>    Größe der einzelnen Kacheln (Standard: 30)
 	--columns <Zahl>      Anzahl der Spalten im Spritesheet (Standard: 8)
 	--max-images <Zahl>   Maximale Anzahl der Bilder pro Sheet (Standard: 15)
