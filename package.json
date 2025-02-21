@@ -11,7 +11,9 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"generate-ball-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate_sprites.ts --input-dir=project-data/images/balls --output-dir=. --output-ts=dynamic-models.ts --tile-size=30 --columns=8 --max-images=50",
+		"generate-pokemon-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate_sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=. --output-ts=dynamic-models.ts --tile-size=96 --columns=15 --max-images=300"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

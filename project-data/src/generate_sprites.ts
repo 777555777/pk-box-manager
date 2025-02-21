@@ -1,72 +1,142 @@
-// Deno-Skript für die automatische Generierung eines Sprite Sheets & TypeScript-Daten
-const INPUT_DIR = "normal/normal"
-const OUTPUT_SPRITESHEET = "."
-const OUTPUT_TS_FILE = "src/dynamic-models.ts"
-const TILE_SIZE = 96 // 96
-const COLUMNS = 10
+import { parseArgs } from 'jsr:@std/cli/parse-args'
 
-// 1️⃣ Sprite Sheet mit ImageMagick erstellen
-async function createSpriteSheet() {
-  console.log("📸 Erstelle Sprite Sheet...")
+const { inputDir, outputSpritesheetDir, outputTsFile, tileSize, columnAmount, maxImagesPerSheet } =
+	parseArguments()
 
-  const process = new Deno.Command("montage", {
-    args: [
-      `${INPUT_DIR}/*.png`, // Alle Bilder aus dem Ordner
-      "-geometry",
-      `${TILE_SIZE}x${TILE_SIZE}+0+0`,
-      "-tile",
-      `${COLUMNS}x`,
-      "-background",
-      "none",
-      OUTPUT_SPRITESHEET,
-    ],
-  })
+// 📸 1️⃣ Sprite Sheets mit ImageMagick erstellen
+async function createSpriteSheets(files: string[]): Promise<string[]> {
+	console.log('📸 Erstelle Sprite Sheets...')
 
-  const { success } = await process.output()
-  if (!success) throw new Error("❌ Fehler beim Erstellen des Sprite Sheets!")
+	const spriteSheetFileNames: string[] = []
+	let sheetIndex = 1
 
-  console.log(`✅ Sprite Sheet gespeichert: ${OUTPUT_SPRITESHEET}`)
+	for (let i = 0; i < files.length; i += maxImagesPerSheet) {
+		// if maxImagesPerSheet = 10
+		// 0 => 10
+		// 10 => 20
+		// 20 => 30
+		const batch = files.slice(i, i + maxImagesPerSheet)
+		const outputFile = `${outputSpritesheetDir}/spritesheet_${sheetIndex}.png`
+		spriteSheetFileNames.push(outputFile)
+
+		console.log(`🖼️ Generiere ${outputFile} mit ${batch.length} Bildern...`)
+
+		const process = new Deno.Command('montage', {
+			args: [
+				// Creates array of path names combined with sprite names: ['sprite1.png', 'sprite2.png', ...]
+				...batch.map((file) => `${inputDir}/${file}`),
+				'-geometry',
+				`${tileSize}x${tileSize}+0+0`,
+				'-tile',
+				`${columnAmount}x`,
+				'-background',
+				'none',
+				outputFile
+			]
+		})
+
+		const { success } = await process.output()
+		if (!success) throw new Error(`❌ Fehler beim Erstellen von ${outputFile}`)
+
+		console.log(`✅ Gespeichert: ${outputFile}`)
+		sheetIndex++
+	}
+
+	return spriteSheetFileNames
 }
 
-// 2️⃣ PNG-Dateien auslesen und Koordinaten berechnen
-async function generateBallData() {
-  console.log("📝 Generiere TypeScript-Datei...")
+// 📝 2️⃣ PNG-Dateien auslesen und Koordinaten berechnen
+async function generateMappingData(spriteSheetFileNames: string[], files: string[]) {
+	console.log('📝 Generiere TypeScript-Datei...')
 
-  const files: string[] = []
-  for await (const entry of Deno.readDir(INPUT_DIR)) {
-    if (entry.isFile && entry.name.endsWith(".png")) {
-      files.push(entry.name)
-    }
-  }
+	const balls: Record<string, { sheet: string; position: { x: number; y: number } }> = {}
 
-  console.log("files", files)
+	files.forEach((file, index) => {
+		const sheetIndex = Math.floor(index / maxImagesPerSheet) // Bestimmt, in welchem Sheet das Bild liegt
+		const positionX = (index % columnAmount) * tileSize * -1
+		const positionY = Math.floor((index % maxImagesPerSheet) / columnAmount) * tileSize * -1
 
-  files.sort() // Falls die Reihenfolge wichtig ist
-  console.log("files", files)
+		balls[file.replace('.png', '')] = {
+			sheet: spriteSheetFileNames[sheetIndex], // Speichert das zugehörige Sprite Sheet
+			position: { x: positionX, y: positionY }
+		}
+	})
 
-  const balls: Record<string, { position: { x: number; y: number } }> = {}
-  files.forEach((file, index) => {
-    const name = file.replace(".png", "") // Entferne .png
-    const positionX = (index % COLUMNS) * TILE_SIZE * -1
-    const positionY = Math.floor(index / COLUMNS) * TILE_SIZE * -1
-    balls[name] = { position: { x: positionX, y: positionY } }
-  })
-
-  // 📝 3️⃣ TypeScript-Datei schreiben
-  const tsContent = `// Automatically generated file!
-export const pkBalls = ${JSON.stringify(balls)} as const;
+	// 📝 3️⃣ TypeScript-Datei schreiben
+	const tsContent = `// Automatically generated file!
+export const pkBalls = ${JSON.stringify(balls, null, 2)} as const;
 
 export type BallType = keyof typeof pkBalls;
 `
 
-  await Deno.writeTextFile(OUTPUT_TS_FILE, tsContent)
-  console.log(`✅ TypeScript-Datei gespeichert: ${OUTPUT_TS_FILE}`)
+	await Deno.writeTextFile(outputTsFile, tsContent)
+	console.log(`✅ TypeScript-Datei gespeichert: ${outputTsFile}`)
 }
 
-// 🚀 Hauptfunktion ausführen
+// 🚀 4️⃣ Hauptfunktion ausführen
 async function main() {
-  await createSpriteSheet()
-  await generateBallData()
+	const files: string[] = []
+
+	for await (const entry of Deno.readDir(inputDir)) {
+		if (entry.isFile && entry.name.endsWith('.png')) {
+			files.push(entry.name)
+		}
+	}
+
+	if (files.length === 0) {
+		throw new Error('❌ Keine PNG-Dateien gefunden!')
+	}
+
+	files.sort() // Sortierung sicherstellen
+
+	const spriteSheetFiles = await createSpriteSheets(files)
+	await generateMappingData(spriteSheetFiles, files)
 }
 
-main().catch((err) => console.error("❌ Fehler:", err))
+main().catch((err) => console.error('❌ Fehler:', err))
+
+// Commandline Arguments setup:
+// ===============================
+
+interface Config {
+	inputDir: string
+	outputSpritesheetDir: string
+	outputTsFile: string
+	tileSize: number
+	columnAmount: number
+	maxImagesPerSheet: number
+}
+
+// Validierungsfunktion für numerische Werte
+function validateNumber(value: string, name: string): number {
+	const num = Number(value)
+	if (isNaN(num)) {
+		console.error(`Fehler: ${name} muss eine gültige Zahl sein`)
+		Deno.exit(1)
+	}
+	return num
+}
+
+function parseArguments(): Config {
+	// Command-line Argumente mit der Flags-API parsen
+	const flags = parseArgs(Deno.args, {
+		string: ['input-dir', 'output-dir', 'output-ts', 'tile-size', 'column-amount', 'max-images'],
+		default: {
+			'input-dir': '.',
+			'output-dir': '.',
+			'output-ts': 'dynamic-models.ts',
+			'tile-size': '30',
+			'column-amount': '8',
+			'max-images': '64'
+		}
+	})
+
+	return {
+		inputDir: flags['input-dir'],
+		outputSpritesheetDir: flags['output-dir'],
+		outputTsFile: flags['output-ts'],
+		tileSize: validateNumber(flags['tile-size'], 'tile-size'),
+		columnAmount: validateNumber(flags['column-amount'], 'column-amount'),
+		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images')
+	}
+}
