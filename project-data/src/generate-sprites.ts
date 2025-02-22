@@ -95,9 +95,10 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 		const sheetIndex = Math.floor(index / maxImagesPerSheet) // Determines which sheet the image is in
 		const positionX = (index % columnAmount) * tileSize * -1
 		const positionY = Math.floor((index % maxImagesPerSheet) / columnAmount) * tileSize * -1
+		const spritesheet = spriteSheetFileNames[sheetIndex].replace('static', '') // Vite needs the path without the in root located dir
 
 		tsFileData[file.replace('.png', '')] = {
-			sheet: spriteSheetFileNames[sheetIndex], // Saves the corresponding sprite sheet
+			sheet: spritesheet, // Saves the corresponding sprite sheet
 			position: { x: positionX, y: positionY }
 		}
 	})
