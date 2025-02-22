@@ -7,3 +7,14 @@
 	<PkBoxContainer />
 	<!-- <PkSidebar /> -->
 </main>
+
+<style>
+	main {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+
+		margin: 0 4rem;
+		position: relative;
+	}
+</style>

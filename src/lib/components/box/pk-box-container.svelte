@@ -1,22 +1,23 @@
 <script lang="ts">
-	import PkBox from './pk-box.svelte'
-	// import orderJson from '../../order/order-national.json'
-	// console.log(orderJson)
+	import { type BoxOrder } from '$lib/models/data-models'
+	import PkBox from '$lib/components/box/pk-box.svelte'
+	import boxOrder from '$lib/order/order-national.json'
+
+	const boxes: BoxOrder[] = boxOrder
 </script>
 
-<!-- todo: alle boxen dynamisch anzeigen -->
-<!-- {#each orderJson as box} -->
-<!-- <pre>{JSON.stringify(box)}</pre> -->
-<!-- {/each} -->
-<PkBox />
+<section class="pk-box-container">
+	{#each boxes as box}
+		<PkBox {box} />
+	{/each}
+</section>
 
-<!-- 
 <style>
-	article {
+	.pk-box-container {
 		margin: 4rem 0;
 		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 		gap: 2rem;
 	}
-</style> -->
+</style>
