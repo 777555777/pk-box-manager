@@ -2,15 +2,11 @@
 	import PkViewer from '$lib/components/sidebar/pk-viewer.svelte'
 	import PkBallSelectorSprite from '$lib/components/sidebar/pk-ball-selector.svelte'
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
-
+	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
 
 	const dummyData = { pokemonid: 'skarmory', formid: null, id_national: 227 }
 	let selectedBall = $state<BallsType>('35-lastrange-ball')
-
-	function getDisplayname(entry: any) {
-		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid : ''}`
-	}
 </script>
 
 <aside class="pk-sidebar">
@@ -19,12 +15,10 @@
 	</section>
 	<section class="pk-title">
 		<PkBallSelectorSprite bind:selectedBall />
-		<h3>{getDisplayname(dummyData)}</h3>
-		<span class="pk-gender">♂️</span>
+		<PkTitle pokemonEntry={dummyData} />
 	</section>
 	<hr />
 	<section>
-		<!-- pk-form-component -->
 		<PkForm />
 	</section>
 </aside>
@@ -53,9 +47,5 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-	}
-	.pk-gender {
-		display: inline-block;
-		font-size: 1.5rem;
 	}
 </style>
