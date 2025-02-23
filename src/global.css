@@ -19,14 +19,14 @@ body {
 }
 
 /* 5. Improve media defaults */
-img,
+/* img,
 picture,
 video,
 canvas,
 svg {
 	display: block;
 	max-width: 100%;
-}
+} */
 
 /* 6. Inherit fonts for form controls */
 input,
