@@ -1,5 +1,7 @@
 <script lang="ts">
-	let { pokemonEntry } = $props()
+	import type { PokemonEntry } from '$lib/models/data-models'
+
+	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 
 	function getDisplayname(entry: any) {
 		console.log(entry)
