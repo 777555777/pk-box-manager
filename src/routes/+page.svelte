@@ -5,7 +5,7 @@
 
 <main>
 	<PkBoxContainer />
-	<!-- <PkSidebar /> -->
+	<PkSidebar />
 </main>
 
 <style>

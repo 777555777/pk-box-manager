@@ -72,4 +72,6 @@ h6 {
 
 body {
 	background: linear-gradient(180deg, #96e7ef 0%, #86e7ae 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
