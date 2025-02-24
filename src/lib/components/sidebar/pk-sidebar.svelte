@@ -4,23 +4,40 @@
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
+	import type { PokemonUserInfo } from '$lib/models/data-models'
 
+	const dummyUserEditedData: PokemonUserInfo = {
+		captured: false, // for viwer component
+		ball: '35-lastrange-ball', // for ball selector component
+		shiny: false, // for viewer component
+		caughtIn: 'Red', // for form component
+		ability: 'chlorophyll', // for form component
+		comment: 'only as starter or by breeding. catchable in any ball available in lets go' // for form component
+	}
 	const dummyData = { pokemonid: 'skarmory', formid: null, id_national: 227 }
-	let selectedBall = $state<BallsType>('35-lastrange-ball')
+
+	let userEditedData = $state(dummyUserEditedData)
+
+	$effect(() => {
+		// call save to disc here
+	})
 </script>
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer />
+		<PkViewer pokemonEntry={dummyData} bind:userEditedData />
 	</section>
 	<section class="pk-title">
-		<PkBallSelectorSprite bind:selectedBall />
+		<PkBallSelectorSprite bind:selectedBall={userEditedData.ball as BallsType} />
 		<PkTitle pokemonEntry={dummyData} />
 	</section>
 	<hr />
 	<section>
-		<PkForm />
+		<PkForm bind:userEditedData />
+
+		<pre>{JSON.stringify(userEditedData, null, 2)}</pre>
 	</section>
+	<div class="pk-save-indicator">saving...</div>
 </aside>
 
 <style>
@@ -28,7 +45,6 @@
 		padding: 10px;
 	}
 	.pk-sidebar {
-		background-color: cadetblue;
 		width: 520px;
 		/* height: 900px; */
 

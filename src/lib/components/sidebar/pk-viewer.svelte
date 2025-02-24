@@ -17,9 +17,8 @@
 	// 0003-venusaur-female
 	let {
 		pokemonEntry,
-		shiny,
-		caught
-	}: { pokemonEntry: PokemonEntry; shiny: boolean; caught: boolean } = $props()
+		userEditedData = $bindable()
+	}: { pokemonEntry: PokemonEntry; userEditedData: any } = $props()
 	const identifier = getIdentifier(pokemonEntry)
 	const currentPokemon = getPokemon(identifier)
 
@@ -42,8 +41,6 @@
 	}
 
 	// ==========================================================================================
-	$inspect(shiny)
-	$inspect(caught)
 </script>
 
 <section class="pk-viewer">
@@ -53,8 +50,8 @@
 		style={setCssPosition(currentPokemon.position)}
 	/>
 	<div class="pk-viewer-controls">
-		<button onclick={() => (shiny = !shiny)}>✨</button>
-		<button onclick={() => (caught = !caught)}>🖥️</button>
+		<button onclick={() => (userEditedData.shiny = !userEditedData.shiny)}>✨</button>
+		<button onclick={() => (userEditedData.captured = !userEditedData.captured)}>🖥️</button>
 	</div>
 </section>
 

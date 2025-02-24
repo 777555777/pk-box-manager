@@ -1,25 +1,28 @@
+<script lang="ts">
+	import { Game, type PokemonUserInfo, type GameType } from '$lib/models/data-models'
+
+	let { userEditedData = $bindable() }: { userEditedData: PokemonUserInfo } = $props()
+
+	$inspect(userEditedData.caughtIn)
+	let gen = $derived(Game[userEditedData.caughtIn as GameType].gen)
+</script>
+
 <form>
+	<label for="pk-region">Caught in</label>
+
 	<div class="pk-region">
-		<label for="ice-cream-choice">Caught in</label>
-		<input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
+		<select name="region" id="pk-region" bind:value={userEditedData.caughtIn}>
+			<option value="">Caught in...</option>
+			{#each Object.entries(Game) as [key, value]}
+				<option value={value.title}>{value.title}</option>
+			{/each}
+		</select>
 
-		<datalist id="ice-cream-flavors">
-			<option value="Chocolate"></option>
-			<option value="Coconut"></option>
-			<option value="Mint"></option>
-			<option value="Strawberry"></option>
-			<option value="Vanilla"></option>
-		</datalist>
-
-		<!-- The Gen will later be derived from the input data -->
-		<span class="pk-gen">Gen 3</span>
+		<span class="pk-gen">Generation {gen}</span>
 	</div>
 
-	<label for="ability">Ability</label><br />
-	<input type="text" id="ability" name="ability" />
-
 	<label for="comment">Comment</label>
-	<textarea name="comment" id="comment"></textarea>
+	<textarea name="comment" id="comment" bind:value={userEditedData.comment}></textarea>
 </form>
 
 <style>
@@ -32,7 +35,9 @@
 		display: flex;
 		justify-content: space-between;
 	}
+
 	textarea {
 		min-height: 196px;
+		max-width: 400px;
 	}
 </style>
