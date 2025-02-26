@@ -4,7 +4,6 @@
 	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 
 	function getDisplayname(entry: any) {
-		console.log(entry)
 		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid : ''}`
 	}
 </script>

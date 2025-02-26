@@ -1,11 +1,12 @@
 <script lang="ts">
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
+	import { selectedPokemon } from '$lib/state/data.svelte'
 </script>
 
 <main>
 	<PkBoxContainer />
-	<PkSidebar />
+	<PkSidebar selectedPokemon={selectedPokemon.entry} />
 </main>
 
 <style>

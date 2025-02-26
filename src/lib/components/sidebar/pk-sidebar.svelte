@@ -4,7 +4,7 @@
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
-	import type { PokemonUserInfo } from '$lib/models/data-models'
+	import { type PokemonUserInfo } from '$lib/models/data-models'
 
 	const dummyUserEditedData: PokemonUserInfo = {
 		captured: false, // for viwer component
@@ -14,8 +14,9 @@
 		ability: 'chlorophyll', // for form component
 		comment: 'only as starter or by breeding. catchable in any ball available in lets go' // for form component
 	}
-	const dummyData = { pokemonid: 'skarmory', formid: null, id_national: 227 }
+	let { selectedPokemon } = $props()
 
+	$inspect(selectedPokemon)
 	let userEditedData = $state(dummyUserEditedData)
 
 	$effect(() => {
@@ -25,19 +26,18 @@
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer pokemonEntry={dummyData} bind:userEditedData />
+		<PkViewer pokemonEntry={selectedPokemon} bind:userEditedData />
 	</section>
 	<section class="pk-title">
 		<PkBallSelectorSprite bind:selectedBall={userEditedData.ball as BallsType} />
-		<PkTitle pokemonEntry={dummyData} />
+		<PkTitle pokemonEntry={selectedPokemon} />
 	</section>
 	<hr />
 	<section>
 		<PkForm bind:userEditedData />
-
-		<pre>{JSON.stringify(userEditedData, null, 2)}</pre>
 	</section>
 	<div class="pk-save-indicator">saving...</div>
+	<pre>{JSON.stringify(userEditedData, null, 2)}</pre>
 </aside>
 
 <style>

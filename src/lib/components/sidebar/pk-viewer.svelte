@@ -1,46 +1,15 @@
 <script lang="ts">
 	import { type PokemonEntry } from '$lib/models/data-models'
-	import { type PokemonType, Pokemon } from '$lib/models/pokemon-models'
-	import { type FormsType, Forms } from '$lib/models/forms-models'
-	interface SpriteData {
-		sheet: string
-		position: {
-			x: number
-			y: number
-		}
-	}
+	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
 
-	type Coordinates = { x: number; y: number }
-
-	const combinedPokemon: Record<string, SpriteData> = { ...Pokemon, ...Forms }
-
-	// 0003-venusaur-female
 	let {
 		pokemonEntry,
 		userEditedData = $bindable()
 	}: { pokemonEntry: PokemonEntry; userEditedData: any } = $props()
 	const identifier = getIdentifier(pokemonEntry)
-	const currentPokemon = getPokemon(identifier)
-
-	function getIdentifier(entry: PokemonEntry) {
-		const paddedId = entry.id_national.toString().padStart(4, '0')
-		return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
-	}
-
-	function getPokemon(identifier: string): SpriteData {
-		if (identifier in combinedPokemon) {
-			return combinedPokemon[identifier]
-		}
-		// return null object Pokemon
-		// displays as questionmark icon
-		return combinedPokemon['0000-null']
-	}
-
-	function setCssPosition(position: Coordinates) {
-		return `object-position: ${position.x}px ${position.y}px;`
-	}
-
-	// ==========================================================================================
+	let currentPokemon = $derived(getPokemon(getIdentifier(pokemonEntry)))
+	// getPokemon(identifier)
+	// const currentPokemon = getPokemon(identifier)
 </script>
 
 <section class="pk-viewer">
