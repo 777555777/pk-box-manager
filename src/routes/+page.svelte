@@ -1,12 +1,32 @@
 <script lang="ts">
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
-	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
-	import { selectedPokemon } from '$lib/state/data.svelte'
+	import { storageHandler } from '$lib/state/storage-handler'
+
+	// State für ausgewählten DexName
+	let selectedDexName = $state(storageHandler.getSelectedDexName())
+	$inspect(selectedDexName)
+
+	// State für ausgewählte DexOrder
+	let selectedDexOrder = $derived(storageHandler.getDexOrder(selectedDexName))
+	$inspect(selectedDexOrder)
+
+	// Wenn sich selectedDexName ändert, speichern wir die Auswahl
+	$effect(() => {
+		storageHandler.switchDex(selectedDexName)
+	})
 </script>
 
+<select name="pk-order" id="pk-order" bind:value={selectedDexName}>
+	<!--  default soll order-national.json sein -->
+	<option value="order-national.json">order-national.json</option>
+	<option value="order-national-forms.json">order-national-forms.json</option>
+	<option value="order-national-test.json">order-national-test.json</option>
+	<option value="order-test-small-1.json">order-test-small-1.json</option>
+	<option value="order-test-small-2.json">order-test-small-2.json</option>
+</select>
+
 <main>
-	<PkBoxContainer />
-	<PkSidebar selectedPokemon={selectedPokemon.entry} />
+	<PkBoxContainer {selectedDexOrder} />
 </main>
 
 <style>

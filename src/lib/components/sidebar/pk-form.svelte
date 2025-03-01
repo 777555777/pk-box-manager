@@ -3,7 +3,7 @@
 
 	let { userEditedData = $bindable() }: { userEditedData: PokemonUserInfo } = $props()
 
-	$inspect(userEditedData.caughtIn)
+	// $inspect(userEditedData.caughtIn)
 	let gen = $derived(Game[userEditedData.caughtIn as GameType].gen)
 </script>
 

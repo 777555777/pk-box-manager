@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { type BoxOrder } from '$lib/models/data-models'
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
+	import { getIdentifier } from '$lib/spriteheet-helper'
 
 	let { box }: { box: BoxOrder } = $props()
 </script>
@@ -10,7 +11,7 @@
 		<h2>{box.title}</h2>
 	</header>
 	<div class="box-grid">
-		{#each box.pokemon as pokemon}
+		{#each box.pokemon as pokemon (getIdentifier(pokemon))}
 			<PkSlot pokemonEntry={pokemon} />
 		{/each}
 	</div>

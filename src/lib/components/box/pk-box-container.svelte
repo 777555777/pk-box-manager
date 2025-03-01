@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { type BoxOrder } from '$lib/models/data-models'
 	import PkBox from '$lib/components/box/pk-box.svelte'
-	import boxOrder from '$lib/order/order-national-forms.json'
 
-	const boxes: BoxOrder[] = boxOrder
+	let { selectedDexOrder }: { selectedDexOrder: BoxOrder[] } = $props()
 </script>
 
 <section class="pk-box-container">
-	{#each boxes as box}
+	{#each selectedDexOrder as box (box.title)}
 		<PkBox {box} />
 	{/each}
 </section>

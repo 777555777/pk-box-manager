@@ -16,7 +16,7 @@
 	}
 	let { selectedPokemon } = $props()
 
-	$inspect(selectedPokemon)
+	// $inspect(selectedPokemon)
 	let userEditedData = $state(dummyUserEditedData)
 
 	$effect(() => {
