@@ -14,7 +14,7 @@ function getBoxOrder(dexName: string): BoxOrder[] {
 
 	switch (dexName) {
 		case 'order-national.json':
-			return boxOrderNationalForms
+			return boxOrderNational
 		case 'order-national-forms.json':
 			return boxOrderNationalForms
 		case 'order-national-test.json':
