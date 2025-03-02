@@ -1,7 +1,8 @@
-import { storageHandler, type PokemonData } from './storage-handler.ts'
+import { storageHandler, type PokemonData, type PokemonState } from './storage-handler.ts'
 
 export class PokemonStateManager {
 	private nullState = {
+		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
 		captured: false,
 		ball: '01-Pokeball',
 		shiny: false,
@@ -9,11 +10,10 @@ export class PokemonStateManager {
 		ability: '',
 		comment: ''
 	}
+
 	private nullDexState = { '0000': this.nullState }
-	private dexState: Record<string, PokemonData> = $state(this.nullDexState)
-	private selectedPokemon: string = $state('0000-null')
-	// { pokemonid: 'null', formid: null, id_national: 0 }
-	// 0000-null
+	private dexState: Record<string, PokemonState> = $state(this.nullDexState)
+	private selectedPokemon: PokemonState = $state(this.nullState)
 
 	constructor() {
 		this.loadDexState(storageHandler.getSelectedDexName())
@@ -30,7 +30,7 @@ export class PokemonStateManager {
 		this.dexState = JSON.parse(JSON.stringify(stateData))
 
 		// Reset selected Pokemon when changing dex
-		this.selectedPokemon = '0000-null'
+		this.selectedPokemon = this.nullState
 	}
 
 	getDexState() {
@@ -71,11 +71,11 @@ export class PokemonStateManager {
 	}
 
 	setSelectedPokemon(identifier: string) {
-		this.selectedPokemon = identifier
+		this.selectedPokemon = this.dexState[identifier]
 	}
 
 	getSelectedPokemon() {
-		return this.selectedPokemon ? this.dexState[this.selectedPokemon] : null
+		return this.selectedPokemon ? this.selectedPokemon : null
 	}
 }
 

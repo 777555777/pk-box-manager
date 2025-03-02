@@ -49,7 +49,7 @@ export interface PokemonData {
 }
 
 export interface PokemonState extends PokemonData {
-	identifier: PokemonEntry
+	idEntry: PokemonEntry
 }
 
 class StorageHandler {
@@ -127,13 +127,14 @@ class StorageHandler {
 	 * @param pokedexOrder Die Pokedex Box-Order.
 	 * @returns Ein Objekt welches den initialen Bearbeitungsstatus enthält.
 	 */
-	private setupInitialPokedex(pokedexOrder: BoxOrder[]): Record<string, PokemonData> {
-		const initialPokedex: Record<string, PokemonData> = {}
+	private setupInitialPokedex(pokedexOrder: BoxOrder[]): Record<string, PokemonState> {
+		const initialPokedex: Record<string, PokemonState> = {}
 
 		for (const box of pokedexOrder) {
 			for (const pokemon of box.pokemon) {
 				const pokemonIdentifier = this.formatIdentifier(pokemon)
 				initialPokedex[pokemonIdentifier] = {
+					idEntry: pokemon,
 					captured: false,
 					ball: '01-Pokeball',
 					shiny: false,
@@ -157,7 +158,7 @@ class StorageHandler {
 		return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
 	}
 
-	public editPokemonStateEntry(identifier: string, pokemonData: PokemonData) {
+	public editPokemonStateEntry(identifier: string, pokemonState: PokemonState) {
 		const selectedDex = localStorage.getItem(this.SELECTED_DEX_KEY)
 		const selectedDexState = localStorage.getItem(`dex:${selectedDex}`)!
 		if (selectedDexState) {
@@ -165,9 +166,9 @@ class StorageHandler {
 			const targetPokemon = parsedDexState[identifier]
 
 			const updatedPokemon = { ...targetPokemon }
-			for (const key in pokemonData) {
+			for (const key in pokemonState) {
 				if (key in targetPokemon) {
-					updatedPokemon[key] = pokemonData[key as keyof PokemonData]
+					updatedPokemon[key] = pokemonState[key as keyof PokemonState]
 				}
 			}
 
