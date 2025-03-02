@@ -157,7 +157,7 @@ class StorageHandler {
 		return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
 	}
 
-	public editPokemonStateEntry(identifier: string, pokemonState: PokemonState) {
+	public editPokemonStateEntry(identifier: string, pokemonData: PokemonData) {
 		const selectedDex = localStorage.getItem(this.SELECTED_DEX_KEY)
 		const selectedDexState = localStorage.getItem(`dex:${selectedDex}`)!
 		if (selectedDexState) {
@@ -165,9 +165,9 @@ class StorageHandler {
 			const targetPokemon = parsedDexState[identifier]
 
 			const updatedPokemon = { ...targetPokemon }
-			for (const key in pokemonState) {
+			for (const key in pokemonData) {
 				if (key in targetPokemon) {
-					updatedPokemon[key] = pokemonState[key as keyof PokemonData]
+					updatedPokemon[key] = pokemonData[key as keyof PokemonData]
 				}
 			}
 

@@ -1,19 +1,6 @@
-import { storageHandler } from './storage-handler.ts'
-
-export interface PokemonData {
-	captured: boolean
-	ball: string
-	shiny: boolean
-	caughtIn: string
-	ability: string
-	comment: string
-}
+import { storageHandler, type PokemonData } from './storage-handler.ts'
 
 export class PokemonStateManager {
-	private dexState = $state({})
-	private selectedPokemon: string = $state('0000-null')
-	// { pokemonid: 'null', formid: null, id_national: 0 }
-	// 0000-null
 	private nullState = {
 		captured: false,
 		ball: '01-Pokeball',
@@ -22,6 +9,11 @@ export class PokemonStateManager {
 		ability: '',
 		comment: ''
 	}
+	private nullDexState = { '0000': this.nullState }
+	private dexState: Record<string, PokemonData> = $state(this.nullDexState)
+	private selectedPokemon: string = $state('0000-null')
+	// { pokemonid: 'null', formid: null, id_national: 0 }
+	// 0000-null
 
 	constructor() {
 		this.loadDexState(storageHandler.getSelectedDexName())
@@ -66,11 +58,15 @@ export class PokemonStateManager {
 	}
 
 	toggleCaptured(identifier: string) {
-		const pokemon = this.dexState[identifier]
-		if (pokemon) {
-			this.updatePokemonState(identifier, {
-				captured: !pokemon.captured
-			})
+		try {
+			const pokemon = this.dexState[identifier]
+			if (pokemon) {
+				this.updatePokemonState(identifier, {
+					captured: !pokemon.captured
+				})
+			}
+		} catch (error) {
+			console.error('Failed to toggle captured status', error)
 		}
 	}
 
