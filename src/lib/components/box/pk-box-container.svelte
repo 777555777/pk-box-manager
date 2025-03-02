@@ -2,12 +2,12 @@
 	import { type BoxOrder } from '$lib/models/data-models'
 	import PkBox from '$lib/components/box/pk-box.svelte'
 
-	let { dexOrder, dexState }: { dexOrder: BoxOrder[]; dexState: any } = $props()
+	let { dexOrder }: { dexOrder: BoxOrder[] } = $props()
 </script>
 
 <section class="pk-box-container">
 	{#each dexOrder as box (box.title)}
-		<PkBox {box} {dexState} />
+		<PkBox {box} />
 	{/each}
 </section>
 

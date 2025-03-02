@@ -1,22 +1,20 @@
 <script lang="ts">
 	import { type PokemonEntry } from '$lib/models/data-models'
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
-	import { storageHandler } from '$lib/state/storage-handler'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 
-	let { pokemonEntry, pokemonState }: { pokemonEntry: PokemonEntry; pokemonState: any } = $props()
+	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 	const identifier = getIdentifier(pokemonEntry)
 	const currentPokemon = getPokemon(identifier)
 
-	function onclick() {
-		// pokemonState.captured = !pokemonState.captured
-		// storageHandler.editPokemonStateEntry(identifier, pokemonState)
+	let pokemonState = $derived(pokemonStateManager.getPokemonState(identifier))
 
-		pokemonState = { ...pokemonState, captured: !pokemonState.captured }
-		storageHandler.editPokemonStateEntry(identifier, pokemonState)
+	function onclick() {
+		pokemonStateManager.toggleCaptured(identifier)
 	}
 </script>
 
-<button class="pk-slot" {onclick} style="--grayscale: {pokemonState.captured ? '0%' : '100%'}">
+<button class="pk-slot" {onclick} style="--grayscale: {pokemonState.captured ? '100%' : '0%'}">
 	<img
 		src={currentPokemon.sheet + '.webp'}
 		alt={identifier}
@@ -37,6 +35,7 @@
 		transform-origin: top left;
 
 		filter: grayscale(var(--grayscale));
+		filter: brightness(var(--grayscale));
 	}
 
 	.pk-slot {

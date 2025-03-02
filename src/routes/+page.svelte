@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 
 	// State für ausgewählten DexName
@@ -11,25 +12,47 @@
 	// $inspect(selectedDexOrder)
 
 	// State für ausgewählte DexOrder
-	let dexState = $derived(storageHandler.getDexState(selectedDexName))
+	// let dexState = $derived(storageHandler.getDexState(selectedDexName))
+	let dexState = $derived(pokemonStateManager.getDexState())
 
 	let isLoading = $state(true)
 
-	// Wenn sich selectedDexName ändert, speichern wir die Auswahl
+	// Handle dex changes
+	function handleDexChange(event: Event) {
+		const select = event.target as HTMLSelectElement
+		const newDexName = select.value
+
+		// Set loading state
+		isLoading = true
+
+		// Update selected dex name
+		selectedDexName = newDexName
+
+		// Load the new dex state
+		pokemonStateManager.loadDexState(newDexName)
+
+		// Wait for the next tick to ensure state is updated
+		queueMicrotask(() => {
+			isLoading = false
+		})
+	}
+
+	// Initialize data on first load
 	$effect(() => {
-		// Sicherstellen, dass Daten geladen sind
+		// Ensure dex data is loaded
+		pokemonStateManager.loadDexState(selectedDexName)
+
+		// Check if data is available
 		if (dexState && dexOrder) {
 			isLoading = false
 		}
-		storageHandler.switchDex(selectedDexName)
 	})
 </script>
 
 {#if isLoading}
 	<div class="loading">Lade Pokédex...</div>
 {:else}
-	<select name="pk-order" id="pk-order" bind:value={selectedDexName}>
-		<!--  default soll order-national.json sein -->
+	<select name="pk-order" id="pk-order" value={selectedDexName} onchange={handleDexChange}>
 		<option value="order-national.json">order-national.json</option>
 		<option value="order-national-forms.json">order-national-forms.json</option>
 		<option value="order-national-test.json">order-national-test.json</option>
@@ -38,7 +61,8 @@
 	</select>
 
 	<main>
-		<PkBoxContainer {dexOrder} {dexState} />
+		<PkBoxContainer {dexOrder} />
+		<!-- <PkSidebar /> will be added here -->
 	</main>
 {/if}
 

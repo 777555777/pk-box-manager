@@ -90,16 +90,16 @@ class StorageHandler {
 
 	/**
 	 * Wechselt den aktuellen Pokédex und initialisiert ihn falls nötig.
-	 * @param newlySelectedDex Der Name des neu gewählten Pokédex.
+	 * @param selectedDexName Der Name des neu gewählten Pokédex.
 	 */
-	public switchDex(newlySelectedDex: string): void {
-		localStorage.setItem(this.SELECTED_DEX_KEY, newlySelectedDex)
+	public switchDex(selectedDexName: string): void {
+		localStorage.setItem(this.SELECTED_DEX_KEY, selectedDexName)
 
 		// Prüfen, ob der neue Dex bereits initialisiert wurde
-		if (!localStorage.getItem(`dex:${newlySelectedDex}`)) {
-			const pokedexOrder = getBoxOrder(newlySelectedDex)
+		if (!localStorage.getItem(`dex:${selectedDexName}`)) {
+			const pokedexOrder = getBoxOrder(selectedDexName)
 			const initialData = this.setupInitialPokedex(pokedexOrder)
-			this.savePokemonData(newlySelectedDex, initialData)
+			this.savePokemonData(selectedDexName, initialData)
 		}
 	}
 
