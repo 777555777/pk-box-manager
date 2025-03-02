@@ -1,43 +1,32 @@
 <script lang="ts">
 	import PkViewer from '$lib/components/sidebar/pk-viewer.svelte'
-	import PkBallSelectorSprite from '$lib/components/sidebar/pk-ball-selector.svelte'
-	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
-	import { type BallsType } from '$lib/models/balls-models'
-	import { type PokemonUserInfo } from '$lib/models/data-models'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 
-	const dummyUserEditedData: PokemonUserInfo = {
-		captured: false, // for viwer component
-		ball: '35-lastrange-ball', // for ball selector component
-		shiny: false, // for viewer component
-		caughtIn: 'Red', // for form component
-		ability: 'chlorophyll', // for form component
-		comment: 'only as starter or by breeding. catchable in any ball available in lets go' // for form component
-	}
-	let { selectedPokemon } = $props()
+	// Create a reactive state variable
+	let selectedPokemon = $state(pokemonStateManager.getSelectedPokemon())
 
-	// $inspect(selectedPokemon)
-	let userEditedData = $state(dummyUserEditedData)
-
+	// Update it whenever the state manager's selection changes
 	$effect(() => {
-		// call save to disc here
+		selectedPokemon = pokemonStateManager.getSelectedPokemon()
 	})
+
+	$inspect('test: ', selectedPokemon)
 </script>
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer pokemonEntry={selectedPokemon} bind:userEditedData />
+		<PkViewer {selectedPokemon} />
 	</section>
 	<section class="pk-title">
-		<PkBallSelectorSprite bind:selectedBall={userEditedData.ball as BallsType} />
-		<PkTitle pokemonEntry={selectedPokemon} />
+		<!-- <PkBallSelectorSprite bind:selectedBall={userEditedData.ball as BallsType} /> -->
+		<PkTitle {selectedPokemon} />
 	</section>
 	<hr />
 	<section>
-		<PkForm bind:userEditedData />
+		<!-- <PkForm bind:userEditedData /> -->
 	</section>
-	<div class="pk-save-indicator">saving...</div>
-	<pre>{JSON.stringify(userEditedData, null, 2)}</pre>
+	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
 </aside>
 
 <style>

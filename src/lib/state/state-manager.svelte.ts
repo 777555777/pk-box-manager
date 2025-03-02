@@ -1,3 +1,4 @@
+import { getIdentifier } from '../spriteheet-helper.ts'
 import { storageHandler, type PokemonData, type PokemonState } from './storage-handler.ts'
 
 export class PokemonStateManager {
@@ -53,6 +54,11 @@ export class PokemonStateManager {
 			...updatedState
 		}
 
+		// If this is the currently selected Pokemon, update selectedPokemon directly too
+		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {
+			this.selectedPokemon = { ...this.dexState[identifier] }
+		}
+
 		// Persist to storage
 		storageHandler.editPokemonStateEntry(identifier, this.dexState[identifier])
 	}
@@ -70,12 +76,26 @@ export class PokemonStateManager {
 		}
 	}
 
+	// In state-manager.svelte.ts
+	toggleShiny(identifier: string) {
+		try {
+			const pokemon = this.dexState[identifier]
+			if (pokemon) {
+				this.updatePokemonState(identifier, {
+					shiny: !pokemon.shiny
+				})
+			}
+		} catch (error) {
+			console.error('Failed to toggle shiny status', error)
+		}
+	}
+
 	setSelectedPokemon(identifier: string) {
 		this.selectedPokemon = this.dexState[identifier]
 	}
 
 	getSelectedPokemon() {
-		return this.selectedPokemon ? this.selectedPokemon : null
+		return this.selectedPokemon ? this.selectedPokemon : this.nullState
 	}
 }
 

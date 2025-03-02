@@ -11,6 +11,7 @@
 
 	function onclick() {
 		pokemonStateManager.toggleCaptured(identifier)
+		pokemonStateManager.setSelectedPokemon(identifier)
 	}
 </script>
 
@@ -34,7 +35,6 @@
 		transform: scale(0.666667); /* 74px */
 		transform-origin: top left;
 
-		filter: grayscale(var(--grayscale));
 		filter: brightness(var(--grayscale));
 	}
 

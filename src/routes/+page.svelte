@@ -1,18 +1,16 @@
 <script lang="ts">
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
+	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 
 	// State für ausgewählten DexName
 	let selectedDexName = $state(storageHandler.getSelectedDexName())
-	// $inspect(selectedDexName)
 
 	// Ausgewählte DexOrder
 	let dexOrder = $derived(storageHandler.getDexOrder(selectedDexName))
-	// $inspect(selectedDexOrder)
 
 	// State für ausgewählte DexOrder
-	// let dexState = $derived(storageHandler.getDexState(selectedDexName))
 	let dexState = $derived(pokemonStateManager.getDexState())
 
 	let isLoading = $state(true)
@@ -62,7 +60,7 @@
 
 	<main>
 		<PkBoxContainer {dexOrder} />
-		<!-- <PkSidebar /> will be added here -->
+		<PkSidebar />
 	</main>
 {/if}
 

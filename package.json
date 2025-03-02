@@ -15,7 +15,8 @@
 		"sprites": "deno run generate-ball-sprites && deno run generate-pokemon-sprites && deno run generate-form-sprites",
 		"generate-ball-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/balls --output-dir=static/spritesheets --ts-dir=src/lib/models --name=balls --tile-size=30 --column-amount=8 --max-images=50",
 		"generate-pokemon-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/normal --output-dir=static/spritesheets --name=pokemon --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300",
-		"generate-form-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=static/spritesheets --name=forms --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300"
+		"generate-form-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=static/spritesheets --name=forms --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300",
+		"webp": "cd ./static/spritesheets && convertWebP.sh"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

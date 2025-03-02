@@ -1,15 +1,21 @@
 <script lang="ts">
-	import { type PokemonEntry } from '$lib/models/data-models'
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import type { PokemonState } from '$lib/state/storage-handler'
 
-	let {
-		pokemonEntry,
-		userEditedData = $bindable()
-	}: { pokemonEntry: PokemonEntry; userEditedData: any } = $props()
-	const identifier = getIdentifier(pokemonEntry)
-	let currentPokemon = $derived(getPokemon(getIdentifier(pokemonEntry)))
-	// getPokemon(identifier)
-	// const currentPokemon = getPokemon(identifier)
+	// Receive the prop from parent
+	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
+
+	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
+	let currentPokemon = $derived(getPokemon(identifier))
+
+	function toggleShiny() {
+		pokemonStateManager.toggleShiny(identifier)
+	}
+
+	function toggleCaptured() {
+		pokemonStateManager.toggleCaptured(identifier)
+	}
 </script>
 
 <section class="pk-viewer">
@@ -19,8 +25,8 @@
 		style={setCssPosition(currentPokemon.position)}
 	/>
 	<div class="pk-viewer-controls">
-		<button onclick={() => (userEditedData.shiny = !userEditedData.shiny)}>✨</button>
-		<button onclick={() => (userEditedData.captured = !userEditedData.captured)}>🖥️</button>
+		<button onclick={toggleShiny}>✨</button>
+		<button onclick={toggleCaptured}>🖥️</button>
 	</div>
 </section>
 

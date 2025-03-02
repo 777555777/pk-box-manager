@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { PokemonEntry } from '$lib/models/data-models'
+	import type { PokemonState } from '$lib/state/storage-handler'
 
-	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
+	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
 
 	function getDisplayname(entry: any) {
 		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid : ''}`
 	}
 </script>
 
-<h3>{getDisplayname(pokemonEntry)}</h3>
+<h3>{getDisplayname(selectedPokemon.idEntry)}</h3>
 <span class="pk-gender">♂️</span>
 
 <style>
