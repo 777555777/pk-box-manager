@@ -14,17 +14,17 @@ function getBoxOrder(dexName: string): BoxOrder[] {
 
 	switch (dexName) {
 		case 'order-national.json':
-			return boxOrderNational as BoxOrder[]
+			return boxOrderNationalForms
 		case 'order-national-forms.json':
-			return boxOrderNationalForms as BoxOrder[]
+			return boxOrderNationalForms
 		case 'order-national-test.json':
-			return boxOrderNationalTest as BoxOrder[]
+			return boxOrderNationalTest
 		case 'order-test-small-1.json':
-			return orderTestSmall1 as BoxOrder[]
+			return orderTestSmall1
 		case 'order-test-small-2.json':
-			return orderTestSmall2 as BoxOrder[]
+			return orderTestSmall2
 		default:
-			return boxOrderNational as BoxOrder[]
+			return boxOrderNational
 	}
 }
 
@@ -46,6 +46,10 @@ export interface PokemonData {
 	caughtIn: string
 	ability: string
 	comment: string
+}
+
+export interface PokemonState extends PokemonData {
+	identifier: PokemonEntry
 }
 
 class StorageHandler {
@@ -151,6 +155,31 @@ class StorageHandler {
 	private formatIdentifier(entry: PokemonEntry): string {
 		const paddedId = entry.id_national.toString().padStart(4, '0')
 		return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
+	}
+
+	public editPokemonStateEntry(identifier: string, pokemonState: PokemonState) {
+		const selectedDex = localStorage.getItem(this.SELECTED_DEX_KEY)
+		const selectedDexState = localStorage.getItem(`dex:${selectedDex}`)!
+		if (selectedDexState) {
+			const parsedDexState = JSON.parse(selectedDexState)
+			const targetPokemon = parsedDexState[identifier]
+
+			const updatedPokemon = { ...targetPokemon }
+			for (const key in pokemonState) {
+				if (key in targetPokemon) {
+					updatedPokemon[key] = pokemonState[key as keyof PokemonData]
+				}
+			}
+
+			// Aktualisiere das Pokemon im temporären Objekt
+			parsedDexState[identifier] = updatedPokemon
+
+			// Speichere den aktualisierten Zustand zurück in den localStorage
+			localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(parsedDexState))
+
+			// Damit die daten wirklich im Sync sind müsste man eigentlich im Slot sie wieder aus dem localStorage abrufen ODER man returned sie hier
+			return updatedPokemon
+		}
 	}
 }
 

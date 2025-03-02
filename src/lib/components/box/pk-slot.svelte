@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { type PokemonEntry } from '$lib/models/data-models'
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
-	import { selectedPokemon } from '$lib/state/data.svelte'
+	import { storageHandler } from '$lib/state/storage-handler'
 
-	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
+	let { pokemonEntry, pokemonState }: { pokemonEntry: PokemonEntry; pokemonState: any } = $props()
 	const identifier = getIdentifier(pokemonEntry)
 	const currentPokemon = getPokemon(identifier)
 
 	function onclick() {
-		selectedPokemon.entry = pokemonEntry
-		// selectedPokemon.caught = !selectedPokemon.caught
+		// pokemonState.captured = !pokemonState.captured
+		// storageHandler.editPokemonStateEntry(identifier, pokemonState)
+
+		pokemonState = { ...pokemonState, captured: !pokemonState.captured }
+		storageHandler.editPokemonStateEntry(identifier, pokemonState)
 	}
 </script>
 
-<button class="pk-slot" {onclick}>
+<button class="pk-slot" {onclick} style="--grayscale: {pokemonState.captured ? '0%' : '100%'}">
 	<img
 		src={currentPokemon.sheet + '.webp'}
 		alt={identifier}
@@ -32,6 +35,8 @@
 		height: 96px;
 		transform: scale(0.666667); /* 74px */
 		transform-origin: top left;
+
+		filter: grayscale(var(--grayscale));
 	}
 
 	.pk-slot {

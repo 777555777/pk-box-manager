@@ -3,7 +3,7 @@
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 
-	let { box }: { box: BoxOrder } = $props()
+	let { box, dexState }: { box: BoxOrder; dexState: any } = $props()
 </script>
 
 <article class="pk-box">
@@ -12,7 +12,10 @@
 	</header>
 	<div class="box-grid">
 		{#each box.pokemon as pokemon (getIdentifier(pokemon))}
-			<PkSlot pokemonEntry={pokemon} />
+			<PkSlot
+				pokemonEntry={pokemon}
+				pokemonState={{ identifier: pokemon, ...dexState[getIdentifier(pokemon)] }}
+			/>
 		{/each}
 	</div>
 </article>
