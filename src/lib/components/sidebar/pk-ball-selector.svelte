@@ -1,22 +1,25 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
+	import { getIdentifier, setCssPosition } from '$lib/spriteheet-helper'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import type { PokemonState } from '$lib/state/storage-handler'
 
-	type Coordinates = { x: number; y: number }
+	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
+	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
+	let selectedBall = $derived(selectedPokemon.ball)
+	let isSelectionValid = $derived(identifier === '0000-null')
 
-	let { selectedBall = $bindable() }: { selectedBall: BallsType } = $props()
 	let showTray = $state(false)
 	let trayRef = $state<HTMLElement | null>(null)
-
-	function setPosition(data: Coordinates) {
-		return `object-position: ${data.x}px ${data.y}px;`
-	}
 
 	function getBallPosition(selectedBall: BallsType) {
 		return Balls[selectedBall].position || { x: 0, y: 0 }
 	}
 
 	function selectBall(ball: BallsType) {
-		selectedBall = ball
+		pokemonStateManager.updatePokemonState(identifier, {
+			ball: ball
+		})
 		showTray = false
 	}
 
@@ -44,10 +47,10 @@
 	})
 </script>
 
-<button class="pk-ball-container" onclick={toggleSelectorTray}>
+<button class="pk-ball-container" onclick={toggleSelectorTray} disabled={isSelectionValid}>
 	<img
 		src="/spritesheets/spritesheet-balls-1.webp"
-		style={setPosition(getBallPosition(selectedBall))}
+		style={setCssPosition(getBallPosition(selectedBall as BallsType))}
 		alt={selectedBall}
 	/>
 </button>
@@ -61,7 +64,7 @@
 			<button onclick={() => selectBall(name as BallsType)}>
 				<img
 					src="/spritesheets/spritesheet-balls-1.webp"
-					style={setPosition(data.position)}
+					style={setCssPosition(data.position)}
 					alt={name}
 				/>
 			</button>

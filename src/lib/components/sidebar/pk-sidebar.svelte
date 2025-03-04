@@ -1,6 +1,8 @@
 <script lang="ts">
 	import PkViewer from '$lib/components/sidebar/pk-viewer.svelte'
+	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
+	import PkBallSelector from '$lib/components/sidebar/pk-ball-selector.svelte'
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 
 	// Create a reactive state variable
@@ -19,12 +21,12 @@
 		<PkViewer {selectedPokemon} />
 	</section>
 	<section class="pk-title">
-		<!-- <PkBallSelectorSprite bind:selectedBall={userEditedData.ball as BallsType} /> -->
+		<PkBallSelector {selectedPokemon} />
 		<PkTitle {selectedPokemon} />
 	</section>
 	<hr />
 	<section>
-		<!-- <PkForm bind:userEditedData /> -->
+		<PkForm {selectedPokemon} />
 	</section>
 	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
 </aside>

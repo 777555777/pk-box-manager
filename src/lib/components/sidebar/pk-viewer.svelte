@@ -5,9 +5,9 @@
 
 	// Receive the prop from parent
 	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
-
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 	let currentPokemon = $derived(getPokemon(identifier))
+	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function toggleShiny() {
 		pokemonStateManager.toggleShiny(identifier)
@@ -25,8 +25,8 @@
 		style={setCssPosition(currentPokemon.position)}
 	/>
 	<div class="pk-viewer-controls">
-		<button onclick={toggleShiny}>✨</button>
-		<button onclick={toggleCaptured}>🖥️</button>
+		<button onclick={toggleShiny} disabled={isSelectionValid}>✨</button>
+		<button onclick={toggleCaptured} disabled={isSelectionValid}>🖥️</button>
 	</div>
 </section>
 
@@ -49,7 +49,7 @@
 
 	/* .pk-viewer img {
 		box-sizing: content-box;
-		image-rendering: crisp-edges;
+		image-rendering: pixelated;
 		width: 256px; 
 		height: 256px;
 	} */
@@ -59,8 +59,7 @@
 	}
 	img {
 		box-sizing: content-box;
-		image-rendering: crisp-edges;
-		/* image-rendering: pixelated; */
+		image-rendering: pixelated;
 		object-fit: none;
 		width: 96px;
 		height: 96px;

@@ -50,7 +50,13 @@
 {#if isLoading}
 	<div class="loading">Lade Pokédex...</div>
 {:else}
-	<select name="pk-order" id="pk-order" value={selectedDexName} onchange={handleDexChange}>
+	<select
+		name="pk-order"
+		id="pk-order"
+		title="pokedex-order"
+		value={selectedDexName}
+		onchange={handleDexChange}
+	>
 		<option value="order-national.json">order-national.json</option>
 		<option value="order-national-forms.json">order-national-forms.json</option>
 		<option value="order-national-test.json">order-national-test.json</option>
