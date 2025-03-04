@@ -84,6 +84,8 @@ export const Region = {
 	Paldea: 'paldea'
 } as const
 
+export const Generations = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const
+
 export const Game = {
 	// Generation 1
 	Red: { title: 'Red', gen: 1 },
@@ -100,42 +102,42 @@ export const Game = {
 	Ruby: { title: 'Ruby', gen: 3 },
 	Sapphire: { title: 'Sapphire', gen: 3 },
 	Emerald: { title: 'Emerald', gen: 3 },
-	FireRed: { title: 'FireRed', gen: 3 },
-	LeafGreen: { title: 'LeafGreen', gen: 3 },
+	FireRed: { title: 'Fire Red', gen: 3 },
+	LeafGreen: { title: 'Leaf Green', gen: 3 },
 
 	// Generation 4
 	Diamond: { title: 'Diamond', gen: 4 },
 	Pearl: { title: 'Pearl', gen: 4 },
 	Platinum: { title: 'Platinum', gen: 4 },
-	HeartGold: { title: 'HeartGold', gen: 4 },
-	SoulSilver: { title: 'SoulSilver', gen: 4 },
+	HeartGold: { title: 'Heart Gold', gen: 4 },
+	SoulSilver: { title: 'Soul Silver', gen: 4 },
 
 	// Generation 5
 	Black: { title: 'Black', gen: 5 },
 	White: { title: 'White', gen: 5 },
-	Black2: { title: 'Black2', gen: 5 },
-	White2: { title: 'White2', gen: 5 },
+	Black2: { title: 'Black 2', gen: 5 },
+	White2: { title: 'White 2', gen: 5 },
 
 	// Generation 6
 	X: { title: 'X', gen: 6 },
 	Y: { title: 'Y', gen: 6 },
-	OmegaRuby: { title: 'OmegaRuby', gen: 6 },
-	AlphaSapphire: { title: 'AlphaSapphire', gen: 6 },
+	OmegaRuby: { title: 'Omega Ruby', gen: 6 },
+	AlphaSapphire: { title: 'Alpha Sapphire', gen: 6 },
 
 	// Generation 7
 	Sun: { title: 'Sun', gen: 7 },
 	Moon: { title: 'Moon', gen: 7 },
-	UltraSun: { title: 'UltraSun', gen: 7 },
-	UltraMoon: { title: 'UltraMoon', gen: 7 },
-	LetsGoPikachu: { title: 'LetsGoPikachu', gen: 7 },
-	LetsGoEevee: { title: 'LetsGoEevee', gen: 7 },
+	UltraSun: { title: 'Ultra Sun', gen: 7 },
+	UltraMoon: { title: 'Ultra Moon', gen: 7 },
+	LetsGoPikachu: { title: 'Lets Go Pikachu', gen: 7 },
+	LetsGoEevee: { title: 'Lets Go Eevee', gen: 7 },
 
 	// Generation 8
 	Sword: { title: 'Sword', gen: 8 },
 	Shield: { title: 'Shield', gen: 8 },
-	BrilliantDiamond: { title: 'BrilliantDiamond', gen: 8 },
-	ShiningPerl: { title: 'ShiningPerl', gen: 8 },
-	LegendsArceus: { title: 'LegendsArceus', gen: 8 },
+	BrilliantDiamond: { title: 'Brilliant Diamond', gen: 8 },
+	ShiningPerl: { title: 'Shining Perl', gen: 8 },
+	LegendsArceus: { title: 'Legends Arceus', gen: 8 },
 
 	// Generation 9
 	Violet: { title: 'Violet', gen: 9 },

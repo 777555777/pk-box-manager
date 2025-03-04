@@ -5,7 +5,7 @@ export class PokemonStateManager {
 	private nullState = {
 		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
 		captured: false,
-		ball: '01-Pokeball',
+		ball: '01-poke-ball',
 		shiny: false,
 		caughtIn: '',
 		ability: '',
@@ -49,10 +49,9 @@ export class PokemonStateManager {
 		if (!this.dexState[identifier]) return
 
 		// Update local state
-		this.dexState[identifier] = {
-			...this.dexState[identifier],
-			...updatedState
-		}
+		const currentState = this.dexState[identifier]
+		const newState = { ...currentState, ...updatedState }
+		this.dexState[identifier] = newState
 
 		// If this is the currently selected Pokemon, update selectedPokemon directly too
 		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {

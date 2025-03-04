@@ -136,7 +136,7 @@ class StorageHandler {
 				initialPokedex[pokemonIdentifier] = {
 					idEntry: pokemon,
 					captured: false,
-					ball: '01-Pokeball',
+					ball: '01-poke-ball',
 					shiny: false,
 					caughtIn: '',
 					ability: '',
