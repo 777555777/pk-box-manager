@@ -4,7 +4,7 @@ import { Forms } from './models/forms-models.ts'
 
 interface SpriteData {
 	sheet: string
-	position: Coordinates
+	pos: Coordinates
 }
 
 type Coordinates = { x: number; y: number }
@@ -26,6 +26,6 @@ export function getPokemon(identifier: string): SpriteData {
 	return combinedPokemon['0000-null']
 }
 
-export function setCssPosition(position: Coordinates) {
-	return `object-position: ${position.x}px ${position.y}px;`
+export function setCssPosition(pos: Coordinates) {
+	return `object-position: ${pos.x}px ${pos.y}px;`
 }

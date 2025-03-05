@@ -89,7 +89,7 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 async function generateMappingData(spriteSheetFileNames: string[], files: string[]) {
 	console.log('Creating TypeScript file...')
 
-	const tsFileData: Record<string, { sheet: string; position: { x: number; y: number } }> = {}
+	const tsFileData: Record<string, { sheet: string; pos: { x: number; y: number } }> = {}
 
 	files.forEach((file, index) => {
 		const sheetIndex = Math.floor(index / maxImagesPerSheet) // Determines which sheet the image is in
@@ -101,13 +101,13 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 
 		tsFileData[file.replace('.png', '')] = {
 			sheet: spritesheet, // Saves the corresponding sprite sheet
-			position: { x: positionX, y: positionY }
+			pos: { x: positionX, y: positionY }
 		}
 	})
 
 	// Write TypeScript file
 	const tsContent = `// Automatically generated file!
-export const ${firstToUpper(name)} = ${JSON.stringify(tsFileData, null, 2)} as const;
+export const ${firstToUpper(name)} = ${convertToProperties(JSON.stringify(tsFileData, null, 2))} as const;
 
 export type ${firstToUpper(name)}Type = keyof typeof ${firstToUpper(name)};
 `
@@ -186,4 +186,19 @@ Optionen:
 
 function firstToUpper(word: string) {
 	return word.charAt(0).toUpperCase() + word.slice(1)
+}
+
+function convertToProperties(inputString: string) {
+	let result = inputString
+
+	const replacementTerms = ['"sheet"', '"pos"', '"x"', '"y"']
+	const targetTerms = ['sheet', 'pos', 'x', 'y']
+
+	// Ersetze nur die Anführungszeichen für die spezifizierten Terme
+	for (let i = 0; i < replacementTerms.length; i++) {
+		const regex = new RegExp(`${replacementTerms[i]}\\s*:`, 'g')
+		result = result.replace(regex, `${targetTerms[i]}:`)
+	}
+	// Parse das bereinigte String als JSON
+	return result
 }

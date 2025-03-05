@@ -22,7 +22,7 @@
 	<img
 		src={currentPokemon.sheet + '.webp'}
 		alt={identifier}
-		style={setCssPosition(currentPokemon.position)}
+		style={setCssPosition(currentPokemon.pos)}
 	/>
 	<div class="pk-viewer-controls">
 		<button onclick={toggleShiny} disabled={isSelectionValid}>✨</button>

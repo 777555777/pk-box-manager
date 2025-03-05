@@ -19,7 +19,8 @@
 	<img
 		src={currentPokemon.sheet + '.webp'}
 		alt={identifier}
-		style={setCssPosition(currentPokemon.position)}
+		style={setCssPosition(currentPokemon.pos)}
+		loading="lazy"
 	/>
 </button>
 

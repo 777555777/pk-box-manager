@@ -13,7 +13,7 @@
 	let trayRef = $state<HTMLElement | null>(null)
 
 	function getBallPosition(selectedBall: BallsType) {
-		return Balls[selectedBall].position || { x: 0, y: 0 }
+		return Balls[selectedBall].pos || { x: 0, y: 0 }
 	}
 
 	function selectBall(ball: BallsType) {
@@ -64,7 +64,7 @@
 			<button onclick={() => selectBall(name as BallsType)}>
 				<img
 					src="/spritesheets/spritesheet-balls-1.webp"
-					style={setCssPosition(data.position)}
+					style={setCssPosition(data.pos)}
 					alt={name}
 				/>
 			</button>
