@@ -4,7 +4,10 @@
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import { Game, Generations, type GameType } from '$lib/models/data-models'
 
-	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
+	let {
+		selectedPokemon,
+		sidebarEditMode
+	}: { selectedPokemon: PokemonState; sidebarEditMode: boolean } = $props()
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 	let isTextAreaDisabled = $state(true)
 	let localComment = $state(selectedPokemon.comment)
@@ -51,7 +54,7 @@
 			id="pk-region"
 			bind:value={localCaughtIn}
 			onchange={saveCaughtIn}
-			disabled={isSelectionValid}
+			disabled={isSelectionValid || !sidebarEditMode}
 		>
 			<option value="">Select game</option>
 			{#each Generations as gen}
@@ -71,7 +74,11 @@
 
 	{@render commentButton()}
 	<label for="comment">Comment</label>
-	<textarea name="comment" id="comment" bind:value={localComment} disabled={isTextAreaDisabled}
+	<textarea
+		name="comment"
+		id="comment"
+		bind:value={localComment}
+		disabled={isTextAreaDisabled || !sidebarEditMode}
 	></textarea>
 </div>
 
@@ -85,7 +92,7 @@
 					saveComment()
 				}
 			}}
-			disabled={isSelectionValid}
+			disabled={isSelectionValid || !sidebarEditMode}
 		>
 			{isTextAreaDisabled ? 'Edit' : 'Save'}
 		</button>

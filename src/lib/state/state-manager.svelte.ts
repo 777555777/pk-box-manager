@@ -96,6 +96,10 @@ export class PokemonStateManager {
 	getSelectedPokemon() {
 		return this.selectedPokemon ? this.selectedPokemon : this.nullState
 	}
+
+	deselectPokemon() {
+		this.selectedPokemon = this.dexState['0000-null']
+	}
 }
 
 export const pokemonStateManager = new PokemonStateManager()

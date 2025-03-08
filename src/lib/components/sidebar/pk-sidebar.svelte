@@ -4,9 +4,11 @@
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import PkBallSelector from '$lib/components/sidebar/pk-ball-selector.svelte'
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { appState } from '$lib/state/app-state.svelte'
 
 	// Create a reactive state variable
 	let selectedPokemon = $state(pokemonStateManager.getSelectedPokemon())
+	let sidebarEditMode = $derived(appState.getSidebarEditMode())
 
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
@@ -18,15 +20,15 @@
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer {selectedPokemon} />
+		<PkViewer {selectedPokemon} {sidebarEditMode} />
 	</section>
 	<section class="pk-title">
-		<PkBallSelector {selectedPokemon} />
+		<PkBallSelector {selectedPokemon} {sidebarEditMode} />
 		<PkTitle {selectedPokemon} />
 	</section>
 	<hr />
 	<section>
-		<PkForm {selectedPokemon} />
+		<PkForm {selectedPokemon} {sidebarEditMode} />
 	</section>
 	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
 </aside>
