@@ -70,7 +70,7 @@
 	}
 
 	.pk-viewer-controls {
-		background-color: red;
+		background-color: #56565655;
 		position: absolute;
 		top: 16px;
 		right: 16px;

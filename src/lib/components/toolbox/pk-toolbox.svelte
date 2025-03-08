@@ -3,9 +3,14 @@
 	import { storageHandler } from '$lib/state/storage-handler'
 
 	let sidebarEditMode = $derived(appState.getSidebarEditMode())
+	let badgeDisplay = $derived(appState.getBadgeDisplay())
 
 	function toggleSidebarEditMode() {
 		appState.toggleSidebarEditMode()
+	}
+
+	function cycleBadgeDisplay() {
+		appState.cycleBadgeDisplay(badgeDisplay)
 	}
 
 	function exportCurrentDex() {
@@ -50,6 +55,8 @@
 		<button>Import</button>
 	</div>
 
+	<hr />
+
 	<div class="pk-modes">
 		<!-- in quick edit mode sidebar will display on hover
 		and wont allow edits to its data
@@ -67,17 +74,17 @@
 		/>
 
 		<!-- cycle to additional display modes -->
-		<button>🔄</button>
+		<button onclick={cycleBadgeDisplay}>🔄</button>
 	</div>
 </aside>
 
 <style>
 	.pk-toolbox {
-		width: 480px;
+		width: 400px;
 		height: 180px;
 
 		position: sticky;
-		top: 1rem; /* Abstand von oben */
+		top: 5.5rem; /* Abstand von oben */
 		align-self: flex-start; /* Damit es oben beginnt */
 		height: fit-content; /* Passt sich dem Inhalt an */
 
@@ -107,7 +114,7 @@
 
 	.pk-modes {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		gap: 0.5rem;
 	}
 

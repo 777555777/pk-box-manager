@@ -38,11 +38,11 @@
 		padding: 10px;
 	}
 	.pk-sidebar {
-		width: 520px;
+		/* width: 520px; */
 		/* height: 900px; */
 
 		position: sticky;
-		top: 4rem; /* Abstand von oben */
+		top: 15rem; /* Abstand von oben */
 		align-self: flex-start; /* Damit es oben beginnt */
 		height: fit-content; /* Passt sich dem Inhalt an */
 

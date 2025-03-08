@@ -97,14 +97,20 @@
 		<option value="order-test-small-2.json">order-test-small-2.json</option>
 	</select>
 
-	<PkToolBox />
 	<main>
 		<PkBoxContainer {dexOrder} />
-		<PkSidebar />
+
+		<section class="pk-tools">
+			<PkToolBox />
+			<PkSidebar />
+		</section>
 	</main>
 {/if}
 
 <style>
+	.pk-tools {
+		max-width: 400px;
+	}
 	main {
 		display: flex;
 		justify-content: center;
