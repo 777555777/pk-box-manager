@@ -1,4 +1,5 @@
 export class AppState {
+	private isAppLoading = $state(false)
 	private sidebarEditMode = $state(false)
 	private badgeDisplay: string | boolean = $state(false)
 
@@ -12,6 +13,14 @@ export class AppState {
 
 	public getBadgeDisplay() {
 		return this.badgeDisplay
+	}
+
+	public getAppLoadingState() {
+		return this.isAppLoading
+	}
+
+	public setAppLoadingState(isLoading: boolean) {
+		this.isAppLoading = isLoading
 	}
 
 	public cycleBadgeDisplay(currentBadeDisplay: string | boolean) {

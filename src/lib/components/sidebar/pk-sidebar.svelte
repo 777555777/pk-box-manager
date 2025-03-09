@@ -41,16 +41,13 @@
 		/* width: 520px; */
 		/* height: 900px; */
 
-		position: sticky;
-		top: 15rem; /* Abstand von oben */
-		align-self: flex-start; /* Damit es oben beginnt */
-		height: fit-content; /* Passt sich dem Inhalt an */
-
 		/* concept placeholder */
 		background-color: #cdffd7;
 		border: 2px solid #7cff80;
 		border-radius: 10px;
 		padding: 10px;
+
+		position: relative;
 	}
 	.pk-title {
 		display: flex;

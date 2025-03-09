@@ -49,9 +49,9 @@
 		grid-template-columns: repeat(6, 1fr);
 		grid-template-rows: repeat(5, 1fr);
 		gap: 0;
-		/* 
-		width: 384px;
-		height: 320px; */
+
+		/* width: 384px; */
+		height: 320px;
 
 		/* concept placeholder */
 		background-color: hsl(10, 100%, 90%);

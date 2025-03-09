@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
+	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
+
+	let { selectedDexName = $bindable() } = $props<{ selectedDexName: string }>()
 
 	let sidebarEditMode = $derived(appState.getSidebarEditMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
@@ -36,11 +39,37 @@
 		// Gib die URL frei
 		URL.revokeObjectURL(url)
 	}
+
+	// Handle dex changes
+	function handleDexChange(event: Event) {
+		const select = event.target as HTMLSelectElement
+
+		// Update selected dex name, this automatically updates the parent
+		selectedDexName = select.value //
+
+		// Set loading state
+		appState.setAppLoadingState(true)
+
+		// Load the new dex state
+		pokemonStateManager.loadDexState(select.value)
+
+		// Wait for the next tick to ensure state is updated
+		queueMicrotask(() => {
+			appState.setAppLoadingState(false)
+		})
+	}
 </script>
 
 <aside class="pk-toolbox">
 	<div class="pk-data">
-		<select class="pk-order" name="pk-order" id="pk-order" title="pokedex-order" value="">
+		<select
+			class="pk-order"
+			name="pk-order"
+			id="pk-order"
+			title="pokedex-order"
+			value={selectedDexName}
+			onchange={handleDexChange}
+		>
 			<option value="order-national.json">order-national.json</option>
 			<option value="order-national-forms.json">order-national-forms.json</option>
 			<option value="order-national-test.json">order-national-test.json</option>
@@ -81,12 +110,6 @@
 <style>
 	.pk-toolbox {
 		width: 400px;
-		height: 180px;
-
-		position: sticky;
-		top: 5.5rem; /* Abstand von oben */
-		align-self: flex-start; /* Damit es oben beginnt */
-		height: fit-content; /* Passt sich dem Inhalt an */
 
 		/* concept placeholder */
 		background-color: hsl(212, 100%, 90%);

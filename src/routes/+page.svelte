@@ -2,6 +2,7 @@
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
+	import { appState } from '$lib/state/app-state.svelte'
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 	import { onMount } from 'svelte'
@@ -15,27 +16,7 @@
 	// State für ausgewählte DexOrder
 	let dexState = $derived(pokemonStateManager.getDexState())
 
-	let isLoading = $state(true)
-
-	// Handle dex changes
-	function handleDexChange(event: Event) {
-		const select = event.target as HTMLSelectElement
-		const newDexName = select.value
-
-		// Set loading state
-		isLoading = true
-
-		// Update selected dex name
-		selectedDexName = newDexName
-
-		// Load the new dex state
-		pokemonStateManager.loadDexState(newDexName)
-
-		// Wait for the next tick to ensure state is updated
-		queueMicrotask(() => {
-			isLoading = false
-		})
-	}
+	let isLoading = $derived(appState.getAppLoadingState())
 
 	// Initialize data on first load
 	$effect(() => {
@@ -44,7 +25,7 @@
 
 		// Check if data is available
 		if (dexState && dexOrder) {
-			isLoading = false
+			appState.setAppLoadingState(false)
 		}
 	})
 
@@ -83,40 +64,35 @@
 {#if isLoading}
 	<div class="loading">Lade Pokédex...</div>
 {:else}
-	<select
-		name="pk-order"
-		id="pk-order"
-		title="pokedex-order"
-		value={selectedDexName}
-		onchange={handleDexChange}
-	>
-		<option value="order-national.json">order-national.json</option>
-		<option value="order-national-forms.json">order-national-forms.json</option>
-		<option value="order-national-test.json">order-national-test.json</option>
-		<option value="order-test-small-1.json">order-test-small-1.json</option>
-		<option value="order-test-small-2.json">order-test-small-2.json</option>
-	</select>
-
 	<main>
 		<PkBoxContainer {dexOrder} />
 
 		<section class="pk-tools">
-			<PkToolBox />
+			<PkToolBox bind:selectedDexName />
 			<PkSidebar />
 		</section>
 	</main>
 {/if}
 
 <style>
-	.pk-tools {
-		max-width: 400px;
-	}
 	main {
-		display: flex;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: 1fr 400px; /* Content area and tools area */
 		gap: 2rem;
-
 		margin: 0 4rem;
-		position: relative;
+		align-items: start; /* Important for proper alignment */
+
+		min-height: 100dvh;
+	}
+
+	.pk-tools {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		position: sticky; /* Make the entire tools section sticky */
+		top: 4rem;
+		height: auto;
+		max-height: calc(100vh - 4rem); /* Ensure it doesn't exceed viewport */
+		overflow-y: auto; /* Allow scrolling if tools get too tall */
 	}
 </style>
