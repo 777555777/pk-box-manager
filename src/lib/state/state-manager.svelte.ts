@@ -12,7 +12,7 @@ export class PokemonStateManager {
 		comment: ''
 	}
 
-	private nullDexState = { '0000': this.nullState }
+	private nullDexState = { '0000-null': this.nullState }
 	private dexState: Record<string, PokemonState> = $state(this.nullDexState)
 	private selectedPokemon: PokemonState = $state(this.nullState)
 
@@ -98,7 +98,7 @@ export class PokemonStateManager {
 	}
 
 	deselectPokemon() {
-		this.selectedPokemon = this.dexState['0000-null']
+		this.selectedPokemon = this.nullState
 	}
 }
 
