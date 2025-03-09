@@ -9,7 +9,6 @@
 		sidebarEditMode
 	}: { selectedPokemon: PokemonState; sidebarEditMode: boolean } = $props()
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
-	let isTextAreaDisabled = $state(true)
 	let localComment = $state(selectedPokemon.comment)
 	let localCaughtIn = $state(selectedPokemon.caughtIn)
 	let isSelectionValid = $derived(identifier === '0000-null')
@@ -20,7 +19,6 @@
 		pokemonStateManager.updatePokemonState(identifier, {
 			comment: localComment
 		})
-		isTextAreaDisabled = true
 	}
 
 	function saveCaughtIn() {
@@ -41,7 +39,6 @@
 	$effect(() => {
 		localComment = selectedPokemon.comment
 		localCaughtIn = selectedPokemon.caughtIn
-		isTextAreaDisabled = true
 	})
 </script>
 
@@ -74,39 +71,15 @@
 
 	{@render commentButton()}
 	<label for="comment">Comment</label>
-	<textarea
-		name="comment"
-		id="comment"
-		bind:value={localComment}
-		disabled={isTextAreaDisabled || !sidebarEditMode}
+	<textarea name="comment" id="comment" bind:value={localComment} disabled={sidebarEditMode}
 	></textarea>
 </div>
 
 {#snippet commentButton()}
 	<div class="button-group">
-		<button
-			type="button"
-			onclick={() => {
-				isTextAreaDisabled = !isTextAreaDisabled
-				if (isTextAreaDisabled) {
-					saveComment()
-				}
-			}}
-			disabled={isSelectionValid || !sidebarEditMode}
-		>
-			{isTextAreaDisabled ? 'Edit' : 'Save'}
+		<button type="button" onclick={saveComment} disabled={isSelectionValid || !sidebarEditMode}>
+			Save comment
 		</button>
-		{#if !isTextAreaDisabled}
-			<button
-				type="button"
-				onclick={() => {
-					localComment = selectedPokemon.comment
-					isTextAreaDisabled = true
-				}}
-			>
-				Cancel
-			</button>
-		{/if}
 	</div>
 {/snippet}
 
