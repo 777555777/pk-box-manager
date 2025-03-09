@@ -56,6 +56,10 @@
 		style={setCssPosition(currentPokemon.pos)}
 		loading="lazy"
 	/>
+	{@render badge()}
+</button>
+
+{#snippet badge()}
 	{#if pokemonState.captured && badgeDisplay === 'ball' && pokemonState.ball}
 		<img
 			class="pk-badge"
@@ -67,7 +71,7 @@
 	{#if pokemonState.captured && badgeDisplay === 'shiny' && pokemonState.shiny}
 		<div class="pk-badge">✨</div>
 	{/if}
-</button>
+{/snippet}
 
 <style>
 	:root {
@@ -109,6 +113,7 @@
 		padding: 0;
 
 		position: relative;
+		overflow: hidden; /* Verhindert Überstand des Bildes */
 
 		/* concept placeholder */
 		background-color: hsl(60, 100%, 90%);
