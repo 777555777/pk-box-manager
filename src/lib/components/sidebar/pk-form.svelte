@@ -71,7 +71,11 @@
 
 	{@render commentButton()}
 	<label for="comment">Comment</label>
-	<textarea name="comment" id="comment" bind:value={localComment} disabled={sidebarEditMode}
+	<textarea
+		name="comment"
+		id="comment"
+		bind:value={localComment}
+		disabled={isSelectionValid || !sidebarEditMode}
 	></textarea>
 </div>
 
