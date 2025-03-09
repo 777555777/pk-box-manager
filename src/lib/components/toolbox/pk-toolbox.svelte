@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
-	import { storageHandler } from '$lib/state/storage-handler'
-
-	let { selectedDexName = $bindable() } = $props<{ selectedDexName: string }>()
+	import PkImport from '$lib/components/toolbox/pk-import.svelte'
+	import PkDexSelector from './pk-dex-selector.svelte'
+	import PkExport from './pk-export.svelte'
 
 	let sidebarEditMode = $derived(appState.getSidebarEditMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
@@ -15,73 +14,18 @@
 	function cycleBadgeDisplay() {
 		appState.cycleBadgeDisplay(badgeDisplay)
 	}
-
-	function exportCurrentDex() {
-		const selectedDexName = storageHandler.getSelectedDexName()
-		const dexState = JSON.stringify(storageHandler.getDexState(selectedDexName), null, 2)
-
-		// Erstelle einen Blob mit dem JSON-Inhalt
-		const blob = new Blob([dexState], { type: 'application/json' })
-
-		// Erstelle eine URL für den Blob
-		const url = URL.createObjectURL(blob)
-
-		// Erstelle ein temporäres a-Element zum Herunterladen
-		const a = document.createElement('a')
-		a.href = url
-		a.download = selectedDexName
-
-		// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
-		document.body.appendChild(a)
-		a.click()
-		document.body.removeChild(a)
-
-		// Gib die URL frei
-		URL.revokeObjectURL(url)
-	}
-
-	// Handle dex changes
-	function handleDexChange(event: Event) {
-		const select = event.target as HTMLSelectElement
-
-		// Update selected dex name, this automatically updates the parent
-		selectedDexName = select.value //
-
-		// Set loading state
-		appState.setAppLoadingState(true)
-
-		// Load the new dex state
-		pokemonStateManager.loadDexState(select.value)
-
-		// Wait for the next tick to ensure state is updated
-		queueMicrotask(() => {
-			appState.setAppLoadingState(false)
-		})
-	}
 </script>
 
 <aside class="pk-toolbox">
 	<div class="pk-data">
-		<select
-			class="pk-order"
-			name="pk-order"
-			id="pk-order"
-			title="pokedex-order"
-			value={selectedDexName}
-			onchange={handleDexChange}
-		>
-			<option value="order-national.json">order-national.json</option>
-			<option value="order-national-forms.json">order-national-forms.json</option>
-			<option value="order-national-test.json">order-national-test.json</option>
-			<option value="order-test-small-1.json">order-test-small-1.json</option>
-			<option value="order-test-small-2.json">order-test-small-2.json</option>
-		</select>
+		<PkDexSelector />
+
 		<!-- export the edit state that is stored for the currently selected dex
 		 so just export the localstorage entry as json to the user -->
-		<button onclick={exportCurrentDex}>Export</button>
+		<PkExport />
 		<!-- adds the uploaded file to localstorage, sets it as selected in localstorage
 		 also adds it to the select menu, needs to be criticaly validated -->
-		<button>Import</button>
+		<PkImport />
 	</div>
 
 	<hr />
@@ -128,11 +72,6 @@
 	.pk-data {
 		display: flex;
 		justify-content: center;
-	}
-
-	.pk-order {
-		padding: 0.35rem 0.25rem;
-		margin: 0 auto;
 	}
 
 	.pk-modes {

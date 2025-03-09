@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte'
 
 	// State für ausgewählten DexName
-	let selectedDexName = $state(storageHandler.getSelectedDexName())
+	let selectedDexName = $derived(appState.getSelectedDexName())
 
 	// Ausgewählte DexOrder
 	let dexOrder = $derived(storageHandler.getDexOrder(selectedDexName))
@@ -68,7 +68,7 @@
 		<PkBoxContainer {dexOrder} />
 
 		<section class="pk-tools">
-			<PkToolBox bind:selectedDexName />
+			<PkToolBox />
 			<PkSidebar />
 		</section>
 	</main>
