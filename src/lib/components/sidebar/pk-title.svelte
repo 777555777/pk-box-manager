@@ -13,8 +13,16 @@
 
 {#if !isSelectionValid}
 	<h3>{getDisplayname(selectedPokemon.idEntry)}</h3>
-	<span class="pk-gender">♂️</span>
+	{@render displayGender()}
 {/if}
+
+{#snippet displayGender()}
+	{#if getDisplayname(selectedPokemon.idEntry).includes('female')}
+		<span class="pk-gender">♀️</span>
+	{:else}
+		<span class="pk-gender">♂️</span>
+	{/if}
+{/snippet}
 
 <style>
 	.pk-gender {
