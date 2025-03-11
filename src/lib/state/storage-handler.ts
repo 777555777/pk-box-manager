@@ -4,6 +4,26 @@ import boxOrderNationalTest from '../order/order-national-test.json' with { type
 import orderTestSmall1 from '../order/order-test-small-1.json' with { type: 'json' }
 import orderTestSmall2 from '../order/order-test-small-2.json' with { type: 'json' }
 
+export const staticDexList = {
+	'order-national.json': {
+		displayName: 'National Dex'
+	},
+	'order-national-forms.json': {
+		displayName: 'National Dex mit Formen'
+	},
+	'order-national-test.json': {
+		displayName: 'National Dex Test'
+	},
+	'order-test-small-1.json': {
+		displayName: 'Kleiner Test Dex 1'
+	},
+	'order-test-small-2.json': {
+		displayName: 'Kleiner Test Dex 2'
+	}
+} as const
+
+export type DexType = keyof typeof staticDexList
+
 /**
  * Liefert die entsprechende Box-Reihenfolge für den gewählten Pokédex.
  * @param dexName Der Name des gewünschten Pokédex-Orders.
@@ -52,6 +72,13 @@ export interface PokemonState extends PokemonData {
 	idEntry: PokemonEntry
 }
 
+export interface DexStorage {
+	version: string
+	name: string
+	displayName: string
+	pokemon: Record<string, PokemonState>
+}
+
 class StorageHandler {
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
 	private readonly DEFAULT_SELECTED_DEX = 'order-test-small-1.json'
@@ -61,7 +88,7 @@ class StorageHandler {
 	 * @param selectedDex Der Name des aktuellen Pokédex.
 	 * @returns Ein Array mit dem Bearbeitungsstatus jedes Pokemons im ausgewählten Pokedex.
 	 */
-	public getDexState(selectedDex: string): PokemonData[] {
+	public getDexState(selectedDex: string): DexStorage {
 		const selectedOrder = localStorage.getItem(`dex:${selectedDex}`)
 		if (!selectedOrder) {
 			this.initPokemonData(selectedDex, getBoxOrder(selectedDex))
@@ -99,7 +126,8 @@ class StorageHandler {
 		if (!localStorage.getItem(`dex:${selectedDexName}`)) {
 			const pokedexOrder = getBoxOrder(selectedDexName)
 			const initialData = this.setupInitialPokedex(pokedexOrder)
-			this.savePokemonData(selectedDexName, initialData)
+			const initialDex = this.addDexMetaData(initialData, selectedDexName)
+			this.savePokemonData(selectedDexName, initialDex)
 		}
 	}
 
@@ -108,7 +136,7 @@ class StorageHandler {
 	 * @param selectedDex Der Name des aktuellen Pokédex.
 	 * @param pokemonData Der zu speichernde Bearbeitungsstatus.
 	 */
-	public savePokemonData(selectedDex: string, pokemonData: Record<string, PokemonData>): void {
+	public savePokemonData(selectedDex: string, pokemonData: DexStorage): void {
 		localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(pokemonData))
 	}
 
@@ -119,7 +147,18 @@ class StorageHandler {
 	 */
 	public initPokemonData(selectedDex: string, pokedexOrder: BoxOrder[]): void {
 		const initialData = this.setupInitialPokedex(pokedexOrder)
-		this.savePokemonData(selectedDex, initialData)
+		const initialDex = this.addDexMetaData(initialData, selectedDex)
+		this.savePokemonData(selectedDex, initialDex)
+	}
+
+	// prettier-ignore
+	private addDexMetaData(initialData: Record<string, PokemonState>,selectedDex: string): DexStorage {
+		return {
+			version: '1.0.0',
+			name: selectedDex,
+			displayName: staticDexList[selectedDex as DexType].displayName,
+			pokemon: { ...initialData }
+		}
 	}
 
 	/**
@@ -163,7 +202,7 @@ class StorageHandler {
 		const selectedDexState = localStorage.getItem(`dex:${selectedDex}`)!
 		if (selectedDexState) {
 			const parsedDexState = JSON.parse(selectedDexState)
-			const targetPokemon = parsedDexState[identifier]
+			const targetPokemon = parsedDexState.pokemon[identifier]
 
 			const updatedPokemon = { ...targetPokemon }
 			for (const key in pokemonState) {
@@ -173,7 +212,7 @@ class StorageHandler {
 			}
 
 			// Aktualisiere das Pokemon im temporären Objekt
-			parsedDexState[identifier] = updatedPokemon
+			parsedDexState.pokemon[identifier] = updatedPokemon
 
 			// Speichere den aktualisierten Zustand zurück in den localStorage
 			localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(parsedDexState))

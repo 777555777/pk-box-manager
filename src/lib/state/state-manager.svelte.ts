@@ -1,5 +1,10 @@
 import { getIdentifier } from '../spriteheet-helper.ts'
-import { storageHandler, type PokemonData, type PokemonState } from './storage-handler.ts'
+import {
+	storageHandler,
+	type DexStorage,
+	type PokemonData,
+	type PokemonState
+} from './storage-handler.ts'
 
 export class PokemonStateManager {
 	private nullState = {
@@ -11,13 +16,20 @@ export class PokemonStateManager {
 		ability: '',
 		comment: ''
 	}
+	private nullStatePokemon = { '0000-null': this.nullState }
+	private nullStateMetaData = {
+		version: '0.0.0',
+		name: 'null',
+		displayName: 'Null Dex',
+		pokemon: this.nullStatePokemon
+	}
 
-	private nullDexState = { '0000-null': this.nullState }
-	private dexState: Record<string, PokemonState> = $state(this.nullDexState)
+	private dexState: DexStorage = $state(this.nullStateMetaData)
 	private selectedPokemon: PokemonState = $state(this.nullState)
 
 	constructor() {
-		this.loadDexState(storageHandler.getSelectedDexName())
+		const selectedDex = storageHandler.getSelectedDexName()
+		this.loadDexState(selectedDex)
 	}
 
 	loadDexState(dexName: string) {
@@ -39,32 +51,32 @@ export class PokemonStateManager {
 	}
 
 	getPokemonState(identifier: string) {
-		if (this.dexState[identifier]) {
-			return this.dexState[identifier]
+		if (this.dexState.pokemon[identifier]) {
+			return this.dexState.pokemon[identifier]
 		}
 		return this.nullState
 	}
 
 	updatePokemonState(identifier: string, updatedState: Partial<PokemonData>) {
-		if (!this.dexState[identifier]) return
+		if (!this.dexState.pokemon[identifier]) return
 
-		// Update local state
-		const currentState = this.dexState[identifier]
+		// Lokalen Status aktualisieren
+		const currentState = this.dexState.pokemon[identifier]
 		const newState = { ...currentState, ...updatedState }
-		this.dexState[identifier] = newState
+		this.dexState.pokemon[identifier] = newState
 
-		// If this is the currently selected Pokemon, update selectedPokemon directly too
+		// Falls dies das aktuell ausgewählte Pokemon ist, direkt auch selectedPokemon aktualisieren
 		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {
-			this.selectedPokemon = { ...this.dexState[identifier] }
+			this.selectedPokemon = { ...this.dexState.pokemon[identifier] }
 		}
 
-		// Persist to storage
-		storageHandler.editPokemonStateEntry(identifier, this.dexState[identifier])
+		// In Storage persistieren
+		storageHandler.editPokemonStateEntry(identifier, this.dexState.pokemon[identifier])
 	}
 
 	toggleCaptured(identifier: string) {
 		try {
-			const pokemon = this.dexState[identifier]
+			const pokemon = this.dexState.pokemon[identifier]
 			if (pokemon) {
 				this.updatePokemonState(identifier, {
 					captured: !pokemon.captured
@@ -75,10 +87,9 @@ export class PokemonStateManager {
 		}
 	}
 
-	// In state-manager.svelte.ts
 	toggleShiny(identifier: string) {
 		try {
-			const pokemon = this.dexState[identifier]
+			const pokemon = this.dexState.pokemon[identifier]
 			if (pokemon) {
 				this.updatePokemonState(identifier, {
 					shiny: !pokemon.shiny
@@ -90,7 +101,7 @@ export class PokemonStateManager {
 	}
 
 	setSelectedPokemon(identifier: string) {
-		this.selectedPokemon = this.dexState[identifier]
+		this.selectedPokemon = this.dexState.pokemon[identifier]
 	}
 
 	getSelectedPokemon() {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storageHandler } from '$lib/state/storage-handler'
+	import { storageHandler, staticDexList } from '$lib/state/storage-handler'
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 
@@ -34,11 +34,9 @@
 	value={selectedDexName}
 	onchange={handleDexChange}
 >
-	<option value="order-national.json">order-national.json</option>
-	<option value="order-national-forms.json">order-national-forms.json</option>
-	<option value="order-national-test.json">order-national-test.json</option>
-	<option value="order-test-small-1.json">order-test-small-1.json</option>
-	<option value="order-test-small-2.json">order-test-small-2.json</option>
+	{#each Object.entries(staticDexList) as [name, dex]}
+		<option value={name}>{dex.displayName}</option>
+	{/each}
 </select>
 
 <style>
