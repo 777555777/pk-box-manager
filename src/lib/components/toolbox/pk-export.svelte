@@ -27,3 +27,10 @@
 </script>
 
 <button onclick={exportCurrentDex}>Export</button>
+
+<style>
+	button {
+		width: 4rem;
+		padding: 0.35rem 0.25rem;
+	}
+</style>

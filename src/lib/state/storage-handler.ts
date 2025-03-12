@@ -29,7 +29,7 @@ export type DexType = keyof typeof staticDexList
  * @param dexName Der Name des gewünschten Pokédex-Orders.
  * @returns Das Array mit der Box-Order für den gegebenen Pokédex.
  */
-function getBoxOrder(dexName: string): BoxOrder[] {
+export function getBoxOrder(dexName: string): BoxOrder[] {
 	console.log('getBoxOrder() dexName', dexName)
 
 	switch (dexName) {
@@ -138,6 +138,13 @@ class StorageHandler {
 	 */
 	public savePokemonData(selectedDex: string, pokemonData: DexStorage): void {
 		localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(pokemonData))
+	}
+
+	public loadPokemonData(selectedDex: string): DexStorage | undefined {
+		const localDexData = localStorage.getItem(`dex:${selectedDex}`)
+		if (localDexData) {
+			return JSON.parse(localDexData)
+		}
 	}
 
 	/**

@@ -42,6 +42,5 @@
 <style>
 	.pk-order {
 		padding: 0.35rem 0.25rem;
-		margin: 0 auto;
 	}
 </style>

@@ -3,6 +3,7 @@
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
 	import PkDexSelector from './pk-dex-selector.svelte'
 	import PkExport from './pk-export.svelte'
+	import PkDialog from './pk-dialog.svelte'
 
 	let sidebarEditMode = $derived(appState.getSidebarEditMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
@@ -14,18 +15,25 @@
 	function cycleBadgeDisplay() {
 		appState.cycleBadgeDisplay(badgeDisplay)
 	}
+
+	const dialogConfig = {
+		headline: 'hallo test',
+		textContent: 'mehr test und so weiter',
+		dismiss: true
+	}
+
+	function onConfirm() {
+		alert('Haloooo :D')
+	}
 </script>
 
 <aside class="pk-toolbox">
 	<div class="pk-data">
 		<PkDexSelector />
-
-		<!-- export the edit state that is stored for the currently selected dex
-		 so just export the localstorage entry as json to the user -->
-		<PkExport />
-		<!-- adds the uploaded file to localstorage, sets it as selected in localstorage
-		 also adds it to the select menu, needs to be criticaly validated -->
-		<PkImport />
+		<div class="pk-btn-grp">
+			<PkExport />
+			<PkImport />
+		</div>
 	</div>
 
 	<hr />
@@ -37,15 +45,19 @@
 
 		<!-- in sidebar-edit mode clicking a slot does not toggle captured state
 		instead it highlights the slot and editing via sidebar will be enabled -->
-		<label for="sidebar-edit">Sidebar Edit</label>
-		<input
-			type="checkbox"
-			name="sidebar-edit"
-			id="sidebar-edit"
-			onchange={toggleSidebarEditMode}
-			checked={sidebarEditMode}
-		/>
+		<label for="sidebar-edit"
+			>Sidebar Edit
+			<input
+				type="checkbox"
+				name="sidebar-edit"
+				id="sidebar-edit"
+				onchange={toggleSidebarEditMode}
+				checked={sidebarEditMode}
+			/>
+		</label>
 
+		<PkDialog {dialogConfig} {onConfirm} />
+		<button>test dialog</button>
 		<!-- cycle to additional display modes -->
 		<button onclick={cycleBadgeDisplay}>🔄</button>
 	</div>
@@ -71,12 +83,12 @@
 
 	.pk-data {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 	}
 
 	.pk-modes {
 		display: flex;
-		justify-content: flex-start;
+		justify-content: space-between;
 		gap: 0.5rem;
 	}
 
