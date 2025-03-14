@@ -13,9 +13,8 @@
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
 		selectedPokemon = pokemonStateManager.getSelectedPokemon()
+		$inspect('test: ', selectedPokemon)
 	})
-
-	$inspect('test: ', selectedPokemon)
 </script>
 
 <aside class="pk-sidebar">

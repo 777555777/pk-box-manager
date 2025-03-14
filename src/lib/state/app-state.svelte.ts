@@ -1,7 +1,7 @@
 import { storageHandler } from './storage-handler.ts'
 
 export class AppState {
-	private isAppLoading = $state(false)
+	private isAppLoading = $state(true)
 	private sidebarEditMode = $state(false)
 	private badgeDisplay: string | boolean = $state(false)
 	private selectedDexName = $state(storageHandler.getSelectedDexName())

@@ -13,8 +13,6 @@
 	let localCaughtIn = $state(selectedPokemon.caughtIn)
 	let isSelectionValid = $derived(identifier === '0000-null')
 
-	$inspect(localCaughtIn)
-
 	function saveComment() {
 		pokemonStateManager.updatePokemonState(identifier, {
 			comment: localComment

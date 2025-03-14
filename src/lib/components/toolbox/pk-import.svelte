@@ -34,9 +34,7 @@
 		const reader = new FileReader()
 		reader.onload = () => {
 			try {
-				console.time('import duration')
 				const validDex = validateImportedDexState(reader.result)
-				console.timeEnd('import duration')
 
 				if (storageHandler.loadPokemonData(validDex.name)) {
 					// Local data found, override it?
