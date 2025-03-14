@@ -3,7 +3,6 @@
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
 	import PkDexSelector from './pk-dex-selector.svelte'
 	import PkExport from './pk-export.svelte'
-	import PkDialog from './pk-dialog.svelte'
 
 	let sidebarEditMode = $derived(appState.getSidebarEditMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
@@ -15,24 +14,14 @@
 	function cycleBadgeDisplay() {
 		appState.cycleBadgeDisplay(badgeDisplay)
 	}
-
-	const dialogConfig = {
-		headline: 'hallo test',
-		textContent: 'mehr test und so weiter',
-		dismiss: true
-	}
-
-	function onConfirm() {
-		alert('Haloooo :D')
-	}
 </script>
 
 <aside class="pk-toolbox">
 	<div class="pk-data">
 		<PkDexSelector />
 		<div class="pk-btn-grp">
-			<PkExport />
 			<PkImport />
+			<PkExport />
 		</div>
 	</div>
 
@@ -56,8 +45,6 @@
 			/>
 		</label>
 
-		<PkDialog {dialogConfig} {onConfirm} />
-		<button>test dialog</button>
 		<!-- cycle to additional display modes -->
 		<button onclick={cycleBadgeDisplay}>🔄</button>
 	</div>

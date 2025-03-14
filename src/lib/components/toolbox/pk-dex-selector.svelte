@@ -4,7 +4,7 @@
 	import { appState } from '$lib/state/app-state.svelte'
 
 	// State für ausgewählten DexName
-	let selectedDexName = $state(storageHandler.getSelectedDexName())
+	let selectedDexName = $derived(appState.getSelectedDexName())
 
 	// Handle dex changes
 	function handleDexChange(event: Event) {
