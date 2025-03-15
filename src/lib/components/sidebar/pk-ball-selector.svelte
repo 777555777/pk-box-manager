@@ -4,10 +4,8 @@
 	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
 	import type { PokemonState } from '$lib/state/storage-handler'
 
-	let {
-		selectedPokemon,
-		sidebarEditMode
-	}: { selectedPokemon: PokemonState; sidebarEditMode: boolean } = $props()
+	let { selectedPokemon, viewerMode }: { selectedPokemon: PokemonState; viewerMode: boolean } =
+		$props()
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 	let selectedBall = $derived(selectedPokemon.ball)
 	let isSelectionValid = $derived(identifier === '0000-null')
@@ -23,6 +21,11 @@
 		pokemonStateManager.updatePokemonState(identifier, {
 			ball: ball
 		})
+		if (!pokemonStateManager.getPokemonState(identifier).captured) {
+			pokemonStateManager.updatePokemonState(identifier, {
+				captured: true
+			})
+		}
 		showTray = false
 	}
 
@@ -53,7 +56,7 @@
 <button
 	class="pk-ball-container"
 	onclick={toggleSelectorTray}
-	disabled={isSelectionValid || !sidebarEditMode}
+	disabled={isSelectionValid || viewerMode}
 >
 	<img
 		src="/spritesheets/spritesheet-balls-1.webp"

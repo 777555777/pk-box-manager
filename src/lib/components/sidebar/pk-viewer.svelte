@@ -4,20 +4,14 @@
 	import type { PokemonState } from '$lib/state/storage-handler'
 
 	// Receive the prop from parent
-	let {
-		selectedPokemon,
-		sidebarEditMode
-	}: { selectedPokemon: PokemonState; sidebarEditMode: boolean } = $props()
+	let { selectedPokemon, viewerMode }: { selectedPokemon: PokemonState; viewerMode: boolean } =
+		$props()
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 	let currentPokemon = $derived(getPokemon(identifier))
 	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function toggleShiny() {
 		pokemonStateManager.toggleShiny(identifier)
-	}
-
-	function toggleCaptured() {
-		pokemonStateManager.toggleCaptured(identifier)
 	}
 </script>
 
@@ -28,8 +22,7 @@
 		style={setCssPosition(currentPokemon.pos)}
 	/>
 	<div class="pk-viewer-controls">
-		<button onclick={toggleShiny} disabled={isSelectionValid || !sidebarEditMode}>✨</button>
-		<button onclick={toggleCaptured} disabled={isSelectionValid || !sidebarEditMode}>🖥️</button>
+		<button onclick={toggleShiny} disabled={isSelectionValid || viewerMode}>✨</button>
 	</div>
 </section>
 

@@ -2,17 +2,17 @@ import { storageHandler } from './storage-handler.ts'
 
 export class AppState {
 	private isAppLoading = $state(true)
-	private sidebarEditMode = $state(true)
+	private viewerMode = $state(false)
 	private badgeDisplay: string | boolean = $state(false)
 	private selectedDexName = $state(storageHandler.getSelectedDexName())
 	private defaultBall = $state('01-poke-ball')
 
-	public toggleSidebarEditMode() {
-		this.sidebarEditMode = !this.sidebarEditMode
+	public toggleViewerMode() {
+		this.viewerMode = !this.viewerMode
 	}
 
-	public getSidebarEditMode() {
-		return this.sidebarEditMode
+	public getViewerMode() {
+		return this.viewerMode
 	}
 
 	public getBadgeDisplay() {

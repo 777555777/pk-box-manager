@@ -9,7 +9,7 @@
 	const identifier = getIdentifier(pokemonEntry)
 	const currentPokemon = getPokemon(identifier)
 
-	let sidebarEditMode = $derived(appState.getSidebarEditMode())
+	let viewerMode = $derived(appState.getViewerMode())
 
 	let pokemonState = $derived(pokemonStateManager.getPokemonState(identifier))
 
@@ -19,22 +19,13 @@
 
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
 
-	// let pokeball = $derived(pokemonStateManager.getSelectedPokemon().ball)
-	// let isShiny = $derived(pokemonStateManager.getSelectedPokemon().shiny)
-
-	// get the selected pokemon
-	// get its shiny status and its pokeball
-
-	// display the selected pokeball based on appstate
-	// use if in the template to render if appstate is correct
-
 	function onclick() {
-		if (sidebarEditMode) {
+		if (viewerMode) {
 			// Im Detail-Edit-Modus: Nur Auswahl, keine Statusänderung
 			pokemonStateManager.setSelectedPokemon(identifier)
 		} else {
 			// Im Quick-Edit-Modus: Toggled den Fang-Status direkt und selektiert das Pokémon
-			pokemonStateManager.toggleCaptured(identifier)
+			pokemonStateManager.updatePokemonState(identifier, { captured: true })
 			pokemonStateManager.setSelectedPokemon(identifier)
 		}
 	}

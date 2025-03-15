@@ -4,11 +4,11 @@
 	import PkDexSelector from './pk-dex-selector.svelte'
 	import PkExport from './pk-export.svelte'
 
-	let sidebarEditMode = $derived(appState.getSidebarEditMode())
+	let viewerMode = $derived(appState.getViewerMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
 
-	function toggleSidebarEditMode() {
-		appState.toggleSidebarEditMode()
+	function toggleViewerMode() {
+		appState.toggleViewerMode()
 	}
 
 	function cycleBadgeDisplay() {
@@ -28,20 +28,14 @@
 	<hr />
 
 	<div class="pk-modes">
-		<!-- in quick edit mode sidebar will display on hover
-		and wont allow edits to its data
-		the slots can be clicked to mark caught or not caught -->
-
-		<!-- in sidebar-edit mode clicking a slot does not toggle captured state
-		instead it highlights the slot and editing via sidebar will be enabled -->
 		<label for="sidebar-edit"
-			>Sidebar Edit
+			>Viewer Mode
 			<input
 				type="checkbox"
 				name="sidebar-edit"
 				id="sidebar-edit"
-				onchange={toggleSidebarEditMode}
-				checked={sidebarEditMode}
+				onchange={toggleViewerMode}
+				checked={viewerMode}
 			/>
 		</label>
 
