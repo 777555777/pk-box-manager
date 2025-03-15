@@ -1,4 +1,5 @@
 import { getIdentifier } from '../spriteheet-helper.ts'
+import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
 	type DexStorage,
@@ -10,7 +11,7 @@ export class PokemonStateManager {
 	private nullState = {
 		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
 		captured: false,
-		ball: '01-poke-ball',
+		ball: appState.getDefaultBall(),
 		shiny: false,
 		caughtIn: '',
 		ability: '',
@@ -63,6 +64,31 @@ export class PokemonStateManager {
 		// Lokalen Status aktualisieren
 		const currentState = this.dexState.pokemon[identifier]
 		const newState = { ...currentState, ...updatedState }
+		this.dexState.pokemon[identifier] = newState
+
+		// Falls dies das aktuell ausgewählte Pokemon ist, direkt auch selectedPokemon aktualisieren
+		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {
+			this.selectedPokemon = { ...this.dexState.pokemon[identifier] }
+		}
+
+		// In Storage persistieren
+		storageHandler.editPokemonStateEntry(identifier, this.dexState.pokemon[identifier])
+	}
+
+	resetPokemonState(identifier: string) {
+		if (!this.dexState.pokemon[identifier]) return
+
+		const resetState = {
+			captured: false,
+			ball: appState.getDefaultBall(),
+			shiny: false,
+			caughtIn: '',
+			ability: '',
+			comment: ''
+		}
+
+		const currentState = this.dexState.pokemon[identifier]
+		const newState = { ...currentState, ...resetState }
 		this.dexState.pokemon[identifier] = newState
 
 		// Falls dies das aktuell ausgewählte Pokemon ist, direkt auch selectedPokemon aktualisieren
