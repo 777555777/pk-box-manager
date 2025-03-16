@@ -9,23 +9,42 @@
 
 	// Create a reactive state variable
 	let selectedPokemon = $state(pokemonStateManager.getSelectedPokemon())
+	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
+
+	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.getViewerMode())
 
 	function resetPokemon() {
 		pokemonStateManager.resetPokemonState(getIdentifier(selectedPokemon.idEntry))
-		selectedPokemon = pokemonStateManager.getSelectedPokemon()
+		pokemonStateManager.deselectPokemon()
 	}
 
-	document.addEventListener('keydown', (event) => {
-		if (event.code === 'KeyQ') {
-			// reset pokemon on press Q
+	function handleKeydown(event: KeyboardEvent) {
+		if (!viewerMode && event.code === 'KeyQ') {
+			// Vermeide Auslösung, wenn ein Eingabefeld fokussiert ist
+			if (
+				document.activeElement?.tagName !== 'INPUT' &&
+				document.activeElement?.tagName !== 'TEXTAREA'
+			) {
+				resetPokemon()
+			}
 		}
-	})
+	}
 
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
 		selectedPokemon = pokemonStateManager.getSelectedPokemon()
-		$inspect('test: ', selectedPokemon)
+		$inspect('Sidebar:', selectedPokemon)
+
+		// Event Listener hinzufügen
+		document.addEventListener('keydown', handleKeydown)
+
+		// Teardown-Funktion zurückgeben, die aufgerufen wird:
+		// a) unmittelbar bevor der Effekt erneut ausgeführt wird
+		// b) wenn die Komponente zerstört wird
+		return () => {
+			document.removeEventListener('keydown', handleKeydown)
+		}
 	})
 </script>
 
@@ -42,7 +61,8 @@
 		<PkForm {selectedPokemon} {viewerMode} />
 	</section>
 	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
-	<button onclick={resetPokemon}>Reset Pokemon (Q)</button>
+	<button onclick={resetPokemon} disabled={isSelectionValid || viewerMode}>Reset Pokemon (Q)</button
+	>
 </aside>
 
 <style>
