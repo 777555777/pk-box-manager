@@ -66,6 +66,7 @@ export interface PokemonData {
 	caughtIn: string
 	ability: string
 	comment: string
+	isCustomized: boolean
 }
 
 export interface PokemonState extends PokemonData {
@@ -186,7 +187,8 @@ class StorageHandler {
 					shiny: false,
 					caughtIn: '',
 					ability: '',
-					comment: ''
+					comment: '',
+					isCustomized: false // Initial nicht angepasst
 				}
 			}
 		}

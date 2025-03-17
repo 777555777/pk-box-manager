@@ -115,6 +115,11 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 		if (pokemon.comment !== undefined && typeof pokemon.comment !== 'string') {
 			throw new Error(`Ungültiges 'comment' Feld für Pokemon: ${pokemonKey}`)
 		}
+
+		// We want to allow: boolean
+		if (pokemon.isCustomized === undefined || typeof pokemon.isCustomized !== 'boolean') {
+			throw new Error(`Ungültiges oder fehlendes 'isCustomized' Feld für Pokemon: ${pokemonKey}`)
+		}
 	}
 
 	// 5. Wenn alle Prüfungen bestanden wurden, geben wir die validierte Datei zurück

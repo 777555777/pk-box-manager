@@ -14,7 +14,8 @@ export class PkState {
 		shiny: false,
 		caughtIn: '',
 		ability: '',
-		comment: ''
+		comment: '',
+		isCustomized: false
 	}
 	private nullStatePokemon = { '0000-null': this.nullState }
 	private nullStateMetaData = {
@@ -62,6 +63,11 @@ export class PkState {
 
 		// Lokalen Status aktualisieren
 		const currentState = this.dexState.pokemon[identifier]
+
+		if (!currentState.isCustomized) {
+			updatedState.isCustomized = true
+		}
+
 		const newState = { ...currentState, ...updatedState }
 		this.dexState.pokemon[identifier] = newState
 
@@ -83,7 +89,8 @@ export class PkState {
 			shiny: false,
 			caughtIn: '',
 			ability: '',
-			comment: ''
+			comment: '',
+			isCustomized: false
 		}
 
 		const currentState = this.dexState.pokemon[identifier]

@@ -44,6 +44,7 @@ export interface PokemonUserInfo {
 	caughtIn: string
 	ability: string
 	comment: string
+	isCustomized: boolean
 }
 
 // ===========================================================

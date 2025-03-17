@@ -59,6 +59,20 @@ export class AppState {
 
 	public setDefaultBall(newDefault: string) {
 		this.defaultBall = newDefault
+
+		// Update alle nicht angepassten Pokémon
+		const selectedDex = storageHandler.getSelectedDexName()
+		const dexState = storageHandler.getDexState(selectedDex)
+
+		for (const identifier in dexState.pokemon) {
+			const pokemon = dexState.pokemon[identifier]
+			if (!pokemon.isCustomized) {
+				storageHandler.editPokemonStateEntry(identifier, {
+					...pokemon,
+					ball: newDefault
+				})
+			}
+		}
 	}
 }
 
