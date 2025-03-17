@@ -3,7 +3,6 @@ import boxOrderNationalForms from '../order/order-national-forms.json' with { ty
 import boxOrderNationalTest from '../order/order-national-test.json' with { type: 'json' }
 import orderTestSmall1 from '../order/order-test-small-1.json' with { type: 'json' }
 import orderTestSmall2 from '../order/order-test-small-2.json' with { type: 'json' }
-import { appState } from './app-state.svelte.ts'
 
 export const staticDexList = {
 	'order-national.json': {
@@ -183,7 +182,7 @@ class StorageHandler {
 				initialPokedex[pokemonIdentifier] = {
 					idEntry: pokemon,
 					captured: false,
-					ball: appState.getDefaultBall(),
+					ball: '01-poke-ball',
 					shiny: false,
 					caughtIn: '',
 					ability: '',

@@ -1,5 +1,4 @@
 import { getIdentifier } from '../spriteheet-helper.ts'
-import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
 	type DexStorage,
@@ -11,7 +10,7 @@ export class PkState {
 	private nullState = {
 		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
 		captured: false,
-		ball: appState.getDefaultBall(),
+		ball: '01-poke-ball',
 		shiny: false,
 		caughtIn: '',
 		ability: '',
@@ -80,7 +79,7 @@ export class PkState {
 
 		const resetState = {
 			captured: false,
-			ball: appState.getDefaultBall(),
+			ball: '01-poke-ball',
 			shiny: false,
 			caughtIn: '',
 			ability: '',

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storageHandler, staticDexList } from '$lib/state/storage-handler'
+	import { staticDexList } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 
