@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PokemonState } from '$lib/state/storage-handler'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import { Game, Generations, type GameType } from '$lib/models/data-models'
 
@@ -12,13 +12,13 @@
 	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function saveComment() {
-		pokemonStateManager.updatePokemonState(identifier, {
+		pkState.updatePokemonState(identifier, {
 			comment: localComment
 		})
 	}
 
 	function saveCaughtIn() {
-		pokemonStateManager.updatePokemonState(identifier, {
+		pkState.updatePokemonState(identifier, {
 			caughtIn: localCaughtIn
 		})
 	}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
 	import { getIdentifier, setCssPosition } from '$lib/spriteheet-helper'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import type { PokemonState } from '$lib/state/storage-handler'
 
 	let { selectedPokemon, viewerMode }: { selectedPokemon: PokemonState; viewerMode: boolean } =
@@ -18,11 +18,11 @@
 	}
 
 	function selectBall(ball: BallsType) {
-		pokemonStateManager.updatePokemonState(identifier, {
+		pkState.updatePokemonState(identifier, {
 			ball: ball
 		})
-		if (!pokemonStateManager.getPokemonState(identifier).captured) {
-			pokemonStateManager.updatePokemonState(identifier, {
+		if (!pkState.getPokemonState(identifier).captured) {
+			pkState.updatePokemonState(identifier, {
 				captured: true
 			})
 		}

@@ -3,20 +3,20 @@
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import PkBallSelector from '$lib/components/sidebar/pk-ball-selector.svelte'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 
 	// Create a reactive state variable
-	let selectedPokemon = $state(pokemonStateManager.getSelectedPokemon())
+	let selectedPokemon = $state(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 
 	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.getViewerMode())
 
 	function resetPokemon() {
-		pokemonStateManager.resetPokemonState(getIdentifier(selectedPokemon.idEntry))
-		pokemonStateManager.deselectPokemon()
+		pkState.resetPokemonState(getIdentifier(selectedPokemon.idEntry))
+		pkState.deselectPokemon()
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
@@ -33,7 +33,7 @@
 
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
-		selectedPokemon = pokemonStateManager.getSelectedPokemon()
+		selectedPokemon = pkState.getSelectedPokemon()
 		$inspect('Sidebar:', selectedPokemon)
 
 		// Event Listener hinzufügen

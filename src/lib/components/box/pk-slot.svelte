@@ -3,7 +3,7 @@
 	import { type PokemonEntry } from '$lib/models/data-models'
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 
 	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 	const identifier = getIdentifier(pokemonEntry)
@@ -11,22 +11,20 @@
 
 	let viewerMode = $derived(appState.getViewerMode())
 
-	let pokemonState = $derived(pokemonStateManager.getPokemonState(identifier))
+	let pokemonState = $derived(pkState.getPokemonState(identifier))
 
-	let isSelected = $derived(
-		identifier === getIdentifier(pokemonStateManager.getSelectedPokemon().idEntry)
-	)
+	let isSelected = $derived(identifier === getIdentifier(pkState.getSelectedPokemon().idEntry))
 
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
 
 	function onclick() {
 		if (viewerMode) {
 			// Im Detail-Edit-Modus: Nur Auswahl, keine Statusänderung
-			pokemonStateManager.setSelectedPokemon(identifier)
+			pkState.setSelectedPokemon(identifier)
 		} else {
 			// Im Quick-Edit-Modus: Toggled den Fang-Status direkt und selektiert das Pokémon
-			pokemonStateManager.updatePokemonState(identifier, { captured: true })
-			pokemonStateManager.setSelectedPokemon(identifier)
+			pkState.updatePokemonState(identifier, { captured: true })
+			pkState.setSelectedPokemon(identifier)
 		}
 	}
 

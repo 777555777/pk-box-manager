@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import type { PokemonState } from '$lib/state/storage-handler'
 
 	// Receive the prop from parent
@@ -11,7 +11,7 @@
 	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function toggleShiny() {
-		pokemonStateManager.toggleShiny(identifier)
+		pkState.toggleShiny(identifier)
 	}
 </script>
 

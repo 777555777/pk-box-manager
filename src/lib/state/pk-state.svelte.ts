@@ -7,7 +7,7 @@ import {
 	type PokemonState
 } from './storage-handler.ts'
 
-export class PokemonStateManager {
+export class PkState {
 	private nullState = {
 		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
 		captured: false,
@@ -139,4 +139,4 @@ export class PokemonStateManager {
 	}
 }
 
-export const pokemonStateManager = new PokemonStateManager()
+export const pkState = new PkState()

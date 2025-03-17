@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { storageHandler, staticDexList } from '$lib/state/storage-handler'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 
 	// State für ausgewählten DexName
@@ -17,7 +17,7 @@
 		appState.setAppLoadingState(true)
 
 		// Load the new dex state
-		pokemonStateManager.loadDexState(select.value)
+		pkState.loadDexState(select.value)
 
 		// Wait for the next tick to ensure state is updated
 		queueMicrotask(() => {

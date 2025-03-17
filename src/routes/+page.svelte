@@ -3,7 +3,7 @@
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pokemonStateManager } from '$lib/state/state-manager.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 	import { onMount } from 'svelte'
 
@@ -14,14 +14,14 @@
 	let dexOrder = $derived(storageHandler.getDexOrder(selectedDexName))
 
 	// State für ausgewählte DexOrder
-	let dexState = $derived(pokemonStateManager.getDexState())
+	let dexState = $derived(pkState.getDexState())
 
 	let isLoading = $derived(appState.getAppLoadingState())
 
 	// Initialize data on first load
 	$effect(() => {
 		// Ensure dex data is loaded
-		pokemonStateManager.loadDexState(selectedDexName)
+		pkState.loadDexState(selectedDexName)
 
 		// Check if data is available
 		if (dexState && dexOrder) {
@@ -47,7 +47,7 @@
 				!isClickInsideToolbox &&
 				!isClickInsideTray
 			) {
-				pokemonStateManager.deselectPokemon()
+				pkState.deselectPokemon()
 			}
 		}
 
