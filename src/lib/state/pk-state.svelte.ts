@@ -1,4 +1,5 @@
 import { getIdentifier } from '../spriteheet-helper.ts'
+import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
 	type DexStorage,
@@ -65,6 +66,11 @@ export class PkState {
 		const currentState = this.dexState.pokemon[identifier]
 
 		if (!currentState.isCustomized) {
+			// The first update is always to the captured property
+			// The defaults also dont provide a captured property so this
+			// will not interfer here by overriding something
+			const defaults = appState.getAppDefaults()
+			updatedState = { ...defaults, ...updatedState }
 			updatedState.isCustomized = true
 		}
 

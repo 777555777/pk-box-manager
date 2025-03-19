@@ -14,6 +14,10 @@
 	function cycleBadgeDisplay() {
 		appState.cycleBadgeDisplay(badgeDisplay)
 	}
+
+	function setNewDefaults() {
+		appState.setAppDefaults({ ball: '24-beast-ball', comment: 'Gefangen in Jotho' })
+	}
 </script>
 
 <aside class="pk-toolbox">
@@ -41,6 +45,8 @@
 
 		<!-- cycle to additional display modes -->
 		<button onclick={cycleBadgeDisplay}>🔄</button>
+		<!-- Dummy for setting defaults -->
+		<button onclick={setNewDefaults}>default</button>
 	</div>
 </aside>
 

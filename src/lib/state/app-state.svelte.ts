@@ -1,4 +1,4 @@
-import { storageHandler } from './storage-handler.ts'
+import { type PokemonData, storageHandler } from './storage-handler.ts'
 
 export class AppState {
 	private isAppLoading = $state(true)
@@ -6,6 +6,12 @@ export class AppState {
 	private badgeDisplay: string | boolean = $state(false)
 	private selectedDexName = $state(storageHandler.getSelectedDexName())
 	private defaultBall = $state('01-poke-ball')
+	private appDefaults: Partial<PokemonData> = $state({
+		ball: '01-poke-ball',
+		shiny: false,
+		caughtIn: '',
+		comment: ''
+	})
 
 	public toggleViewerMode() {
 		this.viewerMode = !this.viewerMode
@@ -59,20 +65,23 @@ export class AppState {
 
 	public setDefaultBall(newDefault: string) {
 		this.defaultBall = newDefault
+	}
 
-		// Update alle nicht angepassten Pokémon
-		const selectedDex = storageHandler.getSelectedDexName()
-		const dexState = storageHandler.getDexState(selectedDex)
+	public getAppDefaults() {
+		return this.appDefaults
+	}
 
-		for (const identifier in dexState.pokemon) {
-			const pokemon = dexState.pokemon[identifier]
-			if (!pokemon.isCustomized) {
-				storageHandler.editPokemonStateEntry(identifier, {
-					...pokemon,
-					ball: newDefault
-				})
-			}
-		}
+	public setAppDefaults(updatedDefaults: Partial<PokemonData>) {
+		// Lokalen Status aktualisieren
+		const currentDefaults = this.appDefaults
+		const newDefaults = { ...currentDefaults, ...updatedDefaults }
+		this.appDefaults = newDefaults
+		// persist to localStorage
+		storageHandler.saveAppDefaults(this.appDefaults)
+	}
+
+	public loadAppDefaults() {
+		this.appDefaults = storageHandler.loadAppDefaults()
 	}
 }
 

@@ -31,6 +31,9 @@
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
+		// TODO: find a better place to load the app defaults
+		appState.loadAppDefaults()
+
 		function handleClickOutside(event: MouseEvent) {
 			const target = event.target as HTMLElement
 

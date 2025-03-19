@@ -19,10 +19,8 @@
 
 	function onclick() {
 		if (viewerMode) {
-			// Im Detail-Edit-Modus: Nur Auswahl, keine Statusänderung
 			pkState.setSelectedPokemon(identifier)
 		} else {
-			// Im Quick-Edit-Modus: Toggled den Fang-Status direkt und selektiert das Pokémon
 			pkState.updatePokemonState(identifier, { captured: true })
 			pkState.setSelectedPokemon(identifier)
 		}

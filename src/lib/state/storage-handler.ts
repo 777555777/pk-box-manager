@@ -230,6 +230,17 @@ class StorageHandler {
 			return updatedPokemon
 		}
 	}
+
+	public saveAppDefaults(appDefaults: Partial<PokemonData>) {
+		localStorage.setItem(`appDefaults`, JSON.stringify(appDefaults))
+	}
+
+	public loadAppDefaults() {
+		const appDefaults = localStorage.getItem(`appDefaults`)
+		if (appDefaults) {
+			return JSON.parse(appDefaults)
+		}
+	}
 }
 
 // Export StorageHandler as Singleton
