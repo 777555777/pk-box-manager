@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
-	import PkDexSelector from './pk-dex-selector.svelte'
-	import PkExport from './pk-export.svelte'
+	import PkDexSelector from '$lib/components/toolbox/pk-dex-selector.svelte'
+	import PkExport from '$lib/components/toolbox/pk-export.svelte'
+	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
+
+	interface PkDefaultsDialogElement {
+		showDefaultsDialog: Function
+	}
+
+	let defaultsDialog: PkDefaultsDialogElement
 
 	let viewerMode = $derived(appState.getViewerMode())
 	let badgeDisplay = $derived(appState.getBadgeDisplay())
@@ -15,8 +22,8 @@
 		appState.cycleBadgeDisplay(badgeDisplay)
 	}
 
-	function setNewDefaults() {
-		appState.setAppDefaults({ ball: '24-beast-ball', comment: 'Gefangen in Jotho' })
+	function openDefaultDialog() {
+		defaultsDialog.showDefaultsDialog()
 	}
 </script>
 
@@ -45,10 +52,18 @@
 
 		<!-- cycle to additional display modes -->
 		<button onclick={cycleBadgeDisplay}>🔄</button>
-		<!-- Dummy for setting defaults -->
-		<button onclick={setNewDefaults}>default</button>
+
+		<!-- cycle to additional display modes -->
+		<button onclick={openDefaultDialog}
+			>{#if appState.checkForModifiedDefaults()}
+				👌
+				<!-- TODO: fix indicator that defaults were edited -->
+			{/if}Defaults</button
+		>
 	</div>
 </aside>
+
+<PkDefaults bind:this={defaultsDialog} />
 
 <style>
 	.pk-toolbox {
