@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
 	import { type PokemonEntry } from '$lib/models/data-models'
-	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
+	import { getIdentifier, getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 
 	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 	const identifier = getIdentifier(pokemonEntry)
-	const currentPokemon = getPokemon(identifier)
+	const currentPokemon = getPokemonSpriteData(identifier)
 
 	let viewerMode = $derived(appState.getViewerMode())
 

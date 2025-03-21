@@ -17,7 +17,7 @@ export function getIdentifier(entry: PokemonEntry) {
 	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
 }
 
-export function getPokemon(identifier: string): SpriteData {
+export function getPokemonSpriteData(identifier: string): SpriteData {
 	if (identifier in combinedPokemon) {
 		return combinedPokemon[identifier]
 	}

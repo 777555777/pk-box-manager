@@ -14,6 +14,7 @@
 
 	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.getViewerMode())
+	let disabled = $derived(isSelectionValid || viewerMode)
 
 	// === Ball Selector ===
 	function handleBallChange(newValue: BallsType) {
@@ -42,12 +43,8 @@
 		selectedPokemon = pkState.getSelectedPokemon()
 		$inspect('Sidebar:', selectedPokemon)
 
-		// Event Listener hinzufügen
 		document.addEventListener('keydown', handleKeydown)
 
-		// Teardown-Funktion zurückgeben, die aufgerufen wird:
-		// a) unmittelbar bevor der Effekt erneut ausgeführt wird
-		// b) wenn die Komponente zerstört wird
 		return () => {
 			document.removeEventListener('keydown', handleKeydown)
 		}
@@ -56,23 +53,18 @@
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer {selectedPokemon} {viewerMode} />
+		<PkViewer {identifier} {disabled} />
 	</section>
 	<section class="pk-title">
-		<PkBallSelector
-			selectedBall={selectedPokemon.ball}
-			disabled={isSelectionValid || viewerMode}
-			onChange={handleBallChange}
-		/>
-		<PkTitle {selectedPokemon} />
+		<PkBallSelector selectedBall={selectedPokemon.ball} {disabled} onChange={handleBallChange} />
+		<PkTitle idEntry={selectedPokemon.idEntry} {identifier} />
 	</section>
 	<hr />
 	<section>
-		<PkForm {selectedPokemon} {viewerMode} />
+		<PkForm {selectedPokemon} {identifier} {disabled} />
 	</section>
 	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
-	<button onclick={resetPokemon} disabled={isSelectionValid || viewerMode}>Reset Pokemon (Q)</button
-	>
+	<button onclick={resetPokemon} {disabled}>Reset Pokemon (Q)</button>
 </aside>
 
 <style>

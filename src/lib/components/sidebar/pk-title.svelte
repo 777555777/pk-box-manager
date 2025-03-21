@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { getIdentifier } from '$lib/spriteheet-helper'
-	import type { PokemonState } from '$lib/state/storage-handler'
+	import type { PokemonEntry } from '$lib/state/storage-handler'
 
-	let { selectedPokemon }: { selectedPokemon: PokemonState } = $props()
-	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
+	let { idEntry, identifier }: { idEntry: PokemonEntry; identifier: string } = $props()
 	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function getDisplayname(entry: any) {
@@ -12,12 +10,12 @@
 </script>
 
 {#if !isSelectionValid}
-	<h3>{getDisplayname(selectedPokemon.idEntry)}</h3>
+	<h3>{getDisplayname(idEntry)}</h3>
 	{@render displayGender()}
 {/if}
 
 {#snippet displayGender()}
-	{#if getDisplayname(selectedPokemon.idEntry).includes('female')}
+	{#if getDisplayname(idEntry).includes('female')}
 		<span class="pk-gender">♀️</span>
 	{:else}
 		<span class="pk-gender">♂️</span>
