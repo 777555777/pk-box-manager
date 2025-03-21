@@ -2,10 +2,11 @@
 	import PkViewer from '$lib/components/sidebar/pk-viewer.svelte'
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
-	import PkBallSelector from '$lib/components/sidebar/pk-ball-selector.svelte'
+	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
+	import type { BallsType } from '$lib/models/balls-models'
 
 	// Create a reactive state variable
 	let selectedPokemon = $state(pkState.getSelectedPokemon())
@@ -13,6 +14,11 @@
 
 	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.getViewerMode())
+
+	// === Ball Selector ===
+	function handleBallChange(newValue: BallsType) {
+		pkState.updatePokemonState(identifier, { ball: newValue })
+	}
 
 	function resetPokemon() {
 		pkState.resetPokemonState(getIdentifier(selectedPokemon.idEntry))
@@ -53,7 +59,11 @@
 		<PkViewer {selectedPokemon} {viewerMode} />
 	</section>
 	<section class="pk-title">
-		<PkBallSelector {selectedPokemon} {viewerMode} />
+		<PkBallSelector
+			selectedBall={selectedPokemon.ball}
+			disabled={isSelectionValid || viewerMode}
+			onChange={handleBallChange}
+		/>
 		<PkTitle {selectedPokemon} />
 	</section>
 	<hr />

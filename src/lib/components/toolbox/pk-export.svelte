@@ -30,6 +30,7 @@
 
 <style>
 	button {
+		cursor: pointer;
 		width: 4rem;
 		padding: 0.35rem 0.25rem;
 	}

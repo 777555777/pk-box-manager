@@ -4,6 +4,7 @@
 	import PkDexSelector from '$lib/components/toolbox/pk-dex-selector.svelte'
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
+	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -39,31 +40,19 @@
 	<hr />
 
 	<div class="pk-modes">
-		<label for="sidebar-edit"
-			>Viewer Mode
-			<input
-				type="checkbox"
-				name="sidebar-edit"
-				id="sidebar-edit"
-				onchange={toggleViewerMode}
-				checked={viewerMode}
-			/>
-		</label>
+		<PkToggle icon="👀" label="Viewer Mode" checked={viewerMode} onChange={toggleViewerMode} />
 
 		<!-- cycle to additional display modes -->
 		<button onclick={cycleBadgeDisplay}>🔄</button>
 
 		<!-- cycle to additional display modes -->
 		<button onclick={openDefaultDialog}
-			>{#if appState.checkForModifiedDefaults()}
-				👌
-				<!-- TODO: fix indicator that defaults were edited -->
-			{/if}Defaults</button
+			>{#if appState.checkForModifiedDefaults()}❗{/if}Defaults</button
 		>
 	</div>
-</aside>
 
-<PkDefaults bind:this={defaultsDialog} />
+	<PkDefaults bind:this={defaultsDialog} />
+</aside>
 
 <style>
 	.pk-toolbox {

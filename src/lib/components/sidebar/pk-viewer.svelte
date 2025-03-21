@@ -2,6 +2,7 @@
 	import { getIdentifier, getPokemon, setCssPosition } from '$lib/spriteheet-helper'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import type { PokemonState } from '$lib/state/storage-handler'
+	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 
 	// Receive the prop from parent
 	let { selectedPokemon, viewerMode }: { selectedPokemon: PokemonState; viewerMode: boolean } =
@@ -9,10 +10,6 @@
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 	let currentPokemon = $derived(getPokemon(identifier))
 	let isSelectionValid = $derived(identifier === '0000-null')
-
-	function toggleShiny() {
-		pkState.toggleShiny(identifier)
-	}
 </script>
 
 <section class="pk-viewer">
@@ -22,7 +19,13 @@
 		style={setCssPosition(currentPokemon.pos)}
 	/>
 	<div class="pk-viewer-controls">
-		<button onclick={toggleShiny} disabled={isSelectionValid || viewerMode}>✨</button>
+		<PkToggle
+			icon="✨"
+			label="Shiny"
+			checked={pkState.getPokemonState(identifier).shiny}
+			disabled={isSelectionValid || viewerMode}
+			onChange={() => pkState.toggleShiny(identifier)}
+		/>
 	</div>
 </section>
 
@@ -67,10 +70,5 @@
 		position: absolute;
 		top: 16px;
 		right: 16px;
-	}
-
-	.pk-viewer-controls button {
-		width: 32px;
-		height: 32px;
 	}
 </style>

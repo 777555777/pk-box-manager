@@ -41,6 +41,7 @@
 
 <style>
 	.pk-order {
+		cursor: pointer;
 		padding: 0.35rem 0.25rem;
 	}
 </style>

@@ -95,7 +95,8 @@ export class AppState {
 	}
 
 	public checkForModifiedDefaults() {
-		return JSON.stringify(this.appDefaults) === JSON.stringify(this.initialAppDefaults)
+		const modified = JSON.stringify(this.appDefaults) !== JSON.stringify(this.initialAppDefaults)
+		return modified
 	}
 }
 

@@ -2,26 +2,14 @@
 	import type { PokemonState } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
-	import { Game, Generations, type GameType } from '$lib/models/data-models'
+	import { Game, type GameType } from '$lib/models/data-models'
+	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
+	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
 
 	let { selectedPokemon, viewerMode }: { selectedPokemon: PokemonState; viewerMode: boolean } =
 		$props()
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
-	let localComment = $state(selectedPokemon.comment)
-	let localCaughtIn = $state(selectedPokemon.caughtIn)
 	let isSelectionValid = $derived(identifier === '0000-null')
-
-	function saveComment() {
-		pkState.updatePokemonState(identifier, {
-			comment: localComment
-		})
-	}
-
-	function saveCaughtIn() {
-		pkState.updatePokemonState(identifier, {
-			caughtIn: localCaughtIn
-		})
-	}
 
 	function deriveGameGen() {
 		const gameKey = selectedPokemon.caughtIn
@@ -31,57 +19,42 @@
 		return ''
 	}
 
-	// Update local state when the prop changes
-	$effect(() => {
-		localComment = selectedPokemon.comment
-		localCaughtIn = selectedPokemon.caughtIn
-	})
+	// === Game Dropdown ===
+	function handleGameChange(newValue: GameType) {
+		pkState.updatePokemonState(identifier, {
+			caughtIn: newValue
+		})
+	}
+
+	// === Comment Textarea ===
+	function handleCommentChange(newValue: string) {
+		console.log('updating the state :D')
+		pkState.updatePokemonState(identifier, {
+			comment: newValue
+		})
+	}
 </script>
 
 <div class="pk-inputs">
-	<label for="pk-region">Caught in</label>
-
 	<div class="pk-region">
-		<select
-			name="region"
-			id="pk-region"
-			bind:value={localCaughtIn}
-			onchange={saveCaughtIn}
+		<PkGameSelector
+			onChange={handleGameChange}
 			disabled={isSelectionValid || viewerMode}
-		>
-			<option value="">Select game</option>
-			{#each Generations as gen}
-				<optgroup label={`Generation ${gen}`}>
-					{#each Object.entries(Game) as [key, value]}
-						{#if value.gen === gen}
-							<option value={key}>{value.title}</option>
-						{/if}
-					{/each}
-				</optgroup>
-			{/each}
-		</select>
-		{#if !isSelectionValid}
+			value={selectedPokemon.caughtIn}
+		/>
+		{#if !isSelectionValid && selectedPokemon.caughtIn !== ''}
 			<span class="pk-gen">Generation {deriveGameGen()}</span>
 		{/if}
 	</div>
 
-	{@render commentButton()}
-	<label for="comment">Comment</label>
-	<textarea
-		name="comment"
-		id="comment"
-		bind:value={localComment}
+	<PkTextarea
+		label="Comment"
+		onInput={handleCommentChange}
+		value={selectedPokemon.comment}
+		debounceTime={1250}
 		disabled={isSelectionValid || viewerMode}
-	></textarea>
+	/>
 </div>
-
-{#snippet commentButton()}
-	<div class="button-group">
-		<button type="button" onclick={saveComment} disabled={isSelectionValid || viewerMode}>
-			Save comment
-		</button>
-	</div>
-{/snippet}
 
 <style>
 	.pk-inputs {
@@ -93,10 +66,5 @@
 	.pk-region {
 		display: flex;
 		justify-content: space-between;
-	}
-
-	textarea {
-		min-height: 196px;
-		max-width: 400px;
 	}
 </style>

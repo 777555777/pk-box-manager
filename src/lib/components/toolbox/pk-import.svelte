@@ -2,7 +2,7 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { validateImportedDexState } from '$lib/state/import-validation'
 	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
-	import PkDialog from '$lib/components/toolbox/pk-dialog.svelte'
+	import PkDialog from '$lib/components/ui/pk-dialog.svelte'
 
 	interface PkDialogElement {
 		showDialog: Function

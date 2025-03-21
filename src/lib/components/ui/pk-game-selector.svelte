@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { Game, Generations } from '$lib/models/data-models'
-	import { appState } from '../../state/app-state.svelte'
 
-	let localCaughtIn = $state(appState.getAppDefaults().caughtIn)
-
-	function saveCaughtIn() {
-		appState.setAppDefaults({ caughtIn: localCaughtIn })
-	}
+	let {
+		disabled = false,
+		id = crypto.randomUUID(),
+		value = '', // '' Renders as "Select game"
+		onChange = () => {}
+	} = $props()
 </script>
 
-<select name="region" id="pk-region" bind:value={localCaughtIn} onchange={saveCaughtIn}>
+<label for={id}>Caught in</label>
+<select {id} {disabled} bind:value onchange={() => onChange(value)}>
 	<option value="">Select game</option>
 	{#each Generations as gen}
 		<optgroup label={`Generation ${gen}`}>

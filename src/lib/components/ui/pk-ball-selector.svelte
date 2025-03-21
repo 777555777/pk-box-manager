@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
-	import { appState } from '$lib/state/app-state.svelte'
 
-	let localBall = $state(appState.getAppDefaults().ball)
-
-	function saveCaughtIn(ballName: BallsType) {
-		appState.setAppDefaults({ ball: ballName })
-		showTray = false
-	}
+	let {
+		selectedBall,
+		disabled = false,
+		onChange = () => {},
+		label = '',
+		id = crypto.randomUUID()
+	} = $props()
 
 	let showTray = $state(false)
 	let trayRef = $state<HTMLElement | null>(null)
+
+	function selectBall(ball: BallsType) {
+		onChange(ball)
+		showTray = false
+	}
 
 	function getBallPosition(selectedBall: BallsType) {
 		return Balls[selectedBall].pos || { x: 0, y: 0 }
@@ -41,11 +46,14 @@
 	})
 </script>
 
-<button class="pk-ball-container" onclick={toggleSelectorTray}>
+{#if label}
+	<label for={id}>{label}</label>
+{/if}
+<button {id} class="pk-ball-container" onclick={toggleSelectorTray} {disabled}>
 	<img
 		src="/spritesheets/spritesheet-balls-1.webp"
-		style={setCssPosition(getBallPosition(localBall as BallsType))}
-		alt={localBall}
+		style={setCssPosition(getBallPosition(selectedBall as BallsType))}
+		alt={selectedBall}
 	/>
 </button>
 {#if showTray}
@@ -55,7 +63,7 @@
 {#snippet selectorTray()}
 	<section class="selector-tray" bind:this={trayRef}>
 		{#each Object.entries(Balls) as [name, data]}
-			<button onclick={() => saveCaughtIn(name as BallsType)}>
+			<button onclick={() => selectBall(name as BallsType)}>
 				<img
 					src="/spritesheets/spritesheet-balls-1.webp"
 					style={setCssPosition(data.pos)}

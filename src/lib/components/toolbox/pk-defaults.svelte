@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
-	import PkGameSelector from '$lib/components/util/pk-game-selector.svelte'
-	import PkShinyToggle from '$lib/components/util/pk-shiny-toggle.svelte'
-	import PkDefaultBallSelector from '$lib/components/util/pk-default-ball-selector.svelte'
-	import PkCommentTextarea from '$lib/components/util/pk-comment-textarea.svelte'
+	import type { GameType } from '$lib/models/data-models'
+	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
+	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
+	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
+	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+
+	let dialogElement: HTMLDialogElement
 
 	export function showDefaultsDialog() {
 		dialogElement.showModal()
@@ -13,8 +16,27 @@
 		dialogElement.close()
 	}
 
-	let dialogElement: HTMLDialogElement
+	// === Shiny Toggle ===
+	function handleToggleChange(newValue: boolean) {
+		appState.setAppDefaults({ shiny: newValue })
+	}
 
+	// === Game Dropdown ===
+	function handleGameChange(newValue: GameType) {
+		appState.setAppDefaults({ caughtIn: newValue })
+	}
+
+	// === Comment Textarea ===
+	function handleCommentChange(newValue: string) {
+		appState.setAppDefaults({ comment: newValue })
+	}
+
+	// === Ball Selector ===
+	function handleBallChange(newValue: string) {
+		appState.setAppDefaults({ ball: newValue })
+	}
+
+	// === Reset Button ===
 	function resetDefaults() {
 		appState.resetAppDefaults()
 	}
@@ -23,16 +45,35 @@
 <dialog bind:this={dialogElement}>
 	<section class="pk-defaults">
 		<!-- Ball -->
-		<PkDefaultBallSelector />
+		<PkBallSelector
+			selectedBall={appState.getAppDefaults().ball}
+			onChange={handleBallChange}
+			label="Default Ball"
+		/>
+
 		<!-- Shiny -->
-		<PkShinyToggle />
+		<PkToggle
+			icon="✨"
+			label="Shiny"
+			checked={appState.getAppDefaults().shiny}
+			onChange={handleToggleChange}
+		/>
+
 		<!-- Game -->
-		<PkGameSelector />
+		<PkGameSelector onChange={handleGameChange} value={appState.getAppDefaults().caughtIn} />
+
 		<!-- Comment -->
-		<PkCommentTextarea />
+		<PkTextarea
+			value={appState.getAppDefaults().comment}
+			label="Default Game"
+			onInput={handleCommentChange}
+			debounceTime={1250}
+		/>
 	</section>
-	<button onclick={resetDefaults}>Reset</button>
-	<button onclick={closeDialog}>Close</button>
+	<div class="pk-default-options">
+		<button onclick={resetDefaults}>Reset</button>
+		<button onclick={closeDialog}>Close</button>
+	</div>
 </dialog>
 
 <style>
@@ -43,6 +84,7 @@
 		padding: 10px;
 
 		margin: auto;
+		min-width: 600px;
 	}
 
 	dialog::backdrop {
@@ -59,5 +101,10 @@
 
 	button {
 		padding: 0.35rem 0.25rem;
+	}
+
+	.pk-default-options {
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
