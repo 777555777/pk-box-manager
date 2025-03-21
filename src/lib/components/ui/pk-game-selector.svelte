@@ -5,11 +5,12 @@
 		disabled = false,
 		id = crypto.randomUUID(),
 		value = '', // '' Renders as "Select game"
-		onChange = () => {}
+		onChange = () => {},
+		label = ''
 	} = $props()
 </script>
 
-<label for={id}>Caught in</label>
+<label for={id}>{label}</label>
 <select {id} {disabled} bind:value onchange={() => onChange(value)}>
 	<option value="">Select game</option>
 	{#each Generations as gen}

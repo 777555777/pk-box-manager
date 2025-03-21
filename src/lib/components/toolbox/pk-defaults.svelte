@@ -48,7 +48,7 @@
 		<PkBallSelector
 			selectedBall={appState.getAppDefaults().ball}
 			onChange={handleBallChange}
-			label="Default Ball"
+			label="Ball"
 		/>
 
 		<!-- Shiny -->
@@ -60,12 +60,16 @@
 		/>
 
 		<!-- Game -->
-		<PkGameSelector onChange={handleGameChange} value={appState.getAppDefaults().caughtIn} />
+		<PkGameSelector
+			onChange={handleGameChange}
+			value={appState.getAppDefaults().caughtIn}
+			label="Caught in"
+		/>
 
 		<!-- Comment -->
 		<PkTextarea
 			value={appState.getAppDefaults().comment}
-			label="Default Game"
+			label="Comment"
 			onInput={handleCommentChange}
 			debounceTime={1250}
 		/>

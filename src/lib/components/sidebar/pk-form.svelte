@@ -37,7 +37,12 @@
 
 <div class="pk-inputs">
 	<div class="pk-region">
-		<PkGameSelector onChange={handleGameChange} {disabled} value={selectedPokemon.caughtIn} />
+		<PkGameSelector
+			onChange={handleGameChange}
+			{disabled}
+			value={selectedPokemon.caughtIn}
+			label="Caught in"
+		/>
 		{#if !isSelectionValid && selectedPokemon.caughtIn !== ''}
 			<span class="pk-gen">Generation {deriveGameGen()}</span>
 		{/if}
