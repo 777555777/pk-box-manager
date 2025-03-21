@@ -1,18 +1,12 @@
-import { type PokemonData, storageHandler } from './storage-handler.ts'
+import { initialAppDefaults, type PokemonData, storageHandler } from './storage-handler.ts'
 
 export class AppState {
-	private initialAppDefaults = {
-		ball: '01-poke-ball',
-		shiny: false,
-		caughtIn: '',
-		comment: ''
-	}
 	private isAppLoading = $state(true)
 	private viewerMode = $state(false)
 	private badgeDisplay: string | boolean = $state(false)
 	private selectedDexName = $state(storageHandler.getSelectedDexName())
 	private defaultBall = $state('01-poke-ball')
-	private appDefaults: Partial<PokemonData> = $state(this.initialAppDefaults)
+	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
 
 	public toggleViewerMode() {
 		this.viewerMode = !this.viewerMode
@@ -95,7 +89,7 @@ export class AppState {
 	}
 
 	public checkForModifiedDefaults() {
-		const modified = JSON.stringify(this.appDefaults) !== JSON.stringify(this.initialAppDefaults)
+		const modified = JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults)
 		return modified
 	}
 }

@@ -4,6 +4,12 @@ import boxOrderNationalTest from '../order/order-national-test.json' with { type
 import orderTestSmall1 from '../order/order-test-small-1.json' with { type: 'json' }
 import orderTestSmall2 from '../order/order-test-small-2.json' with { type: 'json' }
 
+export const initialAppDefaults = {
+	ball: '01-poke-ball',
+	shiny: false,
+	caughtIn: '',
+	comment: ''
+}
 export const staticDexList = {
 	'order-national.json': {
 		displayName: 'National Dex'
@@ -237,9 +243,15 @@ class StorageHandler {
 
 	public loadAppDefaults() {
 		const appDefaults = localStorage.getItem(`appDefaults`)
-		if (appDefaults) {
-			return JSON.parse(appDefaults)
+		if (!appDefaults) {
+			this.initAppDefaults()
+			return initialAppDefaults
 		}
+		return JSON.parse(appDefaults)
+	}
+
+	public initAppDefaults() {
+		localStorage.setItem(`appDefaults`, JSON.stringify(initialAppDefaults))
 	}
 }
 
