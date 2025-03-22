@@ -3,6 +3,7 @@
 	import { validateImportedDexState } from '$lib/state/import-validation'
 	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
 	import PkDialog from '$lib/components/ui/pk-dialog.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 
 	interface PkDialogElement {
 		showDialog: Function
@@ -44,6 +45,11 @@
 					// No local data found, write to localStorage!
 					storageHandler.savePokemonData(validDex.name, validDex)
 					appState.setSelectedDexName(validDex.name)
+
+					// Force a refresh if this is the current Dex
+					if (validDex.name === appState.getSelectedDexName()) {
+						pkState.loadDexState(validDex.name)
+					}
 				}
 			} catch (error) {
 				console.error(error)
@@ -58,6 +64,12 @@
 		if (pendingImport) {
 			storageHandler.savePokemonData(pendingImport.name, pendingImport)
 			appState.setSelectedDexName(pendingImport.name)
+
+			// Force a refresh if this is the current Dex
+			if (pendingImport.name === appState.getSelectedDexName()) {
+				pkState.loadDexState(pendingImport.name)
+			}
+
 			pendingImport = null
 		}
 	}
