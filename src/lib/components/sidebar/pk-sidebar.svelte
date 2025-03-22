@@ -27,14 +27,18 @@
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
-		if (!viewerMode && event.code === 'KeyQ') {
-			// Vermeide Auslösung, wenn ein Eingabefeld fokussiert ist
-			if (
-				document.activeElement?.tagName !== 'INPUT' &&
-				document.activeElement?.tagName !== 'TEXTAREA'
-			) {
-				resetPokemon()
-			}
+		if (viewerMode || event.code !== 'KeyQ') {
+			return
+		}
+
+		const activeElement = document.activeElement
+		const isInToolbox = !!activeElement?.closest('.pk-toolbox')
+		const isInputOrTextarea =
+			activeElement?.tagName === 'INPUT' || activeElement?.tagName === 'TEXTAREA'
+
+		// Wenn das aktive Element kein Input/Textarea ist oder sich in der Toolbox befindet
+		if (!isInputOrTextarea || isInToolbox) {
+			resetPokemon()
 		}
 	}
 
