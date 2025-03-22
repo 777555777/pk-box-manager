@@ -56,7 +56,7 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 		// 10 => 20
 		// 20 => 30
 		const batch = files.slice(i, i + maxImagesPerSheet)
-		const outputFile = `${outputSpritesheetDir}/spritesheet-${name}-${sheetIndex}.png`
+		const outputFile = `${outputSpritesheetDir}/s${name.charAt(0)}${sheetIndex}.png`
 		spriteSheetFileNames.push(outputFile)
 
 		console.log(`Generating ${outputFile} with ${batch.length} Images...`)
@@ -97,10 +97,15 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 		const positionY = Math.floor((index % maxImagesPerSheet) / columnAmount) * tileSize * -1
 
 		// Vite needs the path without the dir, which is in the root directory.
-		const spritesheet = spriteSheetFileNames[sheetIndex].replace('static', '').replace('.png', '')
+		const spriteSheetPath = spriteSheetFileNames[sheetIndex].replace('.png', '')
+		// const spriteSheetName = spriteSheetPath.split('/')[2].split('-')
+		// let sheetNameShort = ''
+		// for (const nameSegment of spriteSheetName) {
+		// 	sheetNameShort = sheetNameShort + nameSegment.charAt(0)
+		// }
 
 		tsFileData[file.replace('.png', '')] = {
-			sheet: spritesheet, // Saves the corresponding sprite sheet
+			sheet: spriteSheetPath.split('/')[2], // Saves the corresponding sprite sheet
 			pos: { x: positionX, y: positionY }
 		}
 	})

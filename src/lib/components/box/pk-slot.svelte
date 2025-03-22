@@ -7,7 +7,7 @@
 
 	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
 	const identifier = getIdentifier(pokemonEntry)
-	const currentPokemon = getPokemonSpriteData(identifier)
+	const selectedPokemonSpriteData = getPokemonSpriteData(identifier)
 
 	let viewerMode = $derived(appState.getViewerMode())
 
@@ -38,9 +38,9 @@
 >
 	<img
 		class="pk-slot-image"
-		src={currentPokemon.sheet + '.webp'}
+		src={'/spritesheets/' + selectedPokemonSpriteData.sheet + '.webp'}
 		alt={identifier}
-		style={setCssPosition(currentPokemon.pos)}
+		style={setCssPosition(selectedPokemonSpriteData.pos)}
 		loading="lazy"
 	/>
 	{@render badge()}

@@ -9,7 +9,7 @@
 
 <section class="pk-viewer">
 	<img
-		src={selectedPokemonSpriteData.sheet + '.webp'}
+		src={'/spritesheets/' + selectedPokemonSpriteData.sheet + '.webp'}
 		alt={identifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 	/>
