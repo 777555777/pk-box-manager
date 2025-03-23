@@ -38,7 +38,7 @@
 >
 	<img
 		class="pk-slot-image"
-		src={'/spritesheets/' + selectedPokemonSpriteData.sheet + '.webp'}
+		src={`/spritesheets/${pokemonState.shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
 		alt={identifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 		loading="lazy"
@@ -50,7 +50,7 @@
 	{#if pokemonState.captured && badgeDisplay === 'ball' && pokemonState.ball}
 		<img
 			class="pk-badge"
-			src="/spritesheets/spritesheet-balls-1.webp"
+			src={`/spritesheets/util/sb1.webp`}
 			style={setCssPosition(getBallPosition(pokemonState.ball as BallsType))}
 			alt={pokemonState.ball}
 		/>

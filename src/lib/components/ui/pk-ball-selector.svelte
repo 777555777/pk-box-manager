@@ -51,7 +51,7 @@
 {/if}
 <button {id} class="pk-ball-container" onclick={toggleSelectorTray} {disabled}>
 	<img
-		src="/spritesheets/spritesheet-balls-1.webp"
+		src={`/spritesheets/util/sb1.webp`}
 		style={setCssPosition(getBallPosition(selectedBall as BallsType))}
 		alt={selectedBall}
 	/>

@@ -57,7 +57,7 @@
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer {identifier} {disabled} />
+		<PkViewer {identifier} {disabled} isShiny={selectedPokemon.shiny} />
 	</section>
 	<section class="pk-title">
 		<PkBallSelector selectedBall={selectedPokemon.ball} {disabled} onChange={handleBallChange} />

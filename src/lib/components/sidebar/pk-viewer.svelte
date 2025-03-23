@@ -3,13 +3,17 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 
-	let { identifier, disabled }: { identifier: string; disabled: boolean } = $props()
+	let {
+		identifier,
+		disabled,
+		isShiny = false
+	}: { identifier: string; disabled: boolean; isShiny: boolean } = $props()
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))
 </script>
 
 <section class="pk-viewer">
 	<img
-		src={'/spritesheets/' + selectedPokemonSpriteData.sheet + '.webp'}
+		src={`/spritesheets/${isShiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
 		alt={identifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 	/>

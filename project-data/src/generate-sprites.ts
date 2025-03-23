@@ -8,11 +8,12 @@ interface Config {
 	tileSize: number
 	columnAmount: number
 	maxImagesPerSheet: number
+	generateTs: boolean
 }
 
 // Extraction of cli-parameters to global values
 // prettier-ignore
-const { inputDir, outputSpritesheetDir, tsDir, name, tileSize, columnAmount, maxImagesPerSheet } = parseArguments()
+const { inputDir, outputSpritesheetDir, tsDir, name, tileSize, columnAmount, maxImagesPerSheet, generateTs } = parseArguments()
 
 main()
 
@@ -20,7 +21,9 @@ async function main() {
 	try {
 		const files = await readFiles(inputDir)
 		const spriteSheetFileNames = await createSpriteSheets(files)
-		await generateMappingData(spriteSheetFileNames, files)
+		if (generateTs) {
+			await generateMappingData(spriteSheetFileNames, files)
+		}
 	} catch (error) {
 		console.error('Fehler:', error)
 	}
@@ -98,14 +101,9 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 
 		// Vite needs the path without the dir, which is in the root directory.
 		const spriteSheetPath = spriteSheetFileNames[sheetIndex].replace('.png', '')
-		// const spriteSheetName = spriteSheetPath.split('/')[2].split('-')
-		// let sheetNameShort = ''
-		// for (const nameSegment of spriteSheetName) {
-		// 	sheetNameShort = sheetNameShort + nameSegment.charAt(0)
-		// }
 
 		tsFileData[file.replace('.png', '')] = {
-			sheet: spriteSheetPath.split('/')[2], // Saves the corresponding sprite sheet
+			sheet: spriteSheetPath.split('/')[3], // Saves the corresponding sprite sheet
 			pos: { x: positionX, y: positionY }
 		}
 	})
@@ -133,7 +131,7 @@ function parseArguments(): Config {
 			'column-amount',
 			'max-images'
 		],
-		boolean: ['help'],
+		boolean: ['help', 'no-ts'],
 		default: {
 			'input-dir': '.',
 			'output-dir': '.',
@@ -141,7 +139,8 @@ function parseArguments(): Config {
 			name: 'dynamic',
 			'tile-size': '30',
 			'column-amount': '8',
-			'max-images': '64'
+			'max-images': '64',
+			'no-ts': false
 		}
 	})
 
@@ -156,7 +155,8 @@ function parseArguments(): Config {
 		name: flags['name'],
 		tileSize: validateNumber(flags['tile-size'], 'tile-size'),
 		columnAmount: validateNumber(flags['column-amount'], 'column-amount'),
-		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images')
+		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images'),
+		generateTs: !flags['no-ts']
 	}
 }
 
@@ -174,7 +174,7 @@ function showHelp() {
 Liest einen Ordner mit Bildern (Sprites), die alle die gleiche Größe und das Format .png haben müssen.
 Erzeugt daraus eine oder mehrere Spritesheet PNG-Dateien, abhängig von den eingegebenen Parametern.
 
-Verwendung: deno generate-sprites.ts --input-dir=./images --output-dir=. --name=pokemon --tile-size=96 --column-amount=15 --max-images=300"
+Verwendung: deno generate-sprites.ts --input-dir=./images --output-dir=. --name=pokemon --tile-size=96 --column-amount=15 --max-images=300 --no-ts"
 
 Optionen:
 	--input-dir <Pfad>    Eingabeverzeichnis (Standard: .)
@@ -184,6 +184,7 @@ Optionen:
 	--tile-size <Zahl>    Größe der einzelnen Kacheln (Standard: 30)
 	--columns <Zahl>      Anzahl der Spalten im Spritesheet (Standard: 8)
 	--max-images <Zahl>   Maximale Anzahl der Bilder pro Sheet (Standard: 15)
+	--no-ts               Deaktiviert die Erstellung der TypeScript-Datei
 	--help                Zeigt diese Hilfe an
 	`)
 	Deno.exit(0)
