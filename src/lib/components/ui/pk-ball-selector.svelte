@@ -51,7 +51,7 @@
 {/if}
 <button {id} class="pk-ball-container" onclick={toggleSelectorTray} {disabled}>
 	<img
-		src={`/spritesheets/util/sb1.webp`}
+		src="/spritesheets/util/sb1.webp"
 		style={setCssPosition(getBallPosition(selectedBall as BallsType))}
 		alt={selectedBall}
 	/>
@@ -64,11 +64,7 @@
 	<section class="selector-tray" bind:this={trayRef}>
 		{#each Object.entries(Balls) as [name, data]}
 			<button onclick={() => selectBall(name as BallsType)}>
-				<img
-					src="/spritesheets/spritesheet-balls-1.webp"
-					style={setCssPosition(data.pos)}
-					alt={name}
-				/>
+				<img src="/spritesheets/util/sb1.webp" style={setCssPosition(data.pos)} alt={name} />
 			</button>
 		{/each}
 	</section>

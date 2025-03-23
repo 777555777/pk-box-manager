@@ -32,7 +32,7 @@
 </script>
 
 <button
-	class="pk-slot {isSelected ? 'selected' : ''}"
+	class="pk-slot {pokemonState.shiny ? 'pk-shiny-slot' : ''} {isSelected ? 'selected' : ''}"
 	{onclick}
 	style="--grayscale: {pokemonState.captured ? '100%' : '0%'}"
 >
@@ -54,9 +54,6 @@
 			style={setCssPosition(getBallPosition(pokemonState.ball as BallsType))}
 			alt={pokemonState.ball}
 		/>
-	{/if}
-	{#if pokemonState.captured && badgeDisplay === 'shiny' && pokemonState.shiny}
-		<div class="pk-badge">✨</div>
 	{/if}
 {/snippet}
 
@@ -106,6 +103,10 @@
 		background-color: hsl(60, 100%, 90%);
 		/* border: 2px solid hsl(50, 70%, 50%); */
 		border-radius: 5px;
+	}
+
+	.pk-shiny-slot {
+		background-color: hsl(60, 100%, 75%);
 	}
 
 	.pk-slot.selected {

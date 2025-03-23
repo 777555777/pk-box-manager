@@ -34,9 +34,6 @@ export class AppState {
 				this.badgeDisplay = 'ball'
 				break
 			case 'ball':
-				this.badgeDisplay = 'shiny'
-				break
-			case 'shiny':
 				this.badgeDisplay = false // false is off
 				break
 			default:
