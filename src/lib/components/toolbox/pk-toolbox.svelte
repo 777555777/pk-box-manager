@@ -31,7 +31,7 @@
 <aside class="pk-toolbox">
 	<div class="pk-data">
 		<PkDexSelector />
-		<div class="pk-btn-grp">
+		<div class="pk-toolbox-btn-group">
 			<PkImport />
 			<PkExport />
 		</div>
@@ -42,13 +42,15 @@
 	<div class="pk-modes">
 		<PkToggle icon="👀" label="Viewer Mode" checked={viewerMode} onChange={toggleViewerMode} />
 
-		<!-- cycle to additional display modes -->
-		<button onclick={cycleBadgeDisplay}>🔄</button>
+		<div class="pk-toolbox-btn-group">
+			<!-- cycle to additional display modes -->
+			<button onclick={cycleBadgeDisplay}>Badge 🔄</button>
 
-		<!-- cycle to additional display modes -->
-		<button onclick={openDefaultDialog}
-			>{#if appState.checkForModifiedDefaults()}❗{/if}Defaults</button
-		>
+			<!-- cycle to additional display modes -->
+			<button onclick={openDefaultDialog}
+				>Defaults{#if appState.checkForModifiedDefaults()}❗{/if}</button
+			>
+		</div>
 	</div>
 
 	<PkDefaults bind:this={defaultsDialog} />
@@ -84,7 +86,6 @@
 	}
 
 	button {
-		width: 5rem;
 		padding: 0.35rem 0.25rem;
 	}
 </style>

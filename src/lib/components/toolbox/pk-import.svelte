@@ -123,9 +123,6 @@
 		cursor: pointer;
 		border: 1px solid #8f8f9d;
 		text-align: center;
-
-		width: 4rem;
-		padding: 0.35rem 0.25rem;
 	}
 
 	.button-style:hover {
