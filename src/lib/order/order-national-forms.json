@@ -1862,6 +1862,7 @@
 			{ "pokemonid": "typhlosion", "formid": "hisuian", "id_national": 157 },
 			{ "pokemonid": "qwilfish", "formid": "hisuian", "id_national": 211 },
 			{ "pokemonid": "sneasel", "formid": "hisuian", "id_national": 215 },
+			{ "pokemonid": "sneasel", "formid": "hisuian-female", "id_national": 215 },
 			{ "pokemonid": "samurott", "formid": "hisuian", "id_national": 503 },
 			{ "pokemonid": "lilligant", "formid": "hisuian", "id_national": 549 },
 			{
