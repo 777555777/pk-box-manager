@@ -3,6 +3,9 @@
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
 	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+	import PkStats from '$lib/components/sidebar/pk-stats.svelte'
+	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
+	import PkResetBtn from '$lib/components/ui/pk-reset-btn.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
@@ -21,43 +24,26 @@
 		pkState.updatePokemonState(identifier, { ball: newValue })
 	}
 
-	function resetPokemon() {
-		pkState.resetPokemonState(getIdentifier(selectedPokemon.idEntry))
-		pkState.deselectPokemon()
-	}
-
-	function handleKeydown(event: KeyboardEvent) {
-		if (viewerMode || event.code !== 'KeyQ') {
-			return
-		}
-
-		const activeElement = document.activeElement
-		const isInToolbox = !!activeElement?.closest('.pk-toolbox')
-		const isInputOrTextarea =
-			activeElement?.tagName === 'INPUT' || activeElement?.tagName === 'TEXTAREA'
-
-		// Wenn das aktive Element kein Input/Textarea ist oder sich in der Toolbox befindet
-		if (!isInputOrTextarea || isInToolbox) {
-			resetPokemon()
-		}
-	}
-
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
 		selectedPokemon = pkState.getSelectedPokemon()
 		$inspect('Sidebar:', selectedPokemon)
-
-		document.addEventListener('keydown', handleKeydown)
-
-		return () => {
-			document.removeEventListener('keydown', handleKeydown)
-		}
 	})
 </script>
 
 <aside class="pk-sidebar">
 	<section>
-		<PkViewer {identifier} {disabled} isShiny={selectedPokemon.shiny} />
+		<PkViewer {identifier} isShiny={selectedPokemon.shiny} />
+		<div class="pk-viewer-controls">
+			<PkResetBtn {identifier} {disabled} />
+			<PkToggle
+				icon="✨"
+				label="Shiny"
+				checked={pkState.getPokemonState(identifier).shiny}
+				{disabled}
+				onChange={() => pkState.toggleShiny(identifier)}
+			/>
+		</div>
 	</section>
 	<section class="pk-title">
 		<PkBallSelector selectedBall={selectedPokemon.ball} {disabled} onChange={handleBallChange} />
@@ -68,10 +54,18 @@
 		<PkForm {selectedPokemon} {identifier} {disabled} />
 	</section>
 	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
-	<button onclick={resetPokemon} {disabled}>Reset Pokemon (Q)</button>
 </aside>
 
 <style>
+	.pk-viewer-controls {
+		display: flex;
+		justify-content: space-between;
+		width: 348px;
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+	}
+
 	section {
 		padding: 10px;
 	}

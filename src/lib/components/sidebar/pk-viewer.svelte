@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
-	import { pkState } from '$lib/state/pk-state.svelte'
-	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 
-	let {
-		identifier,
-		disabled,
-		isShiny = false
-	}: { identifier: string; disabled: boolean; isShiny: boolean } = $props()
+	let { identifier, isShiny = false }: { identifier: string; isShiny: boolean } = $props()
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))
 </script>
 
@@ -17,15 +11,6 @@
 		alt={identifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 	/>
-	<div class="pk-viewer-controls">
-		<PkToggle
-			icon="✨"
-			label="Shiny"
-			checked={pkState.getPokemonState(identifier).shiny}
-			{disabled}
-			onChange={() => pkState.toggleShiny(identifier)}
-		/>
-	</div>
 </section>
 
 <style>
@@ -62,12 +47,5 @@
 		width: 96px;
 		height: 96px;
 		transform: scale(2.666667); /* 74px */
-	}
-
-	.pk-viewer-controls {
-		background-color: #56565655;
-		position: absolute;
-		top: 16px;
-		right: 16px;
 	}
 </style>
