@@ -49,18 +49,23 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: #ccc;
+		background-color: #e9e9ed;
 		transition: 0.3s;
 		border-radius: 20px;
+		border: 1px solid #8f8f9d;
+
+		&:hover {
+			background-color: #d0d0d7;
+		}
 	}
 
 	.slider:before {
 		position: absolute;
 		content: '';
-		height: 14px;
-		width: 14px;
-		left: 3px;
-		bottom: 3px;
+		height: 10px;
+		width: 10px;
+		left: 4px;
+		bottom: 4px;
 		background-color: white;
 		transition: 0.3s;
 		border-radius: 50%;
@@ -75,8 +80,12 @@
 	}
 
 	input:disabled + .slider {
-		background-color: #aaa;
-		cursor: not-allowed;
+		background-color: rgba(233, 233, 237, 0.5);
+		cursor: auto;
+
+		&:hover {
+			background-color: rgba(233, 233, 237, 0.5);
+		}
 	}
 
 	.icon-label {
