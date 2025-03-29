@@ -53,7 +53,12 @@
 	<section>
 		<PkForm {selectedPokemon} {identifier} {disabled} />
 	</section>
-	<pre>{JSON.stringify(selectedPokemon, null, 2)}</pre>
+	<hr />
+	<section>
+		<PkStats {identifier} />
+	</section>
+
+	<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
 </aside>
 
 <style>
