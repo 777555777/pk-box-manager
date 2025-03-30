@@ -1,5 +1,5 @@
-import { getIdentifier } from '../spriteheet-helper.ts'
-import { getBoxOrder, type DexStorage } from './storage-handler.ts'
+import { getIdentifier } from '../../spriteheet-helper.ts'
+import { getBoxOrder, type DexStorage } from '../../state/storage-handler.ts'
 
 export function validateImportedDexState(importedFile: unknown): DexStorage {
 	let dexData: DexStorage
@@ -32,7 +32,8 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 	}
 
 	// // 2.5 Prüfen ob die Daten zu einem supporteten Dex gehören
-	if (!getBoxOrder(dexData.name)) {
+	const targetDex = getBoxOrder(dexData.name)
+	if (!targetDex) {
 		throw new Error('Ungültiger Wert in der Eigenschaft "name"')
 	}
 
@@ -44,7 +45,6 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 	// 4. Prüfen jedes Pokemon-Eintrags
 
 	// Liste aller valider Pokemon im Dex erstellen
-	const targetDex = getBoxOrder(dexData.name)
 	const dexPokemon = []
 	for (const box of targetDex) {
 		for (const pokemon of box.pokemon) {
