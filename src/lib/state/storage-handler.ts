@@ -65,14 +65,14 @@ class StorageHandler {
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
 	private readonly DEFAULT_SELECTED_DEX = 'order-test-small-1.json'
 
-	// =======
+	// ================
 	// Pokedex
-	// =======
+	// ================
 
 	/**
-	 * Initialisiert den Bearbeitungsstatus eines gegebenen Pokedex, falls dieser noch nicht im LocalStorage vorhanden ist.
-	 * @param selectedDex Der Name des Pokédex.
-	 * @param pokedexOrder Die Box-Order des Pokédex.
+	 * Initializes the editing status of a given Pokedex in localStorage.
+	 * @param selectedDex The name of the Pokedex.
+	 * @param pokedexOrder The box order of the Pokedex.
 	 */
 	public initPokedex(pokedexOrder: BoxOrder[], selectedDex: string): void {
 		const initialDex = initPokedex(pokedexOrder, selectedDex)
@@ -80,25 +80,25 @@ class StorageHandler {
 	}
 
 	/**
-	 * Speichert die Daten des Pokedex Bearbeitungsstatus im LocalStorage.
-	 * @param selectedDex Der Name des aktuellen Pokédex.
-	 * @param pokemonData Der zu speichernde Bearbeitungsstatus.
+	 * Saves the given Pokedex to localStorage.
+	 * @param selectedDex The name of the Pokedex.
+	 * @param pokemonData The editing status to be saved.
 	 */
 	public savePokedex(selectedDex: string, pokemonData: DexStorage): void {
 		localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(pokemonData))
 	}
 
 	/**
-	 * Ruft den aktuellen Zustand des Pokédex aus dem LocalStorage ab oder initialisiert ihn, falls er nicht existiert.
-	 * @param selectedDex Der Name des aktuellen Pokédex.
-	 * @returns Ein Array mit dem Bearbeitungsstatus jedes Pokemons im ausgewählten Pokedex.
+	 * Retrieves the current state of the Pokedex from localStorage.
+	 * @param selectedDex The name of the Pokedex.
+	 * @returns The Pokedex for the given name.
 	 */
 	public loadPokedex(selectedDex: string): DexStorage | undefined {
-		const selectedOrder = localStorage.getItem(`dex:${selectedDex}`)
-		if (selectedOrder) {
+		const selectedPokedex = localStorage.getItem(`dex:${selectedDex}`)
+		if (selectedPokedex) {
 			try {
-				const parsedOrder = JSON.parse(selectedOrder)
-				return parsedOrder
+				const parsedPokedex = JSON.parse(selectedPokedex)
+				return parsedPokedex
 			} catch (error) {
 				console.error('Fehler beim Parsen des Pokedex:', error)
 			}
@@ -107,76 +107,99 @@ class StorageHandler {
 	}
 
 	/**
-	 * Wechselt den aktuellen Pokédex und initialisiert ihn falls nötig.
-	 * @param selectedDexName Der Name des neu gewählten Pokédex.
+	 * Saves the currently selected Pokedex name to localStorage.
+	 * @param selectedDexName The name of the newly selected Pokedex.
 	 */
 	public saveSelectedPokedexName(selectedDexName: string): void {
 		localStorage.setItem(this.SELECTED_DEX_KEY, selectedDexName)
 	}
 
 	/**
-	 * Ruft den vom Nutzer ausgewählten Pokédex-Namen aus dem LocalStorage ab.
-	 * Falls noch keiner gespeichert ist, wird der Standard-Pokédex zurückgegeben.
-	 * @returns Der Name des gespeicherten oder Standard-Pokédex.
+	 * Retrieves the user-selected Pokedex name from localStorage or returns the default if none is stored.
+	 * @returns The name of the stored or default Pokedex.
 	 */
 	public loadSelectedPokedexName(): string {
 		return localStorage.getItem(this.SELECTED_DEX_KEY) || this.DEFAULT_SELECTED_DEX
 	}
 
-	// =========
+	// ================
 	// Box Order
-	// =========
+	// ================
 
 	/**
-	 * Gibt die vordefinierte Box-Order für den ausgewählten Pokédex zurück.
-	 * @param selectedDex Der Name des Pokédex.
-	 * @returns Die entsprechende BoxOrder.
+	 * Returns the predefined box order for the given Pokedex name.
+	 * @param pokedexName The name of the Pokedex.
+	 * @returns The corresponding BoxOrder.
 	 */
-	public loadPokedexOrder(selectedDex: string): BoxOrder[] {
-		return getBoxOrder(selectedDex)
+	public loadPokedexOrder(pokedexName: string): BoxOrder[] {
+		return getBoxOrder(pokedexName)
 	}
 
-	// =============
+	// ================
 	// Pokemon State
-	// =============
+	// ================
 
-	public editPokemonStateEntry(identifier: string, pokemonState: PokemonState) {
-		const selectedDex = localStorage.getItem(this.SELECTED_DEX_KEY)
-		const selectedDexState = localStorage.getItem(`dex:${selectedDex}`)!
-		if (selectedDexState) {
-			const parsedDexState = JSON.parse(selectedDexState)
-			const targetPokemon = parsedDexState.pokemon[identifier]
+	/**
+	 * Updates a Pokemon's state properties while preserving existing properties not included in the edit.
+	 * @param identifier The unique identifier of the Pokemon to edit.
+	 * @param editedPokemon The new state properties to apply to the Pokemon.
+	 * @returns The updated Pokemon state or undefined if the Pokemon couldn't be found.
+	 */
+	// prettier-ignore
+	public editPokemonStateEntry(identifier: string, editedPokemon: PokemonState): PokemonState | undefined {
+		const selectedDexName = this.loadSelectedPokedexName()
+		const parsedDex = this.loadPokedex(selectedDexName)
 
-			const updatedPokemon = { ...targetPokemon }
-			for (const key in pokemonState) {
-				if (key in targetPokemon) {
-					updatedPokemon[key] = pokemonState[key as keyof PokemonState]
-				}
-			}
-
-			// Aktualisiere das Pokemon im temporären Objekt
-			parsedDexState.pokemon[identifier] = updatedPokemon
-
-			// Speichere den aktualisierten Zustand zurück in den localStorage
-			localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(parsedDexState))
-
-			// Damit die daten wirklich im Sync sind müsste man eigentlich im Slot sie wieder aus dem localStorage abrufen ODER man returned sie hier
-			return updatedPokemon
+		if (!parsedDex || !parsedDex.pokemon) {
+			return undefined
 		}
+
+		const targetPokemon = parsedDex.pokemon[identifier];
+		if (!targetPokemon) {
+			console.error("Could not update given Pokemon", identifier)
+			return undefined;
+		}
+
+		// Update only keys that are present in targetPokemon
+		const editedPokemonValidKeys = Object.entries(editedPokemon).filter(([key]) => key in targetPokemon)
+		const updatedPokemon: PokemonState = {
+		...targetPokemon,
+		...Object.fromEntries(editedPokemonValidKeys) as Pick<PokemonState, keyof typeof targetPokemon>
+		};
+
+		// Update pokemon in memory
+		parsedDex.pokemon[identifier] = updatedPokemon
+
+		// Persist edited Pokedex to localstorage
+		localStorage.setItem(`dex:${selectedDexName}`, JSON.stringify(parsedDex))
+
+		// Return updated Pokemon so it can be used in the application as state
+		return updatedPokemon
 	}
 
-	// ============
+	// ================
 	// App Defaults
-	// ============
+	// ================
 
+	/**
+	 * Initializes the application's default settings in localStorage.
+	 */
 	public initAppDefaults() {
 		localStorage.setItem(`appDefaults`, JSON.stringify(initialAppDefaults))
 	}
 
+	/**
+	 * Saves custom application default settings to localStorage.
+	 * @param appDefaults The default Pokemon data settings to save.
+	 */
 	public saveAppDefaults(appDefaults: Partial<PokemonData>) {
 		localStorage.setItem(`appDefaults`, JSON.stringify(appDefaults))
 	}
 
+	/**
+	 * Loads application default settings from localStorage or initializes them if they don't exist.
+	 * @returns The application's default settings.
+	 */
 	public loadAppDefaults() {
 		const appDefaults = localStorage.getItem(`appDefaults`)
 		if (!appDefaults) {
