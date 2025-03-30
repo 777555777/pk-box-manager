@@ -2,27 +2,35 @@
 	import { storageHandler } from '$lib/state/storage-handler'
 
 	function exportCurrentDex() {
-		const selectedDexName = storageHandler.getSelectedDexName()
-		const dexState = JSON.stringify(storageHandler.getDexState(selectedDexName), null, 2)
+		try {
+			const selectedDexName = storageHandler.getSelectedDexName()
+			const dexState = JSON.stringify(storageHandler.getDexState(selectedDexName), null, 2)
 
-		// Erstelle einen Blob mit dem JSON-Inhalt
-		const blob = new Blob([dexState], { type: 'application/json' })
+			if (!dexState) {
+				throw new Error('Pokedex data is empty!')
+			}
 
-		// Erstelle eine URL für den Blob
-		const url = URL.createObjectURL(blob)
+			// Erstelle einen Blob mit dem JSON-Inhalt
+			const blob = new Blob([dexState], { type: 'application/json' })
 
-		// Erstelle ein temporäres a-Element zum Herunterladen
-		const a = document.createElement('a')
-		a.href = url
-		a.download = selectedDexName
+			// Erstelle eine URL für den Blob
+			const url = URL.createObjectURL(blob)
 
-		// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
-		document.body.appendChild(a)
-		a.click()
-		document.body.removeChild(a)
+			// Erstelle ein temporäres a-Element zum Herunterladen
+			const a = document.createElement('a')
+			a.href = url
+			a.download = selectedDexName
 
-		// Gib die URL frei
-		URL.revokeObjectURL(url)
+			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
+			document.body.appendChild(a)
+			a.click()
+			document.body.removeChild(a)
+
+			// Gib die URL frei
+			URL.revokeObjectURL(url)
+		} catch (error) {
+			console.error('Error during Pokedex export!', error)
+		}
 	}
 </script>
 
