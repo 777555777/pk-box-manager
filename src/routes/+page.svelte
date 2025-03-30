@@ -11,7 +11,7 @@
 	let selectedDexName = $derived(appState.getSelectedDexName())
 
 	// Ausgewählte DexOrder
-	let dexOrder = $derived(storageHandler.getDexOrder(selectedDexName))
+	let dexOrder = $derived(storageHandler.loadPokedexOrder(selectedDexName))
 
 	// State für ausgewählte DexOrder
 	let dexState = $derived(pkState.getDexState())

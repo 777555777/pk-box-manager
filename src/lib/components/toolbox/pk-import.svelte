@@ -37,13 +37,13 @@
 			try {
 				const validDex = validateImportedDexState(reader.result)
 
-				if (storageHandler.loadPokemonData(validDex.name)) {
+				if (storageHandler.loadPokedex(validDex.name)) {
 					// Local data found, override it?
 					pendingImport = validDex
 					infoDialog.showDialog()
 				} else {
 					// No local data found, write to localStorage!
-					storageHandler.savePokemonData(validDex.name, validDex)
+					storageHandler.savePokedex(validDex.name, validDex)
 					appState.setSelectedDexName(validDex.name)
 
 					// Force a refresh if this is the current Dex
@@ -62,7 +62,7 @@
 
 	function onConfirmInfo() {
 		if (pendingImport) {
-			storageHandler.savePokemonData(pendingImport.name, pendingImport)
+			storageHandler.savePokedex(pendingImport.name, pendingImport)
 			appState.setSelectedDexName(pendingImport.name)
 
 			// Force a refresh if this is the current Dex

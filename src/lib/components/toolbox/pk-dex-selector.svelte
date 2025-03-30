@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { staticDexList } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
+	import { supportedPokedexList } from '$lib/init-dex-helper'
 
 	// State für ausgewählten DexName
 	let selectedDexName = $derived(appState.getSelectedDexName())
@@ -34,7 +34,7 @@
 	value={selectedDexName}
 	onchange={handleDexChange}
 >
-	{#each Object.entries(staticDexList) as [name, dex]}
+	{#each Object.entries(supportedPokedexList) as [name, dex]}
 		<option value={name}>{dex.displayName}</option>
 	{/each}
 </select>

@@ -1,6 +1,7 @@
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
+	getBoxOrder,
 	storageHandler,
 	type DexStorage,
 	type PokemonData,
@@ -30,16 +31,21 @@ export class PkState {
 	private selectedPokemon: PokemonState = $state(this.nullState)
 
 	constructor() {
-		const selectedDex = storageHandler.getSelectedDexName()
+		const selectedDex = storageHandler.loadSelectedPokedexName()
 		this.loadDexState(selectedDex)
 	}
 
 	loadDexState(dexName: string) {
 		// Ensure the dex data is initialized in storage
-		storageHandler.switchDex(dexName)
+		storageHandler.saveSelectedPokedexName(dexName)
 
 		// Get fresh state data from storage
-		const stateData = storageHandler.getDexState(dexName)
+		let stateData = storageHandler.loadPokedex(dexName)
+
+		if (!stateData) {
+			storageHandler.initPokedex(getBoxOrder(dexName), dexName)
+			stateData = storageHandler.loadPokedex(dexName)
+		}
 
 		// Create a deep copy to avoid reactivity issues and ensure a complete refresh
 		this.dexState = JSON.parse(JSON.stringify(stateData))

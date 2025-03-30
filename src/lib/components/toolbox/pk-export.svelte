@@ -1,10 +1,18 @@
 <script lang="ts">
-	import { storageHandler } from '$lib/state/storage-handler'
+	import { getBoxOrder, storageHandler } from '$lib/state/storage-handler'
 
 	function exportCurrentDex() {
 		try {
-			const selectedDexName = storageHandler.getSelectedDexName()
-			const dexState = JSON.stringify(storageHandler.getDexState(selectedDexName), null, 2)
+			const selectedDexName = storageHandler.loadSelectedPokedexName()
+			let selectedPokedex = storageHandler.loadPokedex(selectedDexName)
+
+			// Wenn der Dex nicht exsistiert, initialisiere ihn und lade ihn erneut
+			if (!selectedPokedex) {
+				storageHandler.initPokedex(getBoxOrder(selectedDexName), selectedDexName)
+				selectedPokedex = storageHandler.loadPokedex(selectedDexName)
+			}
+
+			const dexState = JSON.stringify(selectedPokedex, null, 2)
 
 			if (!dexState) {
 				throw new Error('Pokedex data is empty!')

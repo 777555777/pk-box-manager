@@ -1,10 +1,11 @@
-import { initialAppDefaults, type PokemonData, storageHandler } from './storage-handler.ts'
+import { initialAppDefaults } from '../init-dex-helper.ts'
+import { type PokemonData, storageHandler } from './storage-handler.ts'
 
 export class AppState {
 	private isAppLoading = $state(true)
 	private viewerMode = $state(false)
 	private badgeDisplay: string | boolean = $state(false)
-	private selectedDexName = $state(storageHandler.getSelectedDexName())
+	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
 	private defaultBall = $state('01-poke-ball')
 	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
 
@@ -48,7 +49,7 @@ export class AppState {
 
 	public setSelectedDexName(name: string) {
 		this.selectedDexName = name
-		storageHandler.switchDex(name)
+		storageHandler.saveSelectedPokedexName(name)
 	}
 
 	public getDefaultBall() {
@@ -77,12 +78,7 @@ export class AppState {
 	}
 
 	public resetAppDefaults() {
-		this.setAppDefaults({
-			ball: '01-poke-ball',
-			shiny: false,
-			caughtIn: '',
-			comment: ''
-		})
+		this.setAppDefaults(initialAppDefaults)
 	}
 
 	public checkForModifiedDefaults() {
