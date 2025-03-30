@@ -1,4 +1,11 @@
 export const pkStats = {
+	'0000-null': {
+		originRegion: 'null',
+		stats: [0, 0, 0, 0, 0, 0],
+		types: null,
+		abilities: [''],
+		genderRatio: { male: null, female: null }
+	},
 	'0001-bulbasaur': {
 		originRegion: 'Kanto',
 		stats: [45, 49, 49, 65, 65, 45],
