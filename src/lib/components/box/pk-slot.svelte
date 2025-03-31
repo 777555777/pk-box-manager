@@ -11,7 +11,7 @@
 
 	let viewerMode = $derived(appState.getViewerMode())
 
-	let pokemonState = $derived(pkState.getPokemonState(identifier))
+	let pokemonState = $derived(pkState.getPokemon(identifier))
 
 	let isSelected = $derived(identifier === getIdentifier(pkState.getSelectedPokemon().idEntry))
 
@@ -19,10 +19,10 @@
 
 	function onclick() {
 		if (viewerMode) {
-			pkState.setSelectedPokemon(identifier)
+			pkState.updateSelectedPokemon(identifier)
 		} else {
-			pkState.updatePokemonState(identifier, { captured: true })
-			pkState.setSelectedPokemon(identifier)
+			pkState.updatePokemon(identifier, { captured: true })
+			pkState.updateSelectedPokemon(identifier)
 		}
 	}
 

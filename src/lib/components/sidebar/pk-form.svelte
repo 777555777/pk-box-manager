@@ -22,14 +22,14 @@
 
 	// === Game Dropdown ===
 	function handleGameChange(newValue: GameType) {
-		pkState.updatePokemonState(identifier, {
+		pkState.updatePokemon(identifier, {
 			caughtIn: newValue
 		})
 	}
 
 	// === Comment Textarea ===
 	function handleCommentChange(newValue: string) {
-		pkState.updatePokemonState(identifier, {
+		pkState.updatePokemon(identifier, {
 			comment: newValue
 		})
 	}

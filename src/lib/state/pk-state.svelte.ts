@@ -1,3 +1,4 @@
+import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../null-state-helper.ts'
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
@@ -9,67 +10,60 @@ import {
 } from './storage-handler.ts'
 
 export class PkState {
-	private nullState = {
-		idEntry: { pokemonid: 'null', formid: null, id_national: 0 },
-		captured: false,
-		ball: '01-poke-ball',
-		shiny: false,
-		caughtIn: '',
-		ability: '',
-		comment: '',
-		isCustomized: false
-	}
-	private nullStatePokemon = { '0000-null': this.nullState }
-	private nullStateMetaData = {
-		version: '0.0.0',
-		name: 'null',
-		displayName: 'Null Dex',
-		pokemon: this.nullStatePokemon
-	}
-
-	private dexState: DexStorage = $state(this.nullStateMetaData)
-	private selectedPokemon: PokemonState = $state(this.nullState)
+	private pokedexState: DexStorage = $state(pokedexNullState)
+	private selectedPokemon: PokemonState = $state(pokemonNullState)
 
 	constructor() {
-		const selectedDex = storageHandler.loadSelectedPokedexName()
-		this.loadDexState(selectedDex)
+		const selectedPokedex = storageHandler.loadSelectedPokedexName()
+		this.switchPokedex(selectedPokedex)
 	}
 
-	loadDexState(dexName: string) {
-		// Ensure the dex data is initialized in storage
+	// ================
+	// Pokedex
+	// ================
+
+	switchPokedex(dexName: string): void {
+		// Persist selected Pokedex in localstorage
 		storageHandler.saveSelectedPokedexName(dexName)
 
-		// Get fresh state data from storage
+		// Read Pokedex data from localstorage
 		let stateData = storageHandler.loadPokedex(dexName)
 
+		// Init the Pokedex if it does not exist yet and read its data
 		if (!stateData) {
 			storageHandler.initPokedex(getBoxOrder(dexName), dexName)
 			stateData = storageHandler.loadPokedex(dexName)
 		}
 
-		// Create a deep copy to avoid reactivity issues and ensure a complete refresh
-		this.dexState = JSON.parse(JSON.stringify(stateData))
+		// Set the Pokedex from localstorage as reactive state
+		this.pokedexState = stateData!
 
-		// Reset selected Pokemon when changing dex
-		this.selectedPokemon = this.nullState
+		// Reset selected Pokemon when changing Pokedex
+		this.selectedPokemon = pokemonNullState
 	}
 
-	getDexState() {
-		return this.dexState
+	getCurrentPokedex(): DexStorage {
+		return this.pokedexState
 	}
 
-	getPokemonState(identifier: string) {
-		if (this.dexState.pokemon[identifier]) {
-			return this.dexState.pokemon[identifier]
+	// ================
+	// Pokemon
+	// ================
+
+	getPokemon(identifier: string): PokemonState {
+		if (this.pokedexState.pokemon[identifier]) {
+			return this.pokedexState.pokemon[identifier]
 		}
-		return this.nullState
+		return pokemonNullState
 	}
 
-	updatePokemonState(identifier: string, updatedState: Partial<PokemonData>) {
-		if (!this.dexState.pokemon[identifier]) return
-
-		// Lokalen Status aktualisieren
-		const currentState = this.dexState.pokemon[identifier]
+	updatePokemon(identifier: string, updatedState: Partial<PokemonData>): void {
+		if (!this.pokedexState.pokemon[identifier]) {
+			throw new Error(
+				`Cannot update Pokemon. The Pokemon with ID "${identifier}" does not exist in the current Pokedex.`
+			)
+		}
+		const currentState = this.pokedexState.pokemon[identifier]
 
 		if (!currentState.isCustomized) {
 			// The first update is always to the captured property
@@ -81,79 +75,52 @@ export class PkState {
 		}
 
 		const newState = { ...currentState, ...updatedState }
-		this.dexState.pokemon[identifier] = newState
+		this.pokedexState.pokemon[identifier] = newState
 
-		// Falls dies das aktuell ausgewählte Pokemon ist, direkt auch selectedPokemon aktualisieren
+		// Update the selected Pokemon to reflect the updated state in the UI
 		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {
-			this.selectedPokemon = { ...this.dexState.pokemon[identifier] }
+			this.selectedPokemon = { ...this.pokedexState.pokemon[identifier] }
 		}
 
-		// In Storage persistieren
-		storageHandler.editPokemonStateEntry(identifier, this.dexState.pokemon[identifier])
+		// Persist in localstorage
+		storageHandler.editPokemonStateEntry(identifier, this.pokedexState.pokemon[identifier])
 	}
 
-	resetPokemonState(identifier: string) {
-		if (!this.dexState.pokemon[identifier]) return
-
-		const resetState = {
-			captured: false,
-			ball: '01-poke-ball',
-			shiny: false,
-			caughtIn: '',
-			ability: '',
-			comment: '',
-			isCustomized: false
+	resetPokemon(identifier: string): void {
+		if (!this.pokedexState.pokemon[identifier]) {
+			throw new Error(
+				`Cannot reset Pokemon. The Pokemon with ID "${identifier}" does not exist in the current Pokedex.`
+			)
 		}
 
-		const currentState = this.dexState.pokemon[identifier]
-		const newState = { ...currentState, ...resetState }
-		this.dexState.pokemon[identifier] = newState
+		// Override the given pokemon with nullState data
+		const currentState = this.pokedexState.pokemon[identifier]
+		const newState = { ...currentState, ...pokemonNullProperties }
+		this.pokedexState.pokemon[identifier] = newState
 
-		// Falls dies das aktuell ausgewählte Pokemon ist, direkt auch selectedPokemon aktualisieren
-		if (getIdentifier(this.selectedPokemon.idEntry) === identifier) {
-			this.selectedPokemon = { ...this.dexState.pokemon[identifier] }
+		// Persist in localstorage
+		storageHandler.editPokemonStateEntry(identifier, this.pokedexState.pokemon[identifier])
+	}
+
+	// ================
+	// Selected Pokemon
+	// ================
+
+	updateSelectedPokemon(identifier: string): void {
+		if (!this.pokedexState.pokemon[identifier]) {
+			throw new Error(
+				`Cannot select Pokemon. The Pokemon with ID "${identifier}" does not exist in the current Pokedex.`
+			)
 		}
-
-		// In Storage persistieren
-		storageHandler.editPokemonStateEntry(identifier, this.dexState.pokemon[identifier])
+		this.selectedPokemon = this.pokedexState.pokemon[identifier]
 	}
 
-	toggleCaptured(identifier: string) {
-		try {
-			const pokemon = this.dexState.pokemon[identifier]
-			if (pokemon) {
-				this.updatePokemonState(identifier, {
-					captured: !pokemon.captured
-				})
-			}
-		} catch (error) {
-			console.error('Failed to toggle captured status', error)
-		}
+	getSelectedPokemon(): PokemonState {
+		return this.selectedPokemon ? this.selectedPokemon : pokemonNullState
 	}
 
-	toggleShiny(identifier: string) {
-		try {
-			const pokemon = this.dexState.pokemon[identifier]
-			if (pokemon) {
-				this.updatePokemonState(identifier, {
-					shiny: !pokemon.shiny
-				})
-			}
-		} catch (error) {
-			console.error('Failed to toggle shiny status', error)
-		}
-	}
-
-	setSelectedPokemon(identifier: string) {
-		this.selectedPokemon = this.dexState.pokemon[identifier]
-	}
-
-	getSelectedPokemon() {
-		return this.selectedPokemon ? this.selectedPokemon : this.nullState
-	}
-
-	deselectPokemon() {
-		this.selectedPokemon = this.nullState
+	deselectPokemon(): void {
+		this.selectedPokemon = pokemonNullState
 	}
 }
 

@@ -4,7 +4,7 @@
 	let { identifier, disabled } = $props()
 
 	function resetPokemon() {
-		pkState.resetPokemonState(identifier)
+		pkState.resetPokemon(identifier)
 		pkState.deselectPokemon()
 	}
 

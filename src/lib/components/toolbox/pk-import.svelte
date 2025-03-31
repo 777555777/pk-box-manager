@@ -48,7 +48,7 @@
 
 					// Force a refresh if this is the current Dex
 					if (validDex.name === appState.getSelectedDexName()) {
-						pkState.loadDexState(validDex.name)
+						pkState.switchPokedex(validDex.name)
 					}
 				}
 			} catch (error) {
@@ -67,7 +67,7 @@
 
 			// Force a refresh if this is the current Dex
 			if (pendingImport.name === appState.getSelectedDexName()) {
-				pkState.loadDexState(pendingImport.name)
+				pkState.switchPokedex(pendingImport.name)
 			}
 
 			pendingImport = null

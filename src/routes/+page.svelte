@@ -14,14 +14,14 @@
 	let dexOrder = $derived(storageHandler.loadPokedexOrder(selectedDexName))
 
 	// State für ausgewählte DexOrder
-	let dexState = $derived(pkState.getDexState())
+	let dexState = $derived(pkState.getCurrentPokedex())
 
 	let isLoading = $derived(appState.getAppLoadingState())
 
 	// Initialize data on first load
 	$effect(() => {
 		// Ensure dex data is loaded
-		pkState.loadDexState(selectedDexName)
+		pkState.switchPokedex(selectedDexName)
 
 		// Check if data is available
 		if (dexState && dexOrder) {

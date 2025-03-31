@@ -21,7 +21,7 @@
 
 	// === Ball Selector ===
 	function handleBallChange(newValue: BallsType) {
-		pkState.updatePokemonState(identifier, { ball: newValue })
+		pkState.updatePokemon(identifier, { ball: newValue })
 	}
 
 	// Update it whenever the state manager's selection changes
@@ -39,9 +39,9 @@
 			<PkToggle
 				icon="✨"
 				label="Shiny"
-				checked={pkState.getPokemonState(identifier).shiny}
+				checked={pkState.getPokemon(identifier).shiny}
 				{disabled}
-				onChange={() => pkState.toggleShiny(identifier)}
+				onChange={() => pkState.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })}
 			/>
 		</div>
 	</section>

@@ -17,7 +17,7 @@
 		appState.setAppLoadingState(true)
 
 		// Load the new dex state
-		pkState.loadDexState(select.value)
+		pkState.switchPokedex(select.value)
 
 		// Wait for the next tick to ensure state is updated
 		queueMicrotask(() => {
