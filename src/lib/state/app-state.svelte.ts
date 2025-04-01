@@ -1,89 +1,87 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
 import { type PokemonData, storageHandler } from './storage-handler.ts'
 
+type BadgeDisplayMode = false | 'ball'
+
 export class AppState {
+	// UI state
 	private isAppLoading = $state(true)
 	private viewerMode = $state(false)
-	private badgeDisplay: string | boolean = $state(false)
+	private badgeDisplay: BadgeDisplayMode = $state(false)
+
+	// Application settings
 	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
-	private defaultBall = $state('01-poke-ball')
 	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
 
-	public toggleViewerMode() {
-		this.viewerMode = !this.viewerMode
-	}
+	// ================
+	// UI State Methods
+	// ================
 
-	public getViewerMode() {
-		return this.viewerMode
-	}
-
-	public getBadgeDisplay() {
-		return this.badgeDisplay
-	}
-
-	public getAppLoadingState() {
+	public isLoading(): boolean {
 		return this.isAppLoading
 	}
 
-	public setAppLoadingState(isLoading: boolean) {
+	public setLoading(isLoading: boolean): void {
 		this.isAppLoading = isLoading
 	}
 
-	public cycleBadgeDisplay(currentBadeDisplay: string | boolean) {
-		switch (currentBadeDisplay) {
-			case false:
-				this.badgeDisplay = 'ball'
-				break
-			case 'ball':
-				this.badgeDisplay = false // false is off
-				break
-			default:
-				this.badgeDisplay = false
-				break
-		}
+	public isViewerModeEnabled(): boolean {
+		return this.viewerMode
 	}
 
-	public getSelectedDexName() {
+	public toggleViewerMode(): void {
+		this.viewerMode = !this.viewerMode
+	}
+
+	public getBadgeDisplayMode(): BadgeDisplayMode {
+		return this.badgeDisplay
+	}
+
+	public cycleBadgeDisplayMode(): void {
+		const nextModeMap = new Map<BadgeDisplayMode, BadgeDisplayMode>([
+			[false, 'ball'],
+			['ball', false]
+		])
+
+		this.badgeDisplay = nextModeMap.get(this.badgeDisplay) ?? false
+	}
+
+	public getCurrentPokedexName(): string {
 		return this.selectedDexName
 	}
 
-	public setSelectedDexName(name: string) {
+	public setCurrentPokedexName(name: string): void {
 		this.selectedDexName = name
 		storageHandler.saveSelectedPokedexName(name)
 	}
 
-	public getDefaultBall() {
-		return this.defaultBall
-	}
+	// ================
+	// App Defaults Methods
+	// ================
 
-	public setDefaultBall(newDefault: string) {
-		this.defaultBall = newDefault
-	}
-
-	public getAppDefaults() {
+	public getAppDefaults(): Partial<PokemonData> {
 		return this.appDefaults
 	}
 
-	public setAppDefaults(updatedDefaults: Partial<PokemonData>) {
-		// Lokalen Status aktualisieren
-		const currentDefaults = this.appDefaults
-		const newDefaults = { ...currentDefaults, ...updatedDefaults }
+	public updateAppDefaults(updatedDefaults: Partial<PokemonData>): void {
+		// Update local state
+		const newDefaults = { ...this.appDefaults, ...updatedDefaults }
 		this.appDefaults = newDefaults
-		// persist to localStorage
+
+		// Persist to localStorage
 		storageHandler.saveAppDefaults(this.appDefaults)
 	}
 
-	public loadAppDefaults() {
+	public loadAppDefaults(): void {
 		this.appDefaults = storageHandler.loadAppDefaults()
 	}
 
-	public resetAppDefaults() {
-		this.setAppDefaults(initialAppDefaults)
+	public resetAppDefaults(): void {
+		this.updateAppDefaults(initialAppDefaults)
 	}
 
-	public checkForModifiedDefaults() {
-		const modified = JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults)
-		return modified
+	public hasModifiedDefaults(): boolean {
+		return JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults)
 	}
 }
 

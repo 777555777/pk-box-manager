@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte'
 
 	// State für ausgewählten DexName
-	let selectedDexName = $derived(appState.getSelectedDexName())
+	let selectedDexName = $derived(appState.getCurrentPokedexName())
 
 	// Ausgewählte DexOrder
 	let dexOrder = $derived(storageHandler.loadPokedexOrder(selectedDexName))
@@ -16,7 +16,7 @@
 	// State für ausgewählte DexOrder
 	let dexState = $derived(pkState.getCurrentPokedex())
 
-	let isLoading = $derived(appState.getAppLoadingState())
+	let isLoading = $derived(appState.isLoading())
 
 	// Initialize data on first load
 	$effect(() => {
@@ -25,7 +25,7 @@
 
 		// Check if data is available
 		if (dexState && dexOrder) {
-			appState.setAppLoadingState(false)
+			appState.setLoading(false)
 		}
 	})
 

@@ -18,22 +18,22 @@
 
 	// === Shiny Toggle ===
 	function handleToggleChange(newValue: boolean) {
-		appState.setAppDefaults({ shiny: newValue })
+		appState.updateAppDefaults({ shiny: newValue })
 	}
 
 	// === Game Dropdown ===
 	function handleGameChange(newValue: GameType) {
-		appState.setAppDefaults({ caughtIn: newValue })
+		appState.updateAppDefaults({ caughtIn: newValue })
 	}
 
 	// === Comment Textarea ===
 	function handleCommentChange(newValue: string) {
-		appState.setAppDefaults({ comment: newValue })
+		appState.updateAppDefaults({ comment: newValue })
 	}
 
 	// === Ball Selector ===
 	function handleBallChange(newValue: string) {
-		appState.setAppDefaults({ ball: newValue })
+		appState.updateAppDefaults({ ball: newValue })
 	}
 
 	// === Reset Button ===

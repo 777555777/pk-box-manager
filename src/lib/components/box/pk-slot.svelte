@@ -9,13 +9,13 @@
 	const identifier = getIdentifier(pokemonEntry)
 	const selectedPokemonSpriteData = getPokemonSpriteData(identifier)
 
-	let viewerMode = $derived(appState.getViewerMode())
+	let viewerMode = $derived(appState.isViewerModeEnabled())
 
 	let pokemonState = $derived(pkState.getPokemon(identifier))
 
 	let isSelected = $derived(identifier === getIdentifier(pkState.getSelectedPokemon().idEntry))
 
-	let badgeDisplay = $derived(appState.getBadgeDisplay())
+	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	function onclick() {
 		if (viewerMode) {

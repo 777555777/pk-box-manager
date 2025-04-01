@@ -12,15 +12,15 @@
 
 	let defaultsDialog: PkDefaultsDialogElement
 
-	let viewerMode = $derived(appState.getViewerMode())
-	let badgeDisplay = $derived(appState.getBadgeDisplay())
+	let viewerMode = $derived(appState.isViewerModeEnabled())
+	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	function toggleViewerMode() {
 		appState.toggleViewerMode()
 	}
 
 	function cycleBadgeDisplay() {
-		appState.cycleBadgeDisplay(badgeDisplay)
+		appState.cycleBadgeDisplayMode(badgeDisplay)
 	}
 
 	function openDefaultDialog() {
@@ -48,7 +48,7 @@
 
 			<!-- cycle to additional display modes -->
 			<button onclick={openDefaultDialog}
-				>Defaults{#if appState.checkForModifiedDefaults()}❗{/if}</button
+				>Defaults{#if appState.hasModifiedDefaults()}❗{/if}</button
 			>
 		</div>
 	</div>

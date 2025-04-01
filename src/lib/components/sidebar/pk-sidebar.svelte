@@ -16,7 +16,7 @@
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 
 	let isSelectionValid = $derived(identifier === '0000-null')
-	let viewerMode = $derived(appState.getViewerMode())
+	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
 
 	// === Ball Selector ===

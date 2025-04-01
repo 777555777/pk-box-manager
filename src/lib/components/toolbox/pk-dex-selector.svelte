@@ -4,24 +4,24 @@
 	import { supportedPokedexList } from '$lib/init-dex-helper'
 
 	// State für ausgewählten DexName
-	let selectedDexName = $derived(appState.getSelectedDexName())
+	let selectedDexName = $derived(appState.getCurrentPokedexName())
 
 	// Handle dex changes
 	function handleDexChange(event: Event) {
 		const select = event.target as HTMLSelectElement
 
 		// Update the app state
-		appState.setSelectedDexName(select.value)
+		appState.setCurrentPokedexName(select.value)
 
 		// Set loading state
-		appState.setAppLoadingState(true)
+		appState.setLoading(true)
 
 		// Load the new dex state
 		pkState.switchPokedex(select.value)
 
 		// Wait for the next tick to ensure state is updated
 		queueMicrotask(() => {
-			appState.setAppLoadingState(false)
+			appState.setLoading(false)
 		})
 	}
 </script>
