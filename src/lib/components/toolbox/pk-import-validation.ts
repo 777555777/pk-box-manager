@@ -1,7 +1,8 @@
 import { getIdentifier } from '../../spriteheet-helper.ts'
-import { getBoxOrder, type DexStorage } from '../../state/storage-handler.ts'
+import { pkState } from '../../state/pk-state.svelte.ts'
+import { type DexStorage } from '../../state/storage-handler.ts'
 
-export function validateImportedDexState(importedFile: unknown): DexStorage {
+export async function validateImportedDexState(importedFile: unknown): Promise<DexStorage> {
 	let dexData: DexStorage
 
 	// 1. Prüfen, ob es sich um ein gültiges JSON-Objekt handelt
@@ -31,8 +32,8 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 		throw new Error('Ungültiger oder fehlender Anzeigename in der Importdatei.')
 	}
 
-	// // 2.5 Prüfen ob die Daten zu einem supporteten Dex gehören
-	const targetDex = getBoxOrder(dexData.name)
+	// 2.5 Prüfen ob die Daten zu einem supporteten Dex gehören
+	const targetDex = await pkState.loadBoxOrder(dexData.name)
 	if (!targetDex) {
 		throw new Error('Ungültiger Wert in der Eigenschaft "name"')
 	}

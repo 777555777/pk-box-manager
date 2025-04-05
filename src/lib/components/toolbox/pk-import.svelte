@@ -33,9 +33,9 @@
 		if (!input.files || input.files.length === 0) return
 		const file = input.files[0]
 		const reader = new FileReader()
-		reader.onload = () => {
+		reader.onload = async () => {
 			try {
-				const validDex = validateImportedDexState(reader.result)
+				const validDex = await validateImportedDexState(reader.result)
 
 				if (storageHandler.loadPokedex(validDex.name)) {
 					// Local data found, override it?

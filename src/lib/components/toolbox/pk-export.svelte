@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { getBoxOrder, storageHandler } from '$lib/state/storage-handler'
+	import { pkState } from '$lib/state/pk-state.svelte'
+	import { storageHandler } from '$lib/state/storage-handler'
 
 	function exportCurrentDex() {
 		try {
@@ -8,7 +9,7 @@
 
 			// Wenn der Dex nicht exsistiert, initialisiere ihn und lade ihn erneut
 			if (!selectedPokedex) {
-				storageHandler.initPokedex(getBoxOrder(selectedDexName), selectedDexName)
+				storageHandler.initPokedex(pkState.getCachedOrder(selectedDexName), selectedDexName)
 				selectedPokedex = storageHandler.loadPokedex(selectedDexName)
 			}
 
