@@ -1,33 +1,4 @@
-import boxOrderNational from '../order/order-national.json' with { type: 'json' }
-import boxOrderNationalForms from '../order/order-national-forms.json' with { type: 'json' }
-import boxOrderNationalTest from '../order/order-national-test.json' with { type: 'json' }
-import orderTestSmall1 from '../order/order-test-small-1.json' with { type: 'json' }
-import orderTestSmall2 from '../order/order-test-small-2.json' with { type: 'json' }
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
-
-/**
- * Liefert die entsprechende Box-Reihenfolge für den gewählten Pokédex.
- * @param dexName Der Name des gewünschten Pokédex-Orders.
- * @returns Das Array mit der Box-Order für den gegebenen Pokédex.
- */
-export function getBoxOrder(dexName: string): BoxOrder[] {
-	console.log('getBoxOrder() dexName', dexName)
-
-	switch (dexName) {
-		case 'order-national.json':
-			return boxOrderNational
-		case 'order-national-forms.json':
-			return boxOrderNationalForms
-		case 'order-national-test.json':
-			return boxOrderNationalTest
-		case 'order-test-small-1.json':
-			return orderTestSmall1
-		case 'order-test-small-2.json':
-			return orderTestSmall2
-		default:
-			return boxOrderNational
-	}
-}
 
 export interface BoxOrder {
 	title: string
@@ -63,7 +34,7 @@ export interface DexStorage {
 
 class StorageHandler {
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
-	private readonly DEFAULT_SELECTED_DEX = 'order-test-small-1.json'
+	private readonly DEFAULT_SELECTED_DEX = 'order-national-forms.json'
 
 	// ================
 	// Pokedex
@@ -119,20 +90,12 @@ class StorageHandler {
 	 * @returns The name of the stored or default Pokedex.
 	 */
 	public loadSelectedPokedexName(): string {
-		return localStorage.getItem(this.SELECTED_DEX_KEY) || this.DEFAULT_SELECTED_DEX
-	}
-
-	// ================
-	// Box Order
-	// ================
-
-	/**
-	 * Returns the predefined box order for the given Pokedex name.
-	 * @param pokedexName The name of the Pokedex.
-	 * @returns The corresponding BoxOrder.
-	 */
-	public loadPokedexOrder(pokedexName: string): BoxOrder[] {
-		return getBoxOrder(pokedexName)
+		const selectedPokedex = localStorage.getItem(this.SELECTED_DEX_KEY) || this.DEFAULT_SELECTED_DEX
+		// If nothing was selected, return the default and persist it as selected in storage
+		if (selectedPokedex === this.DEFAULT_SELECTED_DEX) {
+			this.saveSelectedPokedexName(this.DEFAULT_SELECTED_DEX)
+		}
+		return selectedPokedex
 	}
 
 	// ================

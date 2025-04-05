@@ -2,48 +2,84 @@ import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../nu
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
-	getBoxOrder,
+	type BoxOrder,
 	storageHandler,
 	type DexStorage,
 	type PokemonData,
 	type PokemonState
 } from './storage-handler.ts'
 
+export async function fetchBoxOrder(dexName: string): Promise<BoxOrder[]> {
+	console.log('Fetching Box order from the server', dexName)
+	const response = await fetch(`/pkorder?dexname=${encodeURIComponent(dexName)}`)
+	if (!response.ok) {
+		throw new Error('Pokedex nicht gefunden')
+	}
+	return await response.json()
+}
+
 export class PkState {
+	private boxOrderCache: Record<string, BoxOrder[]> = $state({})
 	private pokedexState: DexStorage = $state(pokedexNullState)
 	private selectedPokemon: PokemonState = $state(pokemonNullState)
 
-	constructor() {
-		const selectedPokedex = storageHandler.loadSelectedPokedexName()
-		this.switchPokedex(selectedPokedex)
+	async loadBoxOrder(dexName: string): Promise<BoxOrder[]> {
+		// Check if the BoxOrder is cached
+		if (this.boxOrderCache[dexName]) {
+			return this.boxOrderCache[dexName]
+		}
+
+		// It is not in the cache, request it from the server
+		try {
+			const order = await fetchBoxOrder(dexName)
+			// Add it to the cache
+			this.boxOrderCache[dexName] = order
+			return order
+		} catch (error) {
+			throw new Error('Fehler beim Laden der BoxOrder:', error as ErrorOptions)
+		}
+	}
+
+	initBoxOrderState(boxOrder: BoxOrder[], dexName: string): void {
+		// Read Pokedex data from localStorage
+		let stateData = storageHandler.loadPokedex(dexName)
+
+		// Initialize if it doesn't exist
+		if (!stateData) {
+			storageHandler.initPokedex(boxOrder, dexName)
+			stateData = storageHandler.loadPokedex(dexName)
+		}
+
+		// Set as reactive state
+		this.pokedexState = stateData!
+
+		// Reset selected Pokemon
+		this.selectedPokemon = pokemonNullState
+	}
+
+	addToBoxOrderCache(dexName: string, boxOrder: BoxOrder[]) {
+		this.boxOrderCache[dexName] = boxOrder
+	}
+
+	getCachedOrder(dexName: string): BoxOrder[] {
+		return this.boxOrderCache[dexName]
 	}
 
 	// ================
 	// Pokedex
 	// ================
 
-	switchPokedex(dexName: string): void {
-		// Persist selected Pokedex in localstorage
-		storageHandler.saveSelectedPokedexName(dexName)
-
-		// Read Pokedex data from localstorage
-		let stateData = storageHandler.loadPokedex(dexName)
-
-		// Init the Pokedex if it does not exist yet and read its data
-		if (!stateData) {
-			storageHandler.initPokedex(getBoxOrder(dexName), dexName)
-			stateData = storageHandler.loadPokedex(dexName)
+	async switchPokedex(dexName: string): Promise<void> {
+		try {
+			// Save selected Pokedex name
+			storageHandler.saveSelectedPokedexName(dexName)
+			const boxOrder = await this.loadBoxOrder(dexName)
+			// Init the edit state for the target boxOrder
+			this.initBoxOrderState(boxOrder, dexName)
+		} catch (error) {
+			console.error('Error switching Pokedex:', error)
+			throw error
 		}
-
-		// Set the Pokedex from localstorage as reactive state
-		this.pokedexState = stateData!
-
-		// Reset selected Pokemon when changing Pokedex
-		this.selectedPokemon = pokemonNullState
-	}
-
-	getCurrentPokedex(): DexStorage {
-		return this.pokedexState
 	}
 
 	// ================

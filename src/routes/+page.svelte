@@ -4,30 +4,11 @@
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
-	import { storageHandler } from '$lib/state/storage-handler'
 	import { onMount } from 'svelte'
 
 	// State für ausgewählten DexName
 	let selectedDexName = $derived(appState.getCurrentPokedexName())
-
-	// Ausgewählte DexOrder
-	let dexOrder = $derived(storageHandler.loadPokedexOrder(selectedDexName))
-
-	// State für ausgewählte DexOrder
-	let dexState = $derived(pkState.getCurrentPokedex())
-
-	let isLoading = $derived(appState.isLoading())
-
-	// Initialize data on first load
-	$effect(() => {
-		// Ensure dex data is loaded
-		pkState.switchPokedex(selectedDexName)
-
-		// Check if data is available
-		if (dexState && dexOrder) {
-			appState.setLoading(false)
-		}
-	})
+	let dexOrder = $derived(pkState.loadBoxOrder(selectedDexName))
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
@@ -64,9 +45,9 @@
 	})
 </script>
 
-{#if isLoading}
-	<div class="loading">Lade Pokédex...</div>
-{:else}
+{#await dexOrder}
+	<p>waiting...</p>
+{:then dexOrder}
 	<main>
 		<PkBoxContainer {dexOrder} />
 
@@ -75,7 +56,7 @@
 			<PkSidebar />
 		</section>
 	</main>
-{/if}
+{/await}
 
 <style>
 	main {
