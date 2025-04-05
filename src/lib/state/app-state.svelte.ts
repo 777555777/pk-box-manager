@@ -5,7 +5,6 @@ type BadgeDisplayMode = false | 'ball'
 
 export class AppState {
 	// UI state
-	private isAppLoading = $state(true)
 	private viewerMode = $state(false)
 	private badgeDisplay: BadgeDisplayMode = $state(false)
 
@@ -16,14 +15,6 @@ export class AppState {
 	// ================
 	// UI State Methods
 	// ================
-
-	public isLoading(): boolean {
-		return this.isAppLoading
-	}
-
-	public setLoading(isLoading: boolean): void {
-		this.isAppLoading = isLoading
-	}
 
 	public isViewerModeEnabled(): boolean {
 		return this.viewerMode

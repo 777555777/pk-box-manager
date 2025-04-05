@@ -8,21 +8,13 @@
 
 	// Handle dex changes
 	function handleDexChange(event: Event) {
-		const select = event.target as HTMLSelectElement
+		const selectElement = event.target as HTMLSelectElement
 
 		// Update the app state
-		appState.setCurrentPokedexName(select.value)
-
-		// Set loading state
-		appState.setLoading(true)
+		appState.setCurrentPokedexName(selectElement.value)
 
 		// Load the new dex state
-		pkState.switchPokedex(select.value)
-
-		// Wait for the next tick to ensure state is updated
-		queueMicrotask(() => {
-			appState.setLoading(false)
-		})
+		pkState.switchPokedex(selectElement.value)
 	}
 </script>
 
