@@ -7,14 +7,18 @@
 	let selectedDexName = $derived(appState.getCurrentPokedexName())
 
 	// Handle dex changes
-	function handleDexChange(event: Event) {
+	async function handleDexChange(event: Event) {
 		const selectElement = event.target as HTMLSelectElement
 
 		// Update the app state
-		appState.setCurrentPokedexName(selectElement.value)
+		const targetPokedexName = selectElement.value
 
 		// Load the new dex state
-		pkState.switchPokedex(selectElement.value)
+		await pkState.switchPokedex(selectElement.value)
+
+		// Set the new pokedex name after the switch so that +page.svelte renders again
+		// when the boxorder is in the cache, preventing duplicate requests.
+		appState.setCurrentPokedexName(targetPokedexName)
 	}
 </script>
 
