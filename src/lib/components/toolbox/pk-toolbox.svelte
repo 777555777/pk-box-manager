@@ -13,14 +13,13 @@
 	let defaultsDialog: PkDefaultsDialogElement
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
-	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	function toggleViewerMode() {
 		appState.toggleViewerMode()
 	}
 
 	function cycleBadgeDisplay() {
-		appState.cycleBadgeDisplayMode(badgeDisplay)
+		appState.cycleBadgeDisplayMode()
 	}
 
 	function openDefaultDialog() {
