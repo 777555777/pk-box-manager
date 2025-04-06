@@ -101,10 +101,15 @@ export class PkState {
 		}
 		const currentState = this.pokedexState.pokemon[identifier]
 
+		// Update captured if another property is somehow edited before it
+		const hasUpdates = Object.keys(updatedState).length > 0
+		const isUpdatingCaptureState = 'captured' in updatedState || 'isCustomized' in updatedState
+
+		if (hasUpdates && !isUpdatingCaptureState) {
+			updatedState.captured = true
+		}
+
 		if (!currentState.isCustomized) {
-			// The first update is always to the captured property
-			// The defaults also dont provide a captured property so this
-			// will not interfer here by overriding something
 			const defaults = appState.getAppDefaults()
 			updatedState = { ...defaults, ...updatedState }
 			updatedState.isCustomized = true
