@@ -5,7 +5,7 @@
 	let isSelectionValid = $derived(identifier === '0000-null')
 
 	function getDisplayname(entry: any) {
-		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid : ''}`
+		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid.replaceAll('-', ' ') : ''}`
 	}
 </script>
 
