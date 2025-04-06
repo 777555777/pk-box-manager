@@ -10,6 +10,7 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
+	import PkLinks from './pk-links.svelte'
 
 	// Create a reactive state variable
 	let selectedPokemon = $state(pkState.getSelectedPokemon())
@@ -57,7 +58,10 @@
 	<section>
 		<PkStats {identifier} />
 	</section>
-
+	<hr />
+	<section>
+		<PkLinks idEntry={selectedPokemon.idEntry} />
+	</section>
 	<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
 </aside>
 
