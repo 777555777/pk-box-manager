@@ -15,11 +15,12 @@
 
 		const activeElement = document.activeElement
 		const isInToolbox = !!activeElement?.closest('.pk-toolbox')
+		const isInSidebar = !!activeElement?.closest('.pk-sidebar')
 		const isInputOrTextarea =
 			activeElement?.tagName === 'INPUT' || activeElement?.tagName === 'TEXTAREA'
 
 		// Wenn das aktive Element kein Input/Textarea ist oder sich in der Toolbox befindet
-		if (!isInputOrTextarea || isInToolbox) {
+		if (!isInputOrTextarea || isInToolbox || isInSidebar) {
 			resetPokemon()
 		}
 	}
