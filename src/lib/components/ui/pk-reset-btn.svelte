@@ -34,4 +34,4 @@
 	})
 </script>
 
-<button onclick={resetPokemon} {disabled}>Reset (Q)</button>
+<button onclick={resetPokemon} {disabled}>Reset <kbd>Q</kbd></button>
