@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PkStatMeter from '../ui/pk-stat-meter.svelte'
-	import PkTypeBadge from '../ui/pk-type-badge.svelte'
+	import PkStatMeter from '$lib/components/ui/pk-stat-meter.svelte'
+	import PkTypeBadge from '$lib/components/ui/pk-type-badge.svelte'
 
 	interface StaticPokemonData {
 		originRegion: string
@@ -15,18 +15,20 @@
 
 	async function requestPokemonStats(): Promise<StaticPokemonData> {
 		const response = await fetch(`/pkinfo?identifier=${encodeURIComponent(identifier)}`)
-		if (!response.ok) {
-			throw new Error('Pokemon nicht gefunden')
-		}
-		return await response.json()
+		if (!response.ok) throw new Error('Pokemon nicht gefunden')
+
+		const data = await response.json()
+		if (!data) throw new Error('Keine Daten erhalten')
+
+		return data
 	}
 
 	const statLabels = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
 </script>
 
-<section class="pk-stats-container">
+<div class="pk-stats-container">
 	{#await requestPokemon}
-		<!-- <p>...loading</p> -->
+		<p>...loading</p>
 	{:then pokemon}
 		<div class="pk-types">
 			{#each pokemon.types as type}
@@ -37,7 +39,7 @@
 		<div class="pk-stats">
 			{#each pokemon.stats as stat, index}
 				<div class="stat-row">
-					<PkStatMeter value={stat} {index} label={statLabels[index]} />
+					<PkStatMeter label={statLabels[index]} value={stat} {index} />
 				</div>
 			{/each}
 		</div>
@@ -59,7 +61,7 @@
 	{:catch error}
 		<p>{error.message}</p>
 	{/await}
-</section>
+</div>
 
 <style>
 	.pk-stats-container {

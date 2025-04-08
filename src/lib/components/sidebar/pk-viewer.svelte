@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 
-	let { identifier, isShiny = false }: { identifier: string; isShiny: boolean } = $props()
+	let { identifier, shiny = false }: { identifier: string; shiny: boolean } = $props()
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))
 </script>
 
 <section class="pk-viewer">
 	<img
-		src={`/spritesheets/${isShiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
+		src={`/spritesheets/${shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
 		alt={identifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 	/>
@@ -30,16 +30,6 @@
 		padding: 10px;
 	}
 
-	/* .pk-viewer img {
-		box-sizing: content-box;
-		image-rendering: pixelated;
-		width: 256px; 
-		height: 256px;
-	} */
-
-	:root {
-		--image-slot-size: 64px;
-	}
 	img {
 		box-sizing: content-box;
 		image-rendering: pixelated;

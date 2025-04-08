@@ -8,27 +8,29 @@
 	let {
 		selectedPokemon,
 		identifier,
-		disabled
-	}: { selectedPokemon: PokemonState; identifier: string; disabled: boolean } = $props()
-	let isSelectionValid = $derived(identifier === '0000-null')
+		disabled,
+		isSelectionValid
+	}: {
+		selectedPokemon: PokemonState
+		identifier: string
+		disabled: boolean
+		isSelectionValid: boolean
+	} = $props()
 
-	function deriveGameGen() {
-		const gameKey = selectedPokemon.caughtIn
-		if (gameKey in Game) {
-			return Game[gameKey as GameType].gen
-		}
-		return ''
+	function deriveGameGeneration() {
+		const game = Game[selectedPokemon.caughtIn as GameType]
+		return game ? game.gen : ''
 	}
 
 	// === Game Dropdown ===
-	function handleGameChange(newValue: GameType) {
+	function updateCaughtIn(newValue: GameType) {
 		pkState.updatePokemon(identifier, {
 			caughtIn: newValue
 		})
 	}
 
 	// === Comment Textarea ===
-	function handleCommentChange(newValue: string) {
+	function updateComment(newValue: string) {
 		pkState.updatePokemon(identifier, {
 			comment: newValue
 		})
@@ -38,21 +40,20 @@
 <div class="pk-inputs">
 	<div class="pk-region">
 		<PkGameSelector
-			onChange={handleGameChange}
-			{disabled}
-			value={selectedPokemon.caughtIn}
 			label="Caught in"
+			onUpdate={updateCaughtIn}
+			value={selectedPokemon.caughtIn}
+			{disabled}
 		/>
 		{#if !isSelectionValid && selectedPokemon.caughtIn !== ''}
-			<span class="pk-gen">Generation {deriveGameGen()}</span>
+			<span class="pk-gen">Generation {deriveGameGeneration()}</span>
 		{/if}
 	</div>
-
 	<PkTextarea
 		label="Comment"
-		onInput={handleCommentChange}
+		onUpdate={updateComment}
 		value={selectedPokemon.comment}
-		debounceTime={1250}
+		debounceTime={250}
 		{disabled}
 	/>
 </div>

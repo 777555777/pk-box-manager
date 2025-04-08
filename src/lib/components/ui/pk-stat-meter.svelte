@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { value, maxStatValue = 255, index, label } = $props()
+	let { label, value, maxStatValue = 255, index } = $props()
 </script>
 
 <label for="stat-{index}" class="stat-label">{label}</label>

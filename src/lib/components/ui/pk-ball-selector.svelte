@@ -3,10 +3,10 @@
 	import { setCssPosition } from '$lib/spriteheet-helper'
 
 	let {
+		label = '',
+		onUpdate = () => {},
 		selectedBall,
 		disabled = false,
-		onChange = () => {},
-		label = '',
 		id = crypto.randomUUID()
 	} = $props()
 
@@ -14,7 +14,7 @@
 	let trayRef = $state<HTMLElement | null>(null)
 
 	function selectBall(ball: BallsType) {
-		onChange(ball)
+		onUpdate(ball)
 		showTray = false
 	}
 

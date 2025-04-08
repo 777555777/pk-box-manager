@@ -39,7 +39,7 @@
 	<hr />
 
 	<div class="pk-modes">
-		<PkToggle icon="👀" label="Viewer Mode" checked={viewerMode} onChange={toggleViewerMode} />
+		<PkToggle icon="👀" label="Viewer Mode" checked={viewerMode} onUpdate={toggleViewerMode} />
 
 		<div class="pk-toolbox-btn-group">
 			<!-- cycle to additional display modes -->

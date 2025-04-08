@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { appState } from '$lib/state/app-state.svelte'
-	import type { GameType } from '$lib/models/data-models'
 	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
 	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+	import { appState } from '$lib/state/app-state.svelte'
+	import type { GameType } from '$lib/models/data-models'
 
 	let dialogElement: HTMLDialogElement
 
@@ -46,31 +46,31 @@
 	<section class="pk-defaults">
 		<!-- Ball -->
 		<PkBallSelector
-			selectedBall={appState.getAppDefaults().ball}
-			onChange={handleBallChange}
 			label="Ball"
+			onUpdate={handleBallChange}
+			selectedBall={appState.getAppDefaults().ball}
 		/>
 
 		<!-- Shiny -->
 		<PkToggle
 			icon="✨"
 			label="Shiny"
+			onUpdate={handleToggleChange}
 			checked={appState.getAppDefaults().shiny}
-			onChange={handleToggleChange}
 		/>
 
 		<!-- Game -->
 		<PkGameSelector
-			onChange={handleGameChange}
-			value={appState.getAppDefaults().caughtIn}
 			label="Caught in"
+			onUpdate={handleGameChange}
+			value={appState.getAppDefaults().caughtIn}
 		/>
 
 		<!-- Comment -->
 		<PkTextarea
-			value={appState.getAppDefaults().comment}
 			label="Comment"
-			onInput={handleCommentChange}
+			onUpdate={handleCommentChange}
+			value={appState.getAppDefaults().comment}
 			debounceTime={1250}
 		/>
 	</section>

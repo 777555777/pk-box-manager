@@ -1,11 +1,11 @@
 <script lang="ts">
 	let {
+		icon = '',
 		label = '',
+		onUpdate = () => {},
 		checked = false,
 		disabled = false,
-		id = crypto.randomUUID(),
-		onChange = () => {},
-		icon = ''
+		id = crypto.randomUUID()
 	} = $props()
 </script>
 
@@ -14,7 +14,7 @@
 		<label for={id}>{label}</label>
 	{/if}
 	<label class="switch">
-		<input type="checkbox" {id} {disabled} bind:checked onchange={() => onChange(checked)} />
+		<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
 		<span class="slider"></span>
 	</label>
 	{#if icon && !label}

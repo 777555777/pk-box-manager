@@ -1,21 +1,21 @@
 <script lang="ts">
 	import type { PokemonEntry } from '$lib/state/storage-handler'
 
-	let { idEntry, identifier }: { idEntry: PokemonEntry; identifier: string } = $props()
-	let isSelectionValid = $derived(identifier === '0000-null')
+	let { idEntry, isSelectionValid }: { idEntry: PokemonEntry; isSelectionValid: boolean } = $props()
 
-	function getDisplayname(entry: any) {
-		return `${entry.id_national} | ${entry.pokemonid} ${entry.formid ? entry.formid.replaceAll('-', ' ') : ''}`
+	function formatPokemonDisplayName(entry: any) {
+		const form = entry.formid ? entry.formid.replaceAll('-', ' ') : ''
+		return `${entry.id_national} | ${entry.pokemonid} ${form}`
 	}
 </script>
 
 {#if !isSelectionValid}
-	<h3>{getDisplayname(idEntry)}</h3>
+	<h3>{formatPokemonDisplayName(idEntry)}</h3>
 	{@render displayGender()}
 {/if}
 
 {#snippet displayGender()}
-	{#if getDisplayname(idEntry).includes('female')}
+	{#if formatPokemonDisplayName(idEntry).includes('female')}
 		<span class="pk-gender">♀️</span>
 	{:else}
 		<span class="pk-gender">♂️</span>

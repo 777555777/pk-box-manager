@@ -1,10 +1,10 @@
 <script lang="ts">
 	let {
 		label = '',
+		onUpdate = () => {},
+		value = '',
 		disabled = false,
 		id = crypto.randomUUID(),
-		value = '',
-		onInput = () => {},
 		debounceTime = 750
 	} = $props()
 	let timer: number | undefined = undefined
@@ -12,7 +12,7 @@
 	function debounce() {
 		clearTimeout(timer)
 		timer = setTimeout(() => {
-			onInput(value)
+			onUpdate(value)
 			clearTimeout(timer)
 		}, debounceTime)
 	}

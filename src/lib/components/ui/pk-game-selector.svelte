@@ -2,16 +2,16 @@
 	import { Game, Generations } from '$lib/models/data-models'
 
 	let {
-		disabled = false,
-		id = crypto.randomUUID(),
+		label = '',
+		onUpdate = () => {},
 		value = '', // '' Renders as "Select game"
-		onChange = () => {},
-		label = ''
+		disabled = false,
+		id = crypto.randomUUID()
 	} = $props()
 </script>
 
 <label for={id}>{label}</label>
-<select {id} {disabled} bind:value onchange={() => onChange(value)}>
+<select {id} {disabled} bind:value onchange={() => onUpdate(value)}>
 	<option value="">Select game</option>
 	{#each Generations as gen}
 		<optgroup label={`Generation ${gen}`}>

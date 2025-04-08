@@ -20,41 +20,54 @@
 	let disabled = $derived(isSelectionValid || viewerMode)
 
 	// === Ball Selector ===
-	function handleBallChange(newValue: BallsType) {
+	function updatePokeball(newValue: BallsType) {
 		pkState.updatePokemon(identifier, { ball: newValue })
+	}
+
+	// === Shiny Toggle ===
+	function toggleShiny() {
+		pkState.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })
 	}
 
 	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
 <aside class="pk-sidebar">
+	<h2 class="sr-only">Pokemon details sidebar</h2>
 	<section>
-		<PkViewer {identifier} isShiny={selectedPokemon.shiny} />
+		<h3 class="sr-only">Pokémon Viewer</h3>
+		<PkViewer {identifier} shiny={selectedPokemon.shiny} />
 		<div class="pk-viewer-controls">
 			<PkResetBtn {identifier} {disabled} />
 			<PkToggle
 				icon="✨"
 				label="Shiny"
-				checked={pkState.getPokemon(identifier).shiny}
+				onUpdate={toggleShiny}
+				checked={selectedPokemon.shiny}
 				{disabled}
-				onChange={() => pkState.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })}
 			/>
 		</div>
 	</section>
-	<section class="pk-title">
-		<PkBallSelector selectedBall={selectedPokemon.ball} {disabled} onChange={handleBallChange} />
-		<PkTitle idEntry={selectedPokemon.idEntry} {identifier} />
-	</section>
-	<hr />
 	<section>
-		<PkForm {selectedPokemon} {identifier} {disabled} />
+		<h3 class="sr-only">Name & Ball</h3>
+		<div class="pk-title-section">
+			<PkBallSelector onUpdate={updatePokeball} selectedBall={selectedPokemon.ball} {disabled} />
+			<PkTitle idEntry={selectedPokemon.idEntry} {isSelectionValid} />
+		</div>
 	</section>
-	<hr />
+	<div class="separator"></div>
 	<section>
+		<h3 class="sr-only">Catch data</h3>
+		<PkForm {selectedPokemon} {identifier} {disabled} {isSelectionValid} />
+	</section>
+	<div class="separator"></div>
+	<section>
+		<h3 class="sr-only">Status values</h3>
 		<PkStats {identifier} />
 	</section>
-	<hr />
+	<div class="separator"></div>
 	<section>
+		<h3 class="sr-only">Catch location</h3>
 		<PkLinks idEntry={selectedPokemon.idEntry} />
 	</section>
 	<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
@@ -85,10 +98,16 @@
 
 		position: relative;
 	}
-	.pk-title {
+	.pk-title-section {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		text-align: center;
+	}
+
+	.separator {
+		height: 1px;
+		background-color: rgba(0, 0, 0, 0.3);
+		margin: 0.5rem 0;
 	}
 </style>
