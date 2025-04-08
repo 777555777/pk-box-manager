@@ -6,14 +6,13 @@
 	import PkStats from '$lib/components/sidebar/pk-stats.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkResetBtn from '$lib/components/ui/pk-reset-btn.svelte'
+	import PkLinks from '$lib/components/sidebar/pk-links.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
-	import PkLinks from './pk-links.svelte'
 
-	// Create a reactive state variable
-	let selectedPokemon = $state(pkState.getSelectedPokemon())
+	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
 
 	let isSelectionValid = $derived(identifier === '0000-null')
@@ -25,11 +24,7 @@
 		pkState.updatePokemon(identifier, { ball: newValue })
 	}
 
-	// Update it whenever the state manager's selection changes
-	$effect(() => {
-		selectedPokemon = pkState.getSelectedPokemon()
-		$inspect('Sidebar:', selectedPokemon)
-	})
+	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
 <aside class="pk-sidebar">

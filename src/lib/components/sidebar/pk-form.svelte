@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { PokemonState } from '$lib/state/storage-handler'
-	import { pkState } from '$lib/state/pk-state.svelte'
-	import { Game, type GameType } from '$lib/models/data-models'
 	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
+	import { Game, type GameType } from '$lib/models/data-models'
+	import { type PokemonState } from '$lib/state/storage-handler'
 
 	let {
 		selectedPokemon,
