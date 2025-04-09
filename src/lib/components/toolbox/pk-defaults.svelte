@@ -17,22 +17,22 @@
 	}
 
 	// === Shiny Toggle ===
-	function handleToggleChange(newValue: boolean) {
+	function toggleShiny(newValue: boolean) {
 		appState.updateAppDefaults({ shiny: newValue })
 	}
 
 	// === Game Dropdown ===
-	function handleGameChange(newValue: GameType) {
+	function updateCaughtIn(newValue: GameType) {
 		appState.updateAppDefaults({ caughtIn: newValue })
 	}
 
 	// === Comment Textarea ===
-	function handleCommentChange(newValue: string) {
+	function updateComment(newValue: string) {
 		appState.updateAppDefaults({ comment: newValue })
 	}
 
 	// === Ball Selector ===
-	function handleBallChange(newValue: string) {
+	function updatePokeball(newValue: string) {
 		appState.updateAppDefaults({ ball: newValue })
 	}
 
@@ -47,7 +47,7 @@
 		<!-- Ball -->
 		<PkBallSelector
 			label="Ball"
-			onUpdate={handleBallChange}
+			onUpdate={updatePokeball}
 			selectedBall={appState.getAppDefaults().ball}
 		/>
 
@@ -55,23 +55,23 @@
 		<PkToggle
 			icon="✨"
 			label="Shiny"
-			onUpdate={handleToggleChange}
+			onUpdate={toggleShiny}
 			checked={appState.getAppDefaults().shiny}
 		/>
 
 		<!-- Game -->
 		<PkGameSelector
 			label="Caught in"
-			onUpdate={handleGameChange}
+			onUpdate={updateCaughtIn}
 			value={appState.getAppDefaults().caughtIn}
 		/>
 
 		<!-- Comment -->
 		<PkTextarea
 			label="Comment"
-			onUpdate={handleCommentChange}
+			onUpdate={updateComment}
 			value={appState.getAppDefaults().comment}
-			debounceTime={1250}
+			debounceTime={250}
 		/>
 	</section>
 	<div class="pk-default-options">
