@@ -29,7 +29,7 @@
 
 <style>
 	textarea {
-		min-height: 128px;
+		min-height: 96px;
 		max-width: 400px;
 	}
 </style>
