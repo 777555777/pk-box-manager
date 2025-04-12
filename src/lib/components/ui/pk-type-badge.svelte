@@ -11,7 +11,6 @@
 		--badge-color-highlight: hsl(from var(--badge-color) h calc(s * 1.5) min(l * 1.4, 90));
 
 		background-color: var(--badge-color);
-		padding: 0 4px;
 		width: fit-content;
 		width: calc(580px / 10);
 		height: calc(228px / 10);
@@ -20,6 +19,7 @@
 		text-align: center;
 		text-shadow: 1px 1px 0px #807870;
 
+		margin: 4px 2px; /* Fix element sizing with box-shadow */
 		box-shadow:
 			0px 2px var(--badge-color),
 			0px -2px var(--badge-color),
