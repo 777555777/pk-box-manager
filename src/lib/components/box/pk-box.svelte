@@ -10,53 +10,99 @@
 	<header class="box-header">
 		<h2>{box.title}</h2>
 	</header>
-	<div class="box-grid">
-		{#each box.pokemon as pokemon (getIdentifier(pokemon))}
-			<PkSlot pokemonEntry={pokemon} />
-		{/each}
+	<div class="pk-box-background">
+		<div class="box-grid">
+			{#each box.pokemon as pokemon (getIdentifier(pokemon))}
+				<PkSlot pokemonEntry={pokemon} />
+			{/each}
+		</div>
 	</div>
 </article>
 
 <style>
-	.pk-box {
-		display: grid;
-		grid-template-rows: auto 1fr;
-		justify-items: center;
-		gap: 0.75rem;
+	:root {
+		--source-box-bg-url: url('boxes/forest.png');
+		/* --source-box-bg-url: url('checks.png'); */
 	}
-	.box-header {
-		width: 258px;
-		height: 52px;
 
+	.pk-box {
+		width: fit-content;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		gap: 0.75rem;
+	}
 
-		/* concept placeholder */
-		background-color: hsl(290, 100%, 90%);
-		/* border: 2px solid hsl(280, 70%, 50%); */
-		border-radius: 10px;
-		padding: 10px;
+	.pk-box-background {
+		box-sizing: border-box;
+		width: 408px; /* source is 1134px */
+		height: 344px; /* source is 854px */
+		border-width: 11px;
+		border-style: solid;
+		border-image-source: var(--source-box-bg-url);
+		border-image-slice: 32; /* passt du ggf. an */
+		border-image-repeat: stretch;
+		border-image-outset: 0;
+		border-image-width: 11px;
 
-		h2 {
-			font-size: 1.5rem;
-			font-weight: normal;
+		image-rendering: pixelated;
+		position: relative;
+		z-index: 0; /* Stacking context für ::before */
+
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: var(--source-box-bg-url);
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+
+			background-size: 145%; /* scale image beyond container cize to avoid backed in border */
+			background-position: 50% 50%; /* center image in container */
+
+			z-index: -1;
 		}
 	}
+
+	.box-header {
+		box-sizing: border-box;
+
+		width: 258px; /*  source is 812px */
+		height: 52px; /* source is 161px */
+		border-width: 8px;
+		border-style: solid;
+		border-image-source: url('boxes/box-title-border.png');
+		border-image-slice: 8; /* passt du ggf. an */
+		border-image-repeat: stretch;
+		border-image-width: 8px;
+
+		image-rendering: pixelated;
+
+		background-image: url('boxes/forest-title-clean.png');
+		background-size: 102% 112%;
+		background-position: center;
+		background-repeat: no-repeat;
+
+		/* center headline */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		h2 {
+			font-size: 1.4rem;
+			color: #fff;
+			text-shadow: 0 0 5px #000;
+		}
+	}
+
 	.box-grid {
 		box-sizing: content-box;
 		display: grid;
 		grid-template-columns: repeat(6, 1fr);
 		grid-template-rows: repeat(5, 1fr);
-		gap: 0;
-
-		/* width: 384px; */
-		height: 320px;
-
-		/* concept placeholder */
-		background-color: hsl(10, 100%, 90%);
-		/* border: 2px solid hsl(0, 70%, 50%); */
-		border-radius: 10px;
-		padding: 10px;
+		place-items: center;
+		height: 100%;
 	}
 </style>

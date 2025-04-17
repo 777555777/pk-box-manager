@@ -17,6 +17,7 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(404px, 1fr));
-		gap: 2rem;
+		row-gap: 3rem;
+		column-gap: 2rem;
 	}
 </style>
