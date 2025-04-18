@@ -84,7 +84,7 @@
 	}
 
 	section {
-		padding: 10px;
+		padding: 8px;
 	}
 	.pk-sidebar {
 		/* width: 520px; */
@@ -95,8 +95,9 @@
 		border: 2px solid #7cff80;
 		border-radius: 10px;
 		padding: 10px;
-
-		position: relative;
+		min-width: 408px;
+		position: sticky;
+		top: 6.125rem;
 	}
 	.pk-title-section {
 		display: flex;

@@ -13,11 +13,12 @@
 
 <style>
 	.pk-box-container {
-		margin: 4rem 0;
 		width: 100%;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(404px, 1fr));
 		row-gap: 3rem;
 		column-gap: 2rem;
+		justify-items: center;
+		margin-bottom: 2rem;
 	}
 </style>

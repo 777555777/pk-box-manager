@@ -49,10 +49,9 @@
 	<p>waiting...</p>
 {:then dexOrder}
 	<main>
-		<PkBoxContainer {dexOrder} />
-
-		<section class="pk-tools">
-			<PkToolBox />
+		<PkToolBox />
+		<section class="pk-content">
+			<PkBoxContainer {dexOrder} />
 			<PkSidebar />
 		</section>
 	</main>
@@ -60,23 +59,13 @@
 
 <style>
 	main {
-		display: grid;
-		grid-template-columns: 1fr 400px; /* Content area and tools area */
-		gap: 2rem;
-		margin: 0 4rem;
-		align-items: start; /* Important for proper alignment */
-
 		min-height: 100dvh;
 	}
 
-	.pk-tools {
+	.pk-content {
+		margin: 0 2rem;
 		display: flex;
-		flex-direction: column;
+		align-items: flex-start;
 		gap: 2rem;
-		position: sticky; /* Make the entire tools section sticky */
-		top: 4rem;
-		height: auto;
-		max-height: calc(100vh - 4rem); /* Ensure it doesn't exceed viewport */
-		overflow-y: auto; /* Allow scrolling if tools get too tall */
 	}
 </style>

@@ -57,7 +57,7 @@
 
 <style>
 	.pk-toolbox {
-		width: 400px;
+		width: 60rem;
 
 		/* concept placeholder */
 		background-color: hsl(212, 100%, 90%);
@@ -66,16 +66,23 @@
 		padding: 10px;
 
 		display: flex;
-		justify-content: center;
-		flex-direction: column;
+		justify-content: space-around;
+		flex-direction: row;
 		gap: 0.75rem;
 
 		margin: 0 auto;
+
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		margin-left: calc(2rem + calc(100vw - 408px - 2rem - 4rem) / 2 - 30rem);
+		margin-bottom: 2rem;
 	}
 
 	.pk-data {
 		display: flex;
 		justify-content: space-between;
+		gap: 1rem;
 	}
 
 	.pk-modes {
