@@ -74,7 +74,7 @@
 		border-width: 8px;
 		border-style: solid;
 		border-image-source: url('boxes/box-title-border.png');
-		border-image-slice: 8; /* passt du ggf. an */
+		border-image-slice: 8; /* Quadrat von Bildecke aus bis zum inneren Rand Ende */
 		border-image-repeat: stretch;
 		border-image-width: 8px;
 

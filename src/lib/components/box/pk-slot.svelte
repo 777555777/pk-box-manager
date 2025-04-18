@@ -80,7 +80,7 @@
 	}
 
 	.pk-slot-image {
-		/* image-rendering: pixelated; */
+		image-rendering: auto;
 		object-fit: none;
 		width: 96px;
 		height: 96px;
@@ -99,18 +99,77 @@
 		position: relative;
 		overflow: hidden; /* Verhindert Überstand des Bildes */
 
-		/* concept placeholder */
-		background-color: hsl(60, 100%, 90%);
-		/* border: 2px solid hsl(50, 70%, 50%); */
+		border: none; /* Remove default button border */
+		background-color: transparent;
+		outline: 2px solid hsl(0, 0%, 40%, 0.2);
+		outline-offset: -2px;
 		border-radius: 5px;
-	}
 
-	.pk-shiny-slot {
-		background-color: hsl(60, 100%, 75%);
+		&:hover {
+			transform: scale(1.05);
+			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+			filter: saturate(1.2) brightness(1.2);
+			background-color: hsla(0, 0%, 80%, 0.25);
+		}
+
+		&:active {
+			transform: scale(0.95);
+			filter: brightness(0.9);
+			box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+		}
+
+		&:focus-visible {
+			outline: 2px solid hsl(220, 100%, 65%);
+			box-shadow: 2px 2px 6px hsl(220, 100%, 70%);
+			background-color: hsla(220, 100%, 85%, 0.25);
+		}
 	}
 
 	.pk-slot.selected {
-		background-color: hsl(120, 100%, 85%);
-		transition: all 0.2s ease-in-out;
+		outline: 2px solid hsl(120, 100%, 50%); /* Idea: use different color vor view mode */
+		box-shadow: 2px 2px 6px hsl(120, 100%, 40%);
+		background-color: rgb(255, 255, 255, 0.25);
+		position: relative;
+		overflow: visible; /* make hand pointer visible outside of slot */
+
+		/* Cursour ponting hand */
+		&::before {
+			content: '';
+			position: absolute;
+			width: 38px;
+			height: 38px;
+
+			/* Position: oberhalb und leicht links */
+			top: -20px;
+			left: 50%;
+			transform: translateX(-50%);
+
+			background-image: url('boxes/hand-cursor.png');
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+
+			z-index: 10;
+			pointer-events: none;
+
+			animation: wiggle 0.5s infinite ease-in-out;
+		}
+	}
+
+	@keyframes wiggle {
+		0%,
+		100% {
+			transform: translateX(-50%) rotate(-5deg);
+		}
+		50% {
+			transform: translateX(-50%) rotate(5deg);
+		}
+	}
+
+	.pk-shiny-slot {
+		background-color: oklch(60 0.18 90 / 0.35);
+		img {
+			filter: drop-shadow(0 0 5px hsl(55, 100%, 85%));
+		}
 	}
 </style>
