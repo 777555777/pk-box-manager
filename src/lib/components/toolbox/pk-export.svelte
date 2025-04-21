@@ -43,12 +43,4 @@
 	}
 </script>
 
-<button onclick={exportCurrentDex}>Export</button>
-
-<style>
-	button {
-		cursor: pointer;
-		height: 100%;
-		padding: 0 16px;
-	}
-</style>
+<button class="pk-button" onclick={exportCurrentDex}>Export</button>

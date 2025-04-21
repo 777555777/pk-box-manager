@@ -97,7 +97,7 @@
 	style="display: none;"
 	onchange={readImportFile}
 />
-<label for="input-file" class="button-style">Import</label>
+<button class="pk-button" onclick={() => fileInput.click()}>Import</button>
 
 <PkDialog
 	bind:this={infoDialog}
@@ -112,24 +112,3 @@
 	onConfirm={() => {}}
 	onCancle={() => {}}
 />
-
-<style>
-	.button-style {
-		display: inline-block;
-		padding: 8px 16px;
-		background-color: #e9e9ed;
-		color: rgb(0, 0, 0);
-		border-radius: 4px;
-		cursor: pointer;
-		border: 1px solid #8f8f9d;
-		text-align: center;
-	}
-
-	.button-style:hover {
-		background-color: #d0d0d7;
-	}
-
-	.button-style:active {
-		background-color: #b1b1b9;
-	}
-</style>

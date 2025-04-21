@@ -43,10 +43,10 @@
 
 		<div class="pk-toolbox-btn-group">
 			<!-- cycle to additional display modes -->
-			<button onclick={cycleBadgeDisplay}>Badge 🔄</button>
+			<button class="pk-button" onclick={cycleBadgeDisplay}>Badge 🔄</button>
 
 			<!-- cycle to additional display modes -->
-			<button onclick={openDefaultDialog}
+			<button class="pk-button" disabled onclick={openDefaultDialog}
 				>Defaults{#if appState.hasModifiedDefaults()}❗{/if}</button
 			>
 		</div>
@@ -58,25 +58,32 @@
 <style>
 	.pk-toolbox {
 		width: 60rem;
-
-		/* concept placeholder */
-		background-color: hsl(212, 100%, 90%);
-		border: 2px solid hsl(202, 100%, 74%);
-		border-radius: 10px;
-		padding: 10px;
+		padding: 0.5rem;
 
 		display: flex;
 		justify-content: space-around;
-		flex-direction: row;
-		gap: 0.75rem;
-
-		margin: 0 auto;
 
 		position: sticky;
 		top: 0;
 		z-index: 5;
+		/* center the toolbox above the boxes */
 		margin-left: calc(2rem + calc(100vw - 408px - 2rem - 4rem) / 2 - 30rem);
 		margin-bottom: 2rem;
+
+		--border-corner-size: 15px;
+		--border-corner-size-num: 15;
+
+		border-width: var(--border-corner-size);
+		border-style: solid;
+		border-image-source: url('ui-layout-border.png');
+		border-image-slice: var(--border-corner-size-num) fill;
+		border-image-repeat: stretch;
+		border-image-outset: 0;
+		border-image-width: var(--border-corner-size);
+
+		image-rendering: pixelated;
+
+		transform: translateY(calc(var(--border-corner-size) * -1)); /* hide border-image top-edge */
 	}
 
 	.pk-data {
@@ -91,7 +98,8 @@
 		gap: 0.5rem;
 	}
 
-	button {
-		padding: 0.35rem 0.25rem;
+	.pk-toolbox-btn-group {
+		display: flex;
+		gap: 1rem;
 	}
 </style>
