@@ -79,7 +79,7 @@
 
 		--slice-top: 18;
 		--slice-right: 18;
-		--slice-bottom: 21;
+		--slice-bottom: 22;
 		--slice-left: 18;
 
 		border-style: solid;
