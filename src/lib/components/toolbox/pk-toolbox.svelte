@@ -55,35 +55,45 @@
 	<PkDefaults bind:this={defaultsDialog} />
 </aside>
 
+<!-- prettier-ignore -->
 <style>
 	.pk-toolbox {
+		/* Layout */
 		width: 60rem;
 		padding: 0.5rem;
-
 		display: flex;
 		justify-content: space-around;
 
+		/* Positioning */
 		position: sticky;
 		top: 0;
 		z-index: 5;
-		/* center the toolbox above the boxes */
-		margin-left: calc(2rem + calc(100vw - 408px - 2rem - 4rem) / 2 - 30rem);
+		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - 30rem);
 		margin-bottom: 2rem;
 
-		--border-corner-size: 15px;
-		--border-corner-size-num: 15;
+		/* Border settings */
+		--corner-top: 18px;
+		--corner-right: 18px;
+		--corner-bottom: 22px;
+		--corner-left: 18px;
 
-		border-width: var(--border-corner-size);
+		--slice-top: 18;
+		--slice-right: 18;
+		--slice-bottom: 21;
+		--slice-left: 18;
+
 		border-style: solid;
-		border-image-source: url('ui-layout-border.png');
-		border-image-slice: var(--border-corner-size-num) fill;
+		border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
+
+		border-image-source: url('/ui/ui-section-filled.png');
+		border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left) fill;
 		border-image-repeat: stretch;
 		border-image-outset: 0;
-		border-image-width: var(--border-corner-size);
 
 		image-rendering: pixelated;
 
-		transform: translateY(calc(var(--border-corner-size) * -1)); /* hide border-image top-edge */
+		/* Adjust top offset correctly */
+		transform: translateY(calc(-1 * var(--corner-top)));
 	}
 
 	.pk-data {

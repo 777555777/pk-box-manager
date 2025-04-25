@@ -97,7 +97,7 @@
 		padding: 10px;
 		min-width: 408px;
 		position: sticky;
-		top: 6.125rem;
+		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
 	}
 	.pk-title-section {
 		display: flex;
