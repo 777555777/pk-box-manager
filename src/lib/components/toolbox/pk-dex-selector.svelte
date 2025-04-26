@@ -22,22 +22,18 @@
 	}
 </script>
 
-<select
-	class="pk-order"
-	name="pk-order"
-	id="pk-order"
-	title="pokedex-order"
-	value={selectedDexName}
-	onchange={handleDexChange}
->
-	{#each Object.entries(supportedPokedexList) as [name, dex]}
-		<option value={name}>{dex.displayName}</option>
-	{/each}
-</select>
-
-<style>
-	.pk-order {
-		cursor: pointer;
-		padding: 0.35rem 0.25rem;
-	}
-</style>
+<div class="pk-select-wrapper">
+	<select
+		class="pk-select"
+		name="pk-order"
+		id="pk-order"
+		title="pokedex-order"
+		value={selectedDexName}
+		onchange={handleDexChange}
+	>
+		{#each Object.entries(supportedPokedexList) as [name, dex]}
+			<option value={name}>{dex.displayName}</option>
+		{/each}
+	</select>
+	<span class="pk-select-arrow"></span>
+</div>

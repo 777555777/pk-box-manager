@@ -110,12 +110,18 @@ body {
 
 /* ======== Global UI Element Classes ========= */
 
-.pk-button {
+:root {
 	--ui-text-color: #fff;
 	--ui-text-disabled: #c5c5c5;
 
-	width: 88px;
-	height: 44px;
+	--ui-form-element-height: 44px;
+}
+
+/* Button */
+.pk-button {
+	width: auto;
+	height: var(--ui-form-element-height);
+	padding-inline: 1rem;
 	color: var(--ui-text-color);
 	text-align: center;
 
@@ -164,3 +170,71 @@ body {
 		color: var(--ui-text-disabled);
 	}
 }
+
+/* Select */
+.pk-select {
+	width: auto;
+	height: var(--ui-form-element-height);
+	color: var(--ui-text-color);
+
+	padding-inline: 1rem;
+	padding-right: 2.875rem;
+	background-color: transparent;
+	image-rendering: pixelated;
+	cursor: pointer;
+
+	appearance: none;
+
+	border-width: 9px solid;
+	border-image: url('/ui/textarea-select-default.png') 9 fill stretch;
+	border-image-outset: 0;
+	border-image-width: 9px;
+
+	&:hover {
+		filter: brightness(1.15);
+	}
+
+	&:active {
+		filter: brightness(0.9);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-image-source: url('/ui/textarea-select-focus.png');
+	}
+
+	&:disabled {
+		filter: brightness(0.75);
+		pointer-events: none;
+		cursor: not-allowed;
+		color: var(--ui-text-disabled);
+	}
+
+	option {
+		background-color: #717186;
+		color: var(--ui-text-color);
+	}
+}
+
+.pk-select-wrapper {
+	position: relative;
+}
+
+.pk-select-arrow {
+	position: absolute;
+	right: 1rem;
+	top: 50%;
+	transform: translateY(-40%);
+	width: 14px;
+	height: 8px;
+	background-image: url('/ui/select-caret.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	pointer-events: none;
+}
+
+/* Textarea */
+/* ... */
+
+/* Toggle */
+/* ... */
