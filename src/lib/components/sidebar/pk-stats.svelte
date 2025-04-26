@@ -30,13 +30,22 @@
 	{#await requestPokemon}
 		<p>...loading</p>
 	{:then pokemon}
-		<div class="pk-types">
-			{#each pokemon.types as type}
-				<PkTypeBadge {type} />
-			{/each}
+		<div class="pk-row-1">
+			<div class="pk-origin">
+				<h4 class="sr-only">Origin Region</h4>
+				<span>Origin: {pokemon.originRegion}</span>
+			</div>
+
+			<div class="pk-types">
+				<h4 class="sr-only">Types</h4>
+				{#each pokemon.types as type}
+					<PkTypeBadge {type} />
+				{/each}
+			</div>
 		</div>
 
 		<div class="pk-stats">
+			<h4 class="sr-only">Base stats</h4>
 			{#each pokemon.stats as stat, index}
 				<div class="stat-row">
 					<PkStatMeter label={statLabels[index]} value={stat} {index} />
@@ -44,19 +53,20 @@
 			{/each}
 		</div>
 
-		<div class="pk-origin">
-			<span>Origin: {pokemon.originRegion}</span>
-		</div>
-
 		<div class="pk-Abilities">
-			Abilities:
-			{#each pokemon.abilities as abilities}
-				<span>{abilities}</span>
+			<h4 class="sr-only">Abilities</h4>
+			{#each pokemon.abilities as ability}
+				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
 			{/each}
 		</div>
 
 		<div class="pk-gender">
-			<span>♂️{pokemon.genderRatio.male}% / ♀️{pokemon.genderRatio.female}%</span>
+			<h4 class="sr-only">Gender ratio</h4>
+			{#if !pokemon.genderRatio.male && !pokemon.genderRatio.female}
+				<span>Unknown</span>
+			{:else}
+				<span>♂️{pokemon.genderRatio.male}% / ♀️{pokemon.genderRatio.female}%</span>
+			{/if}
 		</div>
 	{:catch error}
 		<p>{error.message}</p>
@@ -65,30 +75,64 @@
 
 <style>
 	.pk-stats-container {
-		padding: 1rem;
+		padding-inline: 1rem;
+		display: flex;
+		flex-direction: column;
 	}
 
-	.pk-types {
+	.pk-row-1 {
 		display: flex;
-		justify-content: center;
-		gap: 1rem;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
 		margin-bottom: 1rem;
+
+		.pk-origin {
+			text-align: left;
+		}
+
+		.pk-types {
+			display: flex;
+			gap: 1rem;
+			max-width: 135px;
+		}
 	}
 
 	.pk-stats {
 		margin-bottom: 1rem;
+		.stat-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.stat-row:last-child {
+			margin-bottom: 0;
+		}
 	}
 
-	.stat-row {
+	.pk-Abilities {
 		display: flex;
-		align-items: center;
+		flex-direction: row;
+		justify-content: center;
 		margin-bottom: 0.5rem;
+		gap: 0.5rem;
+
+		text-align: center;
+
+		span {
+			display: block;
+			flex-grow: 1;
+			padding: 0.175rem 0.25rem;
+		}
+
+		.hidden-ability {
+			font-weight: bold;
+		}
 	}
 
-	.pk-origin,
-	.pk-Abilities,
 	.pk-gender {
 		text-align: center;
-		font-style: italic;
 	}
 </style>
