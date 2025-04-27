@@ -12,7 +12,7 @@
 
 <div class="pk-caught-in">
 	<label for={id}>{label}</label>
-	<select {id} {disabled} bind:value onchange={() => onUpdate(value)}>
+	<select class="pk-select" {id} {disabled} bind:value onchange={() => onUpdate(value)}>
 		<option value="">Select game</option>
 		{#each Generations as gen}
 			<optgroup label={`Generation ${gen}`}>

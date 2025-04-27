@@ -215,7 +215,8 @@ body {
 		color: var(--ui-text-disabled);
 	}
 
-	option {
+	option,
+	optgroup {
 		background-color: #717186;
 		color: var(--ui-text-color);
 	}
@@ -239,7 +240,46 @@ body {
 }
 
 /* Textarea */
-/* ... */
+.pk-textarea {
+	width: auto;
+	height: var(--ui-form-element-height);
+	color: var(--ui-text-color);
+
+	padding-inline: 1rem;
+	padding-right: 2.875rem;
+	background-color: transparent;
+	image-rendering: pixelated;
+	cursor: text;
+
+	border-width: 9px solid;
+	border-image: url('/ui/textarea-select-default.png') 9 fill stretch;
+	border-image-outset: 0;
+	border-image-width: 9px;
+
+	&:hover {
+		filter: brightness(1.15);
+	}
+
+	&:active {
+		filter: brightness(0.9);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-image-source: url('/ui/textarea-select-focus.png');
+	}
+
+	&::placeholder {
+		color: var(--ui-text-disabled);
+	}
+
+	&:disabled {
+		filter: brightness(0.75);
+		pointer-events: none;
+		cursor: not-allowed;
+		color: var(--ui-text-disabled);
+	}
+}
 
 /* Toggle */
 /* ... */
