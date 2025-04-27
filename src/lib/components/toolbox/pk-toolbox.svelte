@@ -27,7 +27,7 @@
 	}
 </script>
 
-<aside class="pk-toolbox">
+<aside class="pk-toolbox pk-ui-section">
 	<div class="pk-data">
 		<PkDexSelector />
 		<div class="pk-toolbox-btn-group">
@@ -61,7 +61,6 @@
 	<PkDefaults bind:this={defaultsDialog} />
 </aside>
 
-<!-- prettier-ignore -->
 <style>
 	.pk-toolbox {
 		/* Layout */
@@ -76,27 +75,6 @@
 		z-index: 5;
 		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - 30rem);
 		margin-bottom: 2rem;
-
-		/* Border settings */
-		--corner-top: 18px;
-		--corner-right: 18px;
-		--corner-bottom: 22px;
-		--corner-left: 18px;
-
-		--slice-top: 18;
-		--slice-right: 18;
-		--slice-bottom: 22;
-		--slice-left: 18;
-
-		border-style: solid;
-		border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
-
-		border-image-source: url('/ui/ui-section-filled.png');
-		border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left) fill;
-		border-image-repeat: stretch;
-		border-image-outset: 0;
-
-		image-rendering: pixelated;
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * var(--corner-top)));

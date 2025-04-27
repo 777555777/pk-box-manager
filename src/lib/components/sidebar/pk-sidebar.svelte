@@ -32,7 +32,7 @@
 	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
-<aside class="pk-sidebar">
+<aside class="pk-sidebar pk-ui-section">
 	<h2 class="sr-only">Pokemon details sidebar</h2>
 	<section>
 		<h3 class="sr-only">Pokémon Viewer</h3>
@@ -87,19 +87,7 @@
 	section {
 		padding: 8px;
 	}
-	.pk-sidebar {
-		/* width: 520px; */
-		/* height: 900px; */
 
-		/* concept placeholder */
-		background-color: #cdffd7;
-		border: 2px solid #7cff80;
-		border-radius: 10px;
-		padding: 10px;
-		min-width: 408px;
-		position: sticky;
-		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
-	}
 	.pk-title-section {
 		display: flex;
 		justify-content: space-between;
@@ -111,5 +99,11 @@
 		height: 1px;
 		background-color: rgba(0, 0, 0, 0.3);
 		margin: 0.5rem 0;
+	}
+	.pk-sidebar {
+		padding: 10px;
+		min-width: 408px;
+		position: sticky;
+		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
 	}
 </style>

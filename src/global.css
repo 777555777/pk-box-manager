@@ -99,6 +99,29 @@ body {
 	--ui-form-element-height: 44px;
 }
 
+.pk-ui-section {
+	/* Border settings */
+	--corner-top: 18px;
+	--corner-right: 18px;
+	--corner-bottom: 22px;
+	--corner-left: 18px;
+
+	--slice-top: 18;
+	--slice-right: 18;
+	--slice-bottom: 22;
+	--slice-left: 18;
+
+	border-style: solid;
+	border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
+
+	border-image-source: url('/ui/ui-section-filled.png');
+	border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left) fill;
+	border-image-repeat: stretch;
+	border-image-outset: 0;
+
+	image-rendering: pixelated;
+}
+
 /* Button */
 .pk-button {
 	width: auto;
