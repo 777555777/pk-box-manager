@@ -89,60 +89,60 @@ export const Generations = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const
 
 export const Game = {
 	// Generation 1
-	Red: { title: 'Red', gen: 1 },
-	Blue: { title: 'Blue', gen: 1 },
-	Yellow: { title: 'Yellow', gen: 1 },
-	Green: { title: 'Green', gen: 1 },
+	Red: { title: 'Red', gen: 1, region: 'Kanto' },
+	Blue: { title: 'Blue', gen: 1, region: 'Kanto' },
+	Yellow: { title: 'Yellow', gen: 1, region: 'Kanto' },
+	Green: { title: 'Green', gen: 1, region: 'Kanto' },
 
 	// Generation 2
-	Gold: { title: 'Gold', gen: 2 },
-	Silver: { title: 'Silver', gen: 2 },
-	Crystal: { title: 'Crystal', gen: 2 },
+	Gold: { title: 'Gold', gen: 2, region: 'Johto' },
+	Silver: { title: 'Silver', gen: 2, region: 'Johto' },
+	Crystal: { title: 'Crystal', gen: 2, region: 'Johto' },
 
 	// Generation 3
-	Ruby: { title: 'Ruby', gen: 3 },
-	Sapphire: { title: 'Sapphire', gen: 3 },
-	Emerald: { title: 'Emerald', gen: 3 },
-	FireRed: { title: 'Fire Red', gen: 3 },
-	LeafGreen: { title: 'Leaf Green', gen: 3 },
+	Ruby: { title: 'Ruby', gen: 3, region: 'Hoenn' },
+	Sapphire: { title: 'Sapphire', gen: 3, region: 'Hoenn' },
+	Emerald: { title: 'Emerald', gen: 3, region: 'Hoenn' },
+	FireRed: { title: 'Fire Red', gen: 3, region: 'Kanto' },
+	LeafGreen: { title: 'Leaf Green', gen: 3, region: 'Kanto' },
 
 	// Generation 4
-	Diamond: { title: 'Diamond', gen: 4 },
-	Pearl: { title: 'Pearl', gen: 4 },
-	Platinum: { title: 'Platinum', gen: 4 },
-	HeartGold: { title: 'Heart Gold', gen: 4 },
-	SoulSilver: { title: 'Soul Silver', gen: 4 },
+	Diamond: { title: 'Diamond', gen: 4, region: 'Sinnoh' },
+	Pearl: { title: 'Pearl', gen: 4, region: 'Sinnoh' },
+	Platinum: { title: 'Platinum', gen: 4, region: 'Sinnoh' },
+	HeartGold: { title: 'Heart Gold', gen: 4, region: 'Johto' },
+	SoulSilver: { title: 'Soul Silver', gen: 4, region: 'Johto' },
 
 	// Generation 5
-	Black: { title: 'Black', gen: 5 },
-	White: { title: 'White', gen: 5 },
-	Black2: { title: 'Black 2', gen: 5 },
-	White2: { title: 'White 2', gen: 5 },
+	Black: { title: 'Black', gen: 5, region: 'Unova' },
+	White: { title: 'White', gen: 5, region: 'Unova' },
+	Black2: { title: 'Black 2', gen: 5, region: 'Unova' },
+	White2: { title: 'White 2', gen: 5, region: 'Unova' },
 
 	// Generation 6
-	X: { title: 'X', gen: 6 },
-	Y: { title: 'Y', gen: 6 },
-	OmegaRuby: { title: 'Omega Ruby', gen: 6 },
-	AlphaSapphire: { title: 'Alpha Sapphire', gen: 6 },
+	X: { title: 'X', gen: 6, region: 'Kalos' },
+	Y: { title: 'Y', gen: 6, region: 'Kalos' },
+	OmegaRuby: { title: 'Omega Ruby', gen: 6, region: 'Hoenn' },
+	AlphaSapphire: { title: 'Alpha Sapphire', gen: 6, region: 'Hoenn' },
 
 	// Generation 7
-	Sun: { title: 'Sun', gen: 7 },
-	Moon: { title: 'Moon', gen: 7 },
-	UltraSun: { title: 'Ultra Sun', gen: 7 },
-	UltraMoon: { title: 'Ultra Moon', gen: 7 },
-	LetsGoPikachu: { title: 'Lets Go Pikachu', gen: 7 },
-	LetsGoEevee: { title: 'Lets Go Eevee', gen: 7 },
+	Sun: { title: 'Sun', gen: 7, region: 'Alola' },
+	Moon: { title: 'Moon', gen: 7, region: 'Alola' },
+	UltraSun: { title: 'Ultra Sun', gen: 7, region: 'Alola' },
+	UltraMoon: { title: 'Ultra Moon', gen: 7, region: 'Alola' },
+	LetsGoPikachu: { title: 'Lets Go Pikachu', gen: 7, region: 'Kanto' },
+	LetsGoEevee: { title: 'Lets Go Eevee', gen: 7, region: 'Kanto' },
 
 	// Generation 8
-	Sword: { title: 'Sword', gen: 8 },
-	Shield: { title: 'Shield', gen: 8 },
-	BrilliantDiamond: { title: 'Brilliant Diamond', gen: 8 },
-	ShiningPerl: { title: 'Shining Perl', gen: 8 },
-	LegendsArceus: { title: 'Legends Arceus', gen: 8 },
+	Sword: { title: 'Sword', gen: 8, region: 'Galar' },
+	Shield: { title: 'Shield', gen: 8, region: 'Galar' },
+	BrilliantDiamond: { title: 'Brilliant Diamond', gen: 8, region: 'Sinnoh' },
+	ShiningPerl: { title: 'Shining Perl', gen: 8, region: 'Sinnoh' },
+	LegendsArceus: { title: 'Legends Arceus', gen: 8, region: 'Hisui' },
 
 	// Generation 9
-	Violet: { title: 'Violet', gen: 9 },
-	Scarlet: { title: 'Scarlet', gen: 9 }
+	Violet: { title: 'Violet', gen: 9, region: 'Paldea' },
+	Scarlet: { title: 'Scarlet', gen: 9, region: 'Paldea' }
 } as const
 
 export type GameType = keyof typeof Game

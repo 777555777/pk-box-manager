@@ -17,9 +17,9 @@
 		isSelectionValid: boolean
 	} = $props()
 
-	function deriveGameGeneration() {
+	function deriveGameRegion() {
 		const game = Game[selectedPokemon.caughtIn as GameType]
-		return game ? game.gen : ''
+		return game ? game.region : ''
 	}
 
 	// === Game Dropdown ===
@@ -46,7 +46,10 @@
 			{disabled}
 		/>
 		{#if !isSelectionValid && selectedPokemon.caughtIn !== ''}
-			<span class="pk-gen">Generation {deriveGameGeneration()}</span>
+			<div class="pk-gen">
+				<span>{deriveGameRegion()}</span>
+				<img width="48px" src="mark-example.png" alt="" />
+			</div>
 		{/if}
 	</div>
 	<PkTextarea
@@ -68,5 +71,16 @@
 	.pk-region {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
+	}
+
+	.pk-gen {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+
+		font-size: 0.9rem;
+		font-family: 'Press Start 2P', cursive;
 	}
 </style>

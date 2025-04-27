@@ -10,16 +10,34 @@
 	} = $props()
 </script>
 
-<label for={id}>{label}</label>
-<select {id} {disabled} bind:value onchange={() => onUpdate(value)}>
-	<option value="">Select game</option>
-	{#each Generations as gen}
-		<optgroup label={`Generation ${gen}`}>
-			{#each Object.entries(Game) as [key, value]}
-				{#if value.gen === gen}
-					<option value={key}>{value.title}</option>
-				{/if}
-			{/each}
-		</optgroup>
-	{/each}
-</select>
+<div class="pk-caught-in">
+	<label for={id}>{label}</label>
+	<select {id} {disabled} bind:value onchange={() => onUpdate(value)}>
+		<option value="">Select game</option>
+		{#each Generations as gen}
+			<optgroup label={`Generation ${gen}`}>
+				{#each Object.entries(Game) as [key, value]}
+					{#if value.gen === gen}
+						<option value={key}>{value.title}</option>
+					{/if}
+				{/each}
+			</optgroup>
+		{/each}
+	</select>
+</div>
+
+<style>
+	label {
+		font-weight: bold;
+		margin-bottom: 0.25rem;
+	}
+	.pk-caught-in {
+		display: flex;
+		flex-direction: column;
+
+		select {
+			max-width: 560px;
+			padding: 0.5rem 2rem 0.5rem 0.5rem;
+		}
+	}
+</style>
