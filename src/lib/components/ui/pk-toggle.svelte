@@ -2,93 +2,70 @@
 	let {
 		icon = '',
 		label = '',
+		hideLabel = false,
 		onUpdate = () => {},
 		checked = false,
 		disabled = false,
 		id = crypto.randomUUID()
 	} = $props()
+
+	$inspect(label)
+	$inspect(icon)
 </script>
 
-<div class="toggle-component">
-	{#if label}
-		<label for={id}>{label}</label>
-	{/if}
-	<label class="switch">
-		<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
-		<span class="slider"></span>
+<button class="pk-button" onclick={() => onUpdate(!checked)} {disabled}>
+	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
+	<label for={id}>
+		{#if icon}
+			<img src={icon} alt="" />
+		{/if}
+		{#if label}
+			<span class={hideLabel ? 'sr-only' : ''}>{label}</span>
+		{/if}
 	</label>
-	{#if icon && !label}
-		<label for={id} class="icon-label">{icon}</label>
-	{/if}
-</div>
+</button>
 
 <style>
-	.toggle-component {
+	input[type='checkbox'] {
+		display: none;
+	}
+
+	input[type='checkbox']:checked + label {
+		background-color: hsla(0, 100%, 30%, 0.6);
+		clip-path: polygon(
+			3px calc(100% - 6px),
+			6px calc(100% - 6px),
+			6px calc(100% - 3px),
+			calc(100% - 6px) calc(100% - 3px),
+			calc(100% - 6px) calc(100% - 6px),
+			calc(100% - 3px) calc(100% - 6px),
+			calc(100% - 3px) 6px,
+			calc(100% - 6px) 6px,
+			calc(100% - 6px) 3px,
+			6px 3px,
+			6px 6px,
+			3px 6px
+		);
+		mix-blend-mode: color-dodge;
+	}
+
+	.pk-button img {
+		width: 28px;
+		height: 28px;
+		margin-bottom: 3px;
+	}
+
+	.pk-button {
+		padding: 0;
+	}
+
+	.pk-button label {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-	}
+		justify-content: center;
 
-	.switch {
-		position: relative;
-		display: inline-block;
-		width: 40px;
-		height: 20px;
-	}
-
-	.switch input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
-
-	.slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #e9e9ed;
-		transition: 0.3s;
-		border-radius: 20px;
-		border: 1px solid #8f8f9d;
-
-		&:hover {
-			background-color: #d0d0d7;
-		}
-	}
-
-	.slider:before {
-		position: absolute;
-		content: '';
-		height: 10px;
-		width: 10px;
-		left: 4px;
-		bottom: 4px;
-		background-color: white;
-		transition: 0.3s;
-		border-radius: 50%;
-	}
-
-	input:checked + .slider {
-		background-color: #4caf50;
-	}
-
-	input:checked + .slider:before {
-		transform: translateX(20px);
-	}
-
-	input:disabled + .slider {
-		background-color: rgba(233, 233, 237, 0.5);
-		cursor: auto;
-
-		&:hover {
-			background-color: rgba(233, 233, 237, 0.5);
-		}
-	}
-
-	.icon-label {
+		width: 44px;
+		height: 44px;
 		cursor: pointer;
 	}
 </style>

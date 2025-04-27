@@ -39,7 +39,13 @@
 	<hr />
 
 	<div class="pk-modes">
-		<PkToggle icon="👀" label="Viewer Mode" checked={viewerMode} onUpdate={toggleViewerMode} />
+		<PkToggle
+			icon="pen.svg"
+			label="Viewer Mode"
+			hideLabel={true}
+			checked={viewerMode}
+			onUpdate={toggleViewerMode}
+		/>
 
 		<div class="pk-toolbox-btn-group">
 			<!-- cycle to additional display modes -->
@@ -105,7 +111,7 @@
 	.pk-modes {
 		display: flex;
 		justify-content: space-between;
-		gap: 0.5rem;
+		gap: 1rem;
 	}
 
 	.pk-toolbox-btn-group {

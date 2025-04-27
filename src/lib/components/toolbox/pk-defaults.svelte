@@ -53,8 +53,9 @@
 
 		<!-- Shiny -->
 		<PkToggle
-			icon="✨"
+			icon="pen.svg"
 			label="Shiny"
+			hideLabel={true}
 			onUpdate={toggleShiny}
 			checked={appState.getAppDefaults().shiny}
 		/>

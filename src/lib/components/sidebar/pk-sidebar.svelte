@@ -40,8 +40,9 @@
 		<div class="pk-viewer-controls">
 			<PkResetBtn {identifier} {disabled} />
 			<PkToggle
-				icon="✨"
+				icon="pen.svg"
 				label="Shiny"
+				hideLabel={true}
 				onUpdate={toggleShiny}
 				checked={selectedPokemon.shiny}
 				{disabled}
