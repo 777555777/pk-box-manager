@@ -79,8 +79,5 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-
-		font-size: 0.9rem;
-		font-family: 'Press Start 2P', cursive;
 	}
 </style>
