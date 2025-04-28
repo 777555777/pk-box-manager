@@ -98,7 +98,7 @@
 	.separator {
 		height: 2px;
 		background-color: rgba(0, 0, 0, 0.3);
-		margin: 0.5rem 0;
+		margin: 1rem 0;
 	}
 	.pk-sidebar {
 		padding: 10px;

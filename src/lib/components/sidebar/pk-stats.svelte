@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PkStatMeter from '$lib/components/ui/pk-stat-meter.svelte'
 	import PkTypeBadge from '$lib/components/ui/pk-type-badge.svelte'
+	import { fade } from 'svelte/transition'
 
 	interface StaticPokemonData {
 		originRegion: string
@@ -28,9 +29,9 @@
 
 <div class="pk-stats-container">
 	{#await requestPokemon}
-		<p>...loading</p>
+		<!-- <p>...loading</p> -->
 	{:then pokemon}
-		<div class="pk-row-1">
+		<div transition:fade class="pk-row-1">
 			<div class="pk-origin">
 				<h4 class="sr-only">Origin Region</h4>
 				<span>Origin: {pokemon.originRegion}</span>
@@ -44,7 +45,7 @@
 			</div>
 		</div>
 
-		<div class="pk-stats">
+		<div transition:fade class="pk-stats">
 			<h4 class="sr-only">Base stats</h4>
 			{#each pokemon.stats as stat, index}
 				<div class="stat-row">
@@ -53,14 +54,14 @@
 			{/each}
 		</div>
 
-		<div class="pk-Abilities">
+		<div transition:fade class="pk-Abilities">
 			<h4 class="sr-only">Abilities</h4>
 			{#each pokemon.abilities as ability}
 				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
 			{/each}
 		</div>
 
-		<div class="pk-gender">
+		<div transition:fade class="pk-gender">
 			<h4 class="sr-only">Gender ratio</h4>
 			{#if !pokemon.genderRatio.male && !pokemon.genderRatio.female}
 				<span>Unknown</span>
@@ -75,9 +76,10 @@
 
 <style>
 	.pk-stats-container {
-		padding-inline: 1rem;
 		display: flex;
 		flex-direction: column;
+		gap: 1rem;
+		min-height: 320px;
 	}
 
 	.pk-row-1 {
@@ -85,7 +87,7 @@
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
-		margin-bottom: 1rem;
+		min-height: 32px;
 
 		.pk-origin {
 			text-align: left;
@@ -99,7 +101,6 @@
 	}
 
 	.pk-stats {
-		margin-bottom: 1rem;
 		.stat-row {
 			display: flex;
 			align-items: center;
@@ -116,10 +117,11 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
-		margin-bottom: 0.5rem;
+		align-items: center;
 		gap: 0.5rem;
 
 		text-align: center;
+		min-height: 32px;
 
 		span {
 			display: block;
