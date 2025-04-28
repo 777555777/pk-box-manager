@@ -17,20 +17,37 @@
 	}
 </script>
 
-<h4>Catch location</h4>
 <div class="pk-external-urls">
-	<a href={formatExternalUrl('bulbapedia')} target="_blank">Bulbapedia (EN)</a>
-	<a href={formatExternalUrl('pokewiki')} target="_blank">Pokewiki (DE)</a>
-	<a href={formatExternalUrl('bisafans')} target="_blank">Bisafans (DE)</a>
+	<a href={formatExternalUrl('bulbapedia')} target="_blank">Bulbapedia(EN)</a>
+	<a href={formatExternalUrl('pokewiki')} target="_blank">Pokewiki(DE)</a>
+	<a href={formatExternalUrl('bisafans')} target="_blank">Bisafans(DE)</a>
 </div>
 
 <style>
-	h4 {
-		text-align: center;
+	:root {
+		--pk-link-color: hsl(50, 90%, 60%);
+		--pk-link-hover-color: hsl(50, 100%, 75%);
+		--pk-link-visited-color: hsl(50, 90%, 42%);
 	}
+
 	.pk-external-urls {
 		display: flex;
 		justify-content: center;
-		gap: 1rem;
+		gap: 1.25rem;
+	}
+
+	.pk-external-urls a {
+		position: relative;
+		color: var(--pk-link-color);
+		text-decoration: none;
+	}
+
+	.pk-external-urls a:hover {
+		color: var(--pk-link-hover-color);
+		text-decoration: underline;
+	}
+
+	.pk-external-urls a:visited {
+		color: var(--pk-link-visited-color);
 	}
 </style>

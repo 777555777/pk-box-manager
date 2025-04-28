@@ -67,8 +67,8 @@
 		<PkStats {identifier} />
 	</section>
 	<div class="separator"></div>
-	<section>
-		<h3 class="sr-only">Catch location</h3>
+	<section class="pk-links-section">
+		<h3 class="visible-h3">Catch location</h3>
 		<PkLinks idEntry={selectedPokemon.idEntry} />
 	</section>
 	<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
@@ -85,7 +85,7 @@
 	}
 
 	section {
-		padding: 8px;
+		padding: 0.5rem;
 	}
 
 	.pk-title-section {
@@ -96,7 +96,7 @@
 	}
 
 	.separator {
-		height: 1px;
+		height: 2px;
 		background-color: rgba(0, 0, 0, 0.3);
 		margin: 0.5rem 0;
 	}
@@ -105,5 +105,17 @@
 		min-width: 408px;
 		position: sticky;
 		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
+		color: #fff;
+	}
+
+	.visible-h3 {
+		font-size: 1rem;
+		text-align: center;
+	}
+
+	.pk-links-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 </style>
