@@ -31,8 +31,7 @@
 
 <style>
 	label {
-		font-weight: bold;
-		margin-bottom: 0.25rem;
+		margin-bottom: 0.375rem;
 	}
 	.pk-caught-in {
 		display: flex;

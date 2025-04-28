@@ -242,11 +242,10 @@ body {
 /* Textarea */
 .pk-textarea {
 	width: auto;
-	height: var(--ui-form-element-height);
 	color: var(--ui-text-color);
 
 	padding-inline: 1rem;
-	padding-right: 2.875rem;
+	padding-block: 0.5rem;
 	background-color: transparent;
 	image-rendering: pixelated;
 	cursor: text;
@@ -255,10 +254,7 @@ body {
 	border-image: url('/ui/textarea-select-default.png') 9 fill stretch;
 	border-image-outset: 0;
 	border-image-width: 9px;
-
-	&:hover {
-		filter: brightness(1.15);
-	}
+	resize: none;
 
 	&:active {
 		filter: brightness(0.9);

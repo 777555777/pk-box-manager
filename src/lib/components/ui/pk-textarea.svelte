@@ -25,11 +25,16 @@
 </script>
 
 <label for={id}>{label}</label>
-<textarea {id} bind:value oninput={() => debounce()} {disabled}></textarea>
+<textarea class="pk-textarea" maxlength="196" bind:value oninput={() => debounce()} {disabled}
+></textarea>
 
 <style>
 	textarea {
-		min-height: 96px;
-		max-width: 400px;
+		min-height: 118px;
+		max-width: 336px;
+	}
+
+	label {
+		margin-bottom: 0.375rem;
 	}
 </style>

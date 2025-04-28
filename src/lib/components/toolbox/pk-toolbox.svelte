@@ -52,7 +52,7 @@
 			<button class="pk-button" onclick={cycleBadgeDisplay}>Badge 🔄</button>
 
 			<!-- cycle to additional display modes -->
-			<button class="pk-button" disabled onclick={openDefaultDialog}
+			<button class="pk-button" onclick={openDefaultDialog}
 				>Defaults{#if appState.hasModifiedDefaults()}❗{/if}</button
 			>
 		</div>
