@@ -20,6 +20,11 @@
 </div>
 
 <style>
+	:root {
+		--meter-bar-background-color: #717186;
+		--meter-border-pixel-size: 3px;
+	}
+
 	.stat-label {
 		width: 4rem;
 		text-align: left;
@@ -30,13 +35,12 @@
 		width: 2em;
 	}
 
-	/* Anpassung des meter-Elements */
-
+	/* Meter-Element */
 	.pixel-meter {
 		box-sizing: border-box;
 		display: block;
 
-		background: transparent;
+		background: var(--meter-bar-background-color);
 		width: 12rem;
 		height: 0.75rem;
 	}
@@ -44,15 +48,14 @@
 	/* Make colored part as high as in Firefox */
 	/* !Deprecated https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-meter-bar */
 	.pixel-meter::-webkit-meter-bar {
-		background: transparent;
+		background: var(--meter-bar-background-color);
 		height: 0.75rem;
 	}
 
 	.meter-border {
-		--meter-border-pixel-size: 3px;
 		width: fit-content;
 		height: fit-content;
-		border: var(--meter-border-pixel-size) solid rgb(35, 35, 35);
+		border: var(--meter-border-pixel-size) solid #2a2a31;
 	}
 
 	.pixel-corners {
