@@ -5,26 +5,21 @@
 
 	function formatPokemonDisplayName(entry: any) {
 		const form = entry.formid ? entry.formid.replaceAll('-', ' ') : ''
-		return `${entry.id_national} | ${entry.pokemonid} ${form}`
+		return `${entry.pokemonid} ${form}`
+	}
+
+	function capitalizeFirstLetter(val: string) {
+		return String(val).charAt(0).toUpperCase() + String(val).slice(1)
 	}
 </script>
 
 {#if !isSelectionValid}
-	<h3>{formatPokemonDisplayName(idEntry)}</h3>
-	{@render displayGender()}
+	<h3>{capitalizeFirstLetter(formatPokemonDisplayName(idEntry))}</h3>
+	<h3>{idEntry.id_national}</h3>
 {/if}
 
-{#snippet displayGender()}
-	{#if formatPokemonDisplayName(idEntry).includes('female')}
-		<span class="pk-gender">♀️</span>
-	{:else}
-		<span class="pk-gender">♂️</span>
-	{/if}
-{/snippet}
-
 <style>
-	.pk-gender {
-		display: inline-block;
-		font-size: 1.5rem;
+	h3:last-child {
+		margin-right: 12px;
 	}
 </style>
