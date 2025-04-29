@@ -34,7 +34,7 @@
 
 <aside class="pk-sidebar pk-ui-section">
 	<h2 class="sr-only">Pokemon details sidebar</h2>
-	<section>
+	<section class="pk-viewer-section">
 		<h3 class="sr-only">Pokémon Viewer</h3>
 		<PkViewer {identifier} shiny={selectedPokemon.shiny} />
 		<div class="pk-viewer-controls">
@@ -49,32 +49,96 @@
 			/>
 		</div>
 	</section>
-	<section>
-		<h3 class="sr-only">Name & Ball</h3>
-		<div class="pk-title-section">
-			<PkBallSelector onUpdate={updatePokeball} selectedBall={selectedPokemon.ball} {disabled} />
-			<PkTitle idEntry={selectedPokemon.idEntry} {isSelectionValid} />
-		</div>
+	<div class="pk-viewer-seperator"></div>
+	<section class="pk-ui-section-inner">
+		<section class="pk-title-section">
+			<h3 class="sr-only">Name & Ball</h3>
+			<div class="pk-title-row">
+				<PkBallSelector onUpdate={updatePokeball} selectedBall={selectedPokemon.ball} {disabled} />
+				<PkTitle idEntry={selectedPokemon.idEntry} {isSelectionValid} />
+			</div>
+		</section>
+		<div class="separator"></div>
+		<section class="pk-form-section">
+			<h3 class="sr-only">Catch data</h3>
+			<PkForm {selectedPokemon} {identifier} {disabled} {isSelectionValid} />
+		</section>
+		<div class="separator"></div>
+		<section class="pk-stats-section">
+			<h3 class="sr-only">Status values</h3>
+			<PkStats {identifier} />
+		</section>
+		<div class="separator"></div>
+		<section class="pk-links-section">
+			<h3 class="visible-h3">Catch location</h3>
+			<PkLinks idEntry={selectedPokemon.idEntry} />
+		</section>
+		<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
 	</section>
-	<div class="separator"></div>
-	<section>
-		<h3 class="sr-only">Catch data</h3>
-		<PkForm {selectedPokemon} {identifier} {disabled} {isSelectionValid} />
-	</section>
-	<div class="separator"></div>
-	<section>
-		<h3 class="sr-only">Status values</h3>
-		<PkStats {identifier} />
-	</section>
-	<div class="separator"></div>
-	<section class="pk-links-section">
-		<h3 class="visible-h3">Catch location</h3>
-		<PkLinks idEntry={selectedPokemon.idEntry} />
-	</section>
-	<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
 </aside>
 
 <style>
+	.pk-sidebar {
+		min-width: 408px;
+		position: sticky;
+		z-index: 2;
+		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
+		color: #fff;
+	}
+
+	.pk-viewer-seperator {
+		--test123: 6px;
+
+		height: 6px;
+		width: calc(100% + var(--test123));
+		margin-left: calc(var(--test123) / 2 * -1);
+		background-color: #717186;
+		box-sizing: content-box;
+		border-block: 3px solid #595969;
+
+		position: relative;
+		z-index: 1;
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 3px;
+		}
+
+		&::before {
+			top: 9px;
+			background-color: #557d8b;
+		}
+
+		&::after {
+			bottom: 9px;
+			background-color: #2e99d1;
+		}
+	}
+
+	.pk-title-section,
+	.pk-form-section,
+	.pk-stats-section,
+	.pk-links-section {
+		padding-inline: 1rem;
+	}
+
+	.pk-links-section {
+		padding-bottom: 0.5rem;
+	}
+	.pk-title-section {
+		padding-top: 0.5rem;
+	}
+
+	.pk-links-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
 	.pk-viewer-controls {
 		display: flex;
 		justify-content: space-between;
@@ -84,28 +148,11 @@
 		left: 1.5rem;
 	}
 
-	section {
-		padding: 0.5rem;
-	}
-
-	.pk-title-section {
+	.pk-title-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		text-align: center;
-	}
-
-	.separator {
-		height: 2px;
-		background-color: rgba(0, 0, 0, 0.3);
-		margin: 1rem 0;
-	}
-	.pk-sidebar {
-		padding: 10px;
-		min-width: 408px;
-		position: sticky;
-		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
-		color: #fff;
 	}
 
 	.visible-h3 {
@@ -113,9 +160,9 @@
 		text-align: center;
 	}
 
-	.pk-links-section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+	.separator {
+		height: 2px;
+		background-color: rgba(0, 0, 0, 0.3);
+		margin: 1rem 0;
 	}
 </style>

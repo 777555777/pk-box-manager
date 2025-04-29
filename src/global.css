@@ -101,25 +101,68 @@ body {
 
 .pk-ui-section {
 	/* Border settings */
-	--corner-top: 18px;
-	--corner-right: 18px;
-	--corner-bottom: 22px;
-	--corner-left: 18px;
+	--corner-top: 15px;
+	--corner-right: 15px;
+	--corner-bottom: 19px;
+	--corner-left: 15px;
 
-	--slice-top: 18;
-	--slice-right: 18;
-	--slice-bottom: 22;
-	--slice-left: 18;
+	--slice-top: 15;
+	--slice-right: 15;
+	--slice-bottom: 19;
+	--slice-left: 15;
 
 	border-style: solid;
 	border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
 
-	border-image-source: url('/ui/ui-section-filled.png');
-	border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left) fill;
+	border-image-source: url('/ui/ui-section-border.png');
+	border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left);
 	border-image-repeat: stretch;
 	border-image-outset: 0;
 
+	background-color: #618e9e;
+	/* Cutoff background overflow */
+	clip-path: polygon(
+		0px calc(100% - 9px),
+		3px calc(100% - 9px),
+		3px calc(100% - 6px),
+		6px calc(100% - 6px),
+		6px calc(100% - 3px),
+		9px calc(100% - 3px),
+		9px 100%,
+		calc(100% - 9px) 100%,
+		calc(100% - 9px) calc(100% - 3px),
+		calc(100% - 6px) calc(100% - 3px),
+		calc(100% - 6px) calc(100% - 6px),
+		calc(100% - 3px) calc(100% - 6px),
+		calc(100% - 3px) calc(100% - 9px),
+		100% calc(100% - 9px),
+		100% 9px,
+		calc(100% - 3px) 9px,
+		calc(100% - 3px) 6px,
+		calc(100% - 6px) 6px,
+		calc(100% - 6px) 3px,
+		calc(100% - 9px) 3px,
+		calc(100% - 9px) 0px,
+		9px 0px,
+		9px 3px,
+		6px 3px,
+		6px 6px,
+		3px 6px,
+		3px 9px,
+		0px 9px
+	);
+
 	image-rendering: pixelated;
+}
+
+.pk-ui-section-inner {
+	border-style: solid;
+	border-width: 6px;
+
+	border-image-source: url('/ui/inner-border-sidebar.png');
+	border-image-slice: 6;
+	border-image-repeat: stretch;
+	border-image-outset: 3px;
 }
 
 /* Button */
