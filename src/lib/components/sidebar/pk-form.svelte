@@ -62,16 +62,12 @@
 </div>
 
 <style>
-	.pk-inputs {
-		display: flex;
-		justify-content: flex-start;
-		flex-direction: column;
-	}
-
 	.pk-region {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
+		margin-bottom: 0.75rem;
 	}
 
 	.pk-gen {
