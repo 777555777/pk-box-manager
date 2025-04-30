@@ -20,6 +20,6 @@
 
 <style>
 	h3:last-child {
-		margin-right: 12px;
+		width: 48px; /* Same as Ballselector */
 	}
 </style>
