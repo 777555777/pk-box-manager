@@ -23,13 +23,15 @@
 			const isClickInsideSidebar = !!target.closest('.pk-sidebar')
 			const isClickInsideTray = !!target.closest('.selector-tray')
 			const isClickInsideToolbox = !!target.closest('.pk-toolbox')
+			const isClickInsidePkBallSelector = !!target.closest('.pk-selector-tray')
 
 			// If the click is outside both the pk-slot and sidebar, deselect the Pokémon
 			if (
 				!isClickInsidePkSlot &&
 				!isClickInsideSidebar &&
 				!isClickInsideToolbox &&
-				!isClickInsideTray
+				!isClickInsideTray &&
+				!isClickInsidePkBallSelector
 			) {
 				pkState.deselectPokemon()
 			}

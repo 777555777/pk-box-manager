@@ -46,22 +46,24 @@
 	})
 </script>
 
-{#if label}
-	<label for={id}>{label}</label>
-{/if}
-<button {id} class="pk-ball-container" onclick={toggleSelectorTray} {disabled}>
-	<img
-		src="/spritesheets/util/sb1.webp"
-		style={setCssPosition(getBallPosition(selectedBall as BallsType))}
-		alt={selectedBall}
-	/>
-</button>
-{#if showTray}
-	{@render selectorTray()}
-{/if}
+<div class="pk-ball-selector">
+	{#if label}
+		<label for={id}>{label}</label>
+	{/if}
+	<button {id} class="pk-button" onclick={toggleSelectorTray} {disabled}>
+		<img
+			src="/spritesheets/util/sb1.webp"
+			style={setCssPosition(getBallPosition(selectedBall as BallsType))}
+			alt={selectedBall}
+		/>
+	</button>
+	{#if showTray}
+		{@render selectorTray()}
+	{/if}
+</div>
 
 {#snippet selectorTray()}
-	<section class="selector-tray" bind:this={trayRef}>
+	<section class="pk-selector-tray" bind:this={trayRef}>
 		{#each Object.entries(Balls) as [name, data]}
 			<button onclick={() => selectBall(name as BallsType)}>
 				<img src="/spritesheets/util/sb1.webp" style={setCssPosition(data.pos)} alt={name} />
@@ -90,13 +92,58 @@
 		justify-content: center;
 		align-items: center;
 	}
-	.selector-tray {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, 48px);
-		justify-content: center;
 
-		background-color: rgb(235, 235, 235);
-		padding: 8px 0;
-		max-width: 240px;
+	.pk-selector-tray {
+		--ball-amount: 5;
+		--ball-size: 48px;
+
+		background-color: #717186;
+		width: fit-content;
+		padding: 6px;
+
+		/* Positioning */
+		display: grid;
+		grid-template-columns: repeat(var(--ball-amount), var(--ball-size));
+		place-items: center;
+
+		/* Position below trigger Button */
+		position: absolute;
+		top: 100%;
+		z-index: 1;
+
+		/* ======================== */
+		background-color: transparent;
+		image-rendering: pixelated;
+		cursor: text;
+
+		border-width: 9px solid;
+		border-image: url('/ui/textarea-select-default.png') 9 fill stretch;
+		border-image-outset: 0;
+		border-image-width: 9px;
+
+		button {
+			background-color: transparent;
+			border: 1px solid #5a5a5a81;
+			cursor: pointer;
+			border-radius: 0.3rem;
+
+			&:hover {
+				filter: brightness(1.15);
+				background-color: hsla(0, 0%, 100%, 0.175);
+			}
+
+			&:active {
+				filter: brightness(0.9);
+				background-color: hsla(0, 0%, 100%, 0.1);
+			}
+
+			&:focus-visible {
+				outline: 3px solid hsl(220, 100%, 65%);
+			}
+		}
+	}
+
+	.pk-ball-selector {
+		position: relative;
 	}
 </style>
