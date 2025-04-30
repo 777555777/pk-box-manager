@@ -26,7 +26,13 @@
 
 <div class="pk-comment">
 	<label for={id}>{label}</label>
-	<textarea class="pk-textarea" maxlength="196" bind:value oninput={() => debounce()} {disabled}
+	<textarea
+		{id}
+		class="pk-textarea"
+		maxlength="196"
+		bind:value
+		oninput={() => debounce()}
+		{disabled}
 	></textarea>
 </div>
 
