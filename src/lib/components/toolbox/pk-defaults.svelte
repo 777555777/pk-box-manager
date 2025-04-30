@@ -53,7 +53,8 @@
 
 		<!-- Shiny -->
 		<PkToggle
-			icon="pen.svg"
+			icon="sparkle-solid.svg"
+			activeColor="hsla(50, 80%, 30%, 0.8)"
 			label="Shiny"
 			hideLabel={true}
 			onUpdate={toggleShiny}

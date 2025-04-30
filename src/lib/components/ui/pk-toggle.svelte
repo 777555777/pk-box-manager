@@ -1,6 +1,7 @@
 <script lang="ts">
 	let {
 		icon = '',
+		activeColor = 'hsla(0, 0, 40%, 0.6)',
 		label = '',
 		hideLabel = false,
 		onUpdate = () => {},
@@ -13,7 +14,12 @@
 	$inspect(icon)
 </script>
 
-<button class="pk-button" onclick={() => onUpdate(!checked)} {disabled}>
+<button
+	style="--active-background: {activeColor}"
+	class="pk-button"
+	onclick={() => onUpdate(!checked)}
+	{disabled}
+>
 	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
 	<label for={id}>
 		{#if icon}
@@ -31,7 +37,7 @@
 	}
 
 	input[type='checkbox']:checked + label {
-		background-color: hsla(0, 100%, 30%, 0.6);
+		background-color: var(--active-background);
 		clip-path: polygon(
 			3px calc(100% - 6px),
 			6px calc(100% - 6px),
@@ -50,8 +56,8 @@
 	}
 
 	.pk-button img {
-		width: 28px;
-		height: 28px;
+		width: 26px;
+		height: 26px;
 		margin-bottom: 3px;
 	}
 

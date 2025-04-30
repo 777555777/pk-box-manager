@@ -40,7 +40,8 @@
 		<div class="pk-viewer-controls">
 			<PkResetBtn {identifier} {disabled} />
 			<PkToggle
-				icon="pen.svg"
+				icon="sparkle-solid.svg"
+				activeColor="hsla(125, 100%, 30%, 0.55)"
 				label="Shiny"
 				hideLabel={true}
 				onUpdate={toggleShiny}
@@ -139,13 +140,18 @@
 		gap: 0.5rem;
 	}
 
-	.pk-viewer-controls {
-		display: flex;
-		justify-content: space-between;
-		width: 348px;
-		position: absolute;
-		top: 1.5rem;
-		left: 1.5rem;
+	.pk-viewer-section {
+		position: relative;
+
+		.pk-viewer-controls {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			z-index: 2;
+			width: 100%;
+			top: 0;
+			padding: 0.5rem;
+		}
 	}
 
 	.pk-title-row {

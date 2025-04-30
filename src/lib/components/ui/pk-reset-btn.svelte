@@ -3,6 +3,8 @@
 
 	let { identifier, disabled } = $props()
 
+	const icon = 'trash-alt-solid.svg'
+
 	function resetPokemon() {
 		pkState.resetPokemon(identifier)
 		pkState.deselectPokemon()
@@ -34,4 +36,21 @@
 	})
 </script>
 
-<button onclick={resetPokemon} {disabled}>Reset <kbd>Q</kbd></button>
+<button class="pk-button" onclick={resetPokemon} {disabled} title="Reset Pokemon (Q)"
+	><img src={icon} alt="" />
+</button>
+
+<style>
+	button {
+		width: 44px;
+		height: 44px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.pk-button img {
+		width: 26px;
+		height: 26px;
+		margin-bottom: 3px;
+	}
+</style>

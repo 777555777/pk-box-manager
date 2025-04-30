@@ -41,6 +41,7 @@
 	<div class="pk-modes">
 		<PkToggle
 			icon="pen.svg"
+			activeColor="hsla(0, 100%, 30%, 0.6)"
 			label="Viewer Mode"
 			hideLabel={true}
 			checked={viewerMode}
