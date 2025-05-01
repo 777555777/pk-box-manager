@@ -181,6 +181,19 @@ body {
 
 	position: relative;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* Visually verticaly center Text and Icons */
+	/* Because of the 3px high shadow in the border image */
+	padding-bottom: 3px;
+
+	img {
+		width: 24px;
+		height: 24px;
+	}
+
 	&::before {
 		content: '';
 		position: absolute;

@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<hr />
+	<div class="separator"></div>
 
 	<div class="pk-modes">
 		<PkToggle
@@ -48,15 +48,16 @@
 			onUpdate={toggleViewerMode}
 		/>
 
-		<div class="pk-toolbox-btn-group">
-			<!-- cycle to additional display modes -->
-			<button class="pk-button" onclick={cycleBadgeDisplay}>Badge 🔄</button>
+		<!-- cycle to additional display modes -->
+		<button class="pk-button" onclick={cycleBadgeDisplay}
+			><img src="refresh.svg" alt="" />Badge
+		</button>
 
-			<!-- cycle to additional display modes -->
-			<button class="pk-button" onclick={openDefaultDialog}
-				>Defaults{#if appState.hasModifiedDefaults()}❗{/if}</button
-			>
-		</div>
+		<!-- cycle to additional display modes -->
+		<button class="pk-button" onclick={openDefaultDialog}
+			><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="tag.svg" alt="" />
+			Defaults</button
+		>
 	</div>
 
 	<PkDefaults bind:this={defaultsDialog} />
@@ -64,8 +65,9 @@
 
 <style>
 	.pk-toolbox {
+		--toolbox-width: 53rem;
 		/* Layout */
-		width: 60rem;
+		width: var(--toolbox-width);
 		padding: 0.5rem;
 		display: flex;
 		justify-content: space-around;
@@ -74,7 +76,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 5;
-		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - 30rem);
+		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - calc(var(--toolbox-width) / 2));
 		margin-bottom: 2rem;
 
 		/* Adjust top offset correctly */
@@ -96,5 +98,19 @@
 	.pk-toolbox-btn-group {
 		display: flex;
 		gap: 1rem;
+	}
+
+	.separator {
+		width: 2px;
+		background-color: rgba(0, 0, 0, 0.3);
+		margin: 0 1rem;
+	}
+
+	img {
+		margin-right: 0.375rem;
+	}
+
+	.modified {
+		filter: sepia(100%) hue-rotate(-10deg) saturate(1000%);
 	}
 </style>

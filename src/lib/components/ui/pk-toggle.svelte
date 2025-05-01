@@ -56,8 +56,6 @@
 	}
 
 	.pk-button img {
-		width: 26px;
-		height: 26px;
 		margin-bottom: 3px;
 	}
 
