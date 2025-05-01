@@ -9,17 +9,9 @@
 		disabled = false,
 		id = crypto.randomUUID()
 	} = $props()
-
-	$inspect(label)
-	$inspect(icon)
 </script>
 
-<button
-	style="--active-background: {activeColor}"
-	class="pk-button"
-	onclick={() => onUpdate(!checked)}
-	{disabled}
->
+<button style="--active-background: {activeColor}" class="pk-button" {disabled}>
 	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
 	<label for={id}>
 		{#if icon}
