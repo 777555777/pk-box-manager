@@ -163,6 +163,9 @@ body {
 	border-image-slice: 6;
 	border-image-repeat: stretch;
 	border-image-outset: 3px;
+
+	/* fix offset for bottom shadow*/
+	margin-bottom: -1px;
 }
 
 /* Button */

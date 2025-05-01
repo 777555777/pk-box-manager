@@ -28,37 +28,39 @@
 </script>
 
 <aside class="pk-toolbox pk-ui-section">
-	<div class="pk-data">
-		<PkDexSelector />
-		<div class="pk-toolbox-btn-group">
-			<PkImport />
-			<PkExport />
+	<section class="pk-ui-section-inner">
+		<div class="pk-pokedex-data">
+			<PkDexSelector />
+			<div class="pk-toolbox-btn-group">
+				<PkImport />
+				<PkExport />
+			</div>
 		</div>
-	</div>
 
-	<div class="separator"></div>
+		<div class="separator"></div>
 
-	<div class="pk-modes">
-		<PkToggle
-			icon="pen.svg"
-			activeColor="hsla(0, 100%, 30%, 0.6)"
-			label="Viewer Mode"
-			hideLabel={true}
-			checked={viewerMode}
-			onUpdate={toggleViewerMode}
-		/>
+		<div class="pk-modes">
+			<PkToggle
+				icon="pen.svg"
+				activeColor="hsla(0, 100%, 30%, 0.6)"
+				label="Viewer Mode"
+				hideLabel={true}
+				checked={viewerMode}
+				onUpdate={toggleViewerMode}
+			/>
 
-		<!-- cycle to additional display modes -->
-		<button class="pk-button" onclick={cycleBadgeDisplay}
-			><img src="refresh.svg" alt="" />Badge
-		</button>
+			<!-- cycle to additional display modes -->
+			<button class="pk-button" onclick={cycleBadgeDisplay}
+				><img src="refresh.svg" alt="" />Badge
+			</button>
 
-		<!-- cycle to additional display modes -->
-		<button class="pk-button" onclick={openDefaultDialog}
-			><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="tag.svg" alt="" />
-			Defaults</button
-		>
-	</div>
+			<!-- cycle to additional display modes -->
+			<button class="pk-button" onclick={openDefaultDialog}
+				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="tag.svg" alt="" />
+				Defaults</button
+			>
+		</div>
+	</section>
 
 	<PkDefaults bind:this={defaultsDialog} />
 </aside>
@@ -68,9 +70,6 @@
 		--toolbox-width: 53rem;
 		/* Layout */
 		width: var(--toolbox-width);
-		padding: 0.5rem;
-		display: flex;
-		justify-content: space-around;
 
 		/* Positioning */
 		position: sticky;
@@ -81,9 +80,15 @@
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * var(--corner-top)));
+
+		.pk-ui-section-inner {
+			display: flex;
+			justify-content: space-around;
+			padding: 0.5rem;
+		}
 	}
 
-	.pk-data {
+	.pk-pokedex-data {
 		display: flex;
 		justify-content: space-between;
 		gap: 1rem;
