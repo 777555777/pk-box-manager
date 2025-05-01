@@ -65,7 +65,8 @@
 	}
 
 	.pk-content {
-		margin: 0 2rem;
+		max-width: 94%;
+		margin: 0 auto;
 		display: flex;
 		align-items: flex-start;
 		gap: 2rem;

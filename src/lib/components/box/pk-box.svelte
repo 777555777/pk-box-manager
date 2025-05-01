@@ -4,11 +4,16 @@
 	import { getIdentifier } from '$lib/spriteheet-helper'
 
 	let { box }: { box: BoxOrder } = $props()
+
+	function formatBoxTitle(title: string): string {
+		const boxTitle = title.replace(/_/g, ' ').replace(/-/g, ' ')
+		return boxTitle.charAt(0).toUpperCase() + boxTitle.slice(1)
+	}
 </script>
 
 <article class="pk-box">
 	<header class="box-header">
-		<h2>{box.title}</h2>
+		<h2>{formatBoxTitle(box.title)}</h2>
 	</header>
 	<div class="pk-box-background">
 		<div class="box-grid">
@@ -22,7 +27,6 @@
 <style>
 	:root {
 		--source-box-bg-url: url('/boxes/forest.png');
-		/* --source-box-bg-url: url('checks.png'); */
 	}
 
 	.pk-box {
@@ -41,14 +45,14 @@
 		border-width: 11px;
 		border-style: solid;
 		border-image-source: var(--source-box-bg-url);
-		border-image-slice: 32; /* passt du ggf. an */
+		border-image-slice: 32;
 		border-image-repeat: stretch;
 		border-image-outset: 0;
 		border-image-width: 11px;
 
 		image-rendering: pixelated;
 		position: relative;
-		z-index: 0; /* Stacking context für ::before */
+		z-index: 0; /* Stacking context for ::before */
 
 		&::before {
 			content: '';
@@ -69,7 +73,7 @@
 	.box-header {
 		box-sizing: border-box;
 
-		width: 258px; /*  source is 812px */
+		width: 258px; /* source is 812px */
 		height: 52px; /* source is 161px */
 		border-width: 8px;
 		border-style: solid;
