@@ -32,6 +32,7 @@
 		align-items: center;
 
 		border-style: solid;
+		border-color: transparent;
 		border-width: 6px;
 
 		border-image-source: url('/ui/inner-border-viewer.png');

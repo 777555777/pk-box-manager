@@ -44,6 +44,7 @@
 		height: 344px; /* source is 854px */
 		border-width: 11px;
 		border-style: solid;
+		border-color: transparent;
 		border-image-source: var(--source-box-bg-url);
 		border-image-slice: 32;
 		border-image-repeat: stretch;
@@ -77,6 +78,7 @@
 		height: 52px; /* source is 161px */
 		border-width: 8px;
 		border-style: solid;
+		border-color: transparent;
 		border-image-source: url('/boxes/box-title-border.png');
 		border-image-slice: 8; /* Quadrat von Bildecke aus bis zum inneren Rand Ende */
 		border-image-repeat: stretch;

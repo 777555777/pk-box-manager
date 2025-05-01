@@ -112,6 +112,7 @@ body {
 	--slice-left: 15;
 
 	border-style: solid;
+	border-color: transparent;
 	border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
 
 	border-image-source: url('/ui/ui-section-border.png');
@@ -157,6 +158,7 @@ body {
 
 .pk-ui-section-inner {
 	border-style: solid;
+	border-color: transparent;
 	border-width: 6px;
 
 	border-image-source: url('/ui/inner-border-sidebar.png');
