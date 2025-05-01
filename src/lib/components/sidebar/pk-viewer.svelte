@@ -2,15 +2,18 @@
 	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 
 	let { identifier, shiny = false }: { identifier: string; shiny: boolean } = $props()
+	$inspect(identifier)
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))
 </script>
 
 <div class="pk-viewer pk-checkerboard">
-	<img
-		src={`/spritesheets/${shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
-		alt={identifier}
-		style={setCssPosition(selectedPokemonSpriteData.pos)}
-	/>
+	{#if identifier !== '0000-null'}
+		<img
+			src={`/spritesheets/${shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
+			alt={identifier}
+			style={setCssPosition(selectedPokemonSpriteData.pos)}
+		/>
+	{/if}
 </div>
 
 <style>

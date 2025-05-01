@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="pk-external-urls">
+<div class="pk-external-urls {idEntry.pokemonid === 'null' ? 'hidden' : ''}">
 	<a href={formatExternalUrl('bulbapedia')} target="_blank">Bulbapedia(EN)</a>
 	<a href={formatExternalUrl('pokewiki')} target="_blank">Pokewiki(DE)</a>
 	<a href={formatExternalUrl('bisafans')} target="_blank">Bisafans(DE)</a>
@@ -49,5 +49,9 @@
 
 	.pk-external-urls a:visited {
 		color: var(--pk-link-visited-color);
+	}
+
+	.hidden {
+		visibility: hidden;
 	}
 </style>
