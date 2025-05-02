@@ -22,6 +22,11 @@
 		return game ? game.region : ''
 	}
 
+	function deriveOriginMark() {
+		const game = Game[selectedPokemon.caughtIn as GameType]
+		return game ? game.originMark : ''
+	}
+
 	// === Game Dropdown ===
 	function updateCaughtIn(newValue: GameType) {
 		pkState.updatePokemon(identifier, {
@@ -48,7 +53,14 @@
 		{#if !isSelectionValid && selectedPokemon.caughtIn !== ''}
 			<div class="pk-gen">
 				<span>{deriveGameRegion()}</span>
-				<img width="48px" src="mark-example.png" alt="" />
+				{#if deriveOriginMark()}
+					<img
+						width="44px"
+						src={`/origin-marks/${deriveOriginMark()}.png`}
+						alt={`${deriveOriginMark()} origin mark`}
+						title={`${deriveOriginMark()} origin mark`}
+					/>
+				{/if}
 			</div>
 		{/if}
 	</div>
@@ -65,7 +77,7 @@
 	.pk-region {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-end;
 
 		margin-bottom: 0.75rem;
 	}
@@ -74,6 +86,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5rem;
+		gap: 0.3rem;
+		min-height: 44px;
+
+		img {
+			image-rendering: auto;
+		}
 	}
 </style>
