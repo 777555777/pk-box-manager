@@ -16,16 +16,15 @@
 	let errorDialog: PkDialogElement
 
 	const infoDialogConfig = {
-		headline: 'Überschreiben der Daten',
-		textContent:
-			'Für diesen Pokedex gibt es bereits lokale Daten, sollen diese überschrieben werden?',
-		cancle: true
+		headline: 'Overwrite local Data',
+		textContent: 'Local data already exists for this Pokedex. Do you want to overwrite it?',
+		cancel: true
 	}
 
 	const errorDialogConfig = {
-		headline: 'Fehler beim Parsen der JSON-Datei',
-		textContent: 'mehr test und so weiter',
-		cancle: false
+		headline: 'Error Parsing JSON File',
+		textContent: 'more text and so on',
+		cancel: false
 	}
 
 	function readImportFile(event: Event) {
@@ -103,12 +102,13 @@
 	bind:this={infoDialog}
 	dialogConfig={infoDialogConfig}
 	onConfirm={onConfirmInfo}
-	onCancle={() => {}}
+	onCancel={() => {}}
+	okBtnText="Override"
 />
 
 <PkDialog
 	bind:this={errorDialog}
 	dialogConfig={errorDialogConfig}
 	onConfirm={() => {}}
-	onCancle={() => {}}
+	onCancel={() => {}}
 />
