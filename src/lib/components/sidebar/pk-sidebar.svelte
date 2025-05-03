@@ -40,7 +40,7 @@
 		<div class="pk-viewer-controls">
 			<PkResetBtn {identifier} {disabled} />
 			<PkToggle
-				icon="sparkle-solid.svg"
+				icon="/ui/sparkle.svg"
 				activeColor="hsla(125, 100%, 30%, 0.55)"
 				label="Shiny"
 				hideLabel={true}
@@ -83,8 +83,8 @@
 		min-width: 408px;
 		position: sticky;
 		z-index: 2;
-		top: calc(7.5rem + 15px); /* toolbox uses translation -15px */
-		color: #fff;
+		top: calc(7.5rem + 65px); /* toolbox uses translation -15px */
+		color: var(--ui-text-color);
 	}
 
 	.pk-viewer-seperator {

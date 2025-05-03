@@ -3,7 +3,7 @@
 
 	let { identifier, disabled } = $props()
 
-	const icon = 'trash-alt-solid.svg'
+	const icon = '/ui/trash-alt-solid.svg'
 
 	function resetPokemon() {
 		pkState.resetPokemon(identifier)

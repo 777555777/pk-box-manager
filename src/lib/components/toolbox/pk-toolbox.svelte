@@ -41,7 +41,7 @@
 
 		<div class="pk-modes">
 			<PkToggle
-				icon="pen.svg"
+				icon="/ui/pen.svg"
 				activeColor="hsla(0, 100%, 30%, 0.6)"
 				label="Viewer Mode"
 				hideLabel={true}
@@ -51,12 +51,12 @@
 
 			<!-- cycle to additional display modes -->
 			<button class="pk-button" onclick={cycleBadgeDisplay}
-				><img src="refresh.svg" alt="" />Badge
+				><img src="/ui/refresh.svg" alt="" />Badge
 			</button>
 
 			<!-- cycle to additional display modes -->
 			<button class="pk-button" onclick={openDefaultDialog}
-				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="tag.svg" alt="" />
+				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
 				Defaults</button
 			>
 		</div>
@@ -76,7 +76,7 @@
 		top: 0;
 		z-index: 5;
 		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - calc(var(--toolbox-width) / 2));
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * 18px));

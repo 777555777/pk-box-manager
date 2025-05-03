@@ -2,7 +2,6 @@
 	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 
 	let { identifier, shiny = false }: { identifier: string; shiny: boolean } = $props()
-	$inspect(identifier)
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))
 </script>
 
@@ -49,6 +48,18 @@
 			var(--checkerboard-color-2) 270deg
 		);
 		background-size: var(--checkerboard-checker-size) var(--checkerboard-checker-size);
+		animation: pan 3s linear infinite;
+	}
+
+	@keyframes pan {
+		from {
+			background-position-x: 0;
+			background-position-y: 0;
+		}
+		to {
+			background-position-x: var(--checkerboard-checker-size);
+			background-position-y: var(--checkerboard-checker-size);
+		}
 	}
 
 	img {

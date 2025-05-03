@@ -111,6 +111,7 @@ body {
 	--ui-text-disabled: #c5c5c5;
 
 	--ui-form-element-height: 44px;
+	--ui-section-background-color: #618e9e;
 }
 
 .pk-ui-section {
@@ -134,7 +135,7 @@ body {
 	border-image-repeat: stretch;
 	border-image-outset: 0;
 
-	background-color: #618e9e;
+	background-color: var(--ui-section-background-color);
 	/* Cutoff background overflow */
 	clip-path: polygon(
 		0px calc(100% - 9px),
