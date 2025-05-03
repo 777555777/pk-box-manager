@@ -13,7 +13,7 @@
 
 <button style="--active-background: {activeColor}" class="pk-button" {disabled}>
 	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
-	<label for={id}>
+	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
 		{#if icon}
 			<img src={icon} alt="" />
 		{/if}
@@ -60,8 +60,19 @@
 		align-items: center;
 		justify-content: center;
 
-		width: 44px;
 		height: 44px;
+		min-width: 44px;
+		width: auto;
 		cursor: pointer;
+	}
+
+	.pk-icon-and-text {
+		white-space: nowrap;
+		padding-inline: 1rem;
+		padding-bottom: 3px;
+		img {
+			margin-right: 0.375rem;
+			margin-bottom: 0;
+		}
 	}
 </style>
