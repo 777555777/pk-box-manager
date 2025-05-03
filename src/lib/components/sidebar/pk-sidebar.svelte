@@ -165,10 +165,4 @@
 		font-size: 1rem;
 		text-align: center;
 	}
-
-	.separator {
-		height: 2px;
-		background-color: rgba(0, 0, 0, 0.3);
-		margin: 1rem 0;
-	}
 </style>

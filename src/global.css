@@ -90,6 +90,20 @@ body {
 	border: 0;
 }
 
+.separator {
+	height: 2px;
+	width: auto;
+	background-color: rgba(0, 0, 0, 0.3);
+	margin: 1rem 0;
+}
+
+.separator-vertical {
+	width: 2px;
+	height: auto;
+	background-color: rgba(0, 0, 0, 0.3);
+	margin: 0 1rem;
+}
+
 /* ======== Global UI Element Classes ========= */
 
 :root {

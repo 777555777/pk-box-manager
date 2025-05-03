@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<div class="separator"></div>
+		<div class="separator-vertical"></div>
 
 		<div class="pk-modes">
 			<PkToggle
@@ -79,7 +79,7 @@
 		margin-bottom: 2rem;
 
 		/* Adjust top offset correctly */
-		transform: translateY(calc(-1 * var(--corner-top)));
+		transform: translateY(calc(-1 * 18px));
 
 		.pk-ui-section-inner {
 			display: flex;
@@ -103,12 +103,6 @@
 	.pk-toolbox-btn-group {
 		display: flex;
 		gap: 1rem;
-	}
-
-	.separator {
-		width: 2px;
-		background-color: rgba(0, 0, 0, 0.3);
-		margin: 0 1rem;
 	}
 
 	img {

@@ -138,10 +138,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--dialog-spacing);
-		margin-bottom: calc(var(--dialog-spacing) * 2);
+		margin-block: calc(var(--dialog-spacing) * 2);
 
 		.pk-dialog-description {
-			margin: 0.5rem 0;
+			margin-bottom: 1rem;
 
 			p {
 				line-height: 1.6;
@@ -181,12 +181,5 @@
 
 	dialog::backdrop {
 		background-color: rgba(0, 0, 0, 0.5);
-	}
-
-	.separator {
-		height: 2px;
-		background-color: rgba(0, 0, 0, 0.3);
-		margin: 1rem 0;
-		width: 100%;
 	}
 </style>
