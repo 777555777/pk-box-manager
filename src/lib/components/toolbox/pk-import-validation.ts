@@ -5,47 +5,47 @@ import { type DexStorage } from '../../state/storage-handler.ts'
 export async function validateImportedDexState(importedFile: unknown): Promise<DexStorage> {
 	let dexData: DexStorage
 
-	// 1. Prüfen, ob es sich um ein gültiges JSON-Objekt handelt
+	// 1. Check if the input is a valid JSON object
 	if (typeof importedFile === 'string') {
 		try {
 			dexData = JSON.parse(importedFile)
 		} catch (error) {
 			console.error(error)
-			throw new Error('Die importierte Datei enthält kein gültiges JSON.')
+			throw new Error('The imported file does not contain valid JSON.')
 		}
 	} else if (typeof importedFile === 'object' && importedFile !== null) {
-		dexData = importedFile as DexStorage // Assume from here on that the import has the required structure
+		dexData = importedFile as DexStorage // Assume the structure is correct from this point on
 	} else {
-		throw new Error('Die importierte Datei hat ein ungültiges Format.')
+		throw new Error('The imported file has an invalid format.')
 	}
 
-	// 2. Prüfen der erforderlichen Metadaten
+	// 2. Validate required metadata fields
 	if (!dexData.version || typeof dexData.version !== 'string') {
-		throw new Error('Ungültige oder fehlende Version in der Importdatei.')
+		throw new Error('Missing or invalid "version" property in the import file.')
 	}
 
 	if (!dexData.name || typeof dexData.name !== 'string') {
-		throw new Error('Ungültiger oder fehlender Dex Name in der Importdatei.')
+		throw new Error('Missing or invalid "name" property in the import file.')
 	}
 
 	if (!dexData.displayName || typeof dexData.displayName !== 'string') {
-		throw new Error('Ungültiger oder fehlender Anzeigename in der Importdatei.')
+		throw new Error('Missing or invalid "displayName" property in the import file.')
 	}
 
-	// 2.5 Prüfen ob die Daten zu einem supporteten Dex gehören
+	// 2.5 Check whether the data refers to a supported Dex
 	const targetDex = await pkState.loadBoxOrder(dexData.name)
 	if (!targetDex) {
-		throw new Error('Ungültiger Wert in der Eigenschaft "name"')
+		throw new Error('Invalid value in the "name" property – no matching Dex found.')
 	}
 
-	// 3. Prüfen des Pokemon-Objekts
+	// 3. Validate the existence and structure of the Pokémon object
 	if (!dexData.pokemon || typeof dexData.pokemon !== 'object' || dexData.pokemon === null) {
-		throw new Error('Ungültiges oder fehlendes Pokemon-Objekt in der Importdatei.')
+		throw new Error('Missing or invalid "pokemon" object in the import file.')
 	}
 
-	// 4. Prüfen jedes Pokemon-Eintrags
+	// 4. Validate each individual Pokémon entry
 
-	// Liste aller valider Pokemon im Dex erstellen
+	// Create a list of all valid Pokémon identifiers for this Dex
 	const dexPokemon = []
 	for (const box of targetDex) {
 		for (const pokemon of box.pokemon) {
@@ -59,70 +59,66 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 		if (!dexPokemon.includes(getIdentifier(pokemon.idEntry))) {
 			console.log('pokemon', pokemon)
 			throw new Error(
-				`Das Pokemon ${pokemonKey} ist nicht teil des Pokedexs: ${dexData.name} : ${pokemonKey}`
+				`The Pokémon ${pokemonKey} is not part of the Pokédex: ${dexData.name} : ${pokemonKey}`
 			)
 		}
 
-		// Prüfen der Struktur jedes Pokemon-Eintrags
+		// Check the structure of each Pokémon entry
 		if (!pokemon.idEntry || typeof pokemon.idEntry !== 'object') {
-			throw new Error(`Ungültiger oder fehlender idEntry für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "idEntry" for Pokémon: ${pokemonKey}`)
 		}
 
 		const idEntry = pokemon.idEntry
 		// We want to allow: string
 		if (!idEntry.pokemonid || typeof idEntry.pokemonid !== 'string') {
-			throw new Error(`Ungültige oder fehlende pokemonid für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "pokemonid" for Pokémon: ${pokemonKey}`)
 		}
 
 		// We want to allow: string || null
 		if (typeof idEntry.formid !== 'string' && idEntry.formid !== null) {
-			throw new Error(`Ungültige oder fehlende formid für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "formid" for Pokémon: ${pokemonKey}`)
 		}
 
 		// We want to allow: number
 		if (idEntry.id_national === undefined || typeof idEntry.id_national !== 'number') {
-			throw new Error(`Ungültige oder fehlende id_national für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "id_national" for Pokémon: ${pokemonKey}`)
 		}
 
-		// Prüfen der erforderlichen Felder für jeden Pokemon-Eintrag
+		// Validate required fields for each Pokémon entry
 		// We want to allow: boolean
 		if (pokemon.captured === undefined || typeof pokemon.captured !== 'boolean') {
-			throw new Error(`Ungültiges oder fehlendes 'captured' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "captured" field for Pokémon: ${pokemonKey}`)
 		}
 
 		// We want to allow: string
 		if (!pokemon.ball || typeof pokemon.ball !== 'string') {
-			// we could even check if the ball is supported
-			throw new Error(`Ungültiges oder fehlendes 'ball' Feld für Pokemon: ${pokemonKey}`)
+			// Optionally: Validate that the ball is one of the supported types
+			throw new Error(`Missing or invalid "ball" field for Pokémon: ${pokemonKey}`)
 		}
 
-		// We want to allow: boolean
 		if (pokemon.shiny === undefined || typeof pokemon.shiny !== 'boolean') {
-			throw new Error(`Ungültiges oder fehlendes 'shiny' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "shiny" field for Pokémon: ${pokemonKey}`)
 		}
 
-		// Optionale Felder prüfen (könnten leer sein, aber sollten String-Typ haben)
+		// Validate optional fields (can be empty, but must be strings if present)
 		// We want to allow: string
 		if (pokemon.caughtIn !== undefined && typeof pokemon.caughtIn !== 'string') {
-			throw new Error(`Ungültiges 'caughtIn' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Invalid "caughtIn" field for Pokémon: ${pokemonKey}`)
 		}
-
 		// We want to allow: string
 		if (pokemon.ability !== undefined && typeof pokemon.ability !== 'string') {
-			throw new Error(`Ungültiges 'ability' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Invalid "ability" field for Pokémon: ${pokemonKey}`)
 		}
-
 		// We want to allow: string
 		if (pokemon.comment !== undefined && typeof pokemon.comment !== 'string') {
-			throw new Error(`Ungültiges 'comment' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Invalid "comment" field for Pokémon: ${pokemonKey}`)
 		}
-
 		// We want to allow: boolean
 		if (pokemon.isCustomized === undefined || typeof pokemon.isCustomized !== 'boolean') {
-			throw new Error(`Ungültiges oder fehlendes 'isCustomized' Feld für Pokemon: ${pokemonKey}`)
+			throw new Error(`Missing or invalid "isCustomized" field for Pokémon: ${pokemonKey}`)
 		}
 	}
 
-	// 5. Wenn alle Prüfungen bestanden wurden, geben wir die validierte Datei zurück
+	// 5. If all validations pass, return the verified file
 	return dexData
 }
