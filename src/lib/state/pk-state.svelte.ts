@@ -82,6 +82,41 @@ export class PkState {
 		}
 	}
 
+	/**
+	 * Reset the current Pokedex to its initial state
+	 */
+	async resetCurrentPokedex(): Promise<void> {
+		const dexName = storageHandler.loadSelectedPokedexName()
+		try {
+			// Get the box order from cache or server
+			const boxOrder = await this.loadBoxOrder(dexName)
+			if (!boxOrder) {
+				throw new Error('Box order not found')
+			}
+
+			// Remove the current Pokedex data from localStorage
+			storageHandler.removePokedex(dexName)
+
+			// Re-initialize the Pokedex with fresh data
+			storageHandler.initPokedex(boxOrder, dexName)
+
+			// Update the state
+			const stateData = storageHandler.loadPokedex(dexName)
+			this.pokedexState = stateData!
+
+			// Reset selected Pokemon
+			this.selectedPokemon = pokemonNullState
+
+			// Make sure app state is aware of the reset
+			appState.setCurrentPokedexName(dexName)
+
+			console.log(`Pokedex ${dexName} has been reset`)
+		} catch (error) {
+			console.error('Error resetting Pokedex:', error)
+			throw new Error(`Error resetting Pokedex "${dexName}": ${error}`)
+		}
+	}
+
 	// ================
 	// Pokemon
 	// ================

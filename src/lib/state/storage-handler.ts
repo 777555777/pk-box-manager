@@ -71,10 +71,25 @@ class StorageHandler {
 				const parsedPokedex = JSON.parse(selectedPokedex)
 				return parsedPokedex
 			} catch (error) {
-				console.error('Fehler beim Parsen des Pokedex:', error)
+				console.error('Error parsing the Pokedex:', error)
 			}
 		}
 		return undefined
+	}
+
+	/**
+	 * Removes a Pokedex from localStorage.
+	 * @param dexName The name of the Pokedex to remove.
+	 * @returns true if the Pokedex was removed, false if it didn't exist.
+	 */
+	public removePokedex(dexName: string): boolean {
+		const key = `dex:${dexName}`
+		if (localStorage.getItem(key) !== null) {
+			localStorage.removeItem(key)
+			console.log(`Pokedex ${dexName} removed from storage`)
+			return true
+		}
+		return false
 	}
 
 	/**
