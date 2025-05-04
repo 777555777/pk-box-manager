@@ -36,7 +36,10 @@
 			try {
 				const validDex = await validateImportedDexState(reader.result)
 
-				if (storageHandler.loadPokedex(validDex.name)) {
+				if (
+					storageHandler.loadPokedex(validDex.name) &&
+					storageHandler.hasModifiedPokedex(validDex.name)
+				) {
 					// Local data found, override it?
 					pendingImport = validDex
 					infoDialog.showDialog()

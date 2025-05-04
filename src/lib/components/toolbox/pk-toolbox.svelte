@@ -5,7 +5,7 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
+	import PkDexReset from './pk-dex-reset.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -26,12 +26,6 @@
 	function openDefaultDialog() {
 		defaultsDialog.showDefaultsDialog()
 	}
-
-	function resetCurrentPokedex() {
-		if (confirm('Are you sure you want to reset the Pokedex?')) {
-			pkState.resetCurrentPokedex()
-		}
-	}
 </script>
 
 <aside class="pk-toolbox pk-ui-section">
@@ -41,9 +35,7 @@
 			<div class="pk-toolbox-btn-group">
 				<PkImport />
 				<PkExport />
-				<button class="pk-button" onclick={resetCurrentPokedex}
-					><img src="/ui/trash-alt-solid.svg" alt="" />
-				</button>
+				<PkDexReset />
 			</div>
 		</div>
 
@@ -59,12 +51,10 @@
 				onUpdate={toggleViewerMode}
 			/>
 
-			<!-- cycle to additional display modes -->
 			<button class="pk-button" onclick={cycleBadgeDisplay}
 				><img src="/ui/refresh.svg" alt="" />Badge
 			</button>
 
-			<!-- cycle to additional display modes -->
 			<button class="pk-button" onclick={openDefaultDialog}
 				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
 				Defaults</button
@@ -95,15 +85,6 @@
 			display: flex;
 			justify-content: space-around;
 			padding: 0.5rem;
-		}
-
-		.pk-toolbox-btn-group {
-			.pk-button:last-child {
-				max-width: 44px;
-				img {
-					margin: 0;
-				}
-			}
 		}
 	}
 

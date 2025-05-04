@@ -113,6 +113,25 @@ class StorageHandler {
 		return selectedPokedex
 	}
 
+	/**
+	 * Checks if a Pokedex has been modified from its initial state.
+	 * @param dexName The name of the Pokedex to check.
+	 * @returns true if the Pokedex has been modified, false if it's in the initial state.
+	 */
+	public hasModifiedPokedex(dexName: string): boolean {
+		const currentDex = this.loadPokedex(dexName)
+		if (!currentDex) {
+			return false
+		}
+
+		// Check if any Pokemon has been customized
+		const hasCustomizedPokemon = Object.values(currentDex.pokemon).some(
+			(pokemon) => pokemon.isCustomized || pokemon.captured
+		)
+
+		return hasCustomizedPokemon
+	}
+
 	// ================
 	// Pokemon State
 	// ================
