@@ -56,7 +56,7 @@
 				{#if deriveOriginMark()}
 					<img
 						width="44px"
-						src={`/origin-marks/${deriveOriginMark()}.png`}
+						src={`/origin-marks/${deriveOriginMark()}.webp`}
 						alt={`${deriveOriginMark()} origin mark`}
 						title={`${deriveOriginMark()} origin mark`}
 					/>

@@ -43,7 +43,7 @@
 	<section class="pk-ui-section-inner">
 		<section class="pk-dialog-header">
 			<h2>{dialogConfig.headline}</h2>
-			<button class="pk-button" onclick={handleDismiss}><img src="ui/x-icon.png" alt="" /></button>
+			<button class="pk-button" onclick={handleDismiss}><img src="ui/x-icon.webp" alt="" /></button>
 		</section>
 
 		<div class="separator"></div>

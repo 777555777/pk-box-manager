@@ -117,7 +117,7 @@
 		cursor: text;
 
 		border-width: 9px solid;
-		border-image: url('/ui/textarea-select-default.png') 9 fill stretch;
+		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
 		border-image-outset: 0;
 		border-image-width: 9px;
 

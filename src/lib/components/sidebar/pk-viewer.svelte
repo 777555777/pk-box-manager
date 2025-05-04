@@ -34,7 +34,7 @@
 		border-color: transparent;
 		border-width: 6px;
 
-		border-image-source: url('/ui/inner-border-viewer.png');
+		border-image-source: url('/ui/inner-border-viewer.webp');
 		border-image-slice: 6;
 		border-image-repeat: stretch;
 		border-image-outset: 3px;

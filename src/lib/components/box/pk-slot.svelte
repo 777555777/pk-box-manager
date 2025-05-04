@@ -144,7 +144,7 @@
 			left: 50%;
 			transform: translateX(-50%);
 
-			background-image: url('/boxes/hand-cursor.png');
+			background-image: url('/boxes/hand-cursor.webp');
 			background-repeat: no-repeat;
 			background-size: contain;
 			background-position: center;

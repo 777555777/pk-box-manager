@@ -26,7 +26,7 @@
 
 <style>
 	:root {
-		--source-box-bg-url: url('/boxes/forest.png');
+		--source-box-bg-url: url('/boxes/forest.webp');
 	}
 
 	.pk-box {
@@ -79,14 +79,14 @@
 		border-width: 8px;
 		border-style: solid;
 		border-color: transparent;
-		border-image-source: url('/boxes/box-title-border.png');
+		border-image-source: url('/boxes/box-title-border.webp');
 		border-image-slice: 8; /* Quadrat von Bildecke aus bis zum inneren Rand Ende */
 		border-image-repeat: stretch;
 		border-image-width: 8px;
 
 		image-rendering: pixelated;
 
-		background-image: url('/boxes/forest-title-clean.png');
+		background-image: url('/boxes/forest-title-clean.webp');
 		background-size: 102% 112%;
 		background-position: center;
 		background-repeat: no-repeat;
