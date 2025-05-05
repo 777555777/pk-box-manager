@@ -116,73 +116,29 @@ body {
 
 .pk-ui-section {
 	/* Border settings */
-	--corner-top: 15px;
-	--corner-right: 15px;
-	--corner-bottom: 19px;
-	--corner-left: 15px;
-
-	--slice-top: 15;
-	--slice-right: 15;
-	--slice-bottom: 19;
-	--slice-left: 15;
-
 	border-style: solid;
 	border-color: transparent;
-	border-width: var(--corner-top) var(--corner-right) var(--corner-bottom) var(--corner-left);
-
-	border-image-source: url('/ui/ui-section-border.webp');
-	border-image-slice: var(--slice-top) var(--slice-right) var(--slice-bottom) var(--slice-left);
-	border-image-repeat: stretch;
+	border-width: 15px 15px 20px 15px;
+	border-image-source: url('/ui/ui-section-filled.png');
+	border-image-slice: 15 15 20 15 fill;
+	border-image-repeat: round;
 	border-image-outset: 0;
-
-	background-color: var(--ui-section-background-color);
-	/* Cutoff background overflow */
-	clip-path: polygon(
-		0px calc(100% - 9px),
-		3px calc(100% - 9px),
-		3px calc(100% - 6px),
-		6px calc(100% - 6px),
-		6px calc(100% - 3px),
-		9px calc(100% - 3px),
-		9px 100%,
-		calc(100% - 9px) 100%,
-		calc(100% - 9px) calc(100% - 3px),
-		calc(100% - 6px) calc(100% - 3px),
-		calc(100% - 6px) calc(100% - 6px),
-		calc(100% - 3px) calc(100% - 6px),
-		calc(100% - 3px) calc(100% - 9px),
-		100% calc(100% - 9px),
-		100% 9px,
-		calc(100% - 3px) 9px,
-		calc(100% - 3px) 6px,
-		calc(100% - 6px) 6px,
-		calc(100% - 6px) 3px,
-		calc(100% - 9px) 3px,
-		calc(100% - 9px) 0px,
-		9px 0px,
-		9px 3px,
-		6px 3px,
-		6px 6px,
-		3px 6px,
-		3px 9px,
-		0px 9px
-	);
 
 	image-rendering: pixelated;
 }
 
 .pk-ui-section-inner {
+	/* Border settings */
 	border-style: solid;
 	border-color: transparent;
 	border-width: 6px;
-
 	border-image-source: url('/ui/inner-border-sidebar.webp');
 	border-image-slice: 6;
-	border-image-repeat: stretch;
+	border-image-repeat: round;
 	border-image-outset: 3px;
 
 	/* fix offset for bottom shadow*/
-	margin-bottom: -1px;
+	margin-bottom: -2px;
 }
 
 /* Button */
@@ -222,7 +178,7 @@ body {
 		width: 100%;
 		height: 100%;
 		border-width: 9px solid;
-		border-image: url('/ui/button-default.webp') 9 fill stretch;
+		border-image: url('/ui/button-default.webp') 9 fill round;
 		border-image-outset: 0;
 		border-image-width: 9px;
 		z-index: -1;
@@ -267,7 +223,7 @@ body {
 	appearance: none;
 
 	border-width: 9px solid;
-	border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
+	border-image: url('/ui/textarea-select-default.webp') 9 fill round;
 	border-image-outset: 0;
 	border-image-width: 9px;
 
@@ -327,7 +283,7 @@ body {
 	cursor: text;
 
 	border-width: 9px solid;
-	border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
+	border-image: url('/ui/textarea-select-default.webp') 9 fill round;
 	border-image-outset: 0;
 	border-image-width: 9px;
 	resize: none;

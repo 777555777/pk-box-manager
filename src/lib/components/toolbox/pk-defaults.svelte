@@ -119,6 +119,7 @@
 		overflow: visible;
 		min-width: var(--dialog-min-width);
 		color: var(--ui-text-color);
+		background-color: transparent;
 		.pk-ui-section-inner {
 			padding: var(--dialog-spacing);
 		}
