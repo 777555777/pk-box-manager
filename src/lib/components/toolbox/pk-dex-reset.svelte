@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { pkState } from '$lib/state/pk-state.svelte'
-	import PkDialog from '../ui/pk-dialog.svelte'
-
-	interface PkDialogElement {
-		showDialog: Function
-	}
+	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
 
 	let infoDialog: PkDialogElement
 
@@ -30,6 +26,7 @@
 	onConfirm={() => pkState.resetCurrentPokedex()}
 	onCancel={() => {}}
 	okBtnText="Reset Pokedex"
+	cancelBtnText="Cancel"
 />
 
 <style>

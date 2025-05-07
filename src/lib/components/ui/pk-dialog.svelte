@@ -4,13 +4,17 @@
 	type ConfirmCallback = () => void
 	type DismissCallback = () => void
 
+	export interface PkDialogElement {
+		showDialog: Function
+	}
+
 	interface PkDialog {
 		headline: string
 		dialogContent: Snippet
 		onConfirm: ConfirmCallback
 		onCancel: DismissCallback
-		cancelBtnText?: string
-		okBtnText?: string
+		cancelBtnText?: string | undefined
+		okBtnText?: string | undefined
 	}
 
 	let {
@@ -18,8 +22,8 @@
 		dialogContent,
 		onConfirm = () => {},
 		onCancel = () => {},
-		cancelBtnText = 'Cancel',
-		okBtnText = 'Ok'
+		cancelBtnText,
+		okBtnText
 	}: PkDialog = $props()
 
 	let dialogElement: HTMLDialogElement
@@ -53,7 +57,7 @@
 				{@render dialogContent()}
 			{:else}
 				<div class="pk-dialog-description">
-					<p>Dialog content not provided.</p>
+					<p>WARNING: Dialog content not provided.</p>
 				</div>
 			{/if}
 		</section>
@@ -106,6 +110,8 @@
 		margin-block: calc(var(--dialog-spacing) * 2);
 
 		.pk-dialog-description p {
+			background-color: red;
+			color: white;
 			line-height: 1.6;
 			max-width: 55ch;
 			letter-spacing: 0.02em;

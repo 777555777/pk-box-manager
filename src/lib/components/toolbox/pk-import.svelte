@@ -2,12 +2,8 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { validateImportedDexState } from '$lib/components/toolbox/pk-import-validation'
 	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
-	import PkDialog from '$lib/components/ui/pk-dialog.svelte'
+	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
-
-	interface PkDialogElement {
-		showDialog: Function
-	}
 
 	let fileInput: HTMLInputElement
 	let pendingImport: DexStorage | null = null
@@ -104,6 +100,7 @@
 	onConfirm={onConfirmInfo}
 	onCancel={() => {}}
 	okBtnText="Override"
+	cancelBtnText="Cancel"
 />
 
 {#snippet errorDialogContent()}
@@ -118,6 +115,7 @@
 	dialogContent={errorDialogContent}
 	onConfirm={() => {}}
 	onCancel={() => {}}
+	okBtnText="Ok"
 />
 
 <style>

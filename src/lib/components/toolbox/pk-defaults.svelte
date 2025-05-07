@@ -5,16 +5,14 @@
 	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import type { GameType } from '$lib/models/data-models'
+	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
 
-	let dialogElement: HTMLDialogElement
+	let defaultsDialog: PkDialogElement
+
 	let disabled = $derived(!appState.hasModifiedDefaults())
 
 	export function showDefaultsDialog() {
-		dialogElement.showModal()
-	}
-
-	function closeDialog() {
-		dialogElement.close()
+		defaultsDialog.showDialog()
 	}
 
 	// === Shiny Toggle ===
@@ -43,103 +41,66 @@
 	}
 </script>
 
-<dialog class="pk-ui-section" bind:this={dialogElement}>
-	<section class="pk-ui-section-inner">
-		<section class="pk-dialog-header">
-			<h2>Editing defaults</h2>
-			<button class="pk-button" onclick={closeDialog}><img src="ui/x-icon.webp" alt="" /></button>
+<PkDialog
+	bind:this={defaultsDialog}
+	headline="Editing defaults"
+	dialogContent={defaultsDialogContent}
+	onConfirm={() => {}}
+	onCancel={() => {}}
+	okBtnText="Ok"
+/>
+
+{#snippet defaultsDialogContent()}
+	<section class="pk-dialog-content">
+		<section class="pk-dialog-description">
+			<p>
+				Configure default values that will be automatically applied to a Pokémon when it is first
+				marked as captured
+			</p>
 		</section>
 
-		<div class="separator"></div>
+		<button class="pk-button" onclick={resetDefaults} {disabled}>Restore defaults</button>
 
-		<section class="pk-dialog-content">
-			<section class="pk-dialog-description">
-				<p>
-					Configure default values that will be automatically applied to a Pokémon when it is first
-					marked as captured
-				</p>
-			</section>
-
-			<button class="pk-button" onclick={resetDefaults} {disabled}>Restore defaults</button>
-
-			<section class="pk-defaults">
-				<div class="pk-input-group">
-					<!-- Game -->
-					<PkGameSelector
-						label="Caught in"
-						onUpdate={updateCaughtIn}
-						value={appState.getAppDefaults().caughtIn}
-					/>
-					<div class="pk-btn-group">
-						<!-- Ball -->
-						<PkBallSelector
-							onUpdate={updatePokeball}
-							selectedBall={appState.getAppDefaults().ball}
-						/>
-
-						<!-- Shiny -->
-						<PkToggle
-							icon="/ui/sparkle.svg"
-							activeColor="hsla(125, 100%, 30%, 0.55)"
-							label="Shiny"
-							hideLabel={false}
-							onUpdate={toggleShiny}
-							checked={appState.getAppDefaults().shiny}
-						/>
-					</div>
-				</div>
-
-				<!-- Comment -->
-				<PkTextarea
-					label="Comment"
-					onUpdate={updateComment}
-					value={appState.getAppDefaults().comment}
-					debounceTime={250}
+		<section class="pk-defaults">
+			<div class="pk-input-group">
+				<!-- Game -->
+				<PkGameSelector
+					label="Caught in"
+					onUpdate={updateCaughtIn}
+					value={appState.getAppDefaults().caughtIn}
 				/>
-			</section>
-		</section>
+				<div class="pk-btn-group">
+					<!-- Ball -->
+					<PkBallSelector onUpdate={updatePokeball} selectedBall={appState.getAppDefaults().ball} />
 
-		<div class="separator"></div>
+					<!-- Shiny -->
+					<PkToggle
+						icon="/ui/sparkle.svg"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						label="Shiny"
+						hideLabel={false}
+						onUpdate={toggleShiny}
+						checked={appState.getAppDefaults().shiny}
+					/>
+				</div>
+			</div>
 
-		<section class="pk-dialog-footer">
-			<button class="pk-button" onclick={closeDialog}>Close</button>
+			<!-- Comment -->
+			<PkTextarea
+				label="Comment"
+				onUpdate={updateComment}
+				value={appState.getAppDefaults().comment}
+				debounceTime={250}
+			/>
 		</section>
 	</section>
-</dialog>
+{/snippet}
 
 <style>
-	dialog {
-		--dialog-spacing: 1rem;
-		--dialog-min-width: 680px;
-
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -65%);
-		overflow: visible;
-		min-width: var(--dialog-min-width);
-		color: var(--ui-text-color);
-		background-color: transparent;
-		.pk-ui-section-inner {
-			padding: var(--dialog-spacing);
-		}
-	}
-
-	.pk-dialog-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-
-		.pk-button {
-			max-width: 44px;
-		}
-	}
-
 	.pk-dialog-content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--dialog-spacing);
-		margin-block: calc(var(--dialog-spacing) * 2);
 
 		.pk-dialog-description {
 			margin-bottom: 1rem;
@@ -173,14 +134,5 @@
 				gap: 1rem;
 			}
 		}
-	}
-
-	.pk-dialog-footer {
-		display: flex;
-		justify-content: flex-end;
-	}
-
-	dialog::backdrop {
-		background-color: rgba(0, 0, 0, 0.5);
 	}
 </style>
