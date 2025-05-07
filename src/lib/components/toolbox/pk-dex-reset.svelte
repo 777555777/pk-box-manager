@@ -8,12 +8,6 @@
 
 	let infoDialog: PkDialogElement
 
-	const infoDialogConfig = {
-		headline: 'Reset current Pokedex',
-		textContent: 'Are you sure you want to reset the currently selected Pokedex?',
-		cancel: true
-	}
-
 	function resetCurrentPokedex() {
 		infoDialog.showDialog()
 	}
@@ -23,9 +17,16 @@
 	><img src="/ui/trash-alt-solid.svg" alt="" />
 </button>
 
+{#snippet infoDialogContent()}
+	<div class="pk-dialog-description">
+		<p>Are you sure you want to reset the currently selected Pokedex?</p>
+	</div>
+{/snippet}
+
 <PkDialog
 	bind:this={infoDialog}
-	dialogConfig={infoDialogConfig}
+	headline="Reset current Pokedex"
+	dialogContent={infoDialogContent}
 	onConfirm={() => pkState.resetCurrentPokedex()}
 	onCancel={() => {}}
 	okBtnText="Reset Pokedex"

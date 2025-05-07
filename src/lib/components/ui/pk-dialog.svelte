@@ -1,26 +1,26 @@
 <script lang="ts">
-	interface DialogConfig {
-		headline: string
-		textContent: string
-		cancel?: boolean
-	}
+	import type { Snippet } from 'svelte'
 
 	type ConfirmCallback = () => void
 	type DismissCallback = () => void
 
-	let {
-		dialogConfig,
-		onConfirm = () => {},
-		onCancel = () => {},
-		cancelBtnText = 'Cancel',
-		okBtnText = 'Ok'
-	}: {
-		dialogConfig: DialogConfig
+	interface PkDialog {
+		headline: string
+		dialogContent: Snippet
 		onConfirm: ConfirmCallback
 		onCancel: DismissCallback
 		cancelBtnText?: string
 		okBtnText?: string
-	} = $props()
+	}
+
+	let {
+		headline = '',
+		dialogContent,
+		onConfirm = () => {},
+		onCancel = () => {},
+		cancelBtnText = 'Cancel',
+		okBtnText = 'Ok'
+	}: PkDialog = $props()
 
 	let dialogElement: HTMLDialogElement
 
@@ -42,24 +42,29 @@
 <dialog class="pk-ui-section" bind:this={dialogElement}>
 	<section class="pk-ui-section-inner">
 		<section class="pk-dialog-header">
-			<h2>{dialogConfig.headline}</h2>
+			<h2>{headline}</h2>
 			<button class="pk-button" onclick={handleDismiss}><img src="ui/x-icon.webp" alt="" /></button>
 		</section>
 
 		<div class="separator"></div>
 
 		<section class="pk-dialog-content">
-			<section class="pk-dialog-description">
-				<p>{dialogConfig.textContent}</p>
-			</section>
+			{#if dialogContent}
+				{@render dialogContent()}
+			{:else}
+				<div class="pk-dialog-description">
+					<p>Dialog content not provided.</p>
+				</div>
+			{/if}
 		</section>
 
 		<div class="separator"></div>
 
 		<section class="pk-dialog-footer">
-			<button class="pk-button" onclick={handleConfirm}>{okBtnText}</button>
-
-			{#if dialogConfig.cancel}
+			{#if okBtnText}
+				<button class="pk-button" onclick={handleConfirm}>{okBtnText}</button>
+			{/if}
+			{#if cancelBtnText}
 				<button class="pk-button" onclick={handleDismiss}>{cancelBtnText}</button>
 			{/if}
 		</section>
@@ -100,14 +105,10 @@
 		gap: var(--dialog-spacing);
 		margin-block: calc(var(--dialog-spacing) * 2);
 
-		.pk-dialog-description {
-			/* margin-bottom: 1rem; */
-
-			p {
-				line-height: 1.6;
-				max-width: 55ch;
-				letter-spacing: 0.02em;
-			}
+		.pk-dialog-description p {
+			line-height: 1.6;
+			max-width: 55ch;
+			letter-spacing: 0.02em;
 		}
 	}
 

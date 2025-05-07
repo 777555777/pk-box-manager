@@ -15,17 +15,7 @@
 	let infoDialog: PkDialogElement
 	let errorDialog: PkDialogElement
 
-	const infoDialogConfig = {
-		headline: 'Overwrite local Data',
-		textContent: 'Local data already exists for this Pokedex. Do you want to overwrite it?',
-		cancel: true
-	}
-
-	const errorDialogConfig = {
-		headline: 'Error Parsing JSON File',
-		textContent: 'more text and so on',
-		cancel: false
-	}
+	let errorDialogText = ''
 
 	function readImportFile(event: Event) {
 		const input = event.target as HTMLInputElement
@@ -55,7 +45,7 @@
 				}
 			} catch (error) {
 				console.error(error)
-				errorDialogConfig.textContent = handleErrorMessage(error)
+				errorDialogText = handleErrorMessage(error)
 				errorDialog.showDialog()
 			}
 		}
@@ -101,17 +91,39 @@
 />
 <button class="pk-button" onclick={() => fileInput.click()}>Import</button>
 
+{#snippet infoDialogContent()}
+	<div class="pk-dialog-description">
+		<p>Local data already exists for this Pokedex. Do you want to overwrite it?</p>
+	</div>
+{/snippet}
+
 <PkDialog
 	bind:this={infoDialog}
-	dialogConfig={infoDialogConfig}
+	headline="Overwrite local Data"
+	dialogContent={infoDialogContent}
 	onConfirm={onConfirmInfo}
 	onCancel={() => {}}
 	okBtnText="Override"
 />
 
+{#snippet errorDialogContent()}
+	<div class="pk-dialog-description">
+		<p>{errorDialogText}</p>
+	</div>
+{/snippet}
+
 <PkDialog
 	bind:this={errorDialog}
-	dialogConfig={errorDialogConfig}
+	headline="Error Parsing JSON File"
+	dialogContent={errorDialogContent}
 	onConfirm={() => {}}
 	onCancel={() => {}}
 />
+
+<style>
+	.pk-dialog-description p {
+		line-height: 1.6;
+		max-width: 55ch;
+		letter-spacing: 0.02em;
+	}
+</style>
