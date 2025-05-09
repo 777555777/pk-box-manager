@@ -84,6 +84,7 @@
 		position: sticky;
 		z-index: 2;
 		top: calc(7.5rem + 65px); /* toolbox uses translation -15px */
+		margin-top: 4rem; /* Needed for when content is shorter then viewport */
 		color: var(--ui-text-color);
 	}
 
