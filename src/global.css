@@ -77,7 +77,7 @@ body {
 
 	/* prettier-ignore */
 	background-image: 
-	  url('/ui/app-background.png'), 
+	  url('/ui/app-background.webp'), 
 	  linear-gradient(
 		to bottom,
 		hsl(185, 79%, 70%) 0%,
