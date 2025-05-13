@@ -5,7 +5,7 @@
 
 <section>
 	{#each Object.entries(Pokemon) as [name, data]}
-		<div class="debug-border">
+		<div class="container debug-border">
 			<img
 				src={`/spritesheets/pokemon/${data.sheet}.webp`}
 				style={setCssPosition(data.pos)}
@@ -38,7 +38,7 @@
 		--scale-factor-y: calc(var(--target-height) / var(--original-height));
 	}
 
-	div {
+	.container {
 		max-width: calc(var(--target-width) * 1px);
 		max-height: calc(var(--target-height) * 1px);
 		img {
