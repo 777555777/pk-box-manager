@@ -1,38 +1,83 @@
-# sv
+# 📦 PK Box Manager
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A fast, lightweight, and mostly local Svelte app to manage your Living Pokédex.
+Userdata is managed entirely in the browsers localStorage.
 
-## Creating a project
+![pk-box-manager screenshot](app-example.png)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```bash
-# create a new project in the current directory
-npx sv create
+Track detailed information for each Pokémon, including:
 
-# create a new project in my-app
-npx sv create my-app
+- 🎯 Pokéball used
+- ✨ Shiny status
+- 🎮 Game of origin
+- 📝 Custom comments
+
+Additional highlights:
+
+- ⚙️ **Default values**: Set default capture values (e.g. ball, game) to speed up marking caught Pokémon.
+- 📊 **Pokémon info display**: Shows base stats, typing, abilities, and gender ratio (fetched via API).
+- 🔗 **Quick wiki access**: Direct links to popular wikis for encounter locations of the selected Pokémon.
+- 📁 **Import & export**: Backup or share your dex progress via JSON file.
+- 👀 **Visual ball indicator**: Shows the caught Pokéball directly in the box view
+
+## Prerequisites
+
+The following Programmes are required in order to generate the image assets for the application:
+
+- **Node.js / Deno** (for dev server & build scripts)
+- **Deno** (sprite-sheet generation scripts)
+- **ImageMagick** (`convert`, `montage`)
+- **cwebp** (WebP encoder)
+- **Bash** (for helper scripts)
+
+## Installation
+
+```sh
+# Clone the repo
+git clone https://github.com/777555777/pk-box-manager
+cd pk-box-manager
+
+# Install dependencies
+deno install
+
+# Start dev server
+deno run build && deno run dev
+
+# Start preview server
+deno run preview
 ```
 
-## Developing
+> ### Note: Clear browser localstorage to reset app state
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Asset Preparation
 
-```bash
-npm run dev
+```sh
+# Generate all sprite sheets (requires Deno and ImageMagick)
+deno run sprites
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Convert .png images in /static to WebP (requires ImageMagick & cwebp CLI)
+deno run webp
 ```
 
-## Building
+## Structure
 
-To create a production version of your app:
+```sh
+📁 /project-data
+├── 📁 /images         # Source images used to generate spritesheets
+└── 📁 /src            # Deno scripts for generating spritesheets
 
-```bash
-npm run build
+📁 /src
+├── 📁 /lib
+│   ├── 📁 /components  # UI components used across the app
+│   ├── 📁 /models      # Type definitions & utilities for sprite data
+│   └── 📁 /state       # Global app state & localStorage persistence
+└── 📁 /routes          # Main app page & server-side API endpoints
+
+📁 /static
+├── 📁 /boxes           # Image assets representing Pokémon storage boxes
+├── 📁 /origin-marks    # Icons showing a Pokémon's game of origin
+├── 📁 /spritesheets    # Generated sprite sheets (normal, shiny, forms, etc.)
+└── 📁 /ui              # UI elements like buttons, icons, etc.
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
