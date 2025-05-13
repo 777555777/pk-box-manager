@@ -82,11 +82,12 @@
 		width: var(--ball-btn-size-sprite);
 		height: var(--ball-btn-size-sprite);
 		transform: scale(1.6);
+		/* transform: scale(1.4666666666666667); */
 	}
 
 	button {
-		width: 48px;
-		height: 48px;
+		width: 44px;
+		height: 44px;
 		padding: 0;
 		display: flex;
 		justify-content: center;
@@ -95,7 +96,7 @@
 
 	.pk-selector-tray {
 		--ball-amount: 5;
-		--ball-size: 48px;
+		--ball-size: 44px;
 
 		background-color: #717186;
 		width: fit-content;
