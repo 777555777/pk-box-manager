@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "deno run sprites && deno run webp && deno run build && vite preview",
+		"preview": "deno run pre-deploy && vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -18,7 +18,9 @@
 		"generate-form-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/forms --output-dir=static/spritesheets/pokemon --name=forms --ts-dir=src/lib/models --tile-size=96 --column-amount=15 --max-images=300",
 		"generate-shiny-pokemon-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/shiny-normal --output-dir=static/spritesheets/shiny-pokemon --name=pokemon --tile-size=96 --column-amount=15 --max-images=300 --no-ts",
 		"generate-shiny-form-sprites": "deno run --allow-read --allow-write --allow-run project-data/src/generate-sprites.ts --input-dir=project-data/images/pokemon/shiny-forms --output-dir=static/spritesheets/shiny-pokemon --name=forms --tile-size=96 --column-amount=15 --max-images=300 --no-ts",
-		"webp": "cd ./static && convertWebP.sh"
+		"webp": "cd ./static && convertWebP.sh",
+		"pre-deploy": "deno task build && deno run sprites && deno run webp",
+		"deploy": "./deploy.sh"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.9",
@@ -33,6 +35,7 @@
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.3.3",
 		"svelte": "^5.28.2",
+		"svelte-adapter-deno": "^0.9.1",
 		"svelte-check": "^4.1.7",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.32.0",
