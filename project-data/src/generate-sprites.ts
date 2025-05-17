@@ -5,7 +5,8 @@ interface Config {
 	outputSpritesheetDir: string
 	tsDir: string
 	name: string
-	tileSize: number
+	tileWidth: number
+	tileHeight: number
 	columnAmount: number
 	maxImagesPerSheet: number
 	generateTs: boolean
@@ -13,7 +14,7 @@ interface Config {
 
 // Extraction of cli-parameters to global values
 // prettier-ignore
-const { inputDir, outputSpritesheetDir, tsDir, name, tileSize, columnAmount, maxImagesPerSheet, generateTs } = parseArguments()
+const { inputDir, outputSpritesheetDir, tsDir, name, tileWidth, tileHeight, columnAmount, maxImagesPerSheet, generateTs } = parseArguments()
 
 main()
 
@@ -69,7 +70,7 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 				// Creates array of path names combined with sprite names: ['sprite1.png', 'sprite2.png', ...]
 				...batch.map((file) => `${inputDir}/${file}`),
 				'-geometry',
-				`${tileSize}x${tileSize}+0+0`,
+				`${tileWidth}x${tileHeight}+0+0`,
 				'-tile',
 				`${columnAmount}x`,
 				'-background',
@@ -95,9 +96,12 @@ async function generateMappingData(spriteSheetFileNames: string[], files: string
 	const tsFileData: Record<string, { sheet: string; pos: { x: number; y: number } }> = {}
 
 	files.forEach((file, index) => {
-		const sheetIndex = Math.floor(index / maxImagesPerSheet) // Determines which sheet the image is in
-		const positionX = (index % columnAmount) * tileSize * -1
-		const positionY = Math.floor((index % maxImagesPerSheet) / columnAmount) * tileSize * -1
+		const sheetIndex = Math.floor(index / maxImagesPerSheet)
+		const column = index % columnAmount
+		const row = Math.floor((index % maxImagesPerSheet) / columnAmount)
+
+		const positionX = column * tileWidth * -1
+		const positionY = row * tileHeight * -1
 
 		// Vite needs the path without the dir, which is in the root directory.
 		const spriteSheetPath = spriteSheetFileNames[sheetIndex].replace('.png', '')
@@ -127,7 +131,8 @@ function parseArguments(): Config {
 			'output-dir',
 			'ts-dir',
 			'name',
-			'tile-size',
+			'tile-width',
+			'tile-height',
 			'column-amount',
 			'max-images'
 		],
@@ -137,7 +142,8 @@ function parseArguments(): Config {
 			'output-dir': '.',
 			'ts-dir': '.',
 			name: 'dynamic',
-			'tile-size': '30',
+			'tile-width': '30',
+			'tile-height': '', // leer = wird aus tile-width übernommen
 			'column-amount': '8',
 			'max-images': '64',
 			'no-ts': false
@@ -148,12 +154,17 @@ function parseArguments(): Config {
 		showHelp()
 	}
 
+	const tileWidth = validateNumber(flags['tile-width'], 'tile-width')
+	const tileHeight =
+		flags['tile-height'] !== '' ? validateNumber(flags['tile-height'], 'tile-height') : tileWidth
+
 	return {
 		inputDir: flags['input-dir'],
 		outputSpritesheetDir: flags['output-dir'],
 		tsDir: flags['ts-dir'],
 		name: flags['name'],
-		tileSize: validateNumber(flags['tile-size'], 'tile-size'),
+		tileWidth,
+		tileHeight,
 		columnAmount: validateNumber(flags['column-amount'], 'column-amount'),
 		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images'),
 		generateTs: !flags['no-ts']
@@ -171,22 +182,30 @@ function validateNumber(value: string, name: string): number {
 
 function showHelp() {
 	console.log(`
-Liest einen Ordner mit Bildern (Sprites), die alle die gleiche Größe und das Format .png haben müssen.
-Erzeugt daraus eine oder mehrere Spritesheet PNG-Dateien, abhängig von den eingegebenen Parametern.
+Liest einen Ordner mit .png-Bildern gleicher Größe und erzeugt ein oder mehrere Spritesheets.
 
-Verwendung: deno generate-sprites.ts --input-dir=./images --output-dir=. --name=pokemon --tile-size=96 --column-amount=15 --max-images=300 --no-ts"
+Verwendung:
+  deno run --allow-read --allow-write --allow-run generate-sprites.ts \\
+    --input-dir=./images \\
+    --output-dir=. \\
+    --name=pokemon \\
+    --tile-width=96 \\
+    --tile-height=96 \\
+    --column-amount=15 \\
+    --max-images=300
 
 Optionen:
-	--input-dir <Pfad>    Eingabeverzeichnis (Standard: .)
-	--output-dir <Pfad>   Ausgabeverzeichnis für das Spritesheet (Standard: .)
-	--ts-dir <Pfad>       Ausgabeverzeichnis für die TypeScript Datei (Standard: .)
-	--name <Name>   	  Naming für Datein und TS Inhalte, nur ein Wort verwenden! (Standard: dynamic)
-	--tile-size <Zahl>    Größe der einzelnen Kacheln (Standard: 30)
-	--columns <Zahl>      Anzahl der Spalten im Spritesheet (Standard: 8)
-	--max-images <Zahl>   Maximale Anzahl der Bilder pro Sheet (Standard: 15)
-	--no-ts               Deaktiviert die Erstellung der TypeScript-Datei
-	--help                Zeigt diese Hilfe an
-	`)
+  --input-dir <Pfad>      Eingabeverzeichnis (Standard: .)
+  --output-dir <Pfad>     Ausgabeverzeichnis für das Spritesheet (Standard: .)
+  --ts-dir <Pfad>         Ausgabeverzeichnis für die TypeScript Datei (Standard: .)
+  --name <Name>           Basename für Dateien und TypeScript-Objekte (Standard: dynamic)
+  --tile-width <Zahl>     Breite eines einzelnen Sprites (Standard: 30)
+  --tile-height <Zahl>    Höhe eines einzelnen Sprites (Standard: tile-width)
+  --column-amount <Zahl>  Anzahl Spalten im Spritesheet (Standard: 8)
+  --max-images <Zahl>     Maximale Bilderanzahl pro Sheet (Standard: 64)
+  --no-ts                 Deaktiviert die Erstellung der TypeScript-Datei
+  --help                  Zeigt diese Hilfe an
+`)
 	Deno.exit(0)
 }
 
