@@ -1,3 +1,4 @@
+import { defaultWallpaper } from './null-state-helper.ts'
 import type { DexStorage, PokemonEntry, BoxOrder, PokemonState } from './state/storage-handler.ts'
 
 export const initialAppDefaults = {
@@ -22,15 +23,24 @@ export const supportedPokedexList = {
 	},
 	'order-test-small-2.json': {
 		displayName: 'Kleiner Test Dex 2'
+	},
+	'order-background-test.json': {
+		displayName: 'Hintergrund Test Dex'
 	}
 } as const
 
 export type DexType = keyof typeof supportedPokedexList
 
-export function initPokedex(pokedexOrder: BoxOrder[], dexName: string) {
+export function initPokedex(pokedexOrder: BoxOrder[], dexName: string): DexStorage {
 	const initialDexPokemon = setupInitialPokedex(pokedexOrder)
+	const boxSettings = addBoxSettings(pokedexOrder)
 	const initialDex = addDexMetaData(initialDexPokemon, dexName)
-	return initialDex
+
+	// Return Object with all properties
+	return {
+		...initialDex,
+		boxSettings
+	}
 }
 
 function setupInitialPokedex(pokedexOrder: BoxOrder[]): Record<string, PokemonState> {
@@ -56,7 +66,7 @@ function setupInitialPokedex(pokedexOrder: BoxOrder[]): Record<string, PokemonSt
 }
 
 // prettier-ignore
-function addDexMetaData(initialData: Record<string, PokemonState>, dexName: string): DexStorage {
+function addDexMetaData(initialData: Record<string, PokemonState>, dexName: string) {
 	return {
 		version: '1.0.0',
 		name: dexName,
@@ -68,4 +78,15 @@ function addDexMetaData(initialData: Record<string, PokemonState>, dexName: stri
 function formatIdentifier(entry: PokemonEntry): string {
 	const paddedId = entry.id_national.toString().padStart(4, '0')
 	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
+}
+
+function addBoxSettings(pokedexOrder: BoxOrder[]) {
+	const boxSettings: Record<string, { wallpaper: string }> = {}
+	for (const box of pokedexOrder) {
+		const boxId = box.title.replace(/\s+/g, '-').toLowerCase()
+		boxSettings[boxId] = {
+			wallpaper: box.wallpaper || defaultWallpaper
+		}
+	}
+	return boxSettings
 }

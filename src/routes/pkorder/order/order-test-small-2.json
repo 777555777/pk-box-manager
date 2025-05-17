@@ -5,6 +5,7 @@
 			{ "pokemonid": "pikachu", "formid": "cap-original", "id_national": 25 },
 			{ "pokemonid": "pikachu", "formid": "cap-hoenn", "id_national": 25 },
 			{ "pokemonid": "pikachu", "formid": "cap-sinnoh", "id_national": 25 }
-		]
+		],
+		"wallpaper": "forest"
 	}
 ]

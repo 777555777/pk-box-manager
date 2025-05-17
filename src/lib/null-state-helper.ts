@@ -13,9 +13,16 @@ export const pokemonNullState = {
 	...pokemonNullProperties
 }
 
+export const defaultWallpaper = 'forest'
+
 export const pokedexNullState = {
 	version: '0.0.0',
 	name: 'null',
 	displayName: 'Null Dex',
-	pokemon: { '0000-null': pokemonNullState }
+	pokemon: { '0000-null': pokemonNullState },
+	boxSettings: {
+		title_1: {
+			wallpaper: defaultWallpaper
+		}
+	}
 }

@@ -29,3 +29,24 @@ export function getPokemonSpriteData(identifier: string): SpriteData {
 export function setCssPosition(pos: Coordinates) {
 	return `object-position: ${pos.x}px ${pos.y}px;`
 }
+
+export function getBackgroundStyle(
+	rows: number,
+	columns: number,
+	spriteWidth: number,
+	spriteHeight: number,
+	spriteData: Coordinates
+) {
+	// Calculate the index of the sprite in the sprite sheet
+	const xIndex = Math.abs(spriteData.x / spriteWidth)
+	const yIndex = Math.abs(spriteData.y / spriteHeight)
+
+	const percentX = (xIndex / (columns - 1)) * 100
+	const percentY = (yIndex / (rows - 1)) * 100
+
+	console.log(`xIndex: ${xIndex}, yIndex: ${yIndex}, percentX: ${percentX}, percentY: ${percentY}`)
+	console.log(
+		`background-Size: ${columns * 100}% ${rows * 100}%; background-Position: ${percentX}% ${percentY}%;`
+	)
+	return `background-Size: ${columns * 100}% ${rows * 100}%; background-Position: ${percentX}% ${percentY}%;`
+}

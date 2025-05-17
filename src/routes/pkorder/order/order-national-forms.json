@@ -32,7 +32,8 @@
 			{ "pokemonid": "sandslash", "formid": null, "id_national": 28 },
 			{ "pokemonid": "nidoran-f", "formid": null, "id_national": 29 },
 			{ "pokemonid": "nidorina", "formid": null, "id_national": 30 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-2",
@@ -67,7 +68,8 @@
 			{ "pokemonid": "growlithe", "formid": null, "id_national": 58 },
 			{ "pokemonid": "arcanine", "formid": null, "id_national": 59 },
 			{ "pokemonid": "poliwag", "formid": null, "id_national": 60 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-3",
@@ -102,7 +104,8 @@
 			{ "pokemonid": "grimer", "formid": null, "id_national": 88 },
 			{ "pokemonid": "muk", "formid": null, "id_national": 89 },
 			{ "pokemonid": "shellder", "formid": null, "id_national": 90 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-4",
@@ -137,7 +140,8 @@
 			{ "pokemonid": "goldeen", "formid": null, "id_national": 118 },
 			{ "pokemonid": "seaking", "formid": null, "id_national": 119 },
 			{ "pokemonid": "staryu", "formid": null, "id_national": 120 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-5",
@@ -172,11 +176,13 @@
 			{ "pokemonid": "dragonair", "formid": null, "id_national": 148 },
 			{ "pokemonid": "dragonite", "formid": null, "id_national": 149 },
 			{ "pokemonid": "mewtwo", "formid": null, "id_national": 150 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-6",
-		"pokemon": [{ "pokemonid": "mew", "formid": null, "id_national": 151 }]
+		"pokemon": [{ "pokemonid": "mew", "formid": null, "id_national": 151 }],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kanto-females",
@@ -204,7 +210,8 @@
 			{ "pokemonid": "magikarp", "formid": "female", "id_national": 129 },
 			{ "pokemonid": "gyarados", "formid": "female", "id_national": 130 },
 			{ "pokemonid": "eevee", "formid": "female", "id_national": 133 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "cap-pikachu",
@@ -217,7 +224,8 @@
 			{ "pokemonid": "pikachu", "formid": "cap-alola", "id_national": 25 },
 			{ "pokemonid": "pikachu", "formid": "cap-partner", "id_national": 25 },
 			{ "pokemonid": "pikachu", "formid": "cap-world", "id_national": 25 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "jotho-1",
@@ -252,7 +260,8 @@
 			{ "pokemonid": "mareep", "formid": null, "id_national": 179 },
 			{ "pokemonid": "flaaffy", "formid": null, "id_national": 180 },
 			{ "pokemonid": "ampharos", "formid": null, "id_national": 181 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "jotho-2",
@@ -287,7 +296,8 @@
 			{ "pokemonid": "snubbull", "formid": null, "id_national": 209 },
 			{ "pokemonid": "granbull", "formid": null, "id_national": 210 },
 			{ "pokemonid": "qwilfish", "formid": null, "id_national": 211 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "jotho-3",
@@ -322,7 +332,8 @@
 			{ "pokemonid": "elekid", "formid": null, "id_national": 239 },
 			{ "pokemonid": "magby", "formid": null, "id_national": 240 },
 			{ "pokemonid": "miltank", "formid": null, "id_national": 241 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "jotho-4",
@@ -337,7 +348,8 @@
 			{ "pokemonid": "lugia", "formid": null, "id_national": 249 },
 			{ "pokemonid": "ho-oh", "formid": null, "id_national": 250 },
 			{ "pokemonid": "celebi", "formid": null, "id_national": 251 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "jotho-females",
@@ -364,7 +376,8 @@
 			{ "pokemonid": "octillery", "formid": "female", "id_national": 224 },
 			{ "pokemonid": "houndoom", "formid": "female", "id_national": 229 },
 			{ "pokemonid": "donphan", "formid": "female", "id_national": 232 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unown-dex",
@@ -397,7 +410,8 @@
 			{ "pokemonid": "unown", "formid": "unown-z", "id_national": 201 },
 			{ "pokemonid": "unown", "formid": "unown-!", "id_national": 201 },
 			{ "pokemonid": "unown", "formid": "unown-?", "id_national": 201 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-1",
@@ -432,7 +446,8 @@
 			{ "pokemonid": "pelipper", "formid": null, "id_national": 279 },
 			{ "pokemonid": "ralts", "formid": null, "id_national": 280 },
 			{ "pokemonid": "kirlia", "formid": null, "id_national": 281 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-2",
@@ -467,7 +482,8 @@
 			{ "pokemonid": "electrike", "formid": null, "id_national": 309 },
 			{ "pokemonid": "manectric", "formid": null, "id_national": 310 },
 			{ "pokemonid": "plusle", "formid": null, "id_national": 311 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-3",
@@ -502,7 +518,8 @@
 			{ "pokemonid": "barboach", "formid": null, "id_national": 339 },
 			{ "pokemonid": "whiscash", "formid": null, "id_national": 340 },
 			{ "pokemonid": "corphish", "formid": null, "id_national": 341 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-4",
@@ -537,7 +554,8 @@
 			{ "pokemonid": "relicanth", "formid": null, "id_national": 369 },
 			{ "pokemonid": "luvdisc", "formid": null, "id_national": 370 },
 			{ "pokemonid": "bagon", "formid": null, "id_national": 371 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-5",
@@ -557,7 +575,8 @@
 			{ "pokemonid": "rayquaza", "formid": null, "id_national": 384 },
 			{ "pokemonid": "jirachi", "formid": null, "id_national": 385 },
 			{ "pokemonid": "deoxys", "formid": "normal", "id_national": 386 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-females",
@@ -580,7 +599,8 @@
 			{ "pokemonid": "cacturne", "formid": "female", "id_national": 332 },
 			{ "pokemonid": "milotic", "formid": "female", "id_national": 350 },
 			{ "pokemonid": "relicanth", "formid": "female", "id_national": 369 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hoenn-alternate",
@@ -588,7 +608,8 @@
 			{ "pokemonid": "deoxys", "formid": "attack", "id_national": 386 },
 			{ "pokemonid": "deoxys", "formid": "defense", "id_national": 386 },
 			{ "pokemonid": "deoxys", "formid": "speed", "id_national": 386 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-1",
@@ -623,7 +644,8 @@
 			{ "pokemonid": "mothim", "formid": null, "id_national": 414 },
 			{ "pokemonid": "combee", "formid": null, "id_national": 415 },
 			{ "pokemonid": "vespiquen", "formid": null, "id_national": 416 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-2",
@@ -658,7 +680,8 @@
 			{ "pokemonid": "gabite", "formid": null, "id_national": 444 },
 			{ "pokemonid": "garchomp", "formid": null, "id_national": 445 },
 			{ "pokemonid": "munchlax", "formid": null, "id_national": 446 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-3",
@@ -693,7 +716,8 @@
 			{ "pokemonid": "porygon-z", "formid": null, "id_national": 474 },
 			{ "pokemonid": "gallade", "formid": null, "id_national": 475 },
 			{ "pokemonid": "probopass", "formid": null, "id_national": 476 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-4",
@@ -715,7 +739,8 @@
 			{ "pokemonid": "darkrai", "formid": null, "id_national": 491 },
 			{ "pokemonid": "shaymin", "formid": "land", "id_national": 492 },
 			{ "pokemonid": "arceus", "formid": null, "id_national": 493 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-female-1",
@@ -750,11 +775,13 @@
 			{ "pokemonid": "weavile", "formid": "female", "id_national": 461 },
 			{ "pokemonid": "rhyperior", "formid": "female", "id_national": 464 },
 			{ "pokemonid": "tangrowth", "formid": "female", "id_national": 465 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-female-2",
-		"pokemon": [{ "pokemonid": "mamoswine", "formid": "female", "id_national": 473 }]
+		"pokemon": [{ "pokemonid": "mamoswine", "formid": "female", "id_national": 473 }],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "sinnoh-alternate",
@@ -771,7 +798,8 @@
 			{ "pokemonid": "rotom", "formid": "fan", "id_national": 479 },
 			{ "pokemonid": "rotom", "formid": "mow", "id_national": 479 },
 			{ "pokemonid": "shaymin", "formid": "sky", "id_national": 492 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-1",
@@ -806,7 +834,8 @@
 			{ "pokemonid": "unfezant", "formid": null, "id_national": 521 },
 			{ "pokemonid": "blitzle", "formid": null, "id_national": 522 },
 			{ "pokemonid": "zebstrika", "formid": null, "id_national": 523 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-2",
@@ -841,7 +870,8 @@
 			{ "pokemonid": "sandile", "formid": null, "id_national": 551 },
 			{ "pokemonid": "krokorok", "formid": null, "id_national": 552 },
 			{ "pokemonid": "krookodile", "formid": null, "id_national": 553 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-3",
@@ -876,7 +906,8 @@
 			{ "pokemonid": "swanna", "formid": null, "id_national": 581 },
 			{ "pokemonid": "vanillite", "formid": null, "id_national": 582 },
 			{ "pokemonid": "vanillish", "formid": null, "id_national": 583 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-4",
@@ -911,7 +942,8 @@
 			{ "pokemonid": "fraxure", "formid": null, "id_national": 611 },
 			{ "pokemonid": "haxorus", "formid": null, "id_national": 612 },
 			{ "pokemonid": "cubchoo", "formid": null, "id_national": 613 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-5",
@@ -946,7 +978,8 @@
 			{ "pokemonid": "tornadus", "formid": "incarnate", "id_national": 641 },
 			{ "pokemonid": "thundurus", "formid": "incarnate", "id_national": 642 },
 			{ "pokemonid": "reshiram", "formid": null, "id_national": 643 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-6",
@@ -957,7 +990,8 @@
 			{ "pokemonid": "keldeo", "formid": "ordinary", "id_national": 647 },
 			{ "pokemonid": "meloetta", "formid": "aria", "id_national": 648 },
 			{ "pokemonid": "genesect", "formid": null, "id_national": 649 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unova-alternate",
@@ -976,7 +1010,8 @@
 			{ "pokemonid": "thundurus", "formid": "therian", "id_national": 642 },
 			{ "pokemonid": "landorus", "formid": "therian", "id_national": 645 },
 			{ "pokemonid": "keldeo", "formid": "resolute", "id_national": 647 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kalos-1",
@@ -1011,7 +1046,8 @@
 			{ "pokemonid": "espurr", "formid": null, "id_national": 677 },
 			{ "pokemonid": "meowstic", "formid": "male", "id_national": 678 },
 			{ "pokemonid": "honedge", "formid": null, "id_national": 679 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kalos-2",
@@ -1046,7 +1082,8 @@
 			{ "pokemonid": "klefki", "formid": null, "id_national": 707 },
 			{ "pokemonid": "phantump", "formid": null, "id_national": 708 },
 			{ "pokemonid": "trevenant", "formid": null, "id_national": 709 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kalos-3",
@@ -1063,7 +1100,8 @@
 			{ "pokemonid": "diancie", "formid": null, "id_national": 719 },
 			{ "pokemonid": "hoopa", "formid": "confined", "id_national": 720 },
 			{ "pokemonid": "volcanion", "formid": null, "id_national": 721 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kalos-alternate-1",
@@ -1098,7 +1136,8 @@
 			{ "pokemonid": "florges", "formid": "orange", "id_national": 671 },
 			{ "pokemonid": "florges", "formid": "blue", "id_national": 671 },
 			{ "pokemonid": "florges", "formid": "white", "id_national": 671 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "kalos-alternate-2",
@@ -1107,7 +1146,8 @@
 			{ "pokemonid": "zygarde", "formid": "10", "id_national": 718 },
 			{ "pokemonid": "zygarde", "formid": "10-ability", "id_national": 718 },
 			{ "pokemonid": "hoopa", "formid": "unbound", "id_national": 720 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "vivillon-pattern",
@@ -1131,7 +1171,8 @@
 			{ "pokemonid": "vivillon", "formid": "jungle", "id_national": 666 },
 			{ "pokemonid": "vivillon", "formid": "fancy", "id_national": 666 },
 			{ "pokemonid": "vivillon", "formid": "pokeball", "id_national": 666 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alola-1",
@@ -1166,7 +1207,8 @@
 			{ "pokemonid": "mudbray", "formid": null, "id_national": 749 },
 			{ "pokemonid": "mudsdale", "formid": null, "id_national": 750 },
 			{ "pokemonid": "dewpider", "formid": null, "id_national": 751 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alola-2",
@@ -1201,7 +1243,8 @@
 			{ "pokemonid": "bruxish", "formid": null, "id_national": 779 },
 			{ "pokemonid": "drampa", "formid": null, "id_national": 780 },
 			{ "pokemonid": "dhelmise", "formid": null, "id_national": 781 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alola-3",
@@ -1232,7 +1275,8 @@
 			{ "pokemonid": "stakataka", "formid": null, "id_national": 805 },
 			{ "pokemonid": "blacephalon", "formid": null, "id_national": 806 },
 			{ "pokemonid": "zeraora", "formid": null, "id_national": 807 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alola-alternate",
@@ -1254,7 +1298,8 @@
 				"formid": "original-color",
 				"id_national": 801
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alola-forms",
@@ -1277,14 +1322,16 @@
 			{ "pokemonid": "muk", "formid": "alolan", "id_national": 89 },
 			{ "pokemonid": "exeggutor", "formid": "alolan", "id_national": 103 },
 			{ "pokemonid": "marowak", "formid": "alolan", "id_national": 105 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "unknown",
 		"pokemon": [
 			{ "pokemonid": "meltan", "formid": null, "id_national": 808 },
 			{ "pokemonid": "melmetal", "formid": null, "id_national": 809 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "galar-1",
@@ -1319,7 +1366,8 @@
 			{ "pokemonid": "rolycoly", "formid": null, "id_national": 837 },
 			{ "pokemonid": "carkol", "formid": null, "id_national": 838 },
 			{ "pokemonid": "coalossal", "formid": null, "id_national": 839 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "galar-2",
@@ -1354,7 +1402,8 @@
 			{ "pokemonid": "runerigus", "formid": null, "id_national": 867 },
 			{ "pokemonid": "milcery", "formid": null, "id_national": 868 },
 			{ "pokemonid": "alcremie", "formid": null, "id_national": 869 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "galar-3",
@@ -1388,7 +1437,8 @@
 			{ "pokemonid": "glastrier", "formid": null, "id_national": 896 },
 			{ "pokemonid": "spectrier", "formid": null, "id_national": 897 },
 			{ "pokemonid": "calyrex", "formid": null, "id_national": 898 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "galar-alternate",
@@ -1399,7 +1449,8 @@
 			{ "pokemonid": "polteageist", "formid": "antique", "id_national": 855 },
 			{ "pokemonid": "urshifu", "formid": "rapid-strike", "id_national": 892 },
 			{ "pokemonid": "zarude", "formid": "dada", "id_national": 893 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "galar-forms",
@@ -1423,7 +1474,8 @@
 			{ "pokemonid": "darmanitan", "formid": "galarian", "id_national": 555 },
 			{ "pokemonid": "yamask", "formid": "galarian", "id_national": 562 },
 			{ "pokemonid": "stunfisk", "formid": "galarian", "id_national": 618 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alcremie-1",
@@ -1564,7 +1616,8 @@
 				"formid": "mint-cream-ribbon",
 				"id_national": 869
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alcremie-2",
@@ -1709,7 +1762,8 @@
 				"formid": "caramel-swirl-ribbon",
 				"id_national": 869
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "alcremie-3",
@@ -1749,7 +1803,8 @@
 				"formid": "rainbow-swirl-ribbon",
 				"id_national": 869
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "gigantamax-1",
@@ -1812,7 +1867,8 @@
 				"formid": "gigantamax-low-key",
 				"id_national": 849
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "gigantamax-2",
@@ -1837,7 +1893,8 @@
 				"formid": "gigantamax-single-strike",
 				"id_national": 892
 			}
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hisui",
@@ -1850,7 +1907,8 @@
 			{ "pokemonid": "overqwil", "formid": null, "id_national": 904 },
 			{ "pokemonid": "enamorus", "formid": "incarnate", "id_national": 905 },
 			{ "pokemonid": "enamorus", "formid": "therian", "id_national": 905 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "hisui-forms",
@@ -1878,7 +1936,8 @@
 			{ "pokemonid": "goodra", "formid": "hisuian", "id_national": 706 },
 			{ "pokemonid": "avalugg", "formid": "hisuian", "id_national": 713 },
 			{ "pokemonid": "decidueye", "formid": "hisuian", "id_national": 724 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-1",
@@ -1913,7 +1972,8 @@
 			{ "pokemonid": "naclstack", "formid": null, "id_national": 933 },
 			{ "pokemonid": "garganacl", "formid": null, "id_national": 934 },
 			{ "pokemonid": "charcadet", "formid": null, "id_national": 935 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-2",
@@ -1948,7 +2008,8 @@
 			{ "pokemonid": "finizen", "formid": null, "id_national": 963 },
 			{ "pokemonid": "palafin", "formid": "zero", "id_national": 964 },
 			{ "pokemonid": "varoom", "formid": null, "id_national": 965 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-3",
@@ -1987,7 +2048,8 @@
 			{ "pokemonid": "iron-jugulis", "formid": null, "id_national": 993 },
 			{ "pokemonid": "iron-moth", "formid": null, "id_national": 994 },
 			{ "pokemonid": "iron-thorns", "formid": null, "id_national": 995 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-4",
@@ -2022,7 +2084,8 @@
 			{ "pokemonid": "iron-crown", "formid": null, "id_national": 1023 },
 			{ "pokemonid": "terapagos", "formid": "normal", "id_national": 1024 },
 			{ "pokemonid": "pecharunt", "formid": null, "id_national": 1025 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-alternate",
@@ -2047,7 +2110,8 @@
 				"id_national": 1013
 			},
 			{ "pokemonid": "ursaluna", "formid": "bloodmoon", "id_national": 901 }
-		]
+		],
+		"wallpaper": "forest"
 	},
 	{
 		"title": "paldea-forms",
@@ -2056,6 +2120,7 @@
 			{ "pokemonid": "tauros", "formid": "paldean-blaze", "id_national": 128 },
 			{ "pokemonid": "tauros", "formid": "paldean-aqua", "id_national": 128 },
 			{ "pokemonid": "wooper", "formid": "paldean", "id_national": 194 }
-		]
+		],
+		"wallpaper": "forest"
 	}
 ]

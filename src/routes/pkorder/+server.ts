@@ -3,10 +3,12 @@ import boxOrderNationalForms from './order/order-national-forms.json' with { typ
 import boxOrderNationalTest from './order/order-national-test.json' with { type: 'json' }
 import orderTestSmall1 from './order/order-test-small-1.json' with { type: 'json' }
 import orderTestSmall2 from './order/order-test-small-2.json' with { type: 'json' }
+import BoxOrderBackgroundTest from './order/order-background-test.json' with { type: 'json' }
 
 export interface BoxOrder {
 	title: string
 	pokemon: PokemonEntry[]
+	wallpaper: string
 }
 
 export interface PokemonEntry {
@@ -15,7 +17,8 @@ export interface PokemonEntry {
 	id_national: number
 }
 
-const dexNames = {
+const dexNames: Record<string, BoxOrder[]> = {
+	'order-background-test.json': BoxOrderBackgroundTest,
 	'order-national.json': boxOrderNational,
 	'order-national-forms.json': boxOrderNationalForms,
 	'order-national-test.json': boxOrderNationalTest,

@@ -2,8 +2,8 @@ import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../nu
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
-	type BoxOrder,
 	storageHandler,
+	type BoxOrder,
 	type DexStorage,
 	type PokemonData,
 	type PokemonState

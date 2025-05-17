@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { type BoxOrder } from '$lib/models/data-models'
+	import { type BoxOrder } from '$lib/state/storage-handler'
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
-	import { getIdentifier } from '$lib/spriteheet-helper'
+	import { getBackgroundStyle, getIdentifier } from '$lib/spriteheet-helper'
+	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
+	import { Titles, type TitlesType } from '$lib/models/titles-models'
 
 	let { box }: { box: BoxOrder } = $props()
 
@@ -9,13 +11,39 @@
 		const boxTitle = title.replace(/_/g, ' ').replace(/-/g, ' ')
 		return boxTitle.charAt(0).toUpperCase() + boxTitle.slice(1)
 	}
+
+	// Sprite sheet data
+	const boxRows = 6
+	const boxColumns = 4
+	const boxSpriteWidth = 1134
+	const boxSpriteHeight = 854
+	const boxSpriteData = Wallpapers[box.wallpaper as WallpapersType].pos
+
+	// Sprite sheet data
+	const titleRows = 6
+	const titleColumns = 4
+	const titleSpriteWidth = 812
+	const titleSpriteHeight = 161
+	const titleSpriteData = Titles[`${box.wallpaper}-title` as TitlesType].pos
 </script>
 
 <article class="pk-box">
-	<header class="box-header">
+	<header
+		class="box-header"
+		style={getBackgroundStyle(
+			titleRows,
+			titleColumns,
+			titleSpriteWidth,
+			titleSpriteHeight,
+			titleSpriteData
+		)}
+	>
 		<h2>{formatBoxTitle(box.title)}</h2>
 	</header>
-	<div class="pk-box-background">
+	<div
+		class="pk-box-background"
+		style={getBackgroundStyle(boxRows, boxColumns, boxSpriteWidth, boxSpriteHeight, boxSpriteData)}
+	>
 		<div class="box-grid">
 			{#each box.pokemon as pokemon (getIdentifier(pokemon))}
 				<PkSlot pokemonEntry={pokemon} />
@@ -27,6 +55,8 @@
 <style>
 	:root {
 		--source-box-bg-url: url('/boxes/forest.webp');
+		--source-box-bg-url: url('/spritesheets/util/sw1.webp');
+		--source-title-bg-url: url('/spritesheets/util/st1.webp');
 	}
 
 	.pk-box {
@@ -40,56 +70,20 @@
 
 	.pk-box-background {
 		box-sizing: border-box;
-		width: 408px; /* source is 1134px */
-		height: 344px; /* source is 854px */
-		border-width: 11px;
-		border-style: solid;
-		border-color: transparent;
-		border-image-source: var(--source-box-bg-url);
-		border-image-slice: 32;
-		border-image-repeat: stretch;
-		border-image-outset: 0;
-		border-image-width: 11px;
-
 		image-rendering: pixelated;
-		position: relative;
-		z-index: 0; /* Stacking context for ::before */
 
-		&::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background-image: var(--source-box-bg-url);
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-
-			background-size: 145%; /* scale image beyond container cize to avoid backed in border */
-			background-position: 50% 50%; /* center image in container */
-
-			z-index: -1;
-		}
+		background: var(--source-box-bg-url);
+		padding-inline: 13px;
+		padding-block: 14px;
 	}
 
 	.box-header {
 		box-sizing: border-box;
-
-		width: 258px; /* source is 812px */
-		height: 52px; /* source is 161px */
-		border-width: 8px;
-		border-style: solid;
-		border-color: transparent;
-		border-image-source: url('/boxes/box-title-border.webp');
-		border-image-slice: 8; /* Quadrat von Bildecke aus bis zum inneren Rand Ende */
-		border-image-repeat: stretch;
-		border-image-width: 8px;
-
 		image-rendering: pixelated;
 
-		background-image: url('/boxes/forest-title-clean.webp');
-		background-size: 102% 112%;
-		background-position: center;
-		background-repeat: no-repeat;
+		background: var(--source-title-bg-url);
+		width: 258px;
+		height: 52px;
 
 		/* center headline */
 		display: flex;

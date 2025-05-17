@@ -3,6 +3,7 @@ import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 export interface BoxOrder {
 	title: string
 	pokemon: PokemonEntry[]
+	wallpaper: string
 }
 
 export interface PokemonEntry {
@@ -30,6 +31,7 @@ export interface DexStorage {
 	name: string
 	displayName: string
 	pokemon: Record<string, PokemonState>
+	boxSettings: Record<string, { wallpaper: string }>
 }
 
 class StorageHandler {

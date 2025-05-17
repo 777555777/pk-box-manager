@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type BoxOrder } from '$lib/models/data-models'
+	import { type BoxOrder } from '$lib/state/storage-handler'
 	import PkBox from '$lib/components/box/pk-box.svelte'
 
 	let { dexOrder }: { dexOrder: BoxOrder[] } = $props()

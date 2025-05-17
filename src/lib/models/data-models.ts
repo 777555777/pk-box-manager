@@ -1,10 +1,6 @@
 /**
  * Describes order-XXX.json
  */
-export interface BoxOrder {
-	title: string
-	pokemon: PokemonEntry[]
-}
 
 export interface PokemonEntry {
 	pokemonid: string
