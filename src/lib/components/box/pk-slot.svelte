@@ -153,17 +153,17 @@
 			z-index: 10;
 			pointer-events: none;
 
-			animation: wiggle 0.5s infinite ease-in-out;
+			/* animation: wiggle 0.5s infinite ease-in-out; */
 		}
 	}
 
 	@keyframes wiggle {
 		0%,
 		100% {
-			transform: translateX(-50%) rotate(-5deg);
+			transform: translate3d(-50%, 0, 0) rotate(-5deg);
 		}
 		50% {
-			transform: translateX(-50%) rotate(5deg);
+			transform: translate3d(-50%, 0, 0) rotate(5deg);
 		}
 	}
 

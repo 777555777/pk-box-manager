@@ -93,7 +93,7 @@ body {
 		0 0,
 		0 0;
 
-	animation: panBackground 20s linear infinite;
+	/* animation: panBackground 20s linear infinite; */
 
 	/* Vignette above texture and background */
 	&::before {

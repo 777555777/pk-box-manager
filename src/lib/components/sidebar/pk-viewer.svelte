@@ -48,7 +48,7 @@
 			var(--checkerboard-color-2) 270deg
 		);
 		background-size: var(--checkerboard-checker-size) var(--checkerboard-checker-size);
-		animation: pan 3s linear infinite;
+		/* animation: pan 3s linear infinite; */
 	}
 
 	@keyframes pan {
