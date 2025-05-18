@@ -67,7 +67,7 @@
 
 <style>
 	.pk-toolbox {
-		--toolbox-width: 57rem;
+		--toolbox-width: 60rem;
 		/* Layout */
 		width: var(--toolbox-width);
 

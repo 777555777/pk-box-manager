@@ -85,7 +85,9 @@
 	style="display: none;"
 	onchange={readImportFile}
 />
-<button class="pk-button" onclick={() => fileInput.click()}>Import</button>
+<button class="pk-button" onclick={() => fileInput.click()}
+	><img src="/ui/download.svg" alt="" />Import</button
+>
 
 {#snippet infoDialogContent()}
 	<div class="pk-dialog-description">
@@ -123,5 +125,10 @@
 		line-height: 1.6;
 		max-width: 55ch;
 		letter-spacing: 0.02em;
+	}
+
+	.pk-button img {
+		transform: rotate(180deg);
+		margin-right: 0.375rem;
 	}
 </style>
