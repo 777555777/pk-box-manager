@@ -96,7 +96,7 @@
 		border-radius: 5px;
 
 		&:hover {
-			transform: scale(1.05);
+			/* transform: scale(1.05); */
 			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 			filter: saturate(1.2) brightness(1.2);
 			background-color: hsla(0, 0%, 80%, 0.25);
