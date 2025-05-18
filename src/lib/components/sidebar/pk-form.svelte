@@ -1,20 +1,21 @@
 <script lang="ts">
 	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
 	import { Game, type GameType } from '$lib/models/data-models'
 	import { type PokemonState } from '$lib/state/storage-handler'
 
 	let {
 		selectedPokemon,
-		identifier,
 		disabled,
-		isSelectionValid
+		isSelectionValid,
+		updateCaughtIn,
+		updateComment
 	}: {
 		selectedPokemon: PokemonState
-		identifier: string
 		disabled: boolean
 		isSelectionValid: boolean
+		updateCaughtIn: Function
+		updateComment: Function
 	} = $props()
 
 	function deriveGameRegion() {
@@ -25,20 +26,6 @@
 	function deriveOriginMark() {
 		const game = Game[selectedPokemon.caughtIn as GameType]
 		return game ? game.originMark : ''
-	}
-
-	// === Game Dropdown ===
-	function updateCaughtIn(newValue: GameType) {
-		pkState.updatePokemon(identifier, {
-			caughtIn: newValue
-		})
-	}
-
-	// === Comment Textarea ===
-	function updateComment(newValue: string) {
-		pkState.updatePokemon(identifier, {
-			comment: newValue
-		})
 	}
 </script>
 

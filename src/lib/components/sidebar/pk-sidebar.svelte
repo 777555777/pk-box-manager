@@ -11,6 +11,7 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
+	import type { GameType } from '$lib/models/data-models'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
@@ -27,6 +28,20 @@
 	// === Shiny Toggle ===
 	function toggleShiny() {
 		pkState.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })
+	}
+
+	// === Game Dropdown ===
+	function updateCaughtIn(newValue: GameType) {
+		pkState.updatePokemon(identifier, {
+			caughtIn: newValue
+		})
+	}
+
+	// === Comment Textarea ===
+	function updateComment(newValue: string) {
+		pkState.updatePokemon(identifier, {
+			comment: newValue
+		})
 	}
 
 	$inspect('Update from Sidebar:', selectedPokemon)
@@ -62,7 +77,7 @@
 		<div class="separator"></div>
 		<section class="pk-form-section">
 			<h3 class="sr-only">Catch data</h3>
-			<PkForm {selectedPokemon} {identifier} {disabled} {isSelectionValid} />
+			<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
 		</section>
 		<div class="separator"></div>
 		<section class="pk-stats-section">
