@@ -58,17 +58,15 @@
 {/snippet}
 
 <style>
-	:root {
-		--image-slot-size: 64px;
-		--image-badge-size: 30px;
-	}
-
 	.pk-badge {
-		/* image-rendering: pixelated; */
+		--target-size: 24;
+		--original-size: 30;
+		--scale-factor: calc(var(--target-size) / var(--original-size));
+
+		width: calc(var(--original-size) * 1px);
+		height: calc(var(--original-size) * 1px);
 		object-fit: none;
-		width: var(--image-badge-size);
-		height: var(--image-badge-size);
-		transform: scale(0.66666667);
+		transform: scale(var(--scale-factor));
 		transform-origin: top left;
 
 		filter: brightness(var(--grayscale));
@@ -79,27 +77,19 @@
 		left: 38px;
 	}
 
-	.pk-slot-image {
-		image-rendering: auto;
-		object-fit: none;
-		width: 96px;
-		height: 96px;
-		transform: scale(0.666667); /* 74px */
-		transform-origin: top left;
-
-		filter: brightness(var(--grayscale));
-	}
-
 	.pk-slot {
-		width: var(--image-slot-size);
-		height: var(--image-slot-size);
+		--target-size: 64;
+		--original-size: 96;
+		--scale-factor: calc(var(--target-size) / var(--original-size));
+
+		width: calc(var(--target-size) * 1px);
+		height: calc(var(--target-size) * 1px);
 		cursor: pointer;
-		padding: 0;
 
 		position: relative;
-		overflow: hidden; /* Verhindert Überstand des Bildes */
+		overflow: hidden;
 
-		border: none; /* Remove default button border */
+		border: none;
 		background-color: transparent;
 		outline: 2px solid hsl(0, 0%, 40%, 0.2);
 		outline-offset: -2px;
@@ -122,6 +112,17 @@
 			outline: 2px solid hsl(220, 100%, 65%);
 			box-shadow: 2px 2px 6px hsl(220, 100%, 70%);
 			background-color: hsla(220, 100%, 85%, 0.25);
+		}
+
+		.pk-slot-image {
+			width: calc(var(--original-size) * 1px);
+			height: calc(var(--original-size) * 1px);
+			object-fit: none;
+			transform: scale(var(--scale-factor));
+			transform-origin: top left;
+
+			image-rendering: auto;
+			filter: brightness(var(--grayscale));
 		}
 	}
 

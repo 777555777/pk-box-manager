@@ -54,7 +54,7 @@
 	<section class="pk-dialog-content">
 		<section class="pk-dialog-description">
 			<p>
-				Configure default values that will be automatically applied to a Pokémon when it is first
+				Configure default settings that will be automatically applied to a Pokémon when it is first
 				marked as captured
 			</p>
 		</section>
