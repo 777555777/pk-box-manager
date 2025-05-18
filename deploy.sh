@@ -25,6 +25,6 @@ scp -r ./build/* $DEPLOY_SERVER_PATH/build/
 scp Dockerfile $DEPLOY_SERVER_PATH
 
 echo "Starte Container neu..."
-ssh $SERVER_PART "cd ./docker && docker compose down pk-box-manager && docker compose up pk-box-manager -d"
+ssh $SERVER_PART "cd ./docker && docker compose down pk-box-manager && docker compose up --build pk-box-manager -d"
 
 echo "Deployment abgeschlossen!"
