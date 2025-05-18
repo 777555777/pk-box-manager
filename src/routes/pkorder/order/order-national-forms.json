@@ -228,7 +228,7 @@
 		"wallpaper": "forest"
 	},
 	{
-		"title": "jotho-1",
+		"title": "johto-1",
 		"pokemon": [
 			{ "pokemonid": "chikorita", "formid": null, "id_national": 152 },
 			{ "pokemonid": "bayleef", "formid": null, "id_national": 153 },
@@ -264,7 +264,7 @@
 		"wallpaper": "forest"
 	},
 	{
-		"title": "jotho-2",
+		"title": "johto-2",
 		"pokemon": [
 			{ "pokemonid": "bellossom", "formid": null, "id_national": 182 },
 			{ "pokemonid": "marill", "formid": null, "id_national": 183 },
@@ -300,7 +300,7 @@
 		"wallpaper": "forest"
 	},
 	{
-		"title": "jotho-3",
+		"title": "johto-3",
 		"pokemon": [
 			{ "pokemonid": "scizor", "formid": null, "id_national": 212 },
 			{ "pokemonid": "shuckle", "formid": null, "id_national": 213 },
@@ -336,7 +336,7 @@
 		"wallpaper": "forest"
 	},
 	{
-		"title": "jotho-4",
+		"title": "johto-4",
 		"pokemon": [
 			{ "pokemonid": "blissey", "formid": null, "id_national": 242 },
 			{ "pokemonid": "raikou", "formid": null, "id_national": 243 },
@@ -352,7 +352,7 @@
 		"wallpaper": "forest"
 	},
 	{
-		"title": "jotho-females",
+		"title": "johto-females",
 		"pokemon": [
 			{ "pokemonid": "meganium", "formid": "female", "id_national": 154 },
 			{ "pokemonid": "ledyba", "formid": "female", "id_national": 165 },

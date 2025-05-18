@@ -1067,700 +1067,700 @@ export const pkStats = {
 	// ==================================== Gen 1 End ====================================
 	// ===================================================================================
 	'0152-chikorita': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 49, 65, 49, 65, 45],
 		types: ['Grass'],
 		abilities: ['Overgrow', 'Leaf Guard*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0153-bayleef': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 62, 80, 63, 80, 60],
 		types: ['Grass'],
 		abilities: ['Overgrow', 'Leaf Guard*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0154-meganium': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [80, 82, 100, 83, 100, 80],
 		types: ['Grass'],
 		abilities: ['Overgrow', 'Leaf Guard*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0155-cyndaquil': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [39, 52, 43, 60, 50, 65],
 		types: ['Fire'],
 		abilities: ['Blaze', 'Flash Fire*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0156-quilava': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [58, 64, 58, 80, 65, 80],
 		types: ['Fire'],
 		abilities: ['Blaze', 'Flash Fire*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0157-typhlosion': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [78, 84, 78, 109, 85, 100],
 		types: ['Fire'],
 		abilities: ['Blaze', 'Flash Fire*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0158-totodile': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 65, 64, 44, 48, 43],
 		types: ['Water'],
 		abilities: ['Torrent', 'Sheer Force*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0159-croconaw': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 80, 80, 59, 63, 58],
 		types: ['Water'],
 		abilities: ['Torrent', 'Sheer Force*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0160-feraligatr': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [85, 105, 100, 79, 83, 78],
 		types: ['Water'],
 		abilities: ['Torrent', 'Sheer Force*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0161-sentret': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [35, 46, 34, 35, 45, 20],
 		types: ['Normal'],
 		abilities: ['Run Away', 'Keen Eye', 'Frisk*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0162-furret': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [85, 76, 64, 45, 55, 90],
 		types: ['Normal'],
 		abilities: ['Run Away', 'Keen Eye', 'Frisk*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0163-hoothoot': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 30, 30, 36, 56, 50],
 		types: ['Normal', 'Flying'],
 		abilities: ['Insomnia', 'Keen Eye', 'Tinted Lens*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0164-noctowl': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 50, 50, 86, 96, 70],
 		types: ['Normal', 'Flying'],
 		abilities: ['Insomnia', 'Keen Eye', 'Tinted Lens*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0165-ledyba': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [40, 20, 30, 40, 80, 55],
 		types: ['Bug', 'Flying'],
 		abilities: ['Swarm', 'Early Bird', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0166-ledian': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 35, 50, 55, 110, 85],
 		types: ['Bug', 'Flying'],
 		abilities: ['Swarm', 'Early Bird', 'Iron Fist*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0167-spinarak': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [40, 60, 40, 40, 40, 30],
 		types: ['Bug', 'Poison'],
 		abilities: ['Swarm', 'Insomnia', 'Sniper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0168-ariados': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 90, 70, 60, 70, 40],
 		types: ['Bug', 'Poison'],
 		abilities: ['Swarm', 'Insomnia', 'Sniper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0169-crobat': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [85, 90, 80, 70, 80, 130],
 		types: ['Poison', 'Flying'],
 		abilities: ['Inner Focus', 'Infiltrator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0170-chinchou': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 38, 38, 56, 56, 67],
 		types: ['Water', 'Electric'],
 		abilities: ['Volt Absorb', 'Illuminate', 'Water Absorb*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0171-lanturn': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [125, 58, 58, 76, 76, 67],
 		types: ['Water', 'Electric'],
 		abilities: ['Volt Absorb', 'Illuminate', 'Water Absorb*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0172-pichu': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [20, 40, 15, 35, 35, 60],
 		types: ['Electric'],
 		abilities: ['Static', 'Lightning Rod*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0173-cleffa': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 25, 28, 45, 55, 15],
 		types: ['Fairy'],
 		abilities: ['Cute Charm', 'Magic Guard', 'Friend Guard*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0174-igglybuff': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 30, 15, 40, 20, 15],
 		types: ['Normal', 'Fairy'],
 		abilities: ['Cute Charm', 'Competitive', 'Friend Guard*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0175-togepi': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [35, 20, 65, 40, 65, 20],
 		types: ['Fairy'],
 		abilities: ['Hustle', 'Serene Grace', 'Super Luck*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0176-togetic': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 40, 85, 80, 105, 40],
 		types: ['Fairy', 'Flying'],
 		abilities: ['Hustle', 'Serene Grace', 'Super Luck*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0177-natu': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [40, 50, 45, 70, 45, 70],
 		types: ['Psychic', 'Flying'],
 		abilities: ['Synchronize', 'Early Bird', 'Magic Bounce*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0178-xatu': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 75, 70, 95, 70, 95],
 		types: ['Psychic', 'Flying'],
 		abilities: ['Synchronize', 'Early Bird', 'Magic Bounce*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0179-mareep': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 40, 40, 65, 45, 35],
 		types: ['Electric'],
 		abilities: ['Static', 'Plus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0180-flaaffy': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 55, 55, 80, 60, 45],
 		types: ['Electric'],
 		abilities: ['Static', 'Plus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0181-ampharos': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 75, 85, 115, 90, 55],
 		types: ['Electric'],
 		abilities: ['Static', 'Plus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0182-bellossom': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 80, 95, 90, 100, 50],
 		types: ['Grass'],
 		abilities: ['Chlorophyll', 'Healer*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0183-marill': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 20, 50, 20, 50, 40],
 		types: ['Water', 'Fairy'],
 		abilities: ['Thick Fat', 'Huge Power', 'Sap Sipper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0184-azumarill': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 50, 80, 60, 80, 50],
 		types: ['Water', 'Fairy'],
 		abilities: ['Thick Fat', 'Huge Power', 'Sap Sipper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0185-sudowoodo': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 100, 115, 30, 65, 30],
 		types: ['Rock'],
 		abilities: ['Sturdy', 'Rock Head', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0186-politoed': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 75, 75, 90, 100, 70],
 		types: ['Water'],
 		abilities: ['Water Absorb', 'Damp', 'Drizzle*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0187-hoppip': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [35, 35, 40, 35, 55, 50],
 		types: ['Grass', 'Flying'],
 		abilities: ['Chlorophyll', 'Leaf Guard', 'Infiltrator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0188-skiploom': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 45, 50, 45, 65, 80],
 		types: ['Grass', 'Flying'],
 		abilities: ['Chlorophyll', 'Leaf Guard', 'Infiltrator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0189-jumpluff': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 55, 70, 55, 95, 110],
 		types: ['Grass', 'Flying'],
 		abilities: ['Chlorophyll', 'Leaf Guard', 'Infiltrator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0190-aipom': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 70, 55, 40, 55, 85],
 		types: ['Normal'],
 		abilities: ['Run Away', 'Pickup', 'Skill Link*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0191-sunkern': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [30, 30, 30, 30, 30, 30],
 		types: ['Grass'],
 		abilities: ['Chlorophyll', 'Solar Power', 'Early Bird*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0192-sunflora': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 75, 55, 105, 85, 30],
 		types: ['Grass'],
 		abilities: ['Chlorophyll', 'Solar Power', 'Early Bird*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0193-yanma': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 65, 45, 75, 45, 95],
 		types: ['Bug', 'Flying'],
 		abilities: ['Speed Boost', 'Compound Eyes', 'Frisk*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0194-wooper': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 45, 45, 25, 25, 15],
 		types: ['Water', 'Ground'],
 		abilities: ['Damp', 'Water Absorb', 'Unaware*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0195-quagsire': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [95, 85, 85, 65, 65, 35],
 		types: ['Water', 'Ground'],
 		abilities: ['Damp', 'Water Absorb', 'Unaware*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0196-espeon': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 65, 60, 130, 95, 110],
 		types: ['Psychic'],
 		abilities: ['Synchronize', 'Magic Bounce*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0197-umbreon': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [95, 65, 110, 60, 130, 65],
 		types: ['Dark'],
 		abilities: ['Synchronize', 'Inner Focus*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0198-murkrow': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 85, 42, 85, 42, 91],
 		types: ['Dark', 'Flying'],
 		abilities: ['Insomnia', 'Super Luck', 'Prankster*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0199-slowking': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [95, 75, 80, 100, 110, 30],
 		types: ['Water', 'Psychic'],
 		abilities: ['Oblivious', 'Own Tempo', 'Regenerator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0200-misdreavus': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 60, 60, 85, 85, 85],
 		types: ['Ghost'],
 		abilities: ['Levitate'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0201-unown': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [48, 72, 48, 72, 48, 48],
 		types: ['Psychic'],
 		abilities: ['Levitate'],
 		genderRatio: { male: null, female: null }
 	},
 	'0202-wobbuffet': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [190, 33, 58, 33, 58, 33],
 		types: ['Psychic'],
 		abilities: ['Shadow Tag', 'Telepathy*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0203-girafarig': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 80, 65, 90, 65, 85],
 		types: ['Normal', 'Psychic'],
 		abilities: ['Inner Focus', 'Early Bird', 'Sap Sipper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0204-pineco': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 65, 90, 35, 35, 15],
 		types: ['Bug'],
 		abilities: ['Sturdy', 'Overcoat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0205-forretress': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 90, 140, 60, 60, 40],
 		types: ['Bug', 'Steel'],
 		abilities: ['Sturdy', 'Overcoat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0206-dunsparce': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 70, 70, 65, 65, 45],
 		types: ['Normal'],
 		abilities: ['Serene Grace', 'Run Away', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0207-gligar': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 75, 105, 35, 65, 85],
 		types: ['Ground', 'Flying'],
 		abilities: ['Hyper Cutter', 'Sand Veil', 'Immunity*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0208-steelix': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 85, 200, 55, 65, 30],
 		types: ['Steel', 'Ground'],
 		abilities: ['Rock Head', 'Sturdy', 'Sheer Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0209-snubbull': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 80, 50, 40, 40, 30],
 		types: ['Fairy'],
 		abilities: ['Intimidate', 'Run Away', 'Rattled*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0210-granbull': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 120, 75, 60, 60, 45],
 		types: ['Fairy'],
 		abilities: ['Intimidate', 'Quick Feet', 'Rattled*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0211-qwilfish': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 95, 85, 55, 55, 85],
 		types: ['Water', 'Poison'],
 		abilities: ['Poison Point', 'Swift Swim', 'Intimidate*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0212-scizor': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 130, 100, 55, 80, 65],
 		types: ['Bug', 'Steel'],
 		abilities: ['Swarm', 'Technician', 'Light Metal*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0213-shuckle': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [20, 10, 230, 10, 230, 5],
 		types: ['Bug', 'Rock'],
 		abilities: ['Sturdy', 'Gluttony', 'Contrary*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0214-heracross': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [80, 125, 75, 40, 95, 85],
 		types: ['Bug', 'Fighting'],
 		abilities: ['Swarm', 'Guts', 'Moxie*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0215-sneasel': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 95, 55, 35, 75, 115],
 		types: ['Dark', 'Ice'],
 		abilities: ['Inner Focus', 'Keen Eye', 'Pickpocket*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0216-teddiursa': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 80, 50, 50, 50, 40],
 		types: ['Normal'],
 		abilities: ['Pickup', 'Quick Feet', 'Honey Gather*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0217-ursaring': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 130, 75, 75, 75, 55],
 		types: ['Normal'],
 		abilities: ['Guts', 'Quick Feet', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0218-slugma': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [40, 40, 40, 70, 40, 20],
 		types: ['Fire'],
 		abilities: ['Magma Armor', 'Flame Body', 'Weak Armor*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0219-magcargo': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [60, 50, 120, 90, 80, 30],
 		types: ['Fire', 'Rock'],
 		abilities: ['Magma Armor', 'Flame Body', 'Weak Armor*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0220-swinub': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 50, 40, 30, 30, 50],
 		types: ['Ice', 'Ground'],
 		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0221-piloswine': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 100, 80, 60, 60, 50],
 		types: ['Ice', 'Ground'],
 		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0222-corsola': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 55, 95, 65, 95, 35],
 		types: ['Water', 'Rock'],
 		abilities: ['Hustle', 'Natural Cure', 'Regenerator*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0223-remoraid': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [35, 65, 35, 65, 35, 65],
 		types: ['Water'],
 		abilities: ['Hustle', 'Sniper', 'Moody*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0224-octillery': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 105, 75, 105, 75, 45],
 		types: ['Water'],
 		abilities: ['Suction Cups', 'Sniper', 'Moody*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0225-delibird': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 55, 45, 65, 45, 75],
 		types: ['Ice', 'Flying'],
 		abilities: ['Vital Spirit', 'Hustle', 'Insomnia*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0226-mantine': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [85, 40, 70, 80, 140, 70],
 		types: ['Water', 'Flying'],
 		abilities: ['Swift Swim', 'Water Absorb', 'Water Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0227-skarmory': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [65, 80, 140, 40, 70, 70],
 		types: ['Steel', 'Flying'],
 		abilities: ['Keen Eye', 'Sturdy', 'Weak Armor*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0228-houndour': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 60, 30, 80, 50, 65],
 		types: ['Dark', 'Fire'],
 		abilities: ['Early Bird', 'Flash Fire', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0229-houndoom': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 90, 50, 110, 80, 95],
 		types: ['Dark', 'Fire'],
 		abilities: ['Early Bird', 'Flash Fire', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0230-kingdra': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [75, 95, 95, 95, 95, 85],
 		types: ['Water', 'Dragon'],
 		abilities: ['Swift Swim', 'Sniper', 'Damp*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0231-phanpy': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 60, 60, 40, 40, 40],
 		types: ['Ground'],
 		abilities: ['Pickup', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0232-donphan': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 120, 120, 60, 60, 50],
 		types: ['Ground'],
 		abilities: ['Sturdy', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0233-porygon2': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [85, 80, 90, 105, 95, 60],
 		types: ['Normal'],
 		abilities: ['Trace', 'Download', 'Analytic*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0234-stantler': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [73, 95, 62, 85, 65, 85],
 		types: ['Normal'],
 		abilities: ['Intimidate', 'Frisk', 'Sap Sipper*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0235-smeargle': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [55, 20, 35, 20, 45, 75],
 		types: ['Normal'],
 		abilities: ['Own Tempo', 'Technician', 'Moody*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0236-tyrogue': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [35, 35, 35, 35, 35, 35],
 		types: ['Fighting'],
 		abilities: ['Guts', 'Steadfast', 'Vital Spirit*'],
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0237-hitmontop': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 95, 95, 35, 110, 70],
 		types: ['Fighting'],
 		abilities: ['Intimidate', 'Technician', 'Steadfast*'],
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0238-smoochum': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 30, 15, 85, 65, 65],
 		types: ['Ice', 'Psychic'],
 		abilities: ['Oblivious', 'Forewarn', 'Hydration*'],
 		genderRatio: { male: 0, female: 100 }
 	},
 	'0239-elekid': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 63, 37, 65, 55, 95],
 		types: ['Electric'],
 		abilities: ['Static', 'Vital Spirit*'],
 		genderRatio: { male: 75, female: 25 }
 	},
 	'0240-magby': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [45, 75, 37, 70, 55, 83],
 		types: ['Fire'],
 		abilities: ['Flame Body', 'Vital Spirit*'],
 		genderRatio: { male: 75, female: 25 }
 	},
 	'0241-miltank': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [95, 80, 105, 40, 70, 100],
 		types: ['Normal'],
 		abilities: ['Thick Fat', 'Scrappy', 'Sap Sipper*'],
 		genderRatio: { male: 0, female: 100 }
 	},
 	'0242-blissey': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [255, 10, 10, 75, 135, 55],
 		types: ['Normal'],
 		abilities: ['Natural Cure', 'Serene Grace', 'Healer*'],
 		genderRatio: { male: 0, female: 100 }
 	},
 	'0243-raikou': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [90, 85, 75, 115, 100, 115],
 		types: ['Electric'],
 		abilities: ['Pressure', 'Inner Focus*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0244-entei': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [115, 115, 85, 90, 75, 100],
 		types: ['Fire'],
 		abilities: ['Pressure', 'Inner Focus*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0245-suicune': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 75, 115, 90, 115, 85],
 		types: ['Water'],
 		abilities: ['Pressure', 'Inner Focus*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0246-larvitar': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [50, 64, 50, 45, 50, 41],
 		types: ['Rock', 'Ground'],
 		abilities: ['Guts', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0247-pupitar': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [70, 84, 70, 65, 70, 51],
 		types: ['Rock', 'Ground'],
 		abilities: ['Shed Skin'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0248-tyranitar': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 134, 110, 95, 100, 61],
 		types: ['Rock', 'Dark'],
 		abilities: ['Sand Stream', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0249-lugia': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [106, 90, 130, 90, 154, 110],
 		types: ['Psychic', 'Flying'],
 		abilities: ['Pressure', 'Multiscale*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0250-ho-oh': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [106, 130, 90, 110, 154, 90],
 		types: ['Fire', 'Flying'],
 		abilities: ['Pressure', 'Regenerator*'],
 		genderRatio: { male: null, female: null }
 	},
 	'0251-celebi': {
-		originRegion: 'Jotho',
+		originRegion: 'Johto',
 		stats: [100, 100, 100, 100, 100, 100],
 		types: ['Psychic', 'Grass'],
 		abilities: ['Natural Cure'],
