@@ -150,7 +150,7 @@
 			background-size: contain;
 			background-position: center;
 
-			z-index: 10;
+			z-index: 3;
 			pointer-events: none;
 
 			/* animation: wiggle 0.5s infinite ease-in-out; */
