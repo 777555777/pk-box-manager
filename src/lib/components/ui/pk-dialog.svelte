@@ -66,10 +66,10 @@
 
 		<section class="pk-dialog-footer">
 			{#if okBtnText}
-				<button class="pk-button" onclick={handleConfirm}>{okBtnText}</button>
+				<button class="pk-button" onclick={handleConfirm}><span>{okBtnText}</span></button>
 			{/if}
 			{#if cancelBtnText}
-				<button class="pk-button" onclick={handleDismiss}>{cancelBtnText}</button>
+				<button class="pk-button" onclick={handleDismiss}><span>{cancelBtnText}</span></button>
 			{/if}
 		</section>
 	</section>
@@ -97,10 +97,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
-		.pk-button {
-			max-width: 44px;
-		}
 	}
 
 	.pk-dialog-content {

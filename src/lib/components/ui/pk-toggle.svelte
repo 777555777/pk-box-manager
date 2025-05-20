@@ -71,7 +71,6 @@
 		padding-inline: 1rem;
 		padding-bottom: 3px;
 		img {
-			margin-right: 0.375rem;
 			margin-bottom: 0;
 		}
 	}

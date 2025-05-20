@@ -28,12 +28,3 @@
 	okBtnText="Reset Pokedex"
 	cancelBtnText="Cancel"
 />
-
-<style>
-	.pk-button {
-		max-width: 44px;
-		img {
-			margin: 0;
-		}
-	}
-</style>

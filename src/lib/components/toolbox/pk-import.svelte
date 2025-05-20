@@ -86,7 +86,7 @@
 	onchange={readImportFile}
 />
 <button class="pk-button" onclick={() => fileInput.click()}
-	><img src="/ui/download.svg" alt="" />Import</button
+	><img src="/ui/upload-alt-solid.svg" alt="" /><span>Load Dex</span></button
 >
 
 {#snippet infoDialogContent()}
@@ -125,10 +125,5 @@
 		line-height: 1.6;
 		max-width: 55ch;
 		letter-spacing: 0.02em;
-	}
-
-	.pk-button img {
-		transform: rotate(180deg);
-		margin-right: 0.375rem;
 	}
 </style>

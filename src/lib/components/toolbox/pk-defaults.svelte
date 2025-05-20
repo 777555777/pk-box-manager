@@ -59,7 +59,9 @@
 			</p>
 		</section>
 
-		<button class="pk-button" onclick={resetDefaults} {disabled}>Restore defaults</button>
+		<button class="pk-button" onclick={resetDefaults} {disabled}
+			><span>Restore defaults</span></button
+		>
 
 		<section class="pk-defaults">
 			<div class="pk-input-group">

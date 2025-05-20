@@ -44,11 +44,5 @@
 </script>
 
 <button class="pk-button" onclick={exportCurrentDex}
-	><img src="/ui/download.svg" alt="" />Export</button
+	><img src="/ui/save-solid.svg" alt="" /><span>Save Dex</span></button
 >
-
-<style>
-	button img {
-		margin-right: 0.375rem;
-	}
-</style>

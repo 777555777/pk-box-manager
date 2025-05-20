@@ -52,12 +52,12 @@
 			/>
 
 			<button class="pk-button" onclick={cycleBadgeDisplay}
-				><img src="/ui/refresh.svg" alt="" />Badge
+				><img src="/ui/refresh.svg" alt="" /><span>Badge</span>
 			</button>
 
 			<button class="pk-button" onclick={openDefaultDialog}
 				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
-				Defaults</button
+				<span>Defaults</span></button
 			>
 		</div>
 	</section>
@@ -67,7 +67,7 @@
 
 <style>
 	.pk-toolbox {
-		--toolbox-width: 60rem;
+		--toolbox-width: 62rem;
 		/* Layout */
 		width: var(--toolbox-width);
 
@@ -103,10 +103,6 @@
 	.pk-toolbox-btn-group {
 		display: flex;
 		gap: 1rem;
-	}
-
-	img {
-		margin-right: 0.375rem;
 	}
 
 	.modified {

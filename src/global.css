@@ -216,6 +216,14 @@ body {
 		height: 24px;
 	}
 
+	img ~ span {
+		margin-left: 0.375rem;
+	}
+
+	&:has(img):not(:has(span)) {
+		max-width: 44px;
+	}
+
 	&::before {
 		content: '';
 		position: absolute;

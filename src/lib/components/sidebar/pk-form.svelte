@@ -65,8 +65,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-end;
+	}
 
-		margin-bottom: 0.75rem;
+	.pk-inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 
 	.pk-gen {
