@@ -72,9 +72,6 @@
 					value={appState.getAppDefaults().caughtIn}
 				/>
 				<div class="pk-btn-group">
-					<!-- Ball -->
-					<PkBallSelector onUpdate={updatePokeball} selectedBall={appState.getAppDefaults().ball} />
-
 					<!-- Shiny -->
 					<PkToggle
 						icon="/ui/sparkle.svg"
@@ -84,6 +81,9 @@
 						onUpdate={toggleShiny}
 						checked={appState.getAppDefaults().shiny}
 					/>
+
+					<!-- Ball -->
+					<PkBallSelector onUpdate={updatePokeball} selectedBall={appState.getAppDefaults().ball} />
 				</div>
 			</div>
 
@@ -131,7 +131,6 @@
 
 			.pk-btn-group {
 				display: flex;
-				justify-content: space-between;
 				align-items: center;
 				gap: 1rem;
 			}
