@@ -16,15 +16,17 @@
 </div>
 
 <style>
-	:root {
+	.pk-viewer {
 		--checkerboard-color-1: #59aedf;
 		--checkerboard-color-2: #49a6d7;
 		--checkerboard-checker-size: 40px;
-	}
 
-	.pk-viewer {
+		--target-size: 256;
+		--original-size: 96;
+		--scale-factor: calc(var(--target-size) / var(--original-size));
+
 		width: 100%;
-		height: 256px;
+		height: calc(var(--target-size) * 1px);
 
 		display: flex;
 		justify-content: center;
@@ -63,11 +65,12 @@
 	}
 
 	img {
-		box-sizing: content-box;
-		image-rendering: pixelated;
+		width: calc(var(--original-size) * 1px);
+		height: calc(var(--original-size) * 1px);
 		object-fit: none;
-		width: 96px;
-		height: 96px;
-		transform: scale(2.666667); /* 74px */
+		transform: scale(var(--scale-factor));
+		/* transform-origin: top left; */
+
+		image-rendering: pixelated;
 	}
 </style>

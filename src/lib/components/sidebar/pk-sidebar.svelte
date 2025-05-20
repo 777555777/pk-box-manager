@@ -106,11 +106,11 @@
 	}
 
 	.pk-viewer-seperator {
-		--test123: 6px;
+		--separator-overhang: 6px;
 
 		height: 6px;
-		width: calc(100% + var(--test123));
-		margin-left: calc(var(--test123) / 2 * -1);
+		width: calc(100% + var(--separator-overhang));
+		margin-left: calc(var(--separator-overhang) / 2 * -1);
 		background-color: #717186;
 		box-sizing: content-box;
 		border-block: 3px solid #595969;
@@ -145,9 +145,6 @@
 		padding-inline: 1rem;
 	}
 
-	.pk-links-section {
-		padding-bottom: 0.5rem;
-	}
 	.pk-title-section {
 		padding-top: 0.5rem;
 	}
@@ -156,6 +153,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		padding-bottom: 0.5rem;
 	}
 
 	.pk-viewer-section {
