@@ -158,6 +158,8 @@ body {
 
 	--ui-form-element-height: 44px;
 	--ui-section-background-color: #618e9e;
+
+	--box-width: 410px;
 }
 
 .pk-ui-section {

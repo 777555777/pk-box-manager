@@ -51,23 +51,30 @@
 	<p>waiting...</p>
 {:then dexOrder}
 	<main>
-		<PkToolBox />
 		<section class="pk-content">
+			<PkToolBox />
 			<PkBoxContainer {dexOrder} />
-			<PkSidebar />
 		</section>
+		<PkSidebar />
 	</main>
 {/await}
 
 <style>
 	main {
-		min-height: 100dvh;
+		display: flex;
+		height: 100dvh;
+		gap: 2rem;
+		max-width: 94%;
+		margin: 0 auto;
 	}
 
 	.pk-content {
-		max-width: 94%;
-		margin: 0 auto;
+		flex: 1 1 0;
+		max-width: none;
+		margin: 0;
 		display: flex;
 		gap: 2rem;
+		height: 100vh;
+		justify-content: center;
 	}
 </style>
