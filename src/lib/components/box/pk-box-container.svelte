@@ -15,10 +15,14 @@
 	.pk-box-container {
 		width: 100%;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(404px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(var(--box-width), 1fr));
 		row-gap: 3rem;
 		column-gap: 2rem;
 		justify-items: center;
-		margin-bottom: 2rem;
+		padding-top: 8rem;
+		padding-bottom: 2rem;
+
+		overflow-y: scroll;
+		scrollbar-width: none;
 	}
 </style>

@@ -42,6 +42,12 @@
 		border-image-outset: 3px;
 	}
 
+	@media (max-height: 1200px) {
+		.pk-viewer {
+			--target-size: 224;
+		}
+	}
+
 	.pk-checkerboard {
 		background: conic-gradient(
 			var(--checkerboard-color-1) 90deg,

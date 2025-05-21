@@ -126,4 +126,14 @@
 		max-width: 55ch;
 		letter-spacing: 0.02em;
 	}
+
+	@media (max-width: 1550px) {
+		.pk-button {
+			max-width: 44px;
+
+			span {
+				display: none;
+			}
+		}
+	}
 </style>

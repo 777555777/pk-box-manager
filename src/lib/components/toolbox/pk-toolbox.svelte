@@ -67,16 +67,10 @@
 
 <style>
 	.pk-toolbox {
-		--toolbox-width: 62rem;
-		/* Layout */
-		width: var(--toolbox-width);
-
 		/* Positioning */
-		position: sticky;
+		position: fixed;
 		top: 0;
 		z-index: 5;
-		margin-left: calc(2rem + (100vw - 408px - 2rem - 4rem) / 2 - calc(var(--toolbox-width) / 2));
-		margin-bottom: 1rem;
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * 18px));
@@ -107,5 +101,15 @@
 
 	.modified {
 		filter: sepia(100%) hue-rotate(-10deg) saturate(1000%);
+	}
+
+	@media (max-width: 1350px) {
+		.pk-button {
+			max-width: 44px;
+
+			span {
+				display: none;
+			}
+		}
 	}
 </style>

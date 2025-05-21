@@ -78,6 +78,7 @@
 	.pk-stats-container {
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		gap: 1rem;
 		min-height: 320px;
 	}
@@ -136,5 +137,21 @@
 
 	.pk-gender {
 		text-align: center;
+	}
+
+	@media (max-height: 1200px) {
+		.pk-stats-container {
+			gap: 0.75rem;
+			min-height: unset;
+		}
+		.pk-stats {
+			.stat-row {
+				gap: 0.5rem;
+				margin-bottom: 0.375rem;
+			}
+		}
+		.pk-row-1 {
+			margin-block: 0.25rem;
+		}
 	}
 </style>

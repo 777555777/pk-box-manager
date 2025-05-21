@@ -173,4 +173,15 @@
 			filter: drop-shadow(0 0 5px hsl(55, 100%, 85%));
 		}
 	}
+
+	@media (max-width: 1500px) {
+		.pk-slot {
+			--target-size: 58;
+		}
+		.pk-badge {
+			--target-size: 20;
+			top: 36px;
+			left: 36px;
+		}
+	}
 </style>

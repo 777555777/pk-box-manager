@@ -51,23 +51,39 @@
 	<p>waiting...</p>
 {:then dexOrder}
 	<main>
-		<PkToolBox />
 		<section class="pk-content">
+			<PkToolBox />
 			<PkBoxContainer {dexOrder} />
-			<PkSidebar />
 		</section>
+		<PkSidebar />
 	</main>
 {/await}
 
 <style>
 	main {
-		min-height: 100dvh;
+		display: flex;
+		height: 100dvh;
+		gap: 4rem;
+		max-width: 94%;
+		margin: 0 auto;
 	}
 
 	.pk-content {
-		max-width: 94%;
-		margin: 0 auto;
+		flex: 1 1 0;
+		max-width: none;
+		margin: 0;
 		display: flex;
 		gap: 2rem;
+		justify-content: center;
+		align-items: flex-start;
+		height: 100dvh;
+		overflow-y: auto;
+		scrollbar-width: none;
+	}
+
+	@media (max-width: 1350px) {
+		main {
+			gap: 2rem;
+		}
 	}
 </style>
