@@ -150,6 +150,12 @@ body {
 	margin: 0 1rem;
 }
 
+@media (max-height: 1200px) {
+	.separator {
+		margin: 0.75rem 0;
+	}
+}
+
 /* ======== Global UI Element Classes ========= */
 
 :root {
@@ -160,6 +166,12 @@ body {
 	--ui-section-background-color: #618e9e;
 
 	--box-width: 410px;
+}
+
+@media (max-width: 1500px) {
+	:root {
+		--box-width: 374px;
+	}
 }
 
 .pk-ui-section {

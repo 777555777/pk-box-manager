@@ -102,4 +102,14 @@
 	.modified {
 		filter: sepia(100%) hue-rotate(-10deg) saturate(1000%);
 	}
+
+	@media (max-width: 1350px) {
+		.pk-button {
+			max-width: 44px;
+
+			span {
+				display: none;
+			}
+		}
+	}
 </style>

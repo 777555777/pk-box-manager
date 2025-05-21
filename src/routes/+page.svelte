@@ -63,7 +63,7 @@
 	main {
 		display: flex;
 		height: 100dvh;
-		gap: 2rem;
+		gap: 4rem;
 		max-width: 94%;
 		margin: 0 auto;
 	}
@@ -74,7 +74,16 @@
 		margin: 0;
 		display: flex;
 		gap: 2rem;
-		height: 100vh;
 		justify-content: center;
+		align-items: flex-start;
+		height: 100dvh;
+		overflow-y: auto;
+		scrollbar-width: none;
+	}
+
+	@media (max-width: 1350px) {
+		main {
+			gap: 2rem;
+		}
 	}
 </style>

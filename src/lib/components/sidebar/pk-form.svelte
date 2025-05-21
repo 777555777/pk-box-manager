@@ -51,13 +51,15 @@
 			</div>
 		{/if}
 	</div>
-	<PkTextarea
-		label="Comment"
-		onUpdate={updateComment}
-		value={selectedPokemon.comment}
-		debounceTime={250}
-		{disabled}
-	/>
+	<div class="pk-comment-container">
+		<PkTextarea
+			label="Comment"
+			onUpdate={updateComment}
+			value={selectedPokemon.comment}
+			debounceTime={250}
+			{disabled}
+		/>
+	</div>
 </div>
 
 <style>
@@ -82,6 +84,12 @@
 
 		img {
 			image-rendering: auto;
+		}
+	}
+
+	@media (max-height: 1200px) {
+		.pk-comment-container :global(.pk-textarea) {
+			min-height: 5rem;
 		}
 	}
 </style>
