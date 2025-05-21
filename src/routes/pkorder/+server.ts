@@ -28,7 +28,16 @@ const dexNames: Record<string, BoxOrder[]> = {
 
 export function GET(request: Request) {
 	const url = new URL(request.url)
-	console.log('[SERVER] Request URL:', url.href)
+	// Formated german time with date: 22.05.2025, 00:22:03
+	const currentTime = new Date().toLocaleString('de-DE', {
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit'
+	})
+	console.log(`[SERVER] ${currentTime} Request URL:`, url.href)
 	const dexName = url.searchParams.get('dexname')
 
 	if (!dexName) {
