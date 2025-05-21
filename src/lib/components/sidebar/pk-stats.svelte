@@ -78,6 +78,7 @@
 	.pk-stats-container {
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		gap: 1rem;
 		min-height: 320px;
 	}
