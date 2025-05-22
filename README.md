@@ -43,10 +43,10 @@ cd pk-box-manager
 deno install
 
 # Start dev server
-deno run build && deno run dev
+deno task build && deno task dev
 
 # Start preview server
-deno run preview
+deno task preview
 ```
 
 > ### Note: Clear browser localstorage to reset app state
@@ -55,10 +55,10 @@ deno run preview
 
 ```sh
 # Generate all sprite sheets (requires Deno and ImageMagick)
-deno run sprites
+deno task sprites
 
 # Convert .png images in /static to WebP (requires ImageMagick & cwebp CLI)
-deno run webp
+deno task webp
 ```
 
 ## Structure
