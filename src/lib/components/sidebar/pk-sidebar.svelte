@@ -180,4 +180,13 @@
 		font-size: 1rem;
 		text-align: center;
 	}
+
+	@media (max-height: 1200px) {
+		.pk-links-section {
+			padding-bottom: 0.25rem;
+		}
+		.pk-title-section {
+			padding-top: 0.25rem;
+		}
+	}
 </style>

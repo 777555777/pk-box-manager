@@ -141,7 +141,7 @@
 
 	@media (max-height: 1200px) {
 		.pk-stats-container {
-			gap: 0.75rem;
+			gap: 0.5rem;
 			min-height: unset;
 		}
 		.pk-stats {

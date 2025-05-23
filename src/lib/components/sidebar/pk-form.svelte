@@ -92,4 +92,10 @@
 			min-height: 5rem;
 		}
 	}
+	@media (max-height: 1000px) {
+		.pk-comment-container :global(.pk-textarea) {
+			margin-bottom: 0.25rem;
+			min-height: 4rem;
+		}
+	}
 </style>

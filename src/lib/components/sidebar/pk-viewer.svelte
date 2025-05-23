@@ -48,6 +48,12 @@
 		}
 	}
 
+	@media (max-height: 1000px) {
+		.pk-viewer {
+			--target-size: 196;
+		}
+	}
+
 	.pk-checkerboard {
 		background: conic-gradient(
 			var(--checkerboard-color-1) 90deg,
