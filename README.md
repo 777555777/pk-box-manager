@@ -3,6 +3,8 @@
 A fast, lightweight, and mostly local Svelte app to manage your Living Pokédex.
 Userdata is managed entirely in the browsers localStorage.
 
+> https://box-manager.com/
+
 ![pk-box-manager screenshot](app-example.png)
 
 ## Features
