@@ -202,7 +202,7 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Sand Rush*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0029-nidoran♀': {
+	'0029-nidoran-f': {
 		originRegion: 'Kanto',
 		stats: [55, 47, 52, 40, 40, 41],
 		types: ['Poison'],
@@ -223,7 +223,7 @@ export const pkStats = {
 		abilities: ['Poison Point', 'Rivalry', 'Sheer Force*'],
 		genderRatio: { male: 0, female: 100 }
 	},
-	'0032-nidoran♂': {
+	'0032-nidoran-m': {
 		originRegion: 'Kanto',
 		stats: [46, 57, 40, 40, 40, 50],
 		types: ['Poison'],
@@ -580,7 +580,7 @@ export const pkStats = {
 		abilities: ['Magnet Pull', 'Sturdy', 'Analytic*'],
 		genderRatio: { male: null, female: null }
 	},
-	"0083-farfetch'd": {
+	'0083-farfetchd': {
 		originRegion: 'Kanto',
 		stats: [52, 90, 55, 58, 62, 60],
 		types: ['Normal', 'Flying'],
@@ -853,7 +853,7 @@ export const pkStats = {
 		abilities: ['Illuminate', 'Natural Cure', 'Analytic*'],
 		genderRatio: { male: null, female: null }
 	},
-	'0122-mr. mime': {
+	'0122-mr-mime': {
 		originRegion: 'Kanto',
 		stats: [40, 45, 65, 100, 120, 90],
 		types: ['Psychic', 'Fairy'],
@@ -2707,7 +2707,7 @@ export const pkStats = {
 		abilities: ['Serene Grace'],
 		genderRatio: { male: null, female: null }
 	},
-	'0386-deoxys': {
+	'0386-deoxys-normal': {
 		originRegion: 'Hoenn',
 		stats: [50, 150, 50, 150, 50, 150],
 		types: ['Psychic'],
@@ -2892,14 +2892,14 @@ export const pkStats = {
 		abilities: ['Sturdy', 'Soundproof*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
-	'0412-burmy': {
+	'0412-burmy-plant': {
 		originRegion: 'Sinnoh',
 		stats: [40, 29, 45, 29, 45, 36],
 		types: ['Bug'],
 		abilities: ['Shed Skin', 'Overcoat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0413-wormadam': {
+	'0413-wormadam-plant': {
 		originRegion: 'Sinnoh',
 		stats: [60, 59, 85, 79, 105, 36],
 		types: ['Bug', 'Grass'],
@@ -3081,7 +3081,7 @@ export const pkStats = {
 		abilities: ['Sturdy', 'Rock Head', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0439-mime jr.': {
+	'0439-mime-jr': {
 		originRegion: 'Sinnoh',
 		stats: [20, 25, 45, 70, 90, 60],
 		types: ['Psychic', 'Fairy'],
@@ -3417,7 +3417,7 @@ export const pkStats = {
 		abilities: ['Slow Start'],
 		genderRatio: { male: null, female: null }
 	},
-	'0487-giratina': {
+	'0487-giratina-altered': {
 		originRegion: 'Sinnoh',
 		stats: [150, 100, 120, 100, 120, 90],
 		types: ['Ghost', 'Dragon'],
@@ -3452,7 +3452,7 @@ export const pkStats = {
 		abilities: ['Bad Dreams'],
 		genderRatio: { male: null, female: null }
 	},
-	'0492-shaymin': {
+	'0492-shaymin-land': {
 		originRegion: 'Sinnoh',
 		stats: [100, 100, 100, 100, 100, 100],
 		types: ['Grass'],
@@ -3861,7 +3861,7 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Own Tempo', 'Leaf Guard*'],
 		genderRatio: { male: 0, female: 100 }
 	},
-	'0550-basculin': {
+	'0550-basculin-red-striped': {
 		originRegion: 'Unova',
 		stats: [70, 92, 65, 80, 55, 98],
 		types: ['Water'],
@@ -3896,7 +3896,7 @@ export const pkStats = {
 		abilities: ['Hustle', 'Inner Focus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0555-darmanitan': {
+	'0555-darmanitan-standard': {
 		originRegion: 'Unova',
 		stats: [105, 140, 55, 30, 55, 95],
 		types: ['Fire'],
@@ -4498,14 +4498,14 @@ export const pkStats = {
 		abilities: ['Justified'],
 		genderRatio: { male: null, female: null }
 	},
-	'0641-tornadus': {
+	'0641-tornadus-incarnate': {
 		originRegion: 'Unova',
 		stats: [79, 115, 70, 125, 80, 111],
 		types: ['Flying'],
 		abilities: ['Prankster', 'Defiant*'],
 		genderRatio: { male: 100, female: 0 }
 	},
-	'0642-thundurus': {
+	'0642-thundurus-incarnate': {
 		originRegion: 'Unova',
 		stats: [79, 115, 70, 125, 80, 111],
 		types: ['Electric', 'Flying'],
@@ -4526,7 +4526,7 @@ export const pkStats = {
 		abilities: ['Teravolt'],
 		genderRatio: { male: null, female: null }
 	},
-	'0645-landorus': {
+	'0645-landorus-incarnate': {
 		originRegion: 'Unova',
 		stats: [89, 125, 90, 115, 80, 101],
 		types: ['Ground', 'Flying'],
@@ -4540,14 +4540,14 @@ export const pkStats = {
 		abilities: ['Pressure'],
 		genderRatio: { male: null, female: null }
 	},
-	'0647-keldeo': {
+	'0647-keldeo-ordinary': {
 		originRegion: 'Unova',
 		stats: [91, 72, 90, 129, 90, 108],
 		types: ['Water', 'Fighting'],
 		abilities: ['Justified'],
 		genderRatio: { male: null, female: null }
 	},
-	'0648-meloetta': {
+	'0648-meloetta-aria': {
 		originRegion: 'Unova',
 		stats: [100, 77, 77, 128, 128, 90],
 		types: ['Normal', 'Psychic'],
@@ -4697,7 +4697,7 @@ export const pkStats = {
 		abilities: ['Rivalry', 'Unnerve', 'Moxie*'],
 		genderRatio: { male: 12.5, female: 87.5 }
 	},
-	'0669-flabébé': {
+	'0669-flabebe': {
 		originRegion: 'Kalos',
 		stats: [44, 38, 39, 61, 79, 42],
 		types: ['Fairy'],
@@ -4984,14 +4984,14 @@ export const pkStats = {
 		abilities: ['Natural Cure', 'Frisk', 'Harvest*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0710-pumpkaboo': {
+	'0710-pumpkaboo-average': {
 		originRegion: 'Kalos',
 		stats: [59, 66, 70, 44, 55, 41],
 		types: ['Ghost', 'Grass'],
 		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0711-gourgeist': {
+	'0711-gourgeist-average': {
 		originRegion: 'Kalos',
 		stats: [85, 100, 122, 58, 75, 54],
 		types: ['Ghost', 'Grass'],
@@ -5040,7 +5040,7 @@ export const pkStats = {
 		abilities: ['Dark Aura'],
 		genderRatio: { male: null, female: null }
 	},
-	'0718-zygarde': {
+	'0718-zygarde-50': {
 		originRegion: 'Kalos',
 		stats: [108, 100, 121, 81, 95, 95],
 		types: ['Dragon', 'Ground'],
@@ -5054,7 +5054,7 @@ export const pkStats = {
 		abilities: ['Clear Body'],
 		genderRatio: { male: null, female: null }
 	},
-	'0720-hoopa': {
+	'0720-hoopa-confined': {
 		originRegion: 'Kalos',
 		stats: [80, 110, 60, 150, 130, 70],
 		types: ['Psychic', 'Ghost'],
@@ -5204,7 +5204,7 @@ export const pkStats = {
 		abilities: ['Hyper Cutter', 'Iron Fist', 'Anger Point*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0741-oricorio': {
+	'0741-oricorio-baile': {
 		originRegion: 'Alola',
 		stats: [75, 70, 70, 98, 70, 93],
 		types: ['Fire', 'Flying'],
@@ -5232,14 +5232,14 @@ export const pkStats = {
 		abilities: ['Keen Eye', 'Vital Spirit', 'Steadfast*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0745-lycanroc': {
+	'0745-lycanroc-midday': {
 		originRegion: 'Alola',
 		stats: [75, 115, 65, 55, 65, 112],
 		types: ['Rock'],
 		abilities: ['Keen Eye', 'Sand Rush', 'Steadfast*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0746-wishiwashi': {
+	'0746-wishiwashi-solo': {
 		originRegion: 'Alola',
 		stats: [45, 20, 20, 25, 25, 40],
 		types: ['Water'],
@@ -5421,7 +5421,7 @@ export const pkStats = {
 		abilities: ['Innards Out', 'Unaware*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0772-type: null': {
+	'0772-type-null': {
 		originRegion: 'Alola',
 		stats: [95, 95, 95, 95, 95, 59],
 		types: ['Normal'],
@@ -5435,7 +5435,7 @@ export const pkStats = {
 		abilities: ['Rks System'],
 		genderRatio: { male: null, female: null }
 	},
-	'0774-minior': {
+	'0774-minior-core-red': {
 		originRegion: 'Alola',
 		stats: [60, 60, 100, 60, 100, 60],
 		types: ['Rock', 'Flying'],
@@ -5512,28 +5512,28 @@ export const pkStats = {
 		abilities: ['Bulletproof', 'Soundproof', 'Overcoat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0785-tapu koko': {
+	'0785-tapu-koko': {
 		originRegion: 'Alola',
 		stats: [70, 115, 85, 95, 75, 130],
 		types: ['Electric', 'Fairy'],
 		abilities: ['Electric Surge', 'Telepathy*'],
 		genderRatio: { male: null, female: null }
 	},
-	'0786-tapu lele': {
+	'0786-tapu-lele': {
 		originRegion: 'Alola',
 		stats: [70, 85, 75, 130, 115, 95],
 		types: ['Psychic', 'Fairy'],
 		abilities: ['Psychic Surge', 'Telepathy*'],
 		genderRatio: { male: null, female: null }
 	},
-	'0787-tapu bulu': {
+	'0787-tapu-bulu': {
 		originRegion: 'Alola',
 		stats: [70, 130, 115, 85, 95, 75],
 		types: ['Grass', 'Fairy'],
 		abilities: ['Grassy Surge', 'Telepathy*'],
 		genderRatio: { male: null, female: null }
 	},
-	'0788-tapu fini': {
+	'0788-tapu-fini': {
 		originRegion: 'Alola',
 		stats: [70, 75, 115, 95, 130, 85],
 		types: ['Water', 'Fairy'],
