@@ -6,6 +6,7 @@
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkDexReset from './pk-dex-reset.svelte'
+	import { createHotkeyHandler } from '$lib/hotkey-utils'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -26,6 +27,19 @@
 	function openDefaultDialog() {
 		defaultsDialog.showDefaultsDialog()
 	}
+
+	const hotkeyHandlerBadge = createHotkeyHandler('KeyB', cycleBadgeDisplay)
+	const hotkeyHandlerViewerMode = createHotkeyHandler('KeyV', toggleViewerMode)
+
+	// Update it whenever the state manager's selection changes
+	$effect(() => {
+		document.addEventListener('keydown', hotkeyHandlerBadge)
+		document.addEventListener('keydown', hotkeyHandlerViewerMode)
+		return () => {
+			document.removeEventListener('keydown', hotkeyHandlerBadge)
+			document.removeEventListener('keydown', hotkeyHandlerViewerMode)
+		}
+	})
 </script>
 
 <aside class="pk-toolbox pk-ui-section">

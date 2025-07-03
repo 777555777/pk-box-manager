@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { hotkeyManager } from '$lib/state/hotkey-state.svelte'
 	import type { Snippet } from 'svelte'
 
 	type ConfirmCallback = () => void
@@ -29,17 +30,20 @@
 	let dialogElement: HTMLDialogElement
 
 	export function showDialog() {
+		hotkeyManager.disableAll()
 		dialogElement.showModal()
 	}
 
 	function handleConfirm() {
 		onConfirm()
 		dialogElement.close()
+		hotkeyManager.enableAll()
 	}
 
 	function handleDismiss() {
 		onCancel()
 		dialogElement.close()
+		hotkeyManager.enableAll()
 	}
 </script>
 
