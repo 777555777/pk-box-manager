@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
+	import { appState } from '$lib/state/app-state.svelte'
 
 	let {
 		label = '',
@@ -10,12 +11,14 @@
 		id = crypto.randomUUID()
 	} = $props()
 
-	let showTray = $state(false)
 	let trayRef = $state<HTMLElement | null>(null)
+
+	// Computed property für showTray basierend auf AppState
+	let showTray = $derived(appState.isDropdownOpen(id))
 
 	function selectBall(ball: BallsType) {
 		onUpdate(ball)
-		showTray = false
+		appState.closeDropdown() // Dropdown schließen nach Auswahl
 	}
 
 	function getBallPosition(selectedBall: BallsType) {
@@ -24,12 +27,19 @@
 
 	function toggleSelectorTray(event: MouseEvent) {
 		event.stopPropagation() // Verhindert, dass der Click Outside Handler ausgelöst wird
-		showTray = !showTray
+
+		if (showTray) {
+			// Wenn dieses Dropdown bereits offen ist, schließe es
+			appState.closeDropdown()
+		} else {
+			// Öffne dieses Dropdown (schließt automatisch andere)
+			appState.openDropdown(id)
+		}
 	}
 
 	function handleClickOutside(event: MouseEvent) {
 		if (trayRef && !trayRef.contains(event.target as Node)) {
-			showTray = false
+			appState.closeDropdown()
 		}
 	}
 

@@ -12,6 +12,8 @@ export class AppState {
 	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
 	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
 
+	private activeDropdownId: string | null = $state(null)
+
 	// ================
 	// UI State Methods
 	// ================
@@ -44,6 +46,18 @@ export class AppState {
 	public setCurrentPokedexName(name: string): void {
 		this.selectedDexName = name
 		storageHandler.saveSelectedPokedexName(name)
+	}
+
+	public openDropdown(dropdownId: string) {
+		this.activeDropdownId = dropdownId
+	}
+
+	public closeDropdown() {
+		this.activeDropdownId = null
+	}
+
+	public isDropdownOpen(dropdownId: string): boolean {
+		return this.activeDropdownId === dropdownId
 	}
 
 	// ================
