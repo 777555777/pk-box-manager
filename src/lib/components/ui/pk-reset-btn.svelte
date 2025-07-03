@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { pkState } from '$lib/state/pk-state.svelte'
+	import { createHotkeyHandler } from '$lib/hotkey-utils'
 
 	let { identifier, disabled } = $props()
 
@@ -10,28 +11,13 @@
 		pkState.deselectPokemon()
 	}
 
-	function handleKeydown(event: KeyboardEvent) {
-		if (disabled || event.code !== 'KeyQ') {
-			return
-		}
-
-		const activeElement = document.activeElement
-		const isInToolbox = !!activeElement?.closest('.pk-toolbox')
-		const isInSidebar = !!activeElement?.closest('.pk-sidebar')
-		const isInputOrTextarea =
-			activeElement?.tagName === 'INPUT' || activeElement?.tagName === 'TEXTAREA'
-
-		// Wenn das aktive Element kein Input/Textarea ist oder sich in der Toolbox befindet
-		if (!isInputOrTextarea || isInToolbox || isInSidebar) {
-			resetPokemon()
-		}
-	}
+	const hotkeyHandler = createHotkeyHandler('KeyQ', resetPokemon, () => disabled)
 
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
-		document.addEventListener('keydown', handleKeydown)
+		document.addEventListener('keydown', hotkeyHandler)
 		return () => {
-			document.removeEventListener('keydown', handleKeydown)
+			document.removeEventListener('keydown', hotkeyHandler)
 		}
 	})
 </script>
