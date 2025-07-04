@@ -108,9 +108,8 @@
 		}
 
 		&:active {
-			transform: scale(0.95);
 			filter: brightness(0.9);
-			box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+			box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
 		}
 
 		&:focus-visible {
