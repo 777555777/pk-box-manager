@@ -74,54 +74,41 @@ body {
 	font-family:
 		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
 
-	/* prettier-ignore */
-	background-image: 
-	  url('/ui/app-background.webp'), 
-	  linear-gradient(
-		to bottom,
-		hsl(185, 79%, 70%) 0%,
-		hsl(150, 75%, 73%) 50%,
-		hsl(130, 85%, 77%) 100%
-	);
-
+/* Animierter Hintergrund-Layer */
+.animated-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1; /* Hinter alle anderen Elemente */
+	width: calc(100vw + 188px); /* Erweitert um die Bewegungsstrecke */
+	height: calc(100vh + 178px);
+	background-image:
+		url('/ui/app-background.webp'),
+		linear-gradient(
+			to bottom,
+			hsl(185, 79%, 70%) 0%,
+			hsl(150, 75%, 73%) 50%,
+			hsl(130, 85%, 77%) 100%
+		);
 	background-repeat: repeat, no-repeat;
 	background-size: auto, cover;
 	background-attachment: fixed;
 	background-blend-mode: multiply;
-	background-position:
-		0 0,
-		0 0;
 
-	/* animation: panBackground 20s linear infinite; */
-
-	/* Vignette above texture and background */
-	&::before {
-		content: '';
-		position: fixed;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		z-index: -1;
-		pointer-events: none;
-		background-image: radial-gradient(
-			ellipse at center,
-			transparent 0%,
-			rgba(255, 255, 255, 0.25) 100%
-		);
-	}
+	/* GPU-Beschleunigung aktivieren */
+	will-change: transform;
+	transform: translate3d(0, 0, 0);
+	animation: panBackground 20s linear infinite;
 }
 
 @keyframes panBackground {
 	0% {
-		background-position:
-			0 0,
-			0 0; /* Start: Textur bei 0/0, Gradient bei 0/0 (Gradient ändert sich nicht) */
+		transform: translate3d(0, 0, 0);
 	}
 	100% {
-		background-position:
-			188px 178px,
-			0 0; /* Textur-Position animieren, Gradient bleibt fix */
+		transform: translate3d(-188px, -178px, 0);
 	}
 }
 

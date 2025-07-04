@@ -36,6 +36,9 @@
 	{onclick}
 	style="--grayscale: {pokemonState.captured ? '100%' : '0%'}"
 >
+	{#if isSelected}
+		<div class="pk-slot-cursor"></div>
+	{/if}
 	<img
 		class="pk-slot-image"
 		src={`/spritesheets/${pokemonState.shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
@@ -96,10 +99,12 @@
 		border-radius: 5px;
 
 		&:hover {
-			/* transform: scale(1.05); */
 			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-			filter: saturate(1.2) brightness(1.2);
 			background-color: hsla(0, 0%, 80%, 0.25);
+
+			.pk-slot-image {
+				filter: brightness(var(--grayscale)) saturate(1.2) brightness(1.2);
+			}
 		}
 
 		&:active {
@@ -126,45 +131,29 @@
 		}
 	}
 
+	/* CSS für den Slot */
 	.pk-slot.selected {
-		outline: 2px solid hsl(120, 100%, 50%); /* Idea: use different color vor view mode */
+		outline: 2px solid hsl(120, 100%, 50%);
 		box-shadow: 2px 2px 6px hsl(120, 100%, 40%);
 		background-color: rgb(255, 255, 255, 0.25);
 		position: relative;
-		overflow: visible; /* make hand pointer visible outside of slot */
-
-		/* Cursour ponting hand */
-		&::before {
-			content: '';
-			position: absolute;
-			width: 38px;
-			height: 38px;
-
-			/* Position: oberhalb und leicht links */
-			top: -20px;
-			left: 50%;
-			transform: translateX(-50%);
-
-			background-image: url('/boxes/hand-cursor.webp');
-			background-repeat: no-repeat;
-			background-size: contain;
-			background-position: center;
-
-			z-index: 3;
-			pointer-events: none;
-
-			/* animation: wiggle 0.5s infinite ease-in-out; */
-		}
+		overflow: visible;
 	}
 
-	@keyframes wiggle {
-		0%,
-		100% {
-			transform: translate3d(-50%, 0, 0) rotate(-5deg);
-		}
-		50% {
-			transform: translate3d(-50%, 0, 0) rotate(5deg);
-		}
+	/* CSS für die Hand (als separates Element) */
+	.pk-slot-cursor {
+		position: absolute;
+		width: 38px;
+		height: 38px;
+		top: -24px;
+		transform: translateX(30%);
+		background-image: url('/ui/hand-cursor.webp');
+		background-size: 38px 38px;
+		background-repeat: no-repeat;
+		background-position: center;
+		z-index: 3;
+		pointer-events: none;
+		isolation: isolate;
 	}
 
 	.pk-shiny-slot {
