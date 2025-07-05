@@ -150,7 +150,7 @@
 		background-size: 38px 38px;
 		background-repeat: no-repeat;
 		background-position: center;
-		z-index: 3;
+		z-index: 1;
 		pointer-events: none;
 		isolation: isolate;
 	}

@@ -44,9 +44,9 @@ export function getBackgroundStyle(
 	const percentX = (xIndex / (columns - 1)) * 100
 	const percentY = (yIndex / (rows - 1)) * 100
 
-	console.log(`xIndex: ${xIndex}, yIndex: ${yIndex}, percentX: ${percentX}, percentY: ${percentY}`)
-	console.log(
-		`background-Size: ${columns * 100}% ${rows * 100}%; background-Position: ${percentX}% ${percentY}%;`
-	)
+	// console.log(`xIndex: ${xIndex}, yIndex: ${yIndex}, percentX: ${percentX}, percentY: ${percentY}`)
+	// console.log(
+	// 	`background-Size: ${columns * 100}% ${rows * 100}%; background-Position: ${percentX}% ${percentY}%;`
+	// )
 	return `background-Size: ${columns * 100}% ${rows * 100}%; background-Position: ${percentX}% ${percentY}%;`
 }

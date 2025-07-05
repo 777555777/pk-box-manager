@@ -8,7 +8,7 @@ import BoxOrderBackgroundTest from './order/order-background-test.json' with { t
 export interface BoxOrder {
 	title: string
 	pokemon: PokemonEntry[]
-	wallpaper: string
+	wallpaper?: string // all exsisting files need to be updated to include background
 }
 
 export interface PokemonEntry {
