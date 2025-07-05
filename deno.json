@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "es2022"],
+		"allowJs": true,
+		"strict": true
+	},
+	"lint": {
+		"rules": {
+			"tags": ["recommended"]
+		}
+	},
+	"fmt": {
+		"useTabs": false,
+		"lineWidth": 100,
+		"indentWidth": 4,
+		"semiColons": false,
+		"singleQuote": true,
+		"proseWrap": "preserve"
+	}
+}
