@@ -145,7 +145,7 @@
 		width: 38px;
 		height: 38px;
 		top: -24px;
-		transform: translateX(30%);
+		left: 19px; /* Zentriert auf 64px breitem Button: (64-38)/2 + 30% */
 		background-image: url('/ui/hand-cursor.webp');
 		background-size: 38px 38px;
 		background-repeat: no-repeat;
@@ -170,6 +170,9 @@
 			--target-size: 20;
 			top: 36px;
 			left: 36px;
+		}
+		.pk-slot-cursor {
+			left: 16px; /* Zentriert auf 58px breitem Button: (58-38)/2 + 30% */
 		}
 	}
 </style>
