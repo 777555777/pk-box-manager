@@ -1,167 +1,167 @@
 // Automatically generated file!
 export const Wallpapers = {
-  "beach": {
+  "01-forest": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: 0
     }
   },
-  "bigbrother": {
+  "02-city": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: 0
     }
   },
-  "cave": {
+  "03-desert": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: 0
     }
   },
-  "checks": {
+  "04-savanna": {
     sheet: "sw1",
     pos: {
       x: -3402,
       y: 0
     }
   },
-  "city": {
+  "05-crag": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: -854
     }
   },
-  "crag": {
+  "06-volcano": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: -854
     }
   },
-  "desert": {
+  "07-snow": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: -854
     }
   },
-  "forest": {
+  "08-cave": {
     sheet: "sw1",
     pos: {
       x: -3402,
       y: -854
     }
   },
-  "heart": {
+  "09-beach": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: -1708
     }
   },
-  "kimonogirl": {
+  "10-seafloor": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: -1708
     }
   },
-  "machine": {
+  "11-river": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: -1708
     }
   },
-  "pokeathlon": {
+  "12-sky": {
     sheet: "sw1",
     pos: {
       x: -3402,
       y: -1708
     }
   },
-  "pokecenter": {
+  "13-pokecenter": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: -2562
     }
   },
-  "revival": {
+  "14-machine": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: -2562
     }
   },
-  "river": {
+  "15-checks": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: -2562
     }
   },
-  "savanna": {
+  "16-simple": {
     sheet: "sw1",
     pos: {
       x: -3402,
       y: -2562
     }
   },
-  "seafloor": {
+  "17-trio": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: -3416
     }
   },
-  "simple": {
+  "18-spikypika": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: -3416
     }
   },
-  "sky": {
+  "19-heart": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: -3416
     }
   },
-  "snow": {
+  "20-soul": {
     sheet: "sw1",
     pos: {
       x: -3402,
       y: -3416
     }
   },
-  "soul": {
+  "21-kimonogirl": {
     sheet: "sw1",
     pos: {
       x: 0,
       y: -4270
     }
   },
-  "spikypika": {
+  "22-pokeathlon": {
     sheet: "sw1",
     pos: {
       x: -1134,
       y: -4270
     }
   },
-  "trio": {
+  "23-bigbrother": {
     sheet: "sw1",
     pos: {
       x: -2268,
       y: -4270
     }
   },
-  "volcano": {
+  "24-revival": {
     sheet: "sw1",
     pos: {
       x: -3402,

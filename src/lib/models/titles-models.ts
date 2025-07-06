@@ -1,167 +1,167 @@
 // Automatically generated file!
 export const Titles = {
-  "beach-title": {
+  "01-forest-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: 0
     }
   },
-  "bigbrother-title": {
+  "02-city-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: 0
     }
   },
-  "cave-title": {
+  "03-desert-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: 0
     }
   },
-  "checks-title": {
+  "04-savanna-title": {
     sheet: "st1",
     pos: {
       x: -2436,
       y: 0
     }
   },
-  "city-title": {
+  "05-crag-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: -161
     }
   },
-  "crag-title": {
+  "06-volcano-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: -161
     }
   },
-  "desert-title": {
+  "07-snow-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: -161
     }
   },
-  "forest-title": {
+  "08-cave-title": {
     sheet: "st1",
     pos: {
       x: -2436,
       y: -161
     }
   },
-  "heart-title": {
+  "09-beach-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: -322
     }
   },
-  "kimonogirl-title": {
+  "10-seafloor-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: -322
     }
   },
-  "machine-title": {
+  "11-river-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: -322
     }
   },
-  "pokeathlon-title": {
+  "12-sky-title": {
     sheet: "st1",
     pos: {
       x: -2436,
       y: -322
     }
   },
-  "pokecenter-title": {
+  "13-pokecenter-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: -483
     }
   },
-  "revival-title": {
+  "14-machine-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: -483
     }
   },
-  "river-title": {
+  "15-checks-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: -483
     }
   },
-  "savanna-title": {
+  "16-simple-title": {
     sheet: "st1",
     pos: {
       x: -2436,
       y: -483
     }
   },
-  "seafloor-title": {
+  "17-trio-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: -644
     }
   },
-  "simple-title": {
+  "18-spikypika-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: -644
     }
   },
-  "sky-title": {
+  "19-heart-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: -644
     }
   },
-  "snow-title": {
+  "20-soul-title": {
     sheet: "st1",
     pos: {
       x: -2436,
       y: -644
     }
   },
-  "soul-title": {
+  "21-kimonogirl-title": {
     sheet: "st1",
     pos: {
       x: 0,
       y: -805
     }
   },
-  "spikypika-title": {
+  "22-pokeathlon-title": {
     sheet: "st1",
     pos: {
       x: -812,
       y: -805
     }
   },
-  "trio-title": {
+  "23-bigbrother-title": {
     sheet: "st1",
     pos: {
       x: -1624,
       y: -805
     }
   },
-  "volcano-title": {
+  "24-revival-title": {
     sheet: "st1",
     pos: {
       x: -2436,
