@@ -155,10 +155,10 @@
 	}
 
 	.pk-selector-tray {
-		--target-width: calc(812 / 4);
-		--target-height: calc(161 / 4);
 		--original-width: 812;
 		--original-height: 161;
+		--target-width: calc(var(--original-width) / 4);
+		--target-height: calc(var(--original-height) / 4);
 		--scale-factor-x: calc(var(--target-width) / var(--original-width));
 		--scale-factor-y: calc(var(--target-height) / var(--original-height));
 
@@ -178,6 +178,8 @@
 		position: absolute;
 		top: 100%;
 		z-index: 2;
+
+		overflow: hidden;
 
 		/* ======================== */
 		background-color: transparent;
