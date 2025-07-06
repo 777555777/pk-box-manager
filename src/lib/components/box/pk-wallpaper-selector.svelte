@@ -32,6 +32,20 @@
 		return boxTitle.charAt(0).toUpperCase() + boxTitle.slice(1)
 	}
 
+	function getTitleSpriteData(wallpaperName: WallpapersType) {
+		const titleKey = `${wallpaperName}-title` as TitlesType
+		const titleData = Titles[titleKey]
+
+		if (!titleData) {
+			console.warn(`Title data not found for wallpaper: ${wallpaperName}, looking for: ${titleKey}`)
+			// Fallback zu erstem verfügbaren Titel
+			const firstTitle = Object.keys(Titles)[0] as TitlesType
+			return Titles[firstTitle].pos
+		}
+
+		return titleData.pos
+	}
+
 	function handleClickOutside(event: MouseEvent) {
 		if (trayRef && !trayRef.contains(event.target as Node)) {
 			appState.closeDropdown()
@@ -67,7 +81,7 @@
 	const titleColumns = 4
 	const titleSpriteWidth = 812
 	const titleSpriteHeight = 161
-	const titleSpriteData = $derived(Titles[`${wallpaper}-title` as TitlesType].pos)
+	const titleSpriteData = $derived(getTitleSpriteData(wallpaper))
 </script>
 
 <header

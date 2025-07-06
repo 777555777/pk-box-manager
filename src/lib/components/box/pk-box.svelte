@@ -14,12 +14,25 @@
 		pkState.updateBoxWallpaper(box.id, newWallpaper)
 	}
 
+	function getWallpaperSpriteData(wallpaperName: WallpapersType) {
+		const wallpaperData = Wallpapers[wallpaperName]
+
+		if (!wallpaperData) {
+			console.warn(`Wallpaper data not found for: ${wallpaperName}`)
+			// Fallback zu erstem verfügbaren Wallpaper
+			const firstWallpaper = Object.keys(Wallpapers)[0] as WallpapersType
+			return Wallpapers[firstWallpaper].pos
+		}
+
+		return wallpaperData.pos
+	}
+
 	// Sprite sheet data
 	const boxRows = 6
 	const boxColumns = 4
 	const boxSpriteWidth = 1134
 	const boxSpriteHeight = 854
-	const boxSpriteData = $derived(Wallpapers[box.settings.wallpaper as WallpapersType].pos)
+	const boxSpriteData = $derived(getWallpaperSpriteData(box.settings.wallpaper as WallpapersType))
 </script>
 
 <article class="pk-box">

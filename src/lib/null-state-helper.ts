@@ -13,7 +13,7 @@ export const pokemonNullState = {
 	...pokemonNullProperties
 }
 
-export const defaultWallpaper = 'forest'
+export const defaultWallpaper = '01-forest'
 
 export const pokedexNullState = {
 	version: '0.0.0',
