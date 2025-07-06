@@ -117,6 +117,10 @@ export class PkState {
 		}
 	}
 
+	getCurrentPokedexState(): DexStorage {
+		return this.pokedexState || pokedexNullState
+	}
+
 	// ================
 	// Pokemon
 	// ================

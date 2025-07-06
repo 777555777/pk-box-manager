@@ -15,7 +15,6 @@ export const load: PageLoad = async ({ fetch }) => {
 
 		pkState.addToBoxOrderCache(selectedDexName, boxOrder)
 		pkState.initBoxOrderState(boxOrder, selectedDexName)
-		return { boxOrder, selectedDexName }
 	}
 
 	// Sveltekit always builds a client bundle and a server bundle.

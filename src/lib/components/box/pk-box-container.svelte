@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { type BoxOrder } from '$lib/state/storage-handler'
+	import { type DexStorage } from '$lib/state/storage-handler'
 	import PkBox from '$lib/components/box/pk-box.svelte'
 
-	let { dexOrder }: { dexOrder: BoxOrder[] } = $props()
+	let { dexStorage }: { dexStorage: DexStorage } = $props()
 </script>
 
 <section class="pk-box-container">
-	{#each dexOrder as box (box.title)}
+	{#each dexStorage.boxes as box (box.id)}
 		<PkBox {box} />
 	{/each}
 </section>

@@ -6,9 +6,8 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
 
-	// State für ausgewählten DexName
-	let selectedDexName = $derived(appState.getCurrentPokedexName())
-	let dexOrder = $derived(pkState.loadBoxOrder(selectedDexName))
+	// Use DexStorage from pkState to get the current state of the Pokedex
+	let dexStorage = $derived(pkState.getCurrentPokedexState())
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
@@ -47,13 +46,13 @@
 	})
 </script>
 
-{#await dexOrder}
+{#await dexStorage}
 	<p>waiting...</p>
-{:then dexOrder}
+{:then dexStorage}
 	<main>
 		<section class="pk-content">
 			<PkToolBox />
-			<PkBoxContainer {dexOrder} />
+			<PkBoxContainer {dexStorage} />
 		</section>
 		<PkSidebar />
 	</main>

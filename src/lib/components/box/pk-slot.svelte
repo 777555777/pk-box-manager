@@ -1,28 +1,28 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
-	import { type PokemonEntry } from '$lib/models/data-models'
 	import { getIdentifier, getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 
-	let { pokemonEntry }: { pokemonEntry: PokemonEntry } = $props()
-	const identifier = getIdentifier(pokemonEntry)
-	const selectedPokemonSpriteData = getPokemonSpriteData(identifier)
+	let { pokemonIdentifier }: { pokemonIdentifier: string } = $props()
+	const selectedPokemonSpriteData = getPokemonSpriteData(pokemonIdentifier)
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
-	let pokemonState = $derived(pkState.getPokemon(identifier))
+	let pokemonState = $derived(pkState.getPokemon(pokemonIdentifier))
 
-	let isSelected = $derived(identifier === getIdentifier(pkState.getSelectedPokemon().idEntry))
+	let isSelected = $derived(
+		pokemonIdentifier === getIdentifier(pkState.getSelectedPokemon().idEntry)
+	)
 
 	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	function onclick() {
 		if (viewerMode) {
-			pkState.updateSelectedPokemon(identifier)
+			pkState.updateSelectedPokemon(pokemonIdentifier)
 		} else {
-			pkState.updatePokemon(identifier, { captured: true })
-			pkState.updateSelectedPokemon(identifier)
+			pkState.updatePokemon(pokemonIdentifier, { captured: true })
+			pkState.updateSelectedPokemon(pokemonIdentifier)
 		}
 	}
 
@@ -42,7 +42,7 @@
 	<img
 		class="pk-slot-image"
 		src={`/spritesheets/${pokemonState.shiny ? 'shiny-pokemon' : 'pokemon'}/${selectedPokemonSpriteData.sheet}.webp`}
-		alt={identifier}
+		alt={pokemonIdentifier}
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 		loading="lazy"
 	/>

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { type BoxOrder } from '$lib/state/storage-handler'
+	import { type BoxData } from '$lib/state/storage-handler'
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
-	import { getBackgroundStyle, getIdentifier } from '$lib/spriteheet-helper'
+	import { getBackgroundStyle } from '$lib/spriteheet-helper'
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
 	import { Titles, type TitlesType } from '$lib/models/titles-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
 
-	let { box }: { box: BoxOrder } = $props()
+	let { box }: { box: BoxData } = $props()
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
 		console.log('updated wallpaper', newWallpaper)
@@ -18,20 +18,20 @@
 	const boxColumns = 4
 	const boxSpriteWidth = 1134
 	const boxSpriteHeight = 854
-	const boxSpriteData = Wallpapers[box.wallpaper as WallpapersType].pos
+	const boxSpriteData = Wallpapers[box.settings.wallpaper as WallpapersType].pos
 
 	// Sprite sheet data
 	const titleRows = 6
 	const titleColumns = 4
 	const titleSpriteWidth = 812
 	const titleSpriteHeight = 161
-	const titleSpriteData = Titles[`${box.wallpaper}-title` as TitlesType].pos
+	const titleSpriteData = Titles[`${box.settings.wallpaper}-title` as TitlesType].pos
 </script>
 
 <article class="pk-box">
 	<PkWallpaperSelector
 		title={box.title}
-		wallpaper={box.wallpaper as WallpapersType}
+		wallpaper={box.settings.wallpaper as WallpapersType}
 		onUpdate={updateBoxWallpaper}
 	/>
 	<div
@@ -39,8 +39,8 @@
 		style={getBackgroundStyle(boxRows, boxColumns, boxSpriteWidth, boxSpriteHeight, boxSpriteData)}
 	>
 		<div class="box-grid">
-			{#each box.pokemon as pokemon (getIdentifier(pokemon))}
-				<PkSlot pokemonEntry={pokemon} />
+			{#each box.pokemon as pokemon}
+				<PkSlot pokemonIdentifier={pokemon} />
 			{/each}
 		</div>
 	</div>
