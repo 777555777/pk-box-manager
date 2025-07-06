@@ -1,12 +1,12 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
 import { type PokemonData, storageHandler } from './storage-handler.ts'
 
-type BadgeDisplayMode = false | 'ball'
+type BadgeDisplayMode = false | 'ball' | 'comment'
 
 export class AppState {
 	// UI state
 	private viewerMode = $state(false)
-	private badgeDisplay: BadgeDisplayMode = $state(false)
+	private badgeDisplay: BadgeDisplayMode = $state(storageHandler.loadBadgeDisplayMode())
 
 	// Application settings
 	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
@@ -30,13 +30,20 @@ export class AppState {
 		return this.badgeDisplay
 	}
 
+	public setBadgeDisplayMode(mode: BadgeDisplayMode): void {
+		this.badgeDisplay = mode
+		storageHandler.saveBadgeDisplayMode(mode)
+	}
+
 	public cycleBadgeDisplayMode(): void {
 		const nextModeMap = new Map<BadgeDisplayMode, BadgeDisplayMode>([
 			[false, 'ball'],
-			['ball', false]
+			['ball', 'comment'],
+			['comment', false]
 		])
 
 		this.badgeDisplay = nextModeMap.get(this.badgeDisplay) ?? false
+		storageHandler.saveBadgeDisplayMode(this.badgeDisplay)
 	}
 
 	public getCurrentPokedexName(): string {

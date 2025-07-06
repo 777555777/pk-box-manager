@@ -58,6 +58,9 @@
 			alt={pokemonState.ball}
 		/>
 	{/if}
+	{#if pokemonState.captured && badgeDisplay === 'comment' && pokemonState.comment.length > 0}
+		<img class="pk-badge" src={`/ui/text-bubble.webp`} alt="Has comment" />
+	{/if}
 {/snippet}
 
 <style>
@@ -78,6 +81,8 @@
 		inset: 0;
 		top: 38px;
 		left: 38px;
+
+		image-rendering: auto;
 	}
 
 	.pk-slot {

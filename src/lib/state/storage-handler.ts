@@ -219,6 +219,34 @@ class StorageHandler {
 	}
 
 	// ================
+	// Badge Display Settings
+	// ================
+
+	/**
+	 * Saves the badge display mode setting to localStorage.
+	 * @param badgeDisplayMode The badge display mode to save.
+	 */
+	public saveBadgeDisplayMode(badgeDisplayMode: false | 'ball' | 'comment'): void {
+		localStorage.setItem('badgeDisplayMode', JSON.stringify(badgeDisplayMode))
+	}
+
+	/**
+	 * Loads the badge display mode setting from localStorage.
+	 * @returns The saved badge display mode or false as default.
+	 */
+	public loadBadgeDisplayMode(): false | 'ball' | 'comment' {
+		const savedMode = localStorage.getItem('badgeDisplayMode')
+		if (savedMode) {
+			try {
+				return JSON.parse(savedMode)
+			} catch (error) {
+				console.error('Error parsing badge display mode:', error)
+			}
+		}
+		return false
+	}
+
+	// ================
 	// Box Settings
 	// ================
 
