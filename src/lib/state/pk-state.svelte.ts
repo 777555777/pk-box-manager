@@ -3,13 +3,13 @@ import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
-	type BoxOrder,
 	type DexStorage,
 	type PokemonData,
 	type PokemonState
 } from './storage-handler.ts'
+import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 
-export async function fetchBoxOrder(dexName: string): Promise<BoxOrder[]> {
+export async function fetchBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
 	console.log('Fetching Box order from the server', dexName)
 	const response = await fetch(`/pkorder?dexname=${encodeURIComponent(dexName)}`)
 	if (!response.ok) {
@@ -19,11 +19,11 @@ export async function fetchBoxOrder(dexName: string): Promise<BoxOrder[]> {
 }
 
 export class PkState {
-	private boxOrderCache: Record<string, BoxOrder[]> = $state({})
+	private boxOrderCache: Record<string, ServerBoxOrder[]> = $state({})
 	private pokedexState: DexStorage = $state(pokedexNullState)
 	private selectedPokemon: PokemonState = $state(pokemonNullState)
 
-	async loadBoxOrder(dexName: string): Promise<BoxOrder[]> {
+	async loadBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
 		// Check if the BoxOrder is cached
 		if (this.boxOrderCache[dexName]) {
 			return this.boxOrderCache[dexName]
@@ -40,7 +40,7 @@ export class PkState {
 		}
 	}
 
-	initBoxOrderState(boxOrder: BoxOrder[], dexName: string): void {
+	initBoxOrderState(boxOrder: ServerBoxOrder[], dexName: string): void {
 		// Read Pokedex data from localStorage
 		let stateData = storageHandler.loadPokedex(dexName)
 
@@ -57,11 +57,11 @@ export class PkState {
 		this.selectedPokemon = pokemonNullState
 	}
 
-	addToBoxOrderCache(dexName: string, boxOrder: BoxOrder[]) {
+	addToBoxOrderCache(dexName: string, boxOrder: ServerBoxOrder[]) {
 		this.boxOrderCache[dexName] = boxOrder
 	}
 
-	getCachedOrder(dexName: string): BoxOrder[] {
+	getCachedOrder(dexName: string): ServerBoxOrder[] {
 		return this.boxOrderCache[dexName]
 	}
 
@@ -122,10 +122,7 @@ export class PkState {
 	// ================
 
 	getPokemon(identifier: string): PokemonState {
-		if (this.pokedexState.pokemon[identifier]) {
-			return this.pokedexState.pokemon[identifier]
-		}
-		return pokemonNullState
+		return this.pokedexState.pokemon[identifier] || pokemonNullState
 	}
 
 	updatePokemon(identifier: string, updatedState: Partial<PokemonData>): void {

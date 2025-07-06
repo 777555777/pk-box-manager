@@ -1,3 +1,4 @@
+import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 
 export interface BoxOrder {
@@ -31,7 +32,16 @@ export interface DexStorage {
 	name: string
 	displayName: string
 	pokemon: Record<string, PokemonState>
-	boxSettings: Record<string, { wallpaper: string }>
+	boxes: BoxData[]
+}
+
+export interface BoxData {
+	id: string
+	title: string
+	settings: {
+		wallpaper: string
+	}
+	pokemon: string[]
 }
 
 class StorageHandler {
@@ -47,7 +57,7 @@ class StorageHandler {
 	 * @param selectedDex The name of the Pokedex.
 	 * @param pokedexOrder The box order of the Pokedex.
 	 */
-	public initPokedex(pokedexOrder: BoxOrder[], selectedDex: string): void {
+	public initPokedex(pokedexOrder: ServerBoxOrder[], selectedDex: string): void {
 		const initialDex = initPokedex(pokedexOrder, selectedDex)
 		this.savePokedex(selectedDex, initialDex)
 	}

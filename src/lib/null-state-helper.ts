@@ -20,9 +20,14 @@ export const pokedexNullState = {
 	name: 'null',
 	displayName: 'Null Dex',
 	pokemon: { '0000-null': pokemonNullState },
-	boxSettings: {
-		title_1: {
-			wallpaper: defaultWallpaper
+	boxes: [
+		{
+			id: 'box-000',
+			title: 'Null Box',
+			settings: {
+				wallpaper: defaultWallpaper
+			},
+			pokemon: ['0000-null']
 		}
-	}
+	]
 }

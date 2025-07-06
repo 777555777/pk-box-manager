@@ -2,6 +2,7 @@ import { storageHandler } from '../lib/state/storage-handler.ts'
 import { browser } from '$app/environment'
 import { pkState } from '../lib/state/pk-state.svelte.ts'
 import type { PageLoad } from './$types'
+import type { ServerBoxOrder } from './pkorder/+server.ts'
 
 export const prerender = false
 export const ssr = false
@@ -10,7 +11,7 @@ export const load: PageLoad = async ({ fetch }) => {
 	if (browser) {
 		const selectedDexName = storageHandler.loadSelectedPokedexName()
 		const response = await fetch(`/pkorder?dexname=${encodeURIComponent(selectedDexName)}`)
-		const boxOrder = await response.json()
+		const boxOrder: ServerBoxOrder[] = await response.json()
 
 		pkState.addToBoxOrderCache(selectedDexName, boxOrder)
 		pkState.initBoxOrderState(boxOrder, selectedDexName)

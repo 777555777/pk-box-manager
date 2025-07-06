@@ -5,10 +5,9 @@ import orderTestSmall1 from './order/order-test-small-1.json' with { type: 'json
 import orderTestSmall2 from './order/order-test-small-2.json' with { type: 'json' }
 import BoxOrderBackgroundTest from './order/order-background-test.json' with { type: 'json' }
 
-export interface BoxOrder {
+export interface ServerBoxOrder {
 	title: string
 	pokemon: PokemonEntry[]
-	wallpaper?: string // all exsisting files need to be updated to include background
 }
 
 export interface PokemonEntry {
@@ -17,7 +16,7 @@ export interface PokemonEntry {
 	id_national: number
 }
 
-const dexNames: Record<string, BoxOrder[]> = {
+const dexNames: Record<string, ServerBoxOrder[]> = {
 	'order-background-test.json': BoxOrderBackgroundTest,
 	'order-national.json': boxOrderNational,
 	'order-national-forms.json': boxOrderNationalForms,
@@ -44,7 +43,7 @@ export function GET(request: Request) {
 		return new Response(JSON.stringify({ error: 'Missing file parameter' }), { status: 400 })
 	}
 
-	const selectedDex: BoxOrder[] = dexNames[dexName as keyof typeof dexNames]
+	const selectedDex: ServerBoxOrder[] = dexNames[dexName as keyof typeof dexNames]
 
 	if (!selectedDex) {
 		return new Response(JSON.stringify({ error: 'File not found' }), { status: 404 })
