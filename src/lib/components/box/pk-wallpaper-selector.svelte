@@ -62,11 +62,12 @@
 		}
 	})
 
+	// Sprite sheet data
 	const titleRows = 6
 	const titleColumns = 4
 	const titleSpriteWidth = 812
 	const titleSpriteHeight = 161
-	const titleSpriteData = Titles[`${wallpaper}-title` as TitlesType].pos
+	const titleSpriteData = $derived(Titles[`${wallpaper}-title` as TitlesType].pos)
 </script>
 
 <header

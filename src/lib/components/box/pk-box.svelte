@@ -5,12 +5,13 @@
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
 	import { Titles, type TitlesType } from '$lib/models/titles-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
+	import { pkState } from '$lib/state/pk-state.svelte'
 
 	let { box }: { box: BoxData } = $props()
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
-		console.log('updated wallpaper', newWallpaper)
-		// todo proper implementation
+		console.log('Updating wallpaper to:', newWallpaper)
+		pkState.updateBoxWallpaper(box.id, newWallpaper)
 	}
 
 	// Sprite sheet data
@@ -18,14 +19,7 @@
 	const boxColumns = 4
 	const boxSpriteWidth = 1134
 	const boxSpriteHeight = 854
-	const boxSpriteData = Wallpapers[box.settings.wallpaper as WallpapersType].pos
-
-	// Sprite sheet data
-	const titleRows = 6
-	const titleColumns = 4
-	const titleSpriteWidth = 812
-	const titleSpriteHeight = 161
-	const titleSpriteData = Titles[`${box.settings.wallpaper}-title` as TitlesType].pos
+	const boxSpriteData = $derived(Wallpapers[box.settings.wallpaper as WallpapersType].pos)
 </script>
 
 <article class="pk-box">

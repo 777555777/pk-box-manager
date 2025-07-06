@@ -5,7 +5,8 @@ import {
 	storageHandler,
 	type DexStorage,
 	type PokemonData,
-	type PokemonState
+	type PokemonState,
+	type BoxData
 } from './storage-handler.ts'
 import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 
@@ -119,6 +120,44 @@ export class PkState {
 
 	getCurrentPokedexState(): DexStorage {
 		return this.pokedexState || pokedexNullState
+	}
+
+	// ================
+	// Box Settings
+	// ================
+
+	/**
+	 * Get box data by box ID
+	 */
+	getBox(boxId: string): BoxData | undefined {
+		return this.pokedexState.boxes.find((box) => box.id === boxId)
+	}
+
+	/**
+	 * Update box settings (e.g., wallpaper)
+	 */
+	updateBoxSettings(boxId: string, settings: Partial<BoxData['settings']>): void {
+		const boxIndex = this.pokedexState.boxes.findIndex((box) => box.id === boxId)
+
+		if (boxIndex === -1) {
+			throw new Error(`Cannot update box settings. Box with ID "${boxId}" does not exist.`)
+		}
+
+		// Update the box settings
+		this.pokedexState.boxes[boxIndex].settings = {
+			...this.pokedexState.boxes[boxIndex].settings,
+			...settings
+		}
+
+		// Persist changes to localStorage
+		storageHandler.updateBoxSettings(boxId, this.pokedexState.boxes[boxIndex].settings)
+	}
+
+	/**
+	 * Update box wallpaper specifically
+	 */
+	updateBoxWallpaper(boxId: string, wallpaper: string): void {
+		this.updateBoxSettings(boxId, { wallpaper })
 	}
 
 	// ================

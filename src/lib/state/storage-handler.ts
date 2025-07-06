@@ -217,6 +217,35 @@ class StorageHandler {
 		}
 		return JSON.parse(appDefaults)
 	}
+
+	// ================
+	// Box Settings
+	// ================
+
+	/**
+	 * Updates the settings of a specific box while preserving existing settings.
+	 * @param boxId The unique identifier of the box to update.
+	 * @param newSettings The new settings to apply to the box.
+	 */
+	public updateBoxSettings(boxId: string, newSettings: BoxData['settings']): void {
+		const selectedDexName = this.loadSelectedPokedexName()
+		const parsedDex = this.loadPokedex(selectedDexName)
+
+		if (!parsedDex || !parsedDex.boxes) {
+			throw new Error('Could not find Pokedex data to update box settings.')
+		}
+
+		const boxIndex = parsedDex.boxes.findIndex((box) => box.id === boxId)
+		if (boxIndex === -1) {
+			throw new Error(`Box with ID "${boxId}" not found.`)
+		}
+
+		// Update the box settings
+		parsedDex.boxes[boxIndex].settings = { ...parsedDex.boxes[boxIndex].settings, ...newSettings }
+
+		// Persist the updated Pokedex to localStorage
+		this.savePokedex(selectedDexName, parsedDex)
+	}
 }
 
 // Export StorageHandler as Singleton
