@@ -167,6 +167,118 @@ export const Titles = {
       x: -2436,
       y: -805
     }
+  },
+  "25-space-title": {
+    sheet: "st1",
+    pos: {
+      x: 0,
+      y: -966
+    }
+  },
+  "26-backyard-title": {
+    sheet: "st1",
+    pos: {
+      x: -812,
+      y: -966
+    }
+  },
+  "27-nostalgic-d-p-title": {
+    sheet: "st1",
+    pos: {
+      x: -1624,
+      y: -966
+    }
+  },
+  "28-torchic-title": {
+    sheet: "st1",
+    pos: {
+      x: -2436,
+      y: -966
+    }
+  },
+  "29-trio-d-p-title": {
+    sheet: "st1",
+    pos: {
+      x: 0,
+      y: -1127
+    }
+  },
+  "30-pikapika-d-p-title": {
+    sheet: "st1",
+    pos: {
+      x: -812,
+      y: -1127
+    }
+  },
+  "31-legend-d-p-title": {
+    sheet: "st1",
+    pos: {
+      x: -1624,
+      y: -1127
+    }
+  },
+  "32-team-galactic-d-p-title": {
+    sheet: "st1",
+    pos: {
+      x: -2436,
+      y: -1127
+    }
+  },
+  "33-distortion-title": {
+    sheet: "st1",
+    pos: {
+      x: 0,
+      y: -1288
+    }
+  },
+  "34-contest-title": {
+    sheet: "st1",
+    pos: {
+      x: -812,
+      y: -1288
+    }
+  },
+  "35-nostalgic-pl-title": {
+    sheet: "st1",
+    pos: {
+      x: -1624,
+      y: -1288
+    }
+  },
+  "36-croagunk-title": {
+    sheet: "st1",
+    pos: {
+      x: -2436,
+      y: -1288
+    }
+  },
+  "37-trio-pl-title": {
+    sheet: "st1",
+    pos: {
+      x: 0,
+      y: -1449
+    }
+  },
+  "38-pikapika-pl-title": {
+    sheet: "st1",
+    pos: {
+      x: -812,
+      y: -1449
+    }
+  },
+  "39-legend-pl-title": {
+    sheet: "st1",
+    pos: {
+      x: -1624,
+      y: -1449
+    }
+  },
+  "40-team-galactic-pl-title": {
+    sheet: "st1",
+    pos: {
+      x: -2436,
+      y: -1449
+    }
   }
 } as const;
 

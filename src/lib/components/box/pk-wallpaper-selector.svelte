@@ -77,8 +77,8 @@
 	})
 
 	// Sprite sheet data
-	const titleRows = 6
-	const titleColumns = 4
+	const titleRows = 10 // 40 titles with 4 columns = 10 rows
+	const titleColumns = 4 // column-amount from package.json
 	const titleSpriteWidth = 812
 	const titleSpriteHeight = 161
 	const titleSpriteData = $derived(getTitleSpriteData(wallpaper))
