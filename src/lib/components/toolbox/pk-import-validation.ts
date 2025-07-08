@@ -119,6 +119,56 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 		}
 	}
 
-	// 5. If all validations pass, return the verified file
+	// 5. Validate the existence and structure of the boxes array
+	if (!Array.isArray(dexData.boxes)) {
+		throw new Error('Missing or invalid "boxes" array in the import file.')
+	}
+
+	// 6. Validate each individual box entry
+	for (let i = 0; i < dexData.boxes.length; i++) {
+		const box = dexData.boxes[i]
+		const boxIndex = `box[${i}]`
+
+		// Check required fields for each box
+		if (!box.id || typeof box.id !== 'string') {
+			throw new Error(`Missing or invalid "id" field for ${boxIndex}`)
+		}
+
+		if (!box.title || typeof box.title !== 'string') {
+			throw new Error(`Missing or invalid "title" field for ${boxIndex}`)
+		}
+
+		// Validate settings object
+		if (!box.settings || typeof box.settings !== 'object' || box.settings === null) {
+			throw new Error(`Missing or invalid "settings" object for ${boxIndex}`)
+		}
+
+		// Validate wallpaper in settings
+		if (!box.settings.wallpaper || typeof box.settings.wallpaper !== 'string') {
+			throw new Error(`Missing or invalid "wallpaper" in settings for ${boxIndex}`)
+		}
+
+		// Validate pokemon array
+		if (!Array.isArray(box.pokemon)) {
+			throw new Error(`Missing or invalid "pokemon" array for ${boxIndex}`)
+		}
+
+		// Validate that each pokemon reference exists in the pokemon object
+		for (const pokemonKey of box.pokemon) {
+			if (typeof pokemonKey !== 'string') {
+				throw new Error(
+					`Invalid pokemon reference in ${boxIndex}: expected string, got ${typeof pokemonKey}`
+				)
+			}
+
+			if (!dexData.pokemon[pokemonKey]) {
+				throw new Error(
+					`Pokemon reference "${pokemonKey}" in ${boxIndex} does not exist in the pokemon object`
+				)
+			}
+		}
+	}
+
+	// 7. If all validations pass, return the verified file
 	return dexData
 }
