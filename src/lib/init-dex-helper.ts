@@ -14,19 +14,7 @@ export const supportedPokedexList = {
 		displayName: 'National Dex'
 	},
 	'order-national-forms.json': {
-		displayName: 'National Dex mit Formen'
-	},
-	'order-national-test.json': {
-		displayName: 'National Dex Test'
-	},
-	'order-test-small-1.json': {
-		displayName: 'Kleiner Test Dex 1'
-	},
-	'order-test-small-2.json': {
-		displayName: 'Kleiner Test Dex 2'
-	},
-	'order-background-test.json': {
-		displayName: 'Hintergrund Test Dex'
+		displayName: 'National Dex with forms'
 	}
 } as const
 

@@ -1,9 +1,5 @@
 import boxOrderNational from './order/order-national.json' with { type: 'json' }
 import boxOrderNationalForms from './order/order-national-forms.json' with { type: 'json' }
-import boxOrderNationalTest from './order/order-national-test.json' with { type: 'json' }
-import orderTestSmall1 from './order/order-test-small-1.json' with { type: 'json' }
-import orderTestSmall2 from './order/order-test-small-2.json' with { type: 'json' }
-import BoxOrderBackgroundTest from './order/order-background-test.json' with { type: 'json' }
 
 export interface ServerBoxOrder {
 	title: string
@@ -17,12 +13,8 @@ export interface PokemonEntry {
 }
 
 const dexNames: Record<string, ServerBoxOrder[]> = {
-	'order-background-test.json': BoxOrderBackgroundTest,
 	'order-national.json': boxOrderNational,
-	'order-national-forms.json': boxOrderNationalForms,
-	'order-national-test.json': boxOrderNationalTest,
-	'order-test-small-1.json': orderTestSmall1,
-	'order-test-small-2.json': orderTestSmall2
+	'order-national-forms.json': boxOrderNationalForms
 }
 
 export function GET(request: Request) {
