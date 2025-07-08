@@ -150,7 +150,7 @@
 				disabled={currentPage === 0}
 				aria-label="Previous page"
 			>
-				<img src="/ui/pagination-arrow.png" alt="Previous" loading="lazy" />
+				<img src="/ui/pagination-arrow.webp" alt="Previous" loading="lazy" />
 			</button>
 			<span class="page-indicator">
 				{currentPage + 1} / {totalPages}
@@ -161,7 +161,7 @@
 				disabled={currentPage === totalPages - 1}
 				aria-label="Next page"
 			>
-				<img src="/ui/pagination-arrow.png" alt="Next" loading="lazy" />
+				<img src="/ui/pagination-arrow.webp" alt="Next" loading="lazy" />
 			</button>
 		</div>
 	</section>
