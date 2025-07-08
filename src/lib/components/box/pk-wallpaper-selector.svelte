@@ -17,9 +17,19 @@
 	} = $props()
 
 	let trayRef = $state<HTMLElement | null>(null)
+	let currentPage = $state(0)
+	const itemsPerPage = 4
 
 	// Computed property für showTray basierend auf AppState
 	let showTray = $derived(appState.isDropdownOpen(id))
+
+	// Pagination logic
+	const allTitles = $derived(Object.entries(Titles))
+	const totalPages = $derived(Math.ceil(allTitles.length / itemsPerPage))
+	const paginatedTitles = $derived(() => {
+		const startIndex = currentPage * itemsPerPage
+		return allTitles.slice(startIndex, startIndex + itemsPerPage)
+	})
 
 	function selectWallpaper(wallpaper: WallpapersType) {
 		console.log(wallpaper)
@@ -61,6 +71,20 @@
 		} else {
 			// Öffne dieses Dropdown (schließt automatisch andere)
 			appState.openDropdown(id)
+			// Reset to first page when opening
+			// currentPage = 0
+		}
+	}
+
+	function nextPage() {
+		if (currentPage < totalPages - 1) {
+			currentPage++
+		}
+	}
+
+	function prevPage() {
+		if (currentPage > 0) {
+			currentPage--
 		}
 	}
 
@@ -104,16 +128,42 @@
 
 {#snippet selectorTray()}
 	<section class="pk-selector-tray" bind:this={trayRef}>
-		{#each Object.entries(Titles) as [name, data]}
+		<!-- Wallpaper Options -->
+		<div class="wallpaper-grid">
+			{#each paginatedTitles() as [name, data]}
+				<button
+					class="wallpaper-option"
+					onclick={() => {
+						selectWallpaper(name.replace('-title', '') as WallpapersType)
+					}}
+				>
+					<img src="/spritesheets/util/st1.webp" style={setCssPosition(data.pos)} alt={name} />
+				</button>
+			{/each}
+		</div>
+
+		<!-- Pagination Controls -->
+		<div class="pagination-controls">
 			<button
-				onclick={() => {
-					selectWallpaper(name.replace('-title', '') as WallpapersType)
-				}}
+				class="pagination-btn"
+				onclick={prevPage}
+				disabled={currentPage === 0}
+				aria-label="Previous page"
 			>
-				<!-- <p>{name}</p> -->
-				<img src="/spritesheets/util/st1.webp" style={setCssPosition(data.pos)} alt={name} />
+				<img src="/ui/pagination-arrow.png" alt="Previous" loading="lazy" />
 			</button>
-		{/each}
+			<span class="page-indicator">
+				{currentPage + 1} / {totalPages}
+			</span>
+			<button
+				class="pagination-btn"
+				onclick={nextPage}
+				disabled={currentPage === totalPages - 1}
+				aria-label="Next page"
+			>
+				<img src="/ui/pagination-arrow.png" alt="Next" loading="lazy" />
+			</button>
+		</div>
 	</section>
 {/snippet}
 
@@ -138,9 +188,6 @@
 			cursor: pointer;
 			width: 100%;
 			height: 100%;
-			/* display: flex; */
-			/* align-items: center; */
-			/* justify-content: center; */
 
 			&:hover {
 				background-color: rgba(255, 255, 255, 0.15);
@@ -162,63 +209,106 @@
 		--scale-factor-x: calc(var(--target-width) / var(--original-width));
 		--scale-factor-y: calc(var(--target-height) / var(--original-height));
 
-		--ball-amount: 2;
-		--ball-size: 203px;
+		--column-amount: 1;
+		--button-size: 203px;
 
-		background-color: #717186;
 		width: fit-content;
-		padding: 8px;
-
-		/* Positioning */
-		display: grid;
-		grid-template-columns: repeat(var(--ball-amount), var(--ball-size));
-		place-items: center;
+		padding: 12px;
 
 		/* Position below trigger Button */
 		position: absolute;
 		top: 100%;
 		z-index: 2;
 
-		overflow: hidden;
-
-		/* ======================== */
-		background-color: transparent;
+		/* Styling */
 		image-rendering: pixelated;
-		cursor: text;
-
 		border-width: 9px solid;
 		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
 		border-image-outset: 0;
 		border-image-width: 9px;
 
+		/* Layout */
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.pagination-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
+
 		button {
-			background-color: transparent;
-			cursor: pointer;
+			max-width: 3rem;
+			border-radius: 5px;
+			display: grid;
+			place-items: center;
+		}
+		button:last-child {
+			transform: scaleX(-1);
+		}
+	}
 
-			max-width: calc(var(--target-width) * 1px);
-			max-height: calc(var(--target-height) * 1px);
+	.pagination-btn {
+		color: white;
+		padding: 4px 8px;
+		cursor: pointer;
 
-			&:hover {
-				filter: brightness(1.15);
-				background-color: hsla(0, 0%, 100%, 0.175);
+		&:hover:not(:disabled) {
+			img {
+				filter: brightness(1.5);
 			}
+		}
 
-			&:active {
-				filter: brightness(0.9);
-				background-color: hsla(0, 0%, 100%, 0.1);
-			}
+		&:focus-visible {
+			outline: 3px solid hsl(220, 100%, 65%);
+		}
 
-			&:focus-visible {
-				outline: 3px solid hsl(220, 100%, 65%);
+		&:disabled {
+			img {
+				filter: grayscale(1);
 			}
+			cursor: not-allowed;
+		}
+	}
+
+	.page-indicator {
+		color: white;
+		min-width: 4rem;
+		text-align: center;
+	}
+
+	.wallpaper-grid {
+		display: grid;
+		grid-template-columns: repeat(var(--column-amount), var(--button-size));
+		gap: 4px;
+		place-items: center;
+	}
+
+	.wallpaper-option {
+		cursor: pointer;
+		max-width: calc(var(--target-width) * 1px);
+		max-height: calc(var(--target-height) * 1px);
+		overflow: hidden;
+		background-color: transparent !important; /* Override .box-header button hover */
+
+		&:hover {
+			filter: brightness(1.15);
+		}
+
+		&:active {
+			filter: brightness(0.85);
+		}
+
+		&:focus-visible {
+			outline: 3px solid hsl(220, 100%, 65%);
 		}
 
 		img {
 			width: calc(var(--original-width) * 1px);
 			height: calc(var(--original-height) * 1px);
-
 			object-fit: none;
-
 			transform: scaleX(var(--scale-factor-x)) scaleY(var(--scale-factor-y));
 			transform-origin: top left;
 		}
