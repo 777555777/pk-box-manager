@@ -1,8 +1,7 @@
-import { getIdentifier } from '../../spriteheet-helper.ts'
-import { pkState } from '../../state/pk-state.svelte.ts'
 import { type DexStorage } from '../../state/storage-handler.ts'
+import { supportedPokedexList } from '../../init-dex-helper.ts'
 
-export async function validateImportedDexState(importedFile: unknown): Promise<DexStorage> {
+export function validateImportedDexState(importedFile: unknown): DexStorage {
 	let dexData: DexStorage
 
 	// 1. Check if the input is a valid JSON object
@@ -33,9 +32,20 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 	}
 
 	// 2.5 Check whether the data refers to a supported Dex
-	const targetDex = await pkState.loadBoxOrder(dexData.name)
-	if (!targetDex) {
-		throw new Error('Invalid value in the "name" property – no matching Dex found.')
+	if (!(dexData.name in supportedPokedexList)) {
+		throw new Error(
+			`Unsupported Pokedex: ${dexData.name}. Supported Pokedex types: ${Object.keys(supportedPokedexList).join(', ')}`
+		)
+	}
+
+	// 2.6 Validate that we have a complete box structure in the import data
+	// Since the import contains the full structure, we don't need to fetch from server
+	if (!Array.isArray(dexData.boxes)) {
+		throw new Error('Missing or invalid "boxes" array in the import file.')
+	}
+
+	if (dexData.boxes.length === 0) {
+		throw new Error('Import file contains no boxes.')
 	}
 
 	// 3. Validate the existence and structure of the Pokémon object
@@ -45,23 +55,30 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 
 	// 4. Validate each individual Pokémon entry
 
-	// Create a list of all valid Pokémon identifiers for this Dex
-	const dexPokemon = []
-	for (const box of targetDex) {
-		for (const pokemon of box.pokemon) {
-			dexPokemon.push(getIdentifier(pokemon))
+	// Since we're validating a complete import, we validate the Pokemon structure
+	// against the boxes that are also being imported
+	const importedPokemonKeys = new Set(Object.keys(dexData.pokemon))
+	const referencedPokemonKeys = new Set<string>()
+
+	// Collect all pokemon references from boxes
+	for (const box of dexData.boxes) {
+		for (const pokemonKey of box.pokemon) {
+			referencedPokemonKeys.add(pokemonKey)
 		}
 	}
 
-	for (const pokemonKey in dexData.pokemon) {
-		const pokemon = dexData.pokemon[pokemonKey]
-
-		if (!dexPokemon.includes(getIdentifier(pokemon.idEntry))) {
-			console.log('pokemon', pokemon)
+	// Check if all referenced pokemon exist in the pokemon object
+	for (const pokemonKey of referencedPokemonKeys) {
+		if (!importedPokemonKeys.has(pokemonKey)) {
 			throw new Error(
-				`The Pokémon ${pokemonKey} is not part of the Pokédex: ${dexData.name} : ${pokemonKey}`
+				`Pokemon "${pokemonKey}" is referenced in boxes but missing from pokemon object`
 			)
 		}
+	}
+
+	// Validate the structure of each Pokemon entry
+	for (const pokemonKey in dexData.pokemon) {
+		const pokemon = dexData.pokemon[pokemonKey]
 
 		// Check the structure of each Pokémon entry
 		if (!pokemon.idEntry || typeof pokemon.idEntry !== 'object') {
@@ -119,12 +136,7 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 		}
 	}
 
-	// 5. Validate the existence and structure of the boxes array
-	if (!Array.isArray(dexData.boxes)) {
-		throw new Error('Missing or invalid "boxes" array in the import file.')
-	}
-
-	// 6. Validate each individual box entry
+	// 5. Validate each individual box entry (structure validation)
 	for (let i = 0; i < dexData.boxes.length; i++) {
 		const box = dexData.boxes[i]
 		const boxIndex = `box[${i}]`
@@ -169,6 +181,6 @@ export async function validateImportedDexState(importedFile: unknown): Promise<D
 		}
 	}
 
-	// 7. If all validations pass, return the verified file
+	// 6. If all validations pass, return the verified file
 	return dexData
 }

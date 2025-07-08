@@ -10,10 +10,10 @@ export const initialAppDefaults = {
 }
 
 export const supportedPokedexList = {
-	'order-national.json': {
+	'national-dex.json': {
 		displayName: 'National Dex'
 	},
-	'order-national-forms.json': {
+	'national-dex-forms.json': {
 		displayName: 'National Dex with forms'
 	}
 } as const

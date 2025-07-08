@@ -28,7 +28,7 @@
 			// Erstelle ein temporäres a-Element zum Herunterladen
 			const a = document.createElement('a')
 			a.href = url
-			a.download = selectedDexName
+			a.download = `export-${new Date().toISOString().slice(0, 10)}-${selectedDexName}` // Dateiname für den Download
 
 			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
 			document.body.appendChild(a)

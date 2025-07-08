@@ -70,13 +70,30 @@ export class PkState {
 	// Pokedex
 	// ================
 
-	async switchPokedex(dexName: string): Promise<void> {
+	async switchPokedex(dexName: string, forceServerFetch = false): Promise<void> {
 		try {
 			// Save selected Pokedex name
 			storageHandler.saveSelectedPokedexName(dexName)
-			const boxOrder = await this.loadBoxOrder(dexName)
-			// Init the edit state for the target boxOrder
-			this.initBoxOrderState(boxOrder, dexName)
+
+			// Check if we already have complete data in localStorage (e.g., from import)
+			const existingData = storageHandler.loadPokedex(dexName)
+
+			if (existingData && !forceServerFetch) {
+				// We have complete data, just load it directly
+				this.pokedexState = existingData
+				this.selectedPokemon = pokemonNullState
+
+				// Still cache the box order for potential future use
+				if (!this.boxOrderCache[dexName]) {
+					// Extract box order from existing data for cache
+					const boxOrder = this.extractBoxOrderFromDexData(existingData)
+					this.boxOrderCache[dexName] = boxOrder
+				}
+			} else {
+				// No complete data or forced refresh - fetch from server
+				const boxOrder = await this.loadBoxOrder(dexName)
+				this.initBoxOrderState(boxOrder, dexName)
+			}
 		} catch (error) {
 			console.error('Error switching Pokedex:', error)
 			throw error
@@ -237,6 +254,41 @@ export class PkState {
 
 	deselectPokemon(): void {
 		this.selectedPokemon = pokemonNullState
+	}
+
+	// ================
+	// Helper Methods
+	// ================
+
+	/**
+	 * Extract box order structure from existing DexStorage data
+	 * This is useful when we have complete data (e.g., from import) but need the box order format
+	 */
+	private extractBoxOrderFromDexData(dexData: DexStorage): ServerBoxOrder[] {
+		return dexData.boxes.map((box) => ({
+			title: box.title,
+			pokemon: box.pokemon.map((pokemonKey) => {
+				const pokemon = dexData.pokemon[pokemonKey]
+				return pokemon.idEntry
+			}),
+			wallpaper: box.settings.wallpaper
+		}))
+	}
+
+	/**
+	 * Force refresh from server - useful for future server-side updates
+	 * This method can be called when you want to ensure the latest server data is used
+	 */
+	async refreshFromServer(dexName?: string): Promise<void> {
+		const targetDex = dexName || storageHandler.loadSelectedPokedexName()
+
+		// Clear cache to force server fetch
+		if (this.boxOrderCache[targetDex]) {
+			delete this.boxOrderCache[targetDex]
+		}
+
+		// Force server fetch
+		await this.switchPokedex(targetDex, true)
 	}
 }
 

@@ -18,9 +18,9 @@
 		if (!input.files || input.files.length === 0) return
 		const file = input.files[0]
 		const reader = new FileReader()
-		reader.onload = async () => {
+		reader.onload = () => {
 			try {
-				const validDex = await validateImportedDexState(reader.result)
+				const validDex = validateImportedDexState(reader.result)
 
 				if (
 					storageHandler.loadPokedex(validDex.name) &&
