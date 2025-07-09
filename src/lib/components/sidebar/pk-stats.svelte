@@ -66,7 +66,16 @@
 			{#if !pokemon.genderRatio.male && !pokemon.genderRatio.female}
 				<span>Unknown</span>
 			{:else}
-				<span>♂️{pokemon.genderRatio.male}% / ♀️{pokemon.genderRatio.female}%</span>
+				<div class="gender-ratio">
+					<div class="gender-item">
+						<img width="16px" src="ui/male.png" alt="♂️" />
+						<span>{pokemon.genderRatio.male}%</span>
+					</div>
+					<div class="gender-item">
+						<img width="16px" src="ui/female.png" alt="♀️" />
+						<span>{pokemon.genderRatio.female}%</span>
+					</div>
+				</div>
 			{/if}
 		</div>
 	{:catch error}
@@ -137,6 +146,20 @@
 
 	.pk-gender {
 		text-align: center;
+		vertical-align: middle;
+
+		.gender-ratio {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 2rem;
+
+			.gender-item {
+				display: flex;
+				align-items: center;
+				gap: 0.375rem;
+			}
+		}
 	}
 
 	@media (max-height: 1200px) {
