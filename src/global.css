@@ -166,7 +166,7 @@ body {
 	border-style: solid;
 	border-color: transparent;
 	border-width: 15px 15px 20px 15px;
-	border-image-source: url('/ui/ui-section-filled.png');
+	border-image-source: url('/ui/ui-section-filled.webp');
 	border-image-slice: 15 15 20 15 fill;
 	border-image-repeat: round;
 	border-image-outset: 0;
