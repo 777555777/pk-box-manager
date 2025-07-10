@@ -14,6 +14,18 @@
 		// TODO: find a better place to load the app defaults
 		appState.loadAppDefaults()
 
+		// Service Worker registrieren für Asset Caching
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker
+				.register('/service-worker.js')
+				.then((registration) => {
+					console.log('Service Worker registriert:', registration.scope)
+				})
+				.catch((error) => {
+					console.log('Service Worker Registrierung fehlgeschlagen:', error)
+				})
+		}
+
 		function handleClickOutside(event: MouseEvent) {
 			const target = event.target as HTMLElement
 

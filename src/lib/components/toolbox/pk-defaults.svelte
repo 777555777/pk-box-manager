@@ -109,7 +109,7 @@
 
 			p {
 				line-height: 1.6;
-				max-width: 55ch;
+				max-width: 60ch;
 				letter-spacing: 0.02em;
 			}
 		}
