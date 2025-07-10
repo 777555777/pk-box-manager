@@ -119,7 +119,7 @@
 	)}
 >
 	<button onclick={toggleSelectorTray}>
-		<h2>{formatBoxTitle(title)}</h2>
+		<h2 class="text-huge">{formatBoxTitle(title)}</h2>
 	</button>
 	{#if appState.isDropdownOpen(id)}
 		{@render selectorTray()}
@@ -195,9 +195,13 @@
 		}
 
 		h2 {
-			font-size: 1.4rem;
+			--header-text-shadow-color: #616161;
 			color: #fff;
-			text-shadow: 0 0 5px #000;
+			text-shadow:
+				0px 2px var(--header-text-shadow-color),
+				2px 0 var(--header-text-shadow-color),
+				2px 2px var(--header-text-shadow-color);
+			font-weight: 300;
 		}
 	}
 

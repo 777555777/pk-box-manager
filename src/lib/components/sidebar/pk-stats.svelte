@@ -140,13 +140,14 @@
 		}
 
 		.hidden-ability {
-			font-weight: bold;
+			color: #ffb366;
 		}
 	}
 
 	.pk-gender {
 		text-align: center;
 		vertical-align: middle;
+		min-height: 1.5rem;
 
 		.gender-ratio {
 			display: flex;

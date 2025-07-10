@@ -9,17 +9,37 @@
 	}
 
 	function capitalizeFirstLetter(val: string) {
-		return String(val).charAt(0).toUpperCase() + String(val).slice(1)
+		return (String(val).charAt(0).toUpperCase() + String(val).slice(1)).trim()
 	}
+
+	// Bestimme die optimale Schriftgröße basierend auf der Textlänge
+	function getTextSizeClass(text: string) {
+		const length = text.length
+		if (length <= 36) return 'text-large'
+		if (length <= 52) return 'text-base'
+		return 'text-small'
+	}
+
+	let displayName = $derived(capitalizeFirstLetter(formatPokemonDisplayName(idEntry)))
+	$inspect('Display Name:', displayName)
+	let sizeClass = $derived(getTextSizeClass(displayName))
 </script>
 
 {#if !isSelectionValid}
-	<h3>{capitalizeFirstLetter(formatPokemonDisplayName(idEntry))}</h3>
-	<h3>{idEntry.id_national}</h3>
+	<h3 class="pk-name {sizeClass}">{displayName}</h3>
+	<h3 class="pk-number {sizeClass}">{idEntry.id_national}</h3>
 {/if}
 
 <style>
-	h3:last-child {
+	.pk-name {
+		text-align: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-inline: 1.25rem;
+		width: 100%;
+	}
+
+	.pk-number {
 		width: 48px; /* Same as Ballselector */
 	}
 </style>

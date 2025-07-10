@@ -1,14 +1,29 @@
 <script lang="ts">
 	let { type } = $props()
+
+	// Function to shorten type names for display like in the original Pokémon games
+	function shortenTypeName(type: string): string {
+		switch (type.toLowerCase()) {
+			case 'electric':
+				return 'Electr'
+			case 'fighting':
+				return 'Fight'
+			case 'psychic':
+				return 'Psychc'
+			default:
+				return type
+		}
+	}
 </script>
 
-<div class="badge {type.toLowerCase()}"><span>{type}</span></div>
+<div class="badge text-large {type.toLowerCase()}"><span>{shortenTypeName(type)}</span></div>
 
 <style>
 	.badge {
 		/* Derive highlight and shadow color from base */
 		--badge-color-shadow: hsl(from var(--badge-color) h s 30);
 		--badge-color-highlight: hsl(from var(--badge-color) h calc(s * 1.5) min(l * 1.4, 90));
+		--badge-text-shadow-color: #807870;
 
 		background-color: var(--badge-color);
 		width: fit-content;
@@ -17,7 +32,12 @@
 
 		color: #f8f8f8;
 		text-align: center;
-		text-shadow: 1px 1px 0px #807870;
+		text-transform: uppercase;
+		letter-spacing: -0.075em;
+		text-shadow:
+			0px 1px var(--badge-text-shadow-color),
+			1px 0 var(--badge-text-shadow-color),
+			1px 1px var(--badge-text-shadow-color);
 
 		margin: 4px 2px; /* Fix element sizing with box-shadow */
 		box-shadow:
@@ -31,6 +51,14 @@
 			2px -2px var(--badge-color-highlight),
 			-2px -2px var(--badge-color-highlight),
 			0px -4px var(--badge-color-highlight);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		span {
+			display: inline-block;
+			padding-bottom: 1px;
+		}
 	}
 
 	.normal {

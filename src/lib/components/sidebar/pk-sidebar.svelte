@@ -86,7 +86,7 @@
 		</section>
 		<div class="separator"></div>
 		<section class="pk-links-section">
-			<h3 class="visible-h3">Catch location</h3>
+			<h3 class="visible-h3 text-base">Catch location</h3>
 			<PkLinks idEntry={selectedPokemon.idEntry} />
 		</section>
 		<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
@@ -96,12 +96,13 @@
 <style>
 	.pk-sidebar {
 		min-width: var(--box-width);
+		max-width: 415px;
+		max-height: 80rem;
+		height: fit-content;
 		position: sticky;
 		z-index: 2;
-		color: var(--ui-text-color);
-		height: fit-content;
-		max-height: 79rem;
 		margin: auto 0;
+		color: var(--ui-text-color);
 	}
 
 	.pk-viewer-seperator {
@@ -174,10 +175,10 @@
 		justify-content: space-between;
 		align-items: center;
 		text-align: center;
+		min-height: 54px;
 	}
 
 	.visible-h3 {
-		font-size: 1rem;
 		text-align: center;
 	}
 

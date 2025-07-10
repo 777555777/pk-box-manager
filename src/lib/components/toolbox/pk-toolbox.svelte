@@ -114,7 +114,8 @@
 	}
 
 	.modified {
-		filter: sepia(100%) hue-rotate(-10deg) saturate(1000%);
+		filter: brightness(0) saturate(100%) invert(77%) sepia(49%) saturate(728%) hue-rotate(320deg)
+			brightness(105%) contrast(105%);
 	}
 
 	@media (max-width: 1350px) {
