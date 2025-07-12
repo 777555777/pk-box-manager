@@ -3,6 +3,7 @@
 	import { Titles, type TitlesType } from '$lib/models/titles-models'
 	import { getBackgroundStyle, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
+	import PkPagination from '../ui/pk-pagination.svelte'
 
 	let {
 		title,
@@ -17,22 +18,11 @@
 	} = $props()
 
 	let trayRef = $state<HTMLElement | null>(null)
-	let currentPage = $state(0)
-	const itemsPerPage = 4
 
 	// Computed property für showTray basierend auf AppState
 	let showTray = $derived(appState.isDropdownOpen(id))
 
-	// Pagination logic
-	const allTitles = $derived(Object.entries(Titles))
-	const totalPages = $derived(Math.ceil(allTitles.length / itemsPerPage))
-	const paginatedTitles = $derived(() => {
-		const startIndex = currentPage * itemsPerPage
-		return allTitles.slice(startIndex, startIndex + itemsPerPage)
-	})
-
 	function selectWallpaper(wallpaper: WallpapersType) {
-		console.log(wallpaper)
 		onUpdate(wallpaper)
 		appState.closeDropdown() // Dropdown schließen nach Auswahl
 	}
@@ -76,18 +66,6 @@
 		}
 	}
 
-	function nextPage() {
-		if (currentPage < totalPages - 1) {
-			currentPage++
-		}
-	}
-
-	function prevPage() {
-		if (currentPage > 0) {
-			currentPage--
-		}
-	}
-
 	$effect(() => {
 		if (showTray) {
 			// Fügt den Event Listener hinzu wenn das Tray sichtbar ist
@@ -106,6 +84,19 @@
 	const titleSpriteWidth = 812
 	const titleSpriteHeight = 161
 	const titleSpriteData = $derived(getTitleSpriteData(wallpaper))
+
+	// Pagination setup
+	let paginatedData = $state<[string, TitlesType][]>([])
+	let currentPage = $state(0)
+
+	function handlePageChange(data: [string, TitlesType][], page: number) {
+		paginatedData = data
+		currentPage = page
+	}
+
+	function getTitlePosition(selectedTitle: TitlesType) {
+		return Titles[selectedTitle].pos || { x: 0, y: 0 }
+	}
 </script>
 
 <header
@@ -130,40 +121,23 @@
 	<section class="pk-selector-tray" bind:this={trayRef}>
 		<!-- Wallpaper Options -->
 		<div class="wallpaper-grid">
-			{#each paginatedTitles() as [name, data]}
+			{#each paginatedData as [key, value]: [string, TitlesType]}
 				<button
 					class="wallpaper-option"
 					onclick={() => {
-						selectWallpaper(name.replace('-title', '') as WallpapersType)
+						selectWallpaper(key.replace('-title', '') as WallpapersType)
 					}}
 				>
-					<img src="/spritesheets/util/st1.webp" style={setCssPosition(data.pos)} alt={name} />
+					<img
+						src="/spritesheets/util/st1.webp"
+						style={setCssPosition(getTitlePosition(key as TitlesType))}
+						alt={key}
+					/>
 				</button>
 			{/each}
 		</div>
 
-		<!-- Pagination Controls -->
-		<div class="pagination-controls">
-			<button
-				class="pagination-btn"
-				onclick={prevPage}
-				disabled={currentPage === 0}
-				aria-label="Previous page"
-			>
-				<img src="/ui/pagination-arrow.webp" alt="Previous" loading="lazy" />
-			</button>
-			<span class="page-indicator">
-				{currentPage + 1} / {totalPages}
-			</span>
-			<button
-				class="pagination-btn"
-				onclick={nextPage}
-				disabled={currentPage === totalPages - 1}
-				aria-label="Next page"
-			>
-				<img src="/ui/pagination-arrow.webp" alt="Next" loading="lazy" />
-			</button>
-		</div>
+		<PkPagination data={Titles} itemsPerPage={4} onPageChange={handlePageChange} />
 	</section>
 {/snippet}
 
@@ -235,52 +209,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-	}
-
-	.pagination-controls {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 2rem;
-
-		button {
-			max-width: 3rem;
-			border-radius: 5px;
-			display: grid;
-			place-items: center;
-		}
-		button:last-child {
-			transform: scaleX(-1);
-		}
-	}
-
-	.pagination-btn {
-		color: white;
-		padding: 4px 8px;
-		cursor: pointer;
-
-		&:hover:not(:disabled) {
-			img {
-				filter: brightness(1.5);
-			}
-		}
-
-		&:focus-visible {
-			outline: 3px solid hsl(220, 100%, 65%);
-		}
-
-		&:disabled {
-			img {
-				filter: grayscale(1);
-			}
-			cursor: not-allowed;
-		}
-	}
-
-	.page-indicator {
-		color: white;
-		min-width: 4rem;
-		text-align: center;
 	}
 
 	.wallpaper-grid {
