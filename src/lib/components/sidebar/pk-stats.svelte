@@ -31,7 +31,7 @@
 	{#await requestPokemon}
 		<!-- <p>...loading</p> -->
 	{:then pokemon}
-		<div transition:fade class="pk-row-1">
+		<div class="pk-row-1">
 			<div class="pk-origin">
 				<h4 class="sr-only">Origin Region</h4>
 				<span>Origin: {pokemon.originRegion}</span>
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 
-		<div transition:fade class="pk-stats">
+		<div class="pk-stats">
 			<h4 class="sr-only">Base stats</h4>
 			{#each pokemon.stats as stat, index}
 				<div class="stat-row">
@@ -54,14 +54,14 @@
 			{/each}
 		</div>
 
-		<div transition:fade class="pk-Abilities">
+		<div class="pk-Abilities">
 			<h4 class="sr-only">Abilities</h4>
 			{#each pokemon.abilities as ability}
 				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
 			{/each}
 		</div>
 
-		<div transition:fade class="pk-gender">
+		<div class="pk-gender">
 			<h4 class="sr-only">Gender ratio</h4>
 			{#if !pokemon.genderRatio.male && !pokemon.genderRatio.female}
 				<span>Unknown</span>

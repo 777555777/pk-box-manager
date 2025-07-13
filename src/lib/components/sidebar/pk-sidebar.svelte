@@ -12,6 +12,9 @@
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
 	import type { GameType } from '$lib/models/data-models'
+	import PkRibbonPicker from './pk-ribbon-picker.svelte'
+	import PkMarkPicker from './pk-mark-picker.svelte'
+	import PkRadioGroup from '../ui/pk-radio-group.svelte'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
@@ -19,6 +22,13 @@
 	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
+
+	let currentTab = $state('stats')
+	const tabConfig = [
+		{ tabId: 'stats', label: 'Stats' },
+		{ tabId: 'ribbons', label: 'Ribbons' },
+		{ tabId: 'marks', label: 'Marks' }
+	]
 
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
@@ -66,7 +76,7 @@
 		</div>
 	</section>
 	<div class="pk-viewer-seperator"></div>
-	<section class="pk-ui-section-inner">
+	<section class="pk-ui-section-inner pk-sidebar-content">
 		<section class="pk-title-section">
 			<h3 class="sr-only">Name & Ball</h3>
 			<div class="pk-title-row">
@@ -80,10 +90,23 @@
 			<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
 		</section>
 		<div class="separator"></div>
-		<section class="pk-stats-section">
-			<h3 class="sr-only">Status values</h3>
-			<PkStats {identifier} />
-		</section>
+		<PkRadioGroup bind:currentTab {tabConfig} />
+		{#if currentTab === 'stats'}
+			<section class="pk-stats-section">
+				<h3 class="sr-only">Status values</h3>
+				<PkStats {identifier} />
+			</section>
+		{:else if currentTab === 'ribbons'}
+			<section class="pk-stats-section">
+				<h3 class="sr-only">Ribbons</h3>
+				<PkRibbonPicker {disabled} />
+			</section>
+		{:else if currentTab === 'marks'}
+			<section class="pk-stats-section">
+				<h3 class="sr-only">Marks</h3>
+				<PkMarkPicker {disabled} />
+			</section>
+		{/if}
 		<div class="separator"></div>
 		<section class="pk-links-section">
 			<h3 class="visible-h3 text-base">Catch location</h3>
@@ -97,12 +120,18 @@
 	.pk-sidebar {
 		min-width: var(--box-width);
 		max-width: 415px;
-		max-height: 80rem;
-		height: fit-content;
+		max-height: fit-content;
 		position: sticky;
 		z-index: 2;
 		margin: auto 0;
 		color: var(--ui-text-color);
+
+		.pk-sidebar-content {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow-y: auto;
+		}
 	}
 
 	.pk-viewer-seperator {
@@ -143,6 +172,13 @@
 	.pk-stats-section,
 	.pk-links-section {
 		padding-inline: 1rem;
+	}
+
+	.pk-stats-section {
+		min-height: 350px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.pk-title-section {

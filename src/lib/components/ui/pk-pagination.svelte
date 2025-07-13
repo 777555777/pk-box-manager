@@ -95,6 +95,7 @@
 		border: none;
 
 		&:hover:not(:disabled) {
+			background-color: hsla(0, 0%, 100%, 0.175);
 			img {
 				filter: brightness(1.5);
 			}
