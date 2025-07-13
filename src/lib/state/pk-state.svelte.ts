@@ -185,6 +185,36 @@ export class PkState {
 		return this.pokedexState.pokemon[identifier] || pokemonNullState
 	}
 
+	toggleRibbon(identifier: string, ribbonId: string): void {
+		const currentPokemon = this.getPokemon(identifier)
+		const ribbonSet = new Set(currentPokemon.ribbons)
+
+		if (ribbonSet.has(ribbonId)) {
+			ribbonSet.delete(ribbonId)
+		} else {
+			ribbonSet.add(ribbonId)
+		}
+
+		this.updatePokemon(identifier, {
+			ribbons: Array.from(ribbonSet)
+		})
+	}
+
+	toggleMark(identifier: string, markId: string): void {
+		const currentPokemon = this.getPokemon(identifier)
+		const markSet = new Set(currentPokemon.marks)
+
+		if (markSet.has(markId)) {
+			markSet.delete(markId)
+		} else {
+			markSet.add(markId)
+		}
+
+		this.updatePokemon(identifier, {
+			marks: Array.from(markSet)
+		})
+	}
+
 	updatePokemon(identifier: string, updatedState: Partial<PokemonData>): void {
 		if (!this.pokedexState.pokemon[identifier]) {
 			throw new Error(

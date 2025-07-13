@@ -6,7 +6,9 @@ export const initialAppDefaults = {
 	ball: '01-poke-ball',
 	shiny: false,
 	caughtIn: '',
-	comment: ''
+	comment: '',
+	ribbons: [],
+	marks: []
 }
 
 export const supportedPokedexList = {
@@ -70,6 +72,8 @@ function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string,
 				caughtIn: '',
 				ability: '',
 				comment: '',
+				ribbons: [],
+				marks: [],
 				isCustomized: false
 			}
 		}

@@ -5,6 +5,8 @@ export const pokemonNullProperties = {
 	caughtIn: '',
 	ability: '',
 	comment: '',
+	ribbons: [],
+	marks: [],
 	isCustomized: false
 }
 

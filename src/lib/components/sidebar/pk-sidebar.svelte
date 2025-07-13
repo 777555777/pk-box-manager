@@ -54,6 +54,15 @@
 		})
 	}
 
+	// === Ribbon/Mark Picker ===
+	function updateRibbons(ribbonId: string) {
+		pkState.toggleRibbon(identifier, ribbonId)
+	}
+
+	function updateMarks(markId: string) {
+		pkState.toggleMark(identifier, markId)
+	}
+
 	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
@@ -99,12 +108,12 @@
 		{:else if currentTab === 'ribbons'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Ribbons</h3>
-				<PkRibbonPicker {disabled} />
+				<PkRibbonPicker {disabled} onUpdate={updateRibbons} selectedRibbons={selectedPokemon.ribbons} />
 			</section>
 		{:else if currentTab === 'marks'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Marks</h3>
-				<PkMarkPicker {disabled} />
+				<PkMarkPicker {disabled} onUpdate={updateMarks} selectedMarks={selectedPokemon.marks} />
 			</section>
 		{/if}
 		<div class="separator"></div>

@@ -20,6 +20,8 @@ export interface PokemonData {
 	caughtIn: string
 	ability: string
 	comment: string
+	ribbons: string[]
+	marks: string[]
 	isCustomized: boolean
 }
 
@@ -154,8 +156,10 @@ class StorageHandler {
 	 * @param editedPokemon The new state properties to apply to the Pokemon.
 	 * @returns The updated Pokemon state or undefined if the Pokemon couldn't be found.
 	 */
-	// prettier-ignore
-	public editPokemonStateEntry(identifier: string, editedPokemon: PokemonState): PokemonState | undefined {
+	public editPokemonStateEntry(
+		identifier: string,
+		editedPokemon: PokemonState
+	): PokemonState | undefined {
 		const selectedDexName = this.loadSelectedPokedexName()
 		const parsedDex = this.loadPokedex(selectedDexName)
 
@@ -163,18 +167,32 @@ class StorageHandler {
 			return undefined
 		}
 
-		const targetPokemon = parsedDex.pokemon[identifier];
+		const targetPokemon = parsedDex.pokemon[identifier]
 		if (!targetPokemon) {
-			console.error("Could not update given Pokemon", identifier)
-			return undefined;
+			console.error('Could not update given Pokemon', identifier)
+			return undefined
 		}
 
+		const allowedProperties: (keyof PokemonData)[] = [
+			'captured',
+			'ball',
+			'shiny',
+			'caughtIn',
+			'ability',
+			'comment',
+			'ribbons',
+			'marks',
+			'isCustomized'
+		]
+
 		// Update only keys that are present in targetPokemon
-		const editedPokemonValidKeys = Object.entries(editedPokemon).filter(([key]) => key in targetPokemon)
+		const editedPokemonValidKeys = Object.entries(editedPokemon).filter(([key]) =>
+			allowedProperties.includes(key as keyof PokemonData)
+		)
 		const updatedPokemon: PokemonState = {
-		...targetPokemon,
-		...Object.fromEntries(editedPokemonValidKeys) as Pick<PokemonState, keyof typeof targetPokemon>
-		};
+			...targetPokemon,
+			...Object.fromEntries(editedPokemonValidKeys)
+		}
 
 		// Update pokemon in memory
 		parsedDex.pokemon[identifier] = updatedPokemon

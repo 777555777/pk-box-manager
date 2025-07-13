@@ -9,14 +9,16 @@
 		itemsPerPage = 40,
 		disabled = false,
 		onUpdate = () => {},
+		activeItems = new Set(),
 		id = crypto.randomUUID()
 	}: {
 		data: Record<string, any>
 		getPosition: (key: string) => { x: number; y: number }
-		spriteUrl?: string
-		itemsPerPage?: number
-		disabled?: boolean
-		onUpdate?: (value: any) => void
+		spriteUrl: string
+		itemsPerPage: number
+		disabled: boolean
+		onUpdate: (value: any) => void
+		activeItems: Set<string>
 		id?: string
 	} = $props()
 
@@ -33,7 +35,7 @@
 	}
 
 	function handleItemClick(key: string, value: any) {
-		onUpdate(value)
+		onUpdate(key)
 	}
 </script>
 
@@ -41,7 +43,12 @@
 	<section class="pk-icon-grid">
 		{#each displayData as [key, value]: [string, any]}
 			<button class="" {disabled} onclick={() => !disabled && handleItemClick(key, value)}>
-				<img src={spriteUrl} style={setCssPosition(getPosition(key))} alt={key} />
+				<img
+					src={spriteUrl}
+					style={setCssPosition(getPosition(key))}
+					class={activeItems.has(key) ? '' : 'inactive'}
+					alt={key}
+				/>
 			</button>
 		{/each}
 	</section>
@@ -140,5 +147,10 @@
 			transform-origin: center;
 			image-rendering: smooth;
 		}
+	}
+
+	.inactive {
+		opacity: 0.5;
+		filter: grayscale(0.8) brightness(0.7);
 	}
 </style>

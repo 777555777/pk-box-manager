@@ -134,6 +134,42 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 		if (pokemon.isCustomized === undefined || typeof pokemon.isCustomized !== 'boolean') {
 			throw new Error(`Missing or invalid "isCustomized" field for Pokémon: ${pokemonKey}`)
 		}
+
+		// Gracefully handle ribbons array (optional field with defaults)
+		if (pokemon.ribbons !== undefined) {
+			if (!Array.isArray(pokemon.ribbons)) {
+				console.warn(`Invalid "ribbons" field for Pokémon: ${pokemonKey} - using empty array`)
+				pokemon.ribbons = []
+			} else {
+				// Filter out non-string values
+				const validRibbons = pokemon.ribbons.filter((ribbon) => typeof ribbon === 'string')
+				if (validRibbons.length !== pokemon.ribbons.length) {
+					console.warn(`Some invalid ribbons removed for Pokémon: ${pokemonKey}`)
+				}
+				pokemon.ribbons = validRibbons
+			}
+		} else {
+			// Set default empty array if ribbons field is missing
+			pokemon.ribbons = []
+		}
+
+		// Gracefully handle marks array (optional field with defaults)
+		if (pokemon.marks !== undefined) {
+			if (!Array.isArray(pokemon.marks)) {
+				console.warn(`Invalid "marks" field for Pokémon: ${pokemonKey} - using empty array`)
+				pokemon.marks = []
+			} else {
+				// Filter out non-string values
+				const validMarks = pokemon.marks.filter((mark) => typeof mark === 'string')
+				if (validMarks.length !== pokemon.marks.length) {
+					console.warn(`Some invalid marks removed for Pokémon: ${pokemonKey}`)
+				}
+				pokemon.marks = validMarks
+			}
+		} else {
+			// Set default empty array if marks field is missing
+			pokemon.marks = []
+		}
 	}
 
 	// 5. Validate each individual box entry (structure validation)
