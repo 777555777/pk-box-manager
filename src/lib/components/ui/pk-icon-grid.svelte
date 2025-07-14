@@ -89,6 +89,10 @@
 		border-image-outset: 0;
 		border-image-width: 9px;
 
+		&:has(button:disabled) {
+			filter: brightness(0.75);
+		}
+
 		button {
 			background-color: transparent;
 			border: 1px solid #5a5a5a81;
@@ -111,12 +115,7 @@
 
 			&:disabled {
 				cursor: not-allowed;
-				opacity: 0.5;
-				filter: grayscale(0.8);
-
-				img {
-					filter: grayscale(0.8) brightness(0.7);
-				}
+				opacity: 0.6;
 			}
 		}
 	}
@@ -150,7 +149,7 @@
 	}
 
 	.inactive {
-		opacity: 0.5;
+		opacity: 0.35;
 		filter: grayscale(0.8) brightness(0.7);
 	}
 </style>
