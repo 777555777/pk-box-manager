@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Balls, type BallsType } from '$lib/models/balls-models'
 	import { getIdentifier, getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
+	import PkBadge from './pk-badge.svelte'
 
 	let { pokemonIdentifier }: { pokemonIdentifier: string } = $props()
 	const selectedPokemonSpriteData = getPokemonSpriteData(pokemonIdentifier)
@@ -10,12 +10,11 @@
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
 	let pokemonState = $derived(pkState.getPokemon(pokemonIdentifier))
+	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	let isSelected = $derived(
 		pokemonIdentifier === getIdentifier(pkState.getSelectedPokemon().idEntry)
 	)
-
-	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
 
 	function onclick() {
 		if (viewerMode) {
@@ -24,10 +23,6 @@
 			pkState.updatePokemon(pokemonIdentifier, { captured: true })
 			pkState.updateSelectedPokemon(pokemonIdentifier)
 		}
-	}
-
-	function getBallPosition(selectedBall: BallsType) {
-		return Balls[selectedBall].pos || { x: 0, y: 0 }
 	}
 </script>
 
@@ -46,45 +41,12 @@
 		style={setCssPosition(selectedPokemonSpriteData.pos)}
 		loading="lazy"
 	/>
-	{@render badge()}
+	{#if pokemonState.captured && badgeDisplay !== false}
+		<PkBadge {pokemonState} {badgeDisplay} />
+	{/if}
 </button>
 
-{#snippet badge()}
-	{#if pokemonState.captured && badgeDisplay === 'ball' && pokemonState.ball}
-		<img
-			class="pk-badge"
-			src={`/spritesheets/util/sb1.webp`}
-			style={setCssPosition(getBallPosition(pokemonState.ball as BallsType))}
-			alt={pokemonState.ball}
-		/>
-	{/if}
-	{#if pokemonState.captured && badgeDisplay === 'comment' && pokemonState.comment.length > 0}
-		<img class="pk-badge" src={`/ui/text-bubble.webp`} alt="Has comment" />
-	{/if}
-{/snippet}
-
 <style>
-	.pk-badge {
-		--target-size: 24;
-		--original-size: 30;
-		--scale-factor: calc(var(--target-size) / var(--original-size));
-
-		width: calc(var(--original-size) * 1px);
-		height: calc(var(--original-size) * 1px);
-		object-fit: none;
-		transform: scale(var(--scale-factor));
-		transform-origin: top left;
-
-		filter: brightness(var(--grayscale));
-
-		position: absolute;
-		inset: 0;
-		top: 38px;
-		left: 38px;
-
-		image-rendering: auto;
-	}
-
 	.pk-slot {
 		--target-size: 64;
 		--original-size: 96;
@@ -170,11 +132,6 @@
 	@media (max-width: 1500px) {
 		.pk-slot {
 			--target-size: 58;
-		}
-		.pk-badge {
-			--target-size: 20;
-			top: 36px;
-			left: 36px;
 		}
 		.pk-slot-cursor {
 			left: 16px; /* Zentriert auf 58px breitem Button: (58-38)/2 + 30% */

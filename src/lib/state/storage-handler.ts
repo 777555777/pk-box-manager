@@ -1,6 +1,8 @@
 import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 
+export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
+
 export interface BoxOrder {
 	title: string
 	pokemon: PokemonEntry[]
@@ -244,7 +246,7 @@ class StorageHandler {
 	 * Saves the badge display mode setting to localStorage.
 	 * @param badgeDisplayMode The badge display mode to save.
 	 */
-	public saveBadgeDisplayMode(badgeDisplayMode: false | 'ball' | 'comment'): void {
+	public saveBadgeDisplayMode(badgeDisplayMode: BadgeDisplayMode): void {
 		localStorage.setItem('badgeDisplayMode', JSON.stringify(badgeDisplayMode))
 	}
 
@@ -252,7 +254,7 @@ class StorageHandler {
 	 * Loads the badge display mode setting from localStorage.
 	 * @returns The saved badge display mode or false as default.
 	 */
-	public loadBadgeDisplayMode(): false | 'ball' | 'comment' {
+	public loadBadgeDisplayMode(): BadgeDisplayMode {
 		const savedMode = localStorage.getItem('badgeDisplayMode')
 		if (savedMode) {
 			try {

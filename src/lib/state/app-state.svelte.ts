@@ -1,7 +1,5 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
-import { type PokemonData, storageHandler } from './storage-handler.ts'
-
-type BadgeDisplayMode = false | 'ball' | 'comment'
+import { type BadgeDisplayMode, type PokemonData, storageHandler } from './storage-handler.ts'
 
 export class AppState {
 	// UI state
@@ -39,7 +37,9 @@ export class AppState {
 		const nextModeMap = new Map<BadgeDisplayMode, BadgeDisplayMode>([
 			[false, 'ball'],
 			['ball', 'comment'],
-			['comment', false]
+			['comment', 'ribbon'],
+			['ribbon', 'mark'],
+			['mark', false]
 		])
 
 		this.badgeDisplay = nextModeMap.get(this.badgeDisplay) ?? false
