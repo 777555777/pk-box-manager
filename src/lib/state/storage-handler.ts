@@ -130,6 +130,24 @@ class StorageHandler {
 	}
 
 	/**
+	 * Loads all Pokedexes stored in localStorage.
+	 * @returns An array of all stored DexStorage objects.
+	 */
+	public loadEveryPokedex(): DexStorage[] {
+		const allDexes: DexStorage[] = []
+		for (const key in localStorage) {
+			if (key.startsWith('dex:')) {
+				const dexName = key.replace('dex:', '')
+				const dexData = this.loadPokedex(dexName)
+				if (dexData) {
+					allDexes.push(dexData)
+				}
+			}
+		}
+		return allDexes
+	}
+
+	/**
 	 * Checks if a Pokedex has been modified from its initial state.
 	 * @param dexName The name of the Pokedex to check.
 	 * @returns true if the Pokedex has been modified, false if it's in the initial state.

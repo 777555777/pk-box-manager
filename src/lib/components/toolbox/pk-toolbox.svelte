@@ -2,17 +2,21 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
 	import PkDexSelector from '$lib/components/toolbox/pk-dex-selector.svelte'
-	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import PkDexReset from './pk-dex-reset.svelte'
 	import { createHotkeyHandler } from '$lib/hotkey-utils'
+	import PkPokedex from './pk-pokedex.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
 	}
 
+	interface PkPokedexDialogElement {
+		showPokedexDialog: Function
+	}
+
 	let defaultsDialog: PkDefaultsDialogElement
+	let pokedexDialog: PkPokedexDialogElement
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
@@ -26,6 +30,10 @@
 
 	function openDefaultDialog() {
 		defaultsDialog.showDefaultsDialog()
+	}
+
+	function openPokedexDialog() {
+		pokedexDialog.showPokedexDialog()
 	}
 
 	const hotkeyHandlerBadge = createHotkeyHandler('KeyB', cycleBadgeDisplay)
@@ -45,11 +53,12 @@
 <aside class="pk-toolbox pk-ui-section">
 	<section class="pk-ui-section-inner">
 		<div class="pk-pokedex-data">
-			<PkDexSelector />
 			<div class="pk-toolbox-btn-group">
+				<button class="pk-button" onclick={openPokedexDialog}
+					><img src="/ui/tag.svg" alt="" />
+					<span>Pokedex</span></button
+				>
 				<PkImport />
-				<PkExport />
-				<PkDexReset />
 			</div>
 		</div>
 
@@ -77,6 +86,7 @@
 	</section>
 
 	<PkDefaults bind:this={defaultsDialog} />
+	<PkPokedex bind:this={pokedexDialog} />
 </aside>
 
 <style>
