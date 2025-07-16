@@ -5,7 +5,8 @@
 	import PkBadge from './pk-badge.svelte'
 
 	let { pokemonIdentifier }: { pokemonIdentifier: string } = $props()
-	const selectedPokemonSpriteData = getPokemonSpriteData(pokemonIdentifier)
+
+	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(pokemonIdentifier))
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
