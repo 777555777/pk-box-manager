@@ -47,7 +47,7 @@
 	dialogContent={defaultsDialogContent}
 	onConfirm={() => {}}
 	onCancel={() => {}}
-	okBtnText="Ok"
+	okBtnText="Close"
 />
 
 {#snippet defaultsDialogContent()}
