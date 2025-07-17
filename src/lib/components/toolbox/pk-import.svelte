@@ -85,9 +85,7 @@
 	style="display: none;"
 	onchange={readImportFile}
 />
-<button class="pk-button" onclick={() => fileInput.click()}
-	><img src="/ui/upload-alt-solid.svg" alt="" /><span>Load Dex</span></button
->
+<button class="pk-button" onclick={() => fileInput.click()}><span>Import Dex</span></button>
 
 {#snippet infoDialogContent()}
 	<div class="pk-dialog-description">
@@ -125,15 +123,5 @@
 		line-height: 1.6;
 		max-width: 55ch;
 		letter-spacing: 0.02em;
-	}
-
-	@media (max-width: 1550px) {
-		.pk-button {
-			max-width: 44px;
-
-			span {
-				display: none;
-			}
-		}
 	}
 </style>

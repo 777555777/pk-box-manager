@@ -43,18 +43,4 @@
 	}
 </script>
 
-<button class="pk-button" onclick={exportCurrentDex}
-	><img src="/ui/save-solid.svg" alt="" /><span>Save Dex</span></button
->
-
-<style>
-	@media (max-width: 1550px) {
-		.pk-button {
-			max-width: 44px;
-
-			span {
-				display: none;
-			}
-		}
-	}
-</style>
+<button class="pk-button" onclick={exportCurrentDex}><span>Export Dex</span></button>
