@@ -4,6 +4,7 @@
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
+	import PkAppSettings from './pk-app-settings.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -13,8 +14,13 @@
 		showPokedexDialog: Function
 	}
 
+	interface PkAppSettingsDialogElement {
+		showAppSettingsDialog: Function
+	}
+
 	let defaultsDialog: PkDefaultsDialogElement
 	let pokedexDialog: PkPokedexDialogElement
+	let appSettingsDialog: PkAppSettingsDialogElement
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
@@ -32,6 +38,10 @@
 
 	function openPokedexDialog() {
 		pokedexDialog.showPokedexDialog()
+	}
+
+	function openAppSettingsDialog() {
+		appSettingsDialog.showAppSettingsDialog()
 	}
 
 	const hotkeyHandlerBadge = createHotkeyHandler('KeyB', cycleBadgeDisplay)
@@ -71,24 +81,25 @@
 				onUpdate={toggleViewerMode}
 			/>
 
-			<button class="pk-button" onclick={cycleBadgeDisplay}
-				><img src="/ui/refresh.svg" alt="" /><span>Badge</span>
+			<button class="pk-button" onclick={cycleBadgeDisplay}>
+				<img src="/ui/refresh.svg" alt="" /><span>Badge</span>
 			</button>
 
-			<button class="pk-button" onclick={openDefaultDialog}
-				><img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
-				<span>Defaults</span></button
-			>
+			<button class="pk-button" onclick={openDefaultDialog}>
+				<img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
+				<span>Defaults</span>
+			</button>
 		</div>
 
 		<div class="separator-vertical"></div>
 
-		<button class="pk-button" onclick={openPokedexDialog}
-			><img src="/ui/tag.svg" alt="" />
-			<span>Settings</span></button
-		>
+		<button class="pk-button" onclick={openAppSettingsDialog}>
+			<img src="/ui/cog.svg" alt="" />
+			<span>Settings</span>
+		</button>
 	</section>
 
+	<PkAppSettings bind:this={appSettingsDialog} />
 	<PkDefaults bind:this={defaultsDialog} />
 	<PkPokedex bind:this={pokedexDialog} />
 </aside>
