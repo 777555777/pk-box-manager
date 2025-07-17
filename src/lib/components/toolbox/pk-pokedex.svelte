@@ -195,10 +195,6 @@
 			);
 
 			border: 2px solid rgba(93, 93, 111, 0.2);
-
-			&:hover {
-				background-color: #79b6c7;
-			}
 		}
 
 		.option-header {
