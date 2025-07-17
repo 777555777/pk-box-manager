@@ -65,7 +65,7 @@
 	/>
 
 	<section
-		class="pk-dex-card-image {!isSelected ? 'selected' : ''}"
+		class="pk-dex-card-image {!isSelected ? 'unselected' : ''}"
 		style="background-image: url({imgUrl})"
 	>
 		{#if isDeleting}
@@ -159,7 +159,6 @@
 	}
 
 	.pk-dex-card-image {
-		background-image: url('/ui/HGSS_Ilex_Forest-Day.png');
 		background-size: cover;
 		background-position: center;
 		width: 100%;
@@ -168,6 +167,22 @@
 
 		border-top: 3px solid #5d5d6f;
 		border-bottom: 3px solid #5d5d6f;
+
+		/* Background image as pseudo-element */
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: inherit;
+			background-size: inherit;
+			background-position: inherit;
+			z-index: 0;
+		}
+
+		/* Grayscale filter only for background image when unselected */
+		&.unselected::after {
+			filter: grayscale(1);
+		}
 
 		/* Gradient to darken the image */
 		&::before {
@@ -313,9 +328,5 @@
 			position: relative;
 			z-index: 1;
 		}
-	}
-
-	.selected {
-		filter: grayscale(1);
 	}
 </style>

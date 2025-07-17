@@ -87,13 +87,20 @@
 		position: fixed;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -65%);
+		transform: translate(-50%, -50%);
 		overflow: visible;
 		min-width: var(--dialog-min-width);
+		max-height: 90vh;
+		max-width: 90vw;
 		color: var(--ui-text-color);
 		background: transparent;
+
+		/* Dynamische Positionierung: 10% oberhalb der Mitte */
+		margin-top: -10vh;
+
 		.pk-ui-section-inner {
 			padding: var(--dialog-spacing);
+			max-height: inherit;
 		}
 	}
 
@@ -108,6 +115,7 @@
 		flex-direction: column;
 		gap: var(--dialog-spacing);
 		margin-block: calc(var(--dialog-spacing) * 2);
+		flex: 1;
 
 		.pk-dialog-description p {
 			background-color: red;
@@ -129,5 +137,21 @@
 
 	dialog::backdrop {
 		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	/* Responsive Anpassungen für kleinere Bildschirme */
+	@media (max-height: 800px) {
+		dialog {
+			margin-top: -5vh;
+			max-height: 95vh;
+		}
+	}
+
+	@media (max-width: 768px) {
+		dialog {
+			--dialog-min-width: 90vw;
+			margin-top: -5vh;
+			max-height: 90vh;
+		}
 	}
 </style>

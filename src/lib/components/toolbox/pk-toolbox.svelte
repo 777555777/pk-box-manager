@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
-	import PkImport from '$lib/components/toolbox/pk-import.svelte'
-	import PkDexSelector from '$lib/components/toolbox/pk-dex-selector.svelte'
+	import { createHotkeyHandler } from '$lib/hotkey-utils'
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import { createHotkeyHandler } from '$lib/hotkey-utils'
-	import PkPokedex from './pk-pokedex.svelte'
+	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -58,7 +56,6 @@
 					><img src="/ui/tag.svg" alt="" />
 					<span>Pokedex</span></button
 				>
-				<PkImport />
 			</div>
 		</div>
 
@@ -83,6 +80,13 @@
 				<span>Defaults</span></button
 			>
 		</div>
+
+		<div class="separator-vertical"></div>
+
+		<button class="pk-button" onclick={openPokedexDialog}
+			><img src="/ui/tag.svg" alt="" />
+			<span>Settings</span></button
+		>
 	</section>
 
 	<PkDefaults bind:this={defaultsDialog} />
