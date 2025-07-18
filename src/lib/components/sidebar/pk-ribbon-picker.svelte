@@ -26,4 +26,5 @@
 	--icons-per-row="7"
 	--icon-original-size="40"
 	--icon-target-size="44"
+	--icon-scale-factor={44 / 40}
 />

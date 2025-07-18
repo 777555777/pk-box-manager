@@ -53,7 +53,7 @@
 	<img
 		class="pk-badge"
 		src={`/spritesheets/util/sm1.webp`}
-		style="--original-size: 40; {setCssPosition(
+		style="--original-size: 128; {setCssPosition(
 			getMarkPosition(pokemonState.marks[0] as MarksType)
 		)}"
 		alt={pokemonState.marks[0]}
