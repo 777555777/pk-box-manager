@@ -23,8 +23,8 @@
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
 
-	let currentTab = $state('stats')
-	const tabConfig = [
+	let currentOption = $state('stats')
+	const optionConfig = [
 		{ tabId: 'stats', label: 'Stats' },
 		{ tabId: 'ribbons', label: 'Ribbons' },
 		{ tabId: 'marks', label: 'Marks' }
@@ -99,18 +99,22 @@
 			<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
 		</section>
 		<div class="separator"></div>
-		<PkRadioGroup bind:currentTab {tabConfig} />
-		{#if currentTab === 'stats'}
+		<PkRadioGroup bind:currentOption {optionConfig} />
+		{#if currentOption === 'stats'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Status values</h3>
 				<PkStats {identifier} />
 			</section>
-		{:else if currentTab === 'ribbons'}
+		{:else if currentOption === 'ribbons'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Ribbons</h3>
-				<PkRibbonPicker {disabled} onUpdate={updateRibbons} selectedRibbons={selectedPokemon.ribbons} />
+				<PkRibbonPicker
+					{disabled}
+					onUpdate={updateRibbons}
+					selectedRibbons={selectedPokemon.ribbons}
+				/>
 			</section>
-		{:else if currentTab === 'marks'}
+		{:else if currentOption === 'marks'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Marks</h3>
 				<PkMarkPicker {disabled} onUpdate={updateMarks} selectedMarks={selectedPokemon.marks} />

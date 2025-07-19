@@ -1,30 +1,30 @@
 <script lang="ts">
-	// Usage: <PkRadioGroup bind:currentTab {tabConfig} />
+	// Usage: <PkRadioGroup bind:currentOption {optionConfig} />
 
-	interface TabConfig {
+	interface optionConfig {
 		tabId: string
 		label: string
 	}
 
 	let {
-		currentTab = $bindable(),
-		tabConfig,
+		currentOption = $bindable(),
+		optionConfig,
 		id = crypto.randomUUID()
 	}: {
-		currentTab: string
-		tabConfig: TabConfig[]
+		currentOption: string
+		optionConfig: optionConfig[]
 		id?: string
 	} = $props()
 </script>
 
 <section class="pk-tab-group">
-	{#each tabConfig as { tabId, label }}
+	{#each optionConfig as { tabId, label }}
 		<input
 			type="radio"
 			id="{tabId}-tab-{id}"
 			name="tab-group-{id}"
 			value={tabId}
-			bind:group={currentTab}
+			bind:group={currentOption}
 		/><label for="{tabId}-tab-{id}">{label}</label>
 	{/each}
 </section>
@@ -41,6 +41,8 @@
 		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
 		border-image-outset: 0;
 		border-image-width: 9px;
+
+		display: inline-block;
 	}
 
 	.pk-tab-group:has(input[type='radio']:focus-visible) {
