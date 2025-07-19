@@ -5,6 +5,7 @@
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
 	import PkAppSettings from './pk-app-settings.svelte'
+	import PkBadgeButton from './pk-badge-button.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -81,9 +82,7 @@
 				onUpdate={toggleViewerMode}
 			/>
 
-			<button class="pk-button" onclick={cycleBadgeDisplay}>
-				<img src="/ui/refresh.svg" alt="" /><span>Badge</span>
-			</button>
+			<PkBadgeButton />
 
 			<button class="pk-button" onclick={openDefaultDialog}>
 				<img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
