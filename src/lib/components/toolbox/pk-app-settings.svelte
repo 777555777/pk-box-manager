@@ -12,7 +12,7 @@
 	let currentBadgeCycle = $state('default')
 	const badgeCycleConfig = [
 		{ tabId: 'default', label: 'Default' },
-		{ tabId: 'conditional-icons', label: 'Conditional' }
+		{ tabId: 'conditional', label: 'Conditional' }
 	]
 
 	let currentFont = $state('pixel-font')
@@ -127,9 +127,9 @@
 
 					<div class="pk-badge-cycle-pickers">
 						<!-- placeholder for ribbon picker -->
-						<button class="pk-button">R</button>
+						<button class="pk-button" disabled={currentBadgeCycle !== 'conditional'}>R</button>
 						<!-- placeholder for mark picker -->
-						<button class="pk-button">M</button>
+						<button class="pk-button" disabled={currentBadgeCycle !== 'conditional'}>M</button>
 					</div>
 				</div>
 			</fieldset>
@@ -173,6 +173,7 @@
 
 			legend {
 				margin-bottom: 0.5rem;
+				padding-inline: 0.5rem;
 			}
 
 			:global(.pk-tab-group) {
@@ -229,6 +230,12 @@
 
 					image-rendering: auto;
 					filter: brightness(var(--grayscale));
+				}
+			}
+
+			@media (max-width: 1500px) {
+				.pk-demo-slot {
+					--target-size: 58;
 				}
 			}
 		}
