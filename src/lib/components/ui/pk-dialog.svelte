@@ -87,16 +87,13 @@
 		position: fixed;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -55%);
 		overflow: visible;
 		min-width: var(--dialog-min-width);
 		max-height: 90vh;
 		max-width: 90vw;
 		color: var(--ui-text-color);
 		background: transparent;
-
-		/* Dynamische Positionierung: 10% oberhalb der Mitte */
-		margin-top: -10vh;
 
 		.pk-ui-section-inner {
 			padding: var(--dialog-spacing);
