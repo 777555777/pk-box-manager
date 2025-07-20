@@ -133,9 +133,6 @@
 					</div>
 				</div>
 			</fieldset>
-
-			<!-- Reset User Preferences -->
-			<!-- <button class="pk-button">Reset preferences</button> -->
 		</section>
 
 		<!-- ====================================================== -->
@@ -168,10 +165,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-
-		h3 {
-			margin-bottom: 1rem;
-		}
 
 		fieldset {
 			border: 2px solid #57808e;
@@ -293,40 +286,46 @@
 
 	/* ==================================== */
 	/* Hotkey Styles */
-	.pk-hotkey-legend {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		align-items: center;
-		gap: 1rem;
+	.pk-hotkey-section {
+		h3 {
+			margin-bottom: 1rem;
+		}
 
-		kbd {
-			/* <kbd> style from: https://dylanatsmith.com/wrote/styling-the-kbd-element */
-			--kbd-color-background: #f3f4f6;
-			--kbd-color-border: #343434;
-			--kbd-color-text: #1f2937;
+		.pk-hotkey-legend {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			align-items: center;
+			gap: 1rem;
 
-			background-color: var(--kbd-color-background);
-			color: var(--kbd-color-text);
+			kbd {
+				/* <kbd> style from: https://dylanatsmith.com/wrote/styling-the-kbd-element */
+				--kbd-color-background: #f3f4f6;
+				--kbd-color-border: #343434;
+				--kbd-color-text: #1f2937;
 
-			border-radius: 0.25rem;
-			border: 1px solid var(--kbd-color-border);
-			box-shadow: 0 2px 0 1px var(--kbd-color-border);
+				background-color: var(--kbd-color-background);
+				color: var(--kbd-color-text);
 
-			cursor: default;
-			line-height: 1;
+				border-radius: 0.25rem;
+				border: 1px solid var(--kbd-color-border);
+				box-shadow: 0 2px 0 1px var(--kbd-color-border);
 
-			min-width: 0.75rem;
-			display: inline-block;
-			text-align: center;
+				cursor: default;
+				line-height: 1;
 
-			padding: 4px 8px;
+				min-width: 0.75rem;
+				display: inline-block;
+				text-align: center;
 
-			position: relative;
-			top: -1px;
+				padding: 4px 8px;
 
-			&:hover {
-				box-shadow: 0 1px 0 0.5px var(--kbd-color-border);
-				top: 1px;
+				position: relative;
+				top: -1px;
+
+				&:hover {
+					box-shadow: 0 1px 0 0.5px var(--kbd-color-border);
+					top: 1px;
+				}
 			}
 		}
 	}
