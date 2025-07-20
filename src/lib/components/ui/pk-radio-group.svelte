@@ -75,16 +75,19 @@
 	.pk-tab-group label:hover {
 		background: #82829a;
 
-		&:nth-child(4) {
-			clip-path: polygon(0% 3%, 100% 3%, 100% 95%, 0 95%);
-		}
-
-		&:nth-child(2) {
+		/* Erster Button (linke Seite) */
+		&:first-of-type {
 			clip-path: polygon(0% 12%, 5% 12%, 5% 3%, 100% 3%, 100% 95%, 5% 95%, 5% 87%, 0% 87%);
 		}
 
-		&:nth-child(6) {
+		/* Letzter Button (rechte Seite) */
+		&:last-of-type {
 			clip-path: polygon(0 3%, 95% 3%, 95% 12%, 100% 12%, 100% 87%, 95% 87%, 95% 95%, 0 95%);
+		}
+
+		/* Mittlere Buttons (falls mehr als 2 vorhanden) */
+		&:not(:first-of-type):not(:last-of-type) {
+			clip-path: polygon(0% 3%, 100% 3%, 100% 95%, 0 95%);
 		}
 	}
 
