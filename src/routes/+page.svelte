@@ -13,6 +13,7 @@
 	onMount(() => {
 		// TODO: find a better place to load the app defaults
 		appState.loadAppDefaults()
+		appState.loadAppSettings()
 
 		// Service Worker registrieren für Asset Caching
 		if ('serviceWorker' in navigator) {

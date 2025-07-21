@@ -9,12 +9,16 @@
 	let {
 		currentOption = $bindable(),
 		optionConfig,
+		onUpdate = () => {},
 		id = crypto.randomUUID()
 	}: {
 		currentOption: string
 		optionConfig: optionConfig[]
+		onUpdate?: (value: string) => void
 		id?: string
 	} = $props()
+
+	$inspect('currentOption: ', currentOption)
 </script>
 
 <section class="pk-tab-group">
@@ -25,6 +29,7 @@
 			name="tab-group-{id}"
 			value={tabId}
 			bind:group={currentOption}
+			onchange={() => onUpdate(currentOption)}
 		/><label for="{tabId}-tab-{id}">{label}</label>
 	{/each}
 </section>

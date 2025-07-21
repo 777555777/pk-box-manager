@@ -1,5 +1,6 @@
 import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
+import { defaultAppSettings } from '../null-state-helper.ts'
 
 export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
 
@@ -46,6 +47,14 @@ export interface BoxData {
 		wallpaper: string
 	}
 	pokemon: string[]
+}
+
+export interface AppSettings {
+	language: 'en' | 'de'
+	boxSprites: 'original' | 'scaled' | 'classic'
+	font: 'pixel-font' | 'system-font'
+	badgeCycleOption: 'default' | 'conditional'
+	badgeDisplay: BadgeDisplayMode
 }
 
 class StorageHandler {
@@ -257,31 +266,34 @@ class StorageHandler {
 	}
 
 	// ================
-	// Badge Display Settings
+	// App Settings
 	// ================
 
 	/**
-	 * Saves the badge display mode setting to localStorage.
-	 * @param badgeDisplayMode The badge display mode to save.
+	 * Initializes the application's settings in localStorage.
 	 */
-	public saveBadgeDisplayMode(badgeDisplayMode: BadgeDisplayMode): void {
-		localStorage.setItem('badgeDisplayMode', JSON.stringify(badgeDisplayMode))
+	public initAppSettings() {
+		localStorage.setItem('appSettings', JSON.stringify(defaultAppSettings))
 	}
 
 	/**
-	 * Loads the badge display mode setting from localStorage.
-	 * @returns The saved badge display mode or false as default.
+	 * Saves the application's settings to localStorage.
+	 * @param appSettings The application settings to save.
 	 */
-	public loadBadgeDisplayMode(): BadgeDisplayMode {
-		const savedMode = localStorage.getItem('badgeDisplayMode')
-		if (savedMode) {
-			try {
-				return JSON.parse(savedMode)
-			} catch (error) {
-				console.error('Error parsing badge display mode:', error)
-			}
+	public saveAppSettings(appSettings: AppSettings): void {
+		localStorage.setItem('appSettings', JSON.stringify(appSettings))
+	}
+
+	/**
+	 * Reads and returns the application's settings from localStorage.
+	 */
+	public loadAppSettings(): AppSettings {
+		const appSettings = localStorage.getItem('appSettings')
+		if (!appSettings) {
+			this.initAppSettings()
+			return defaultAppSettings
 		}
-		return false
+		return JSON.parse(appSettings)
 	}
 
 	// ================

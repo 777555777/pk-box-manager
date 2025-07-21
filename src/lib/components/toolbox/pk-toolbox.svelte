@@ -6,6 +6,7 @@
 	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
 	import PkAppSettings from './pk-app-settings.svelte'
 	import PkBadgeButton from './pk-badge-button.svelte'
+	import { Balls, type BallsType } from '$lib/models/balls-models'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function

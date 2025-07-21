@@ -11,7 +11,7 @@
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
 	let pokemonState = $derived(pkState.getPokemon(pokemonIdentifier))
-	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
+	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 
 	let isSelected = $derived(
 		pokemonIdentifier === getIdentifier(pkState.getSelectedPokemon().idEntry)

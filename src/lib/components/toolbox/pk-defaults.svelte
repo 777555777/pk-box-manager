@@ -6,6 +6,7 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import type { GameType } from '$lib/models/data-models'
 	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
+	import { type BallsType } from '$lib/models/balls-models'
 
 	let defaultsDialog: PkDialogElement
 
@@ -83,7 +84,10 @@
 					/>
 
 					<!-- Ball -->
-					<PkBallSelector onUpdate={updatePokeball} selectedBall={appState.getAppDefaults().ball} />
+					<PkBallSelector
+						onUpdate={updatePokeball}
+						selectedBall={appState.getAppDefaults().ball as BallsType}
+					/>
 				</div>
 			</div>
 

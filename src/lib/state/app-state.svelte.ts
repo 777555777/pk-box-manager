@@ -1,14 +1,20 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
-import { type BadgeDisplayMode, type PokemonData, storageHandler } from './storage-handler.ts'
+import { defaultAppSettings } from '../null-state-helper.ts'
+import {
+	type AppSettings,
+	type BadgeDisplayMode,
+	type PokemonData,
+	storageHandler
+} from './storage-handler.ts'
 
 export class AppState {
 	// UI state
 	private viewerMode = $state(false)
-	private badgeDisplay: BadgeDisplayMode = $state(storageHandler.loadBadgeDisplayMode())
 
 	// Application settings
 	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
 	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
+	private appSettings = $state(storageHandler.loadAppSettings())
 
 	private activeDropdownId: string | null = $state(null)
 
@@ -22,28 +28,6 @@ export class AppState {
 
 	public toggleViewerMode(): void {
 		this.viewerMode = !this.viewerMode
-	}
-
-	public getBadgeDisplayMode(): BadgeDisplayMode {
-		return this.badgeDisplay
-	}
-
-	public setBadgeDisplayMode(mode: BadgeDisplayMode): void {
-		this.badgeDisplay = mode
-		storageHandler.saveBadgeDisplayMode(mode)
-	}
-
-	public cycleBadgeDisplayMode(): void {
-		const nextModeMap = new Map<BadgeDisplayMode, BadgeDisplayMode>([
-			[false, 'ball'],
-			['ball', 'comment'],
-			['comment', 'ribbon'],
-			['ribbon', 'mark'],
-			['mark', false]
-		])
-
-		this.badgeDisplay = nextModeMap.get(this.badgeDisplay) ?? false
-		storageHandler.saveBadgeDisplayMode(this.badgeDisplay)
 	}
 
 	public getCurrentPokedexName(): string {
@@ -94,6 +78,44 @@ export class AppState {
 
 	public hasModifiedDefaults(): boolean {
 		return JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults)
+	}
+
+	// ================
+	// App Settings Methods
+	// ================
+
+	public getAppSettings(): AppSettings {
+		return this.appSettings
+	}
+
+	public updateAppSettings(updatedSettings: Partial<AppSettings>): void {
+		// Update local state
+		const newSettings = { ...this.appSettings, ...updatedSettings }
+		this.appSettings = newSettings
+
+		// Persist to localStorage
+		storageHandler.saveAppSettings(this.appSettings)
+	}
+
+	public loadAppSettings(): AppSettings {
+		return this.appSettings
+	}
+
+	public resetAppSettings(): void {
+		this.updateAppSettings(defaultAppSettings)
+	}
+
+	public cycleBadgeDisplayMode(): void {
+		const nextModeMap = new Map<BadgeDisplayMode, BadgeDisplayMode>([
+			[false, 'ball'],
+			['ball', 'comment'],
+			['comment', 'ribbon'],
+			['ribbon', 'mark'],
+			['mark', false]
+		])
+
+		this.appSettings.badgeDisplay = nextModeMap.get(this.appSettings.badgeDisplay) ?? false
+		storageHandler.saveAppSettings(this.appSettings)
 	}
 }
 

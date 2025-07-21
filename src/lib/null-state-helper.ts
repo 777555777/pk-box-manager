@@ -1,3 +1,5 @@
+import { type AppSettings } from './state/storage-handler.ts'
+
 export const pokemonNullProperties = {
 	captured: false,
 	ball: '01-poke-ball',
@@ -32,4 +34,12 @@ export const pokedexNullState = {
 			pokemon: ['0000-null']
 		}
 	]
+}
+
+export const defaultAppSettings: AppSettings = {
+	language: 'en',
+	boxSprites: 'original',
+	font: 'pixel-font',
+	badgeCycleOption: 'default',
+	badgeDisplay: false
 }

@@ -1,34 +1,53 @@
 <script lang="ts">
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import { setCssPosition } from '$lib/spriteheet-helper'
+	import { appState } from '$lib/state/app-state.svelte'
+	import PkMarkSelector from '../ui/pk-mark-selector.svelte'
 	import PkRadioGroup from '../ui/pk-radio-group.svelte'
+	import PkRibbonSelector from '../ui/pk-ribbon-selector.svelte'
 
 	let appSettingsDialog: PkDialogElement
+
+	// Local state variables that will be bound to the UI
+	let settings = $derived(appState.getAppSettings())
+
+	// Update functions to save changes to app state
+	function updateLanguage(newLanguage: string) {
+		appState.updateAppSettings({ language: newLanguage as 'en' | 'de' })
+	}
+
+	function updateBoxSprites(newBoxSprites: string) {
+		appState.updateAppSettings({ boxSprites: newBoxSprites as 'original' | 'scaled' | 'classic' })
+	}
+
+	function updateFont(newFont: string) {
+		appState.updateAppSettings({ font: newFont as 'pixel-font' | 'system-font' })
+	}
+
+	function updateBadgeCycleOption(newOption: string) {
+		appState.updateAppSettings({ badgeCycleOption: newOption as 'default' | 'conditional' })
+	}
 
 	export function showAppSettingsDialog() {
 		appSettingsDialog.showDialog()
 	}
 
-	let currentBadgeCycle = $state('default')
 	const badgeCycleConfig = [
 		{ tabId: 'default', label: 'Default' },
 		{ tabId: 'conditional', label: 'Conditional' }
 	]
 
-	let currentFont = $state('pixel-font')
 	const fontConfig = [
 		{ tabId: 'pixel-font', label: 'Pixel Font' },
 		{ tabId: 'system-font', label: 'System Font' }
 	]
 
-	let currentBoxSprites = $state('original')
 	const boxSpriteConfig = [
 		{ tabId: 'original', label: 'Original' },
 		{ tabId: 'scaled', label: 'Scaled' },
 		{ tabId: 'classic', label: 'Classic' }
 	]
 
-	let currentAppLanguage = $state('en')
 	const appLanguageConfig = [
 		{ tabId: 'en', label: 'English' },
 		{ tabId: 'de', label: 'German' }
@@ -36,7 +55,7 @@
 
 	// Reactive statement to update CSS variable when font changes
 	$effect(() => {
-		const fontValue = currentFont === 'pixel-font' ? "'vt323regular'" : 'var(--system-fonts)'
+		const fontValue = settings.font === 'pixel-font' ? "'vt323regular'" : 'var(--system-fonts)'
 		document.documentElement.style.setProperty('--primary-font-family', fontValue)
 	})
 </script>
@@ -54,18 +73,25 @@
 	<section class="pk-dialog-content">
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
-			<!-- radio input for language selector english and german -->
-			<fieldset class="pk-language-options" disabled>
+			<fieldset class="pk-language-options">
 				<legend>Language</legend>
 				<div class="pk-radio-group">
-					<PkRadioGroup bind:currentOption={currentAppLanguage} optionConfig={appLanguageConfig} />
+					<PkRadioGroup
+						bind:currentOption={settings.language}
+						optionConfig={appLanguageConfig}
+						onUpdate={updateLanguage}
+					/>
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-box-sprite-options" disabled>
+			<fieldset class="pk-box-sprite-options">
 				<legend>Box Sprites</legend>
 				<div class="pk-box-sprite-content">
-					<PkRadioGroup bind:currentOption={currentBoxSprites} optionConfig={boxSpriteConfig} />
+					<PkRadioGroup
+						bind:currentOption={settings.boxSprites}
+						optionConfig={boxSpriteConfig}
+						onUpdate={updateBoxSprites}
+					/>
 					<div class="example">
 						<div class="example-element">
 							<div class="pk-demo-slot">
@@ -106,7 +132,11 @@
 			<fieldset class="pk-font-options">
 				<legend>Font</legend>
 				<div class="pk-font-content">
-					<PkRadioGroup bind:currentOption={currentFont} optionConfig={fontConfig} />
+					<PkRadioGroup
+						bind:currentOption={settings.font}
+						optionConfig={fontConfig}
+						onUpdate={updateFont}
+					/>
 					<div class="example">
 						<div class="pixel-font-example">
 							<p>0001 Bulbasaur</p>
@@ -124,7 +154,11 @@
 				<legend>Badge Cycle options:</legend>
 				<div class="pk-badge-content">
 					<div class="pk-badge-element">
-						<PkRadioGroup bind:currentOption={currentBadgeCycle} optionConfig={badgeCycleConfig} />
+						<PkRadioGroup
+							bind:currentOption={settings.badgeCycleOption}
+							optionConfig={badgeCycleConfig}
+							onUpdate={updateBadgeCycleOption}
+						/>
 						<p class="text-small">
 							Only displays the Badge icon for Ribbons and Marks when the here configured Ribbon or
 							Mark is marked as completed
@@ -132,10 +166,16 @@
 					</div>
 
 					<div class="pk-badge-cycle-pickers">
-						<!-- placeholder for ribbon picker -->
-						<button class="pk-button" disabled={currentBadgeCycle !== 'conditional'}>R</button>
-						<!-- placeholder for mark picker -->
-						<button class="pk-button" disabled={currentBadgeCycle !== 'conditional'}>M</button>
+						<PkRibbonSelector
+							disabled={settings.badgeCycleOption !== 'conditional'}
+							onUpdate={() => {}}
+							selectedRibbon={'001-national-ribbon'}
+						/>
+						<PkMarkSelector
+							disabled={settings.badgeCycleOption !== 'conditional'}
+							onUpdate={() => {}}
+							selectedMark={'absent-minded-mark'}
+						/>
 					</div>
 				</div>
 			</fieldset>

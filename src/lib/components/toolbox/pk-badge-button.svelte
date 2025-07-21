@@ -5,7 +5,7 @@
 	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
 
-	let badgeDisplay = $derived(appState.getBadgeDisplayMode())
+	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 
 	function cycleBadgeDisplay() {
 		appState.cycleBadgeDisplayMode()

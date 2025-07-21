@@ -89,7 +89,11 @@
 		<section class="pk-title-section">
 			<h3 class="sr-only">Name & Ball</h3>
 			<div class="pk-title-row">
-				<PkBallSelector onUpdate={updatePokeball} selectedBall={selectedPokemon.ball} {disabled} />
+				<PkBallSelector
+					onUpdate={updatePokeball}
+					selectedBall={selectedPokemon.ball as BallsType}
+					{disabled}
+				/>
 				<PkTitle idEntry={selectedPokemon.idEntry} {isSelectionValid} />
 			</div>
 		</section>
