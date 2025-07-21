@@ -91,6 +91,19 @@
 		}
 	}
 
+	/* Hover-Effekt für disabled Buttons deaktivieren */
+	.pk-tab-group input[type='radio']:disabled + label:hover {
+		background: transparent;
+		clip-path: none;
+	}
+
+	/* Disabled state für Labels */
+	.pk-tab-group input[type='radio']:disabled + label {
+		filter: brightness(0.75);
+		pointer-events: none;
+		cursor: not-allowed;
+	}
+
 	.pk-tab-group input[type='radio']:checked + label {
 		color: #ffb267;
 	}

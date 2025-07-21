@@ -33,6 +33,12 @@
 		{ tabId: 'en', label: 'English' },
 		{ tabId: 'de', label: 'German' }
 	]
+
+	// Reactive statement to update CSS variable when font changes
+	$effect(() => {
+		const fontValue = currentFont === 'pixel-font' ? "'vt323regular'" : 'var(--system-fonts)'
+		document.documentElement.style.setProperty('--primary-font-family', fontValue)
+	})
 </script>
 
 <PkDialog
@@ -49,14 +55,14 @@
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
 			<!-- radio input for language selector english and german -->
-			<fieldset class="pk-language-options">
+			<fieldset class="pk-language-options" disabled>
 				<legend>Language</legend>
 				<div class="pk-radio-group">
 					<PkRadioGroup bind:currentOption={currentAppLanguage} optionConfig={appLanguageConfig} />
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-box-sprite-options">
+			<fieldset class="pk-box-sprite-options" disabled>
 				<legend>Box Sprites</legend>
 				<div class="pk-box-sprite-content">
 					<PkRadioGroup bind:currentOption={currentBoxSprites} optionConfig={boxSpriteConfig} />
