@@ -10,6 +10,8 @@
 		disabled = false,
 		onUpdate = () => {},
 		activeItems = new Set(),
+		showBackground = true,
+		alwaysActive = false,
 		id = crypto.randomUUID()
 	}: {
 		data: Record<string, any>
@@ -19,6 +21,8 @@
 		disabled: boolean
 		onUpdate: (value: any) => void
 		activeItems: Set<string>
+		showBackground?: boolean
+		alwaysActive?: boolean
 		id?: string
 	} = $props()
 
@@ -39,22 +43,24 @@
 	}
 </script>
 
-<section class="container-grid">
-	<section class="pk-icon-grid">
+<section class="container-grid {showBackground ? '' : 'no-container-padding'}">
+	<div class="pk-icon-grid {showBackground ? '' : 'no-background'}">
 		{#each displayData as [key, value]: [string, any]}
 			<button class="" {disabled} onclick={() => !disabled && handleItemClick(key, value)}>
 				<img
 					src={spriteUrl}
 					style={setCssPosition(getPosition(key))}
-					class={activeItems.has(key) ? '' : 'inactive'}
+					class={alwaysActive || activeItems.has(key) ? '' : 'inactive'}
 					alt={key}
 				/>
 			</button>
 		{/each}
-	</section>
+	</div>
 
 	{#if needsPagination}
-		<PkPagination {data} {itemsPerPage} onPageChange={handlePageChange} />
+		<div class="pk-pagination">
+			<PkPagination {data} {itemsPerPage} onPageChange={handlePageChange} />
+		</div>
 	{/if}
 </section>
 
@@ -75,6 +81,10 @@
 		flex: 1;
 		min-height: 0;
 		padding-top: 1rem;
+
+		&.no-container-padding {
+			padding: 0;
+		}
 	}
 
 	.pk-icon-grid {
@@ -91,6 +101,11 @@
 
 		&:has(button:disabled) {
 			filter: brightness(0.75);
+		}
+
+		&.no-background {
+			border: none;
+			padding: 0;
 		}
 
 		button {
@@ -120,7 +135,7 @@
 		}
 	}
 
-	.pk-icon-grid:has(button:focus-visible) {
+	.pk-icon-grid:has(button:focus-visible):not(.no-background) {
 		border-width: 9px solid;
 		border-image: url('/ui/textarea-select-focus.webp') 9 fill stretch;
 		border-image-outset: 0;
