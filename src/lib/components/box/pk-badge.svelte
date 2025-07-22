@@ -3,12 +3,16 @@
 	import { Marks, type MarksType } from '$lib/models/marks-models'
 	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
+	import { appState } from '$lib/state/app-state.svelte'
 	import { type BadgeDisplayMode, type PokemonState } from '$lib/state/storage-handler'
 
 	let {
 		pokemonState,
 		badgeDisplay
 	}: { pokemonState: PokemonState; badgeDisplay: BadgeDisplayMode } = $props()
+
+	// Derived state for selected Pokemon's sprite data
+	let appSettings = $derived(appState.getAppSettings())
 
 	function getBallPosition(selectedBall: BallsType) {
 		return Balls[selectedBall].pos || { x: 0, y: 0 }
@@ -20,6 +24,29 @@
 
 	function getMarkPosition(selectedMark: MarksType) {
 		return Marks[selectedMark].pos || { x: 0, y: 0 }
+	}
+
+	// Conditional badge display logic
+	function shouldShowRibbonBadge(): boolean {
+		// If not using conditional display, show if Pokemon has any ribbons
+		if (appSettings.badgeCycleOption !== 'conditional') {
+			return pokemonState.ribbons.length > 0
+		}
+
+		// If using conditional display, check if Pokemon has the specified ribbon
+		const requiredRibbon = appSettings.conditionalBadgeDisplay.ribbon
+		return pokemonState.ribbons.includes(requiredRibbon)
+	}
+
+	function shouldShowMarkBadge(): boolean {
+		// If not using conditional display, show if Pokemon has any marks
+		if (appSettings.badgeCycleOption !== 'conditional') {
+			return pokemonState.marks.length > 0
+		}
+
+		// If using conditional display, check if Pokemon has the specified mark
+		const requiredMark = appSettings.conditionalBadgeDisplay.mark
+		return pokemonState.marks.includes(requiredMark)
 	}
 </script>
 
@@ -39,24 +66,28 @@
 		alt="Has comment"
 	/>
 {/if}
-{#if badgeDisplay === 'ribbon' && pokemonState.ribbons.length > 0}
+{#if badgeDisplay === 'ribbon' && shouldShowRibbonBadge()}
+	{@const displayRibbon =
+		appSettings.badgeCycleOption === 'conditional'
+			? appSettings.conditionalBadgeDisplay.ribbon
+			: pokemonState.ribbons[0]}
 	<img
 		class="pk-badge"
 		src={`/spritesheets/util/sr1.webp`}
-		style="--original-size: 40; {setCssPosition(
-			getRibbonPosition(pokemonState.ribbons[0] as RibbonsType)
-		)}"
-		alt={pokemonState.ribbons[0]}
+		style="--original-size: 40; {setCssPosition(getRibbonPosition(displayRibbon as RibbonsType))}"
+		alt={displayRibbon}
 	/>
 {/if}
-{#if badgeDisplay === 'mark' && pokemonState.marks.length > 0}
+{#if badgeDisplay === 'mark' && shouldShowMarkBadge()}
+	{@const displayMark =
+		appSettings.badgeCycleOption === 'conditional'
+			? appSettings.conditionalBadgeDisplay.mark
+			: pokemonState.marks[0]}
 	<img
 		class="pk-badge"
 		src={`/spritesheets/util/sm1.webp`}
-		style="--original-size: 128; {setCssPosition(
-			getMarkPosition(pokemonState.marks[0] as MarksType)
-		)}"
-		alt={pokemonState.marks[0]}
+		style="--original-size: 128; {setCssPosition(getMarkPosition(displayMark as MarksType))}"
+		alt={displayMark}
 	/>
 {/if}
 

@@ -102,7 +102,7 @@
 
 	.pk-icon-grid {
 		display: grid;
-		grid-template-columns: repeat(var(--icons-per-row), 1fr);
+		grid-template-columns: repeat(var(--icons-per-row), 0fr);
 		place-items: center;
 		height: 100%;
 		padding: 6px;

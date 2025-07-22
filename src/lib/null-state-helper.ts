@@ -41,5 +41,9 @@ export const defaultAppSettings: AppSettings = {
 	boxSprites: 'original',
 	font: 'pixel-font',
 	badgeCycleOption: 'default',
-	badgeDisplay: false
+	badgeDisplay: false,
+	conditionalBadgeDisplay: {
+		ribbon: '001-national-ribbon',
+		mark: 'absent-minded-mark'
+	}
 }

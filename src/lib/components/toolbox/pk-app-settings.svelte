@@ -5,6 +5,8 @@
 	import PkMarkSelector from '../ui/pk-mark-selector.svelte'
 	import PkRadioGroup from '../ui/pk-radio-group.svelte'
 	import PkRibbonSelector from '../ui/pk-ribbon-selector.svelte'
+	import { type RibbonsType } from '$lib/models/ribbons-models'
+	import { type MarksType } from '$lib/models/marks-models'
 
 	let appSettingsDialog: PkDialogElement
 
@@ -26,6 +28,26 @@
 
 	function updateBadgeCycleOption(newOption: string) {
 		appState.updateAppSettings({ badgeCycleOption: newOption as 'default' | 'conditional' })
+	}
+
+	// === Ribbon Condition ===
+	function updateRibbonCondition(newRibbonCondition: string) {
+		appState.updateAppSettings({
+			conditionalBadgeDisplay: {
+				...settings.conditionalBadgeDisplay,
+				ribbon: newRibbonCondition as RibbonsType
+			}
+		})
+	}
+
+	// === Mark Condition ===
+	function updateMarkCondition(newMarkCondition: string) {
+		appState.updateAppSettings({
+			conditionalBadgeDisplay: {
+				...settings.conditionalBadgeDisplay,
+				mark: newMarkCondition as MarksType
+			}
+		})
 	}
 
 	export function showAppSettingsDialog() {
@@ -168,13 +190,13 @@
 					<div class="pk-badge-cycle-pickers">
 						<PkRibbonSelector
 							disabled={settings.badgeCycleOption !== 'conditional'}
-							onUpdate={() => {}}
-							selectedRibbon={'001-national-ribbon'}
+							onUpdate={updateRibbonCondition}
+							selectedRibbon={settings.conditionalBadgeDisplay.ribbon}
 						/>
 						<PkMarkSelector
 							disabled={settings.badgeCycleOption !== 'conditional'}
-							onUpdate={() => {}}
-							selectedMark={'absent-minded-mark'}
+							onUpdate={updateMarkCondition}
+							selectedMark={settings.conditionalBadgeDisplay.mark}
 						/>
 					</div>
 				</div>

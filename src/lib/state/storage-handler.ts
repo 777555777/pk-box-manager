@@ -1,6 +1,8 @@
 import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 import { defaultAppSettings } from '../null-state-helper.ts'
+import { type RibbonsType } from '../models/ribbons-models.ts'
+import { type MarksType } from '../models/marks-models.ts'
 
 export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
 
@@ -55,6 +57,10 @@ export interface AppSettings {
 	font: 'pixel-font' | 'system-font'
 	badgeCycleOption: 'default' | 'conditional'
 	badgeDisplay: BadgeDisplayMode
+	conditionalBadgeDisplay: {
+		ribbon: RibbonsType
+		mark: MarksType
+	}
 }
 
 class StorageHandler {

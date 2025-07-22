@@ -134,6 +134,7 @@
 			width: calc(var(--icon-original-size) * 1px);
 			height: calc(var(--icon-original-size) * 1px);
 			transform: scale(var(--icon-scale-factor));
+			margin-bottom: 2px;
 		}
 	}
 
