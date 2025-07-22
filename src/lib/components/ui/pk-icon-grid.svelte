@@ -96,7 +96,7 @@
 
 		&.fixed-height {
 			min-height: calc(var(--calculated-height) * 1px);
-			gap: 1rem;
+			gap: 0.5rem;
 		}
 	}
 

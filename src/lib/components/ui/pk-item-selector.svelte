@@ -40,7 +40,7 @@
 	let calculatedHeight = $derived.by(() => {
 		const buttonSize = 44
 		const paginationHeight = 60
-		const gap = 16
+		const gap = 8
 		const maxRows = Math.ceil(itemsPerPage / iconsPerRow)
 		const needsPagination = Object.entries(data).length > itemsPerPage
 		const gridHeight = maxRows * buttonSize
