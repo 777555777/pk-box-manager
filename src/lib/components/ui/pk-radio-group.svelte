@@ -17,8 +17,6 @@
 		onUpdate?: (value: string) => void
 		id?: string
 	} = $props()
-
-	$inspect('currentOption: ', currentOption)
 </script>
 
 <section class="pk-tab-group">

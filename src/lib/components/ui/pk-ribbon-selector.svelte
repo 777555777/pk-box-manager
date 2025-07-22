@@ -32,7 +32,7 @@
 	{itemsPerPage}
 	iconsPerRow={5}
 	iconOriginalSize={40}
-	iconTargetSize={48}
+	iconTargetSize={38}
 />
 
 <style>

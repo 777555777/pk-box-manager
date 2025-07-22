@@ -21,7 +21,6 @@
 	}
 
 	let displayName = $derived(capitalizeFirstLetter(formatPokemonDisplayName(idEntry)))
-	$inspect('Display Name:', displayName)
 	let sizeClass = $derived(getTextSizeClass(displayName))
 </script>
 
