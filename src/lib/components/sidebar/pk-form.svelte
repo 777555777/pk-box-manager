@@ -77,6 +77,7 @@
 
 	.pk-gen {
 		display: flex;
+		flex-direction: column-reverse;
 		align-items: center;
 		justify-content: center;
 		gap: 0.3rem;
