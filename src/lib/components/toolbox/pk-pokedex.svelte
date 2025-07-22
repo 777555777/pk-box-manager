@@ -117,7 +117,7 @@
 <style>
 	.pk-dialog-content {
 		padding-inline: 2rem;
-		padding-bottom: 2rem;
+		padding-bottom: 1rem;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		place-items: center;
@@ -138,7 +138,7 @@
 		border-image-width: 9px;
 
 		padding: 1.5rem;
-		margin-top: 2rem;
+		margin-top: 1rem;
 		margin-inline: 2rem;
 		position: relative;
 		overflow: hidden;
