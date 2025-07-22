@@ -80,9 +80,12 @@
 </dialog>
 
 <style>
+	:root {
+		--dialog-min-width: 680px;
+	}
+
 	dialog {
 		--dialog-spacing: 1rem;
-		--dialog-min-width: 680px;
 
 		position: fixed;
 		top: 50%;

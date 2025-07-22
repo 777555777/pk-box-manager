@@ -89,6 +89,7 @@
 	onConfirm={() => {}}
 	onCancel={() => {}}
 	cancelBtnText="Close"
+	--dialog-min-width="960px"
 />
 
 {#snippet appSettingsDialogContent()}
