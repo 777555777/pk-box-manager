@@ -12,6 +12,7 @@
 		activeItems = new Set(),
 		showBackground = true,
 		alwaysActive = false,
+		fixedHeight = false,
 		id = crypto.randomUUID()
 	}: {
 		data: Record<string, any>
@@ -23,6 +24,7 @@
 		activeItems: Set<string>
 		showBackground?: boolean
 		alwaysActive?: boolean
+		fixedHeight?: boolean
 		id?: string
 	} = $props()
 
@@ -43,8 +45,14 @@
 	}
 </script>
 
-<section class="container-grid {showBackground ? '' : 'no-container-padding'}">
-	<div class="pk-icon-grid {showBackground ? '' : 'no-background'}">
+<section
+	class="container-grid {showBackground ? '' : 'no-container-padding'} 
+		{fixedHeight ? 'fixed-height' : ''}"
+>
+	<div
+		class="pk-icon-grid {showBackground ? '' : 'no-background'} 
+		{fixedHeight ? 'fixed-grid-height' : ''}"
+	>
 		{#each displayData as [key, value]: [string, any]}
 			<button class="" {disabled} onclick={() => !disabled && handleItemClick(key, value)}>
 				<img
@@ -85,11 +93,16 @@
 		&.no-container-padding {
 			padding: 0;
 		}
+
+		&.fixed-height {
+			min-height: calc(var(--calculated-height) * 1px);
+			gap: 1rem;
+		}
 	}
 
 	.pk-icon-grid {
 		display: grid;
-		grid-template-columns: repeat(var(--icons-per-row), 0fr);
+		grid-template-columns: repeat(var(--icons-per-row), 1fr);
 		place-items: center;
 		height: 100%;
 		padding: 6px;
@@ -144,8 +157,8 @@
 
 	/* Icon Button Styles */
 	button {
-		width: calc(var(--icon-target-size) * 1px);
-		height: calc(var(--icon-target-size) * 1px);
+		width: 44px;
+		height: 44px;
 		border: none;
 		display: flex;
 		align-items: center;

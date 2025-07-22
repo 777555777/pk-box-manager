@@ -33,9 +33,19 @@
 		id?: string
 	} = $props()
 
-	$inspect(iconTargetSize, iconOriginalSize, iconsPerRow)
 	let trayRef = $state<HTMLElement | null>(null)
 	let showTray = $derived(appState.isDropdownOpen(id))
+
+	// Calculate the height of the selector tray content based on itemsPerPage and iconsPerRow
+	let calculatedHeight = $derived.by(() => {
+		const buttonSize = 44
+		const paginationHeight = 60
+		const gap = 16
+		const maxRows = Math.ceil(itemsPerPage / iconsPerRow)
+		const needsPagination = Object.entries(data).length > itemsPerPage
+		const gridHeight = maxRows * buttonSize
+		return gridHeight + (needsPagination ? paginationHeight + gap : 0)
+	})
 
 	function toggleSelectorTray(event: MouseEvent) {
 		event.stopPropagation()
@@ -94,10 +104,12 @@
 				{activeItems}
 				showBackground={false}
 				alwaysActive={true}
+				fixedHeight={true}
 				--icons-per-row={iconsPerRow}
 				--icon-original-size={iconOriginalSize}
 				--icon-target-size={iconTargetSize}
 				--icon-scale-factor={iconTargetSize / iconOriginalSize}
+				--calculated-height={calculatedHeight}
 			/>
 		</section>
 	{/if}
@@ -131,7 +143,6 @@
 		padding: 6px;
 
 		position: absolute;
-		top: 100%;
 		z-index: 2;
 
 		image-rendering: pixelated;
