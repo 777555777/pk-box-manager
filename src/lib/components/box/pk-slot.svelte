@@ -57,6 +57,10 @@
 		height: calc(var(--target-size) * 1px);
 		cursor: pointer;
 
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
 		position: relative;
 		overflow: hidden;
 
@@ -86,12 +90,14 @@
 			background-color: hsla(220, 100%, 85%, 0.25);
 		}
 
-		.pk-slot-image {
+		img.pk-slot-image {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(var(--scale-factor));
 			width: calc(var(--original-size) * 1px);
 			height: calc(var(--original-size) * 1px);
 			object-fit: none;
-			transform: scale(var(--scale-factor));
-			transform-origin: top left;
 
 			image-rendering: auto;
 			filter: brightness(var(--grayscale));
