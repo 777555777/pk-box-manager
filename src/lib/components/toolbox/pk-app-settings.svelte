@@ -96,7 +96,7 @@
 	<section class="pk-dialog-content">
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
-			<fieldset class="pk-language-options">
+			<fieldset class="pk-language-options" disabled>
 				<legend>Language</legend>
 				<div class="pk-radio-group">
 					<PkRadioGroup
@@ -107,7 +107,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-box-sprite-options">
+			<fieldset class="pk-box-sprite-options" disabled>
 				<legend>Box Sprites</legend>
 				<div class="pk-box-sprite-content">
 					<PkRadioGroup
