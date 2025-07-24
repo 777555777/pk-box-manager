@@ -23,6 +23,7 @@ export class PkState {
 	private boxOrderCache: Record<string, ServerBoxOrder[]> = $state({})
 	private pokedexState: DexStorage = $state(pokedexNullState)
 	private selectedPokemon: PokemonState = $state(pokemonNullState)
+	private pokedexList = $state<DexStorage[]>([])
 
 	async loadBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
 		// Check if the BoxOrder is cached
@@ -137,6 +138,21 @@ export class PkState {
 
 	getCurrentPokedexState(): DexStorage {
 		return this.pokedexState || pokedexNullState
+	}
+
+	/**
+	 * Get all available Pokedexes from localStorage
+	 */
+	public loadAllPokedexes(): DexStorage[] {
+		this.pokedexList = storageHandler.loadEveryPokedex()
+		return this.pokedexList
+	}
+
+	/**
+	 * Get all available Pokedexes from the current state
+	 */
+	public getAllPokedexes(): DexStorage[] {
+		return this.pokedexList
 	}
 
 	// ================

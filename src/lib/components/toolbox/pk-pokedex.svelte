@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
+	import { type DexStorage } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
@@ -7,7 +7,7 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
 
-	// Placeholder, replace with actual background images
+	// TODO: Placeholder, replace with actual background images
 	const backgroundImages = [
 		'/ui/HGSS_Ilex_Forest-Day.png',
 		'/ui/HGSS_National_Park-Day.png',
@@ -17,7 +17,7 @@
 
 	// Get current selected dex name - use derived for reactive reading
 	let selectedDexName = $derived(appState.getCurrentPokedexName())
-	let pokedexList = $state(storageHandler.loadEveryPokedex())
+	let pokedexList = $derived(pkState.getAllPokedexes())
 
 	let pokedexDialog: PkDialogElement
 
@@ -27,9 +27,6 @@
 
 	async function handlePokedexDelete(isSelected: boolean, dexName: string) {
 		await pkState.resetPokedex(dexName, isSelected)
-
-		// Refresh the pokedex list to reflect the reset
-		pokedexList = storageHandler.loadEveryPokedex()
 	}
 
 	async function handlePokedexSelect(dexName: string) {
@@ -41,9 +38,6 @@
 		// Set the new pokedex name after the switch so that +page.svelte renders again
 		// when the boxorder is in the cache, preventing duplicate requests.
 		appState.setCurrentPokedexName(dexName)
-
-		// Force a refresh of the pokedex list to ensure UI updates
-		pokedexList = storageHandler.loadEveryPokedex()
 	}
 
 	function getPokedexCounts(pokedex: DexStorage) {
