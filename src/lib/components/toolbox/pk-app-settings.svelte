@@ -19,15 +19,15 @@
 	}
 
 	function updateBoxSprites(newBoxSprites: string) {
-		appState.updateAppSettings({ boxSprites: newBoxSprites as 'original' | 'scaled' | 'classic' })
+		appState.updateAppSettings({ boxSprites: newBoxSprites as 'default' | 'scaled' | 'classic' })
 	}
 
 	function updateFont(newFont: string) {
-		appState.updateAppSettings({ font: newFont as 'pixel-font' | 'system-font' })
+		appState.updateAppSettings({ font: newFont as 'pixel' | 'system' })
 	}
 
 	function updateBadgeCycleOption(newOption: string) {
-		appState.updateAppSettings({ badgeCycleOption: newOption as 'default' | 'conditional' })
+		appState.updateAppSettings({ badgeCycleOption: newOption as 'default' | 'filter' })
 	}
 
 	// === Ribbon Condition ===
@@ -56,16 +56,16 @@
 
 	const badgeCycleConfig = [
 		{ tabId: 'default', label: 'Default' },
-		{ tabId: 'conditional', label: 'Conditional' }
+		{ tabId: 'filter', label: 'Filter' }
 	]
 
 	const fontConfig = [
-		{ tabId: 'pixel-font', label: 'Pixel Font' },
-		{ tabId: 'system-font', label: 'System Font' }
+		{ tabId: 'pixel', label: 'Pixel' },
+		{ tabId: 'system', label: 'System' }
 	]
 
 	const boxSpriteConfig = [
-		{ tabId: 'original', label: 'Original' },
+		{ tabId: 'default', label: 'Default' },
 		{ tabId: 'scaled', label: 'Scaled' },
 		{ tabId: 'classic', label: 'Classic' }
 	]
@@ -77,7 +77,7 @@
 
 	// Reactive statement to update CSS variable when font changes
 	$effect(() => {
-		const fontValue = settings.font === 'pixel-font' ? "'vt323regular'" : 'var(--system-fonts)'
+		const fontValue = settings.font === 'pixel' ? "'vt323regular'" : 'var(--system-fonts)'
 		document.documentElement.style.setProperty('--primary-font-family', fontValue)
 	})
 </script>
@@ -190,12 +190,12 @@
 
 					<div class="pk-badge-cycle-pickers">
 						<PkRibbonSelector
-							disabled={settings.badgeCycleOption !== 'conditional'}
+							disabled={settings.badgeCycleOption !== 'filter'}
 							onUpdate={updateRibbonCondition}
 							selectedRibbon={settings.conditionalBadgeDisplay.ribbon}
 						/>
 						<PkMarkSelector
-							disabled={settings.badgeCycleOption !== 'conditional'}
+							disabled={settings.badgeCycleOption !== 'filter'}
 							onUpdate={updateMarkCondition}
 							selectedMark={settings.conditionalBadgeDisplay.mark}
 						/>

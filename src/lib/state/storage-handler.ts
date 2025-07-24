@@ -53,9 +53,9 @@ export interface BoxData {
 
 export interface AppSettings {
 	language: 'en' | 'de'
-	boxSprites: 'original' | 'scaled' | 'classic'
-	font: 'pixel-font' | 'system-font'
-	badgeCycleOption: 'default' | 'conditional'
+	boxSprites: 'default' | 'scaled' | 'classic'
+	font: 'pixel' | 'system'
+	badgeCycleOption: 'default' | 'filter'
 	badgeDisplay: BadgeDisplayMode
 	conditionalBadgeDisplay: {
 		ribbon: RibbonsType

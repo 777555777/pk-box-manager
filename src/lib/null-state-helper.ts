@@ -38,8 +38,8 @@ export const pokedexNullState = {
 
 export const defaultAppSettings: AppSettings = {
 	language: 'en',
-	boxSprites: 'original',
-	font: 'pixel-font',
+	boxSprites: 'default',
+	font: 'pixel',
 	badgeCycleOption: 'default',
 	badgeDisplay: false,
 	conditionalBadgeDisplay: {
