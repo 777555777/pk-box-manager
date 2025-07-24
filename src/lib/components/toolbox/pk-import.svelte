@@ -38,6 +38,9 @@
 					if (validDex.name === appState.getCurrentPokedexName()) {
 						pkState.switchPokedex(validDex.name)
 					}
+
+					// Update the pokedex list in memory
+					pkState.loadAllPokedexes()
 				}
 			} catch (error) {
 				console.error(error)
@@ -57,6 +60,9 @@
 			if (pendingImport.name === appState.getCurrentPokedexName()) {
 				pkState.switchPokedex(pendingImport.name)
 			}
+
+			// Update the pokedex list in memory
+			pkState.loadAllPokedexes()
 
 			pendingImport = null
 		}

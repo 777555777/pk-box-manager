@@ -1,5 +1,6 @@
 import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../null-state-helper.ts'
 import { getIdentifier } from '../spriteheet-helper.ts'
+import { supportedPokedexList } from '../init-dex-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
@@ -141,10 +142,38 @@ export class PkState {
 	}
 
 	/**
-	 * Get all available Pokedexes from localStorage
+	 * Load all available Pokedexes from localStorage and server-supported dexes
+	 * This includes both local dexes with real editing state and server-supported dexes without real editing state
 	 */
 	public loadAllPokedexes(): DexStorage[] {
-		this.pokedexList = storageHandler.loadEveryPokedex()
+		// Get all dexes from localStorage
+		const localDexes = storageHandler.loadEveryPokedex()
+
+		// Create a Set of existing dex names for quick lookup
+		const existingDexNames = new Set(localDexes.map((dex) => dex.name))
+
+		// Add server-supported dexes that aren't in localStorage yet
+		const allDexes: DexStorage[] = [...localDexes]
+
+		for (const [dexName, dexConfig] of Object.entries(supportedPokedexList)) {
+			// Only add if not already in localStorage
+			if (!existingDexNames.has(dexName)) {
+				// Create a placeholder DexStorage for unloaded dexes
+				const placeholderDex: DexStorage = {
+					version: '1.0.0', // Default version
+					name: dexName,
+					displayName: dexConfig.displayName,
+					boxes: [],
+					pokemon: {}
+				}
+				allDexes.push(placeholderDex)
+			}
+		}
+
+		// Pokedex list now includes local dexes that have real editing state and
+		// server-supported dexes that are not yet loaded and dont have any real editing state
+		this.pokedexList = allDexes
+		console.log('allDexes', allDexes)
 		return this.pokedexList
 	}
 

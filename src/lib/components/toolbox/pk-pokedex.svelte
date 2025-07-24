@@ -27,6 +27,8 @@
 
 	async function handlePokedexDelete(isSelected: boolean, dexName: string) {
 		await pkState.resetPokedex(dexName, isSelected)
+		// Reload the pokedex list to reflect the reset
+		pkState.loadAllPokedexes()
 	}
 
 	async function handlePokedexSelect(dexName: string) {
@@ -38,6 +40,9 @@
 		// Set the new pokedex name after the switch so that +page.svelte renders again
 		// when the boxorder is in the cache, preventing duplicate requests.
 		appState.setCurrentPokedexName(dexName)
+
+		// Reload the pokedex list to update the dialog with the newly loaded dex
+		pkState.loadAllPokedexes()
 	}
 
 	function getPokedexCounts(pokedex: DexStorage) {

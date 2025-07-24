@@ -84,6 +84,7 @@
 			onclick={() => {
 				isDeleting = true
 			}}
+			disabled={counter.limit === 0}
 		>
 			<img src="/ui/trash-alt-solid.svg" alt="" />
 		</button>
@@ -103,18 +104,20 @@
 {/snippet}
 
 {#snippet cardImageStatOverlay()}
-	<div class="pk-dex-card-overlay">
-		<div class="pk-dex-card-stats text-small">
-			<div class="stat-item">
-				<img src="/ui/tag.svg" alt="Caught" />
-				<span>{counter.count}/{counter.limit}</span>
-			</div>
-			<div class="stat-item">
-				<img src="/ui/sparkle.svg" alt="Seen" />
-				<span>{counter.shinyCount}/{counter.limit}</span>
+	{#if counter.limit !== 0}
+		<div class="pk-dex-card-overlay">
+			<div class="pk-dex-card-stats text-small">
+				<div class="stat-item">
+					<img src="/ui/tag.svg" alt="Caught" />
+					<span>{counter.count}/{counter.limit}</span>
+				</div>
+				<div class="stat-item">
+					<img src="/ui/sparkle.svg" alt="Seen" />
+					<span>{counter.shinyCount}/{counter.limit}</span>
+				</div>
 			</div>
 		</div>
-	</div>
+	{/if}
 {/snippet}
 
 <style>
