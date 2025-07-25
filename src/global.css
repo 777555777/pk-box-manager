@@ -15,7 +15,7 @@ body {
 	/* 3. Add accessible line-height */
 	line-height: 1.5;
 	/* 4. Set body heigt */
-	height: 100vh;
+	height: 100dvh;
 }
 
 /* 5. Improve media defaults */

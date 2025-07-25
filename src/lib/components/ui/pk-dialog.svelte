@@ -116,6 +116,7 @@
 		gap: var(--dialog-spacing);
 		margin-block: calc(var(--dialog-spacing) * 2);
 		flex: 1;
+		padding-inline: 1rem;
 
 		.pk-dialog-description p {
 			background-color: red;

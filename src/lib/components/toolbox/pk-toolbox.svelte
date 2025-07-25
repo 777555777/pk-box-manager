@@ -66,7 +66,7 @@
 		<div class="pk-pokedex-data">
 			<div class="pk-toolbox-btn-group">
 				<button class="pk-button" onclick={openPokedexDialog}
-					><img src="/ui/tag.svg" alt="" />
+					><img src="/ui/folder-open.svg" alt="" />
 					<span>Pokedex</span></button
 				>
 			</div>

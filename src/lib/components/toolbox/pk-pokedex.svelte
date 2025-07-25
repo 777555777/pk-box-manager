@@ -71,7 +71,7 @@
 />
 
 {#snippet pokedexDialogContent()}
-	<section class="pk-dialog-content">
+	<section class="pk-pokedex-section">
 		{#each pokedexList as pokedex, index}
 			<PkDexCard
 				dexTitle={pokedex.displayName}
@@ -114,9 +114,9 @@
 {/snippet}
 
 <style>
-	.pk-dialog-content {
-		padding-inline: 2rem;
+	.pk-pokedex-section {
 		padding-bottom: 1rem;
+		padding-inline: 1rem;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		place-items: center;
@@ -138,9 +138,9 @@
 
 		padding: 1.5rem;
 		margin-top: 1rem;
-		margin-inline: 2rem;
 		position: relative;
 		overflow: hidden;
+		margin-inline: 1rem;
 
 		display: flex;
 		flex-direction: column;
