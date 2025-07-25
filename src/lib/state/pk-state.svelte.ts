@@ -163,12 +163,25 @@ export class PkState {
 					version: '1.0.0', // Default version
 					name: dexName,
 					displayName: dexConfig.displayName,
+					coverImage: dexConfig.coverImage,
+					sortOrder: dexConfig.sortOrder,
 					boxes: [],
 					pokemon: {}
 				}
 				allDexes.push(placeholderDex)
 			}
 		}
+
+		// Sort by sortOrder for deterministic display
+		// First by type (server before client), then by value within type
+		allDexes.sort((a, b) => {
+			// Server dexes come first
+			if (a.sortOrder.type !== b.sortOrder.type) {
+				return a.sortOrder.type === 'server' ? -1 : 1
+			}
+			// Within same type, sort by value
+			return a.sortOrder.value - b.sortOrder.value
+		})
 
 		// Pokedex list now includes local dexes that have real editing state and
 		// server-supported dexes that are not yet loaded and dont have any real editing state

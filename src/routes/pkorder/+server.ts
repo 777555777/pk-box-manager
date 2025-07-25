@@ -1,5 +1,17 @@
 import boxOrderNational from './order/national-dex.json' with { type: 'json' }
 import boxOrderNationalForms from './order/national-dex-forms.json' with { type: 'json' }
+import boxOrderGeneration1 from './order/generation-1.json' with { type: 'json' }
+import boxOrderGeneration1Forms from './order/generation-1-forms.json' with { type: 'json' }
+import boxOrderGeneration2 from './order/generation-2.json' with { type: 'json' }
+import boxOrderGeneration2Forms from './order/generation-2-forms.json' with { type: 'json' }
+import boxOrderGeneration3 from './order/generation-3.json' with { type: 'json' }
+import boxOrderGeneration3Forms from './order/generation-3-forms.json' with { type: 'json' }
+import boxOrderGeneration4 from './order/generation-4.json' with { type: 'json' }
+import boxOrderGeneration4Forms from './order/generation-4-forms.json' with { type: 'json' }
+import boxOrderGeneration5 from './order/generation-5.json' with { type: 'json' }
+import boxOrderGeneration5Forms from './order/generation-5-forms.json' with { type: 'json' }
+import boxOrderGeneration6 from './order/generation-6.json' with { type: 'json' }
+import boxOrderGeneration6Forms from './order/generation-6-forms.json' with { type: 'json' }
 
 export interface ServerBoxOrder {
 	title: string
@@ -14,7 +26,19 @@ export interface PokemonEntry {
 
 const dexNames: Record<string, ServerBoxOrder[]> = {
 	'national-dex.json': boxOrderNational,
-	'national-dex-forms.json': boxOrderNationalForms
+	'national-dex-forms.json': boxOrderNationalForms,
+	'generation-1.json': boxOrderGeneration1,
+	'generation-1-forms.json': boxOrderGeneration1Forms,
+	'generation-2.json': boxOrderGeneration2,
+	'generation-2-forms.json': boxOrderGeneration2Forms,
+	'generation-3.json': boxOrderGeneration3,
+	'generation-3-forms.json': boxOrderGeneration3Forms,
+	'generation-4.json': boxOrderGeneration4,
+	'generation-4-forms.json': boxOrderGeneration4Forms,
+	'generation-5.json': boxOrderGeneration5,
+	'generation-5-forms.json': boxOrderGeneration5Forms,
+	'generation-6.json': boxOrderGeneration6,
+	'generation-6-forms.json': boxOrderGeneration6Forms
 }
 
 export function GET(request: Request) {

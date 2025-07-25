@@ -13,10 +13,74 @@ export const initialAppDefaults = {
 
 export const supportedPokedexList = {
 	'national-dex.json': {
-		displayName: 'National Dex'
+		displayName: 'National Dex',
+		coverImage: 'national-dex-cover',
+		sortOrder: { type: 'server', value: 1 }
 	},
 	'national-dex-forms.json': {
-		displayName: 'National Dex with forms'
+		displayName: 'National Dex with forms',
+		coverImage: 'national-dex-forms-cover',
+		sortOrder: { type: 'server', value: 2 }
+	},
+	'generation-1.json': {
+		displayName: 'Generation 1',
+		coverImage: 'gen1-cover',
+		sortOrder: { type: 'server', value: 10 }
+	},
+	'generation-1-forms.json': {
+		displayName: 'Generation 1 with forms',
+		coverImage: 'gen1-forms-cover',
+		sortOrder: { type: 'server', value: 11 }
+	},
+	'generation-2.json': {
+		displayName: 'Generation 2',
+		coverImage: 'gen2-cover',
+		sortOrder: { type: 'server', value: 20 }
+	},
+	'generation-2-forms.json': {
+		displayName: 'Generation 2 with forms',
+		coverImage: 'gen2-forms-cover',
+		sortOrder: { type: 'server', value: 21 }
+	},
+	'generation-3.json': {
+		displayName: 'Generation 3',
+		coverImage: 'gen3-cover',
+		sortOrder: { type: 'server', value: 30 }
+	},
+	'generation-3-forms.json': {
+		displayName: 'Generation 3 with forms',
+		coverImage: 'gen3-forms-cover',
+		sortOrder: { type: 'server', value: 31 }
+	},
+	'generation-4.json': {
+		displayName: 'Generation 4',
+		coverImage: 'gen4-cover',
+		sortOrder: { type: 'server', value: 40 }
+	},
+	'generation-4-forms.json': {
+		displayName: 'Generation 4 with forms',
+		coverImage: 'gen4-forms-cover',
+		sortOrder: { type: 'server', value: 41 }
+	},
+	'generation-5.json': {
+		displayName: 'Generation 5',
+		coverImage: 'gen5-cover',
+		sortOrder: { type: 'server', value: 50 }
+	},
+	'generation-5-forms.json': {
+		displayName: 'Generation 5 with forms',
+		coverImage: 'gen5-forms-cover',
+		sortOrder: { type: 'server', value: 51 }
+	},
+	'generation-6.json': {
+		displayName: 'Generation 6',
+		coverImage: 'gen6-cover',
+		sortOrder: { type: 'server', value: 60 }
+	},
+	'generation-6-forms.json': {
+		displayName: 'Generation 6 with forms',
+		coverImage: 'gen6-forms-cover',
+		sortOrder: { type: 'server', value: 61 }
 	}
 } as const
 
@@ -84,10 +148,13 @@ function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string,
 
 // prettier-ignore
 function addDexMetaData(initialBoxes: BoxData[], pokemonList: Record<string, PokemonState>, dexName: string): DexStorage {
+	const dexConfig = supportedPokedexList[dexName as DexType]
 	return {
 		version: '1.0.0',
 		name: dexName,
-		displayName: supportedPokedexList[dexName as DexType].displayName,
+		displayName: dexConfig.displayName,
+		coverImage: dexConfig.coverImage,
+		sortOrder: dexConfig.sortOrder,
 		pokemon: pokemonList,
 		boxes: initialBoxes
 	}

@@ -31,6 +31,43 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 		throw new Error('Missing or invalid "displayName" property in the import file.')
 	}
 
+	// 2.1 Validate or set default coverImage
+	if (!dexData.coverImage || typeof dexData.coverImage !== 'string') {
+		// Set default based on supported pokedex list or fallback
+		const dexConfig = supportedPokedexList[dexData.name as keyof typeof supportedPokedexList]
+		if (dexConfig) {
+			dexData.coverImage = dexConfig.coverImage
+			console.warn(`Missing coverImage for ${dexData.name}, using default: ${dexConfig.coverImage}`)
+		} else {
+			dexData.coverImage = 'default-cover'
+			console.warn(`Missing coverImage for ${dexData.name}, using fallback: default-cover`)
+		}
+	}
+
+	// 2.2 Validate or set default sortOrder
+	if (!dexData.sortOrder || typeof dexData.sortOrder !== 'object' || dexData.sortOrder === null) {
+		// Set default based on supported pokedex list or fallback
+		const dexConfig = supportedPokedexList[dexData.name as keyof typeof supportedPokedexList]
+		if (dexConfig) {
+			dexData.sortOrder = dexConfig.sortOrder
+			console.warn(
+				`Missing sortOrder for ${dexData.name}, using default: ${JSON.stringify(dexConfig.sortOrder)}`
+			)
+		} else {
+			// For user-created or unknown dexes, use client type with high value
+			dexData.sortOrder = { type: 'client', value: 1000 }
+			console.warn(`Missing sortOrder for ${dexData.name}, using fallback: client/1000`)
+		}
+	} else {
+		// Validate existing sortOrder structure
+		if (!dexData.sortOrder.type || !['server', 'client'].includes(dexData.sortOrder.type)) {
+			throw new Error('Invalid "sortOrder.type" property - must be "server" or "client".')
+		}
+		if (typeof dexData.sortOrder.value !== 'number') {
+			throw new Error('Invalid "sortOrder.value" property - must be a number.')
+		}
+	}
+
 	// 2.5 Check whether the data refers to a supported Dex
 	if (!(dexData.name in supportedPokedexList)) {
 		throw new Error(

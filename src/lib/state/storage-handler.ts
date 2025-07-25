@@ -38,6 +38,11 @@ export interface DexStorage {
 	version: string
 	name: string
 	displayName: string
+	coverImage: string
+	sortOrder: {
+		type: 'server' | 'client'
+		value: number
+	}
 	pokemon: Record<string, PokemonState>
 	boxes: BoxData[]
 }
