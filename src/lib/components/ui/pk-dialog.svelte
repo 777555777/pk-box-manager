@@ -4,6 +4,7 @@
 
 	type ConfirmCallback = () => void
 	type DismissCallback = () => void
+	type DialogSize = 'S' | 'M' | 'L'
 
 	export interface PkDialogElement {
 		showDialog: Function
@@ -16,6 +17,7 @@
 		onCancel: DismissCallback
 		cancelBtnText?: string | undefined
 		okBtnText?: string | undefined
+		size?: DialogSize
 	}
 
 	let {
@@ -24,7 +26,8 @@
 		onConfirm = () => {},
 		onCancel = () => {},
 		cancelBtnText,
-		okBtnText
+		okBtnText,
+		size = 'S'
 	}: PkDialog = $props()
 
 	let dialogElement: HTMLDialogElement
@@ -47,7 +50,7 @@
 	}
 </script>
 
-<dialog class="pk-ui-section" bind:this={dialogElement}>
+<dialog class="pk-ui-section dialog-size-{size}" bind:this={dialogElement}>
 	<section class="pk-ui-section-inner">
 		<section class="pk-dialog-header">
 			<h2>{headline}</h2>
@@ -81,7 +84,9 @@
 
 <style>
 	:root {
-		--dialog-min-width: 680px;
+		--dialog-size-s: 560px;
+		--dialog-size-m: 680px;
+		--dialog-size-l: 960px;
 	}
 
 	dialog {
@@ -92,7 +97,6 @@
 		left: 50%;
 		transform: translate(-50%, -55%);
 		overflow: visible;
-		min-width: var(--dialog-min-width);
 		max-height: 90vh;
 		max-width: 90vw;
 		color: var(--ui-text-color);
@@ -104,10 +108,30 @@
 		}
 	}
 
+	/* Dialog Größen */
+	.dialog-size-S {
+		width: var(--dialog-size-s);
+		min-width: var(--dialog-size-s);
+	}
+
+	.dialog-size-M {
+		width: var(--dialog-size-m);
+		min-width: var(--dialog-size-m);
+	}
+
+	.dialog-size-L {
+		width: var(--dialog-size-l);
+		min-width: var(--dialog-size-l);
+	}
+
 	.pk-dialog-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+
+		button {
+			margin-left: 2rem;
+		}
 	}
 
 	.pk-dialog-content {
@@ -148,11 +172,34 @@
 		}
 	}
 
+	/* Mobile - alle Dialoge werden schmaler */
 	@media (max-width: 768px) {
+		.dialog-size-S,
+		.dialog-size-M,
+		.dialog-size-L {
+			width: 90vw;
+			min-width: 90vw;
+		}
+
 		dialog {
-			--dialog-min-width: 90vw;
 			margin-top: -5vh;
 			max-height: 90vh;
+		}
+	}
+
+	/* Tablet - L wird zu M, M bleibt M, S bleibt S */
+	@media (max-width: 1024px) {
+		.dialog-size-L {
+			width: var(--dialog-size-m);
+			min-width: var(--dialog-size-m);
+		}
+	}
+
+	/* Sehr kleine Bildschirme - S wird noch kleiner */
+	@media (max-width: 520px) {
+		.dialog-size-S {
+			width: 95vw;
+			min-width: 95vw;
 		}
 	}
 </style>

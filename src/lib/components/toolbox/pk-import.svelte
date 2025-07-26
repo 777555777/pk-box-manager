@@ -107,6 +107,7 @@
 	onCancel={() => {}}
 	okBtnText="Override"
 	cancelBtnText="Cancel"
+	size="S"
 />
 
 {#snippet errorDialogContent()}
@@ -122,6 +123,7 @@
 	onConfirm={() => {}}
 	onCancel={() => {}}
 	okBtnText="Ok"
+	size="S"
 />
 
 <style>

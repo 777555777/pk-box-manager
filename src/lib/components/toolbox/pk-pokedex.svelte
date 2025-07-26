@@ -100,8 +100,8 @@
 	onConfirm={() => {}}
 	onCancel={() => {}}
 	cancelBtnText="Close"
+	size="L"
 />
-
 {#snippet pokedexDialogContent()}
 	<fieldset class="pk-dex-filter-options">
 		<legend>Pokedex Filters</legend>

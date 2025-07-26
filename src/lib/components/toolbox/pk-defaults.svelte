@@ -49,8 +49,8 @@
 	onConfirm={() => {}}
 	onCancel={() => {}}
 	okBtnText="Close"
+	size="M"
 />
-
 {#snippet defaultsDialogContent()}
 	<section class="pk-dialog-content">
 		<section class="pk-dialog-description">
