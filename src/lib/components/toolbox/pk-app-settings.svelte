@@ -241,7 +241,6 @@
 			padding: 0.5rem 1rem;
 
 			legend {
-				margin-bottom: 0.5rem;
 				padding-inline: 0.5rem;
 			}
 

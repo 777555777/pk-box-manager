@@ -52,44 +52,43 @@
 	size="M"
 />
 {#snippet defaultsDialogContent()}
-	<section class="pk-dialog-content">
+	<section class="pk-dialog-section">
 		<section class="pk-dialog-description">
 			<p>
-				Configure default settings that will be automatically applied to a Pokémon when it is first
-				marked as captured
+				This menu allows you to set default values for new Pokémon. These defaults will be applied
+				when you mark a Pokémon as captured for the first time.
 			</p>
 		</section>
 
-		<button class="pk-button" onclick={resetDefaults} {disabled}
-			><span>Restore defaults</span></button
-		>
-
-		<section class="pk-defaults">
-			<div class="pk-input-group">
-				<!-- Game -->
-				<PkGameSelector
-					label="Caught in"
-					onUpdate={updateCaughtIn}
-					value={appState.getAppDefaults().caughtIn}
+		<fieldset class="pk-defaults">
+			<legend>Default Settings</legend>
+			<div class="pk-btn-group">
+				<!-- Ball -->
+				<PkBallSelector
+					onUpdate={updatePokeball}
+					selectedBall={appState.getAppDefaults().ball as BallsType}
 				/>
-				<div class="pk-btn-group">
-					<!-- Shiny -->
-					<PkToggle
-						icon="/ui/sparkle.svg"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						label="Shiny"
-						hideLabel={false}
-						onUpdate={toggleShiny}
-						checked={appState.getAppDefaults().shiny}
-					/>
 
-					<!-- Ball -->
-					<PkBallSelector
-						onUpdate={updatePokeball}
-						selectedBall={appState.getAppDefaults().ball as BallsType}
-					/>
-				</div>
+				<!-- Shiny -->
+				<PkToggle
+					icon="/ui/sparkle.svg"
+					activeColor="hsla(125, 100%, 30%, 0.55)"
+					hideLabel={true}
+					onUpdate={toggleShiny}
+					checked={appState.getAppDefaults().shiny}
+				/>
+
+				<button class="pk-button" onclick={resetDefaults} {disabled}>
+					<img src="/ui/reset.svg" alt="" /><span>Reset defaults</span>
+				</button>
 			</div>
+
+			<!-- Game -->
+			<PkGameSelector
+				label="Caught in"
+				onUpdate={updateCaughtIn}
+				value={appState.getAppDefaults().caughtIn}
+			/>
 
 			<!-- Comment -->
 			<PkTextarea
@@ -98,45 +97,62 @@
 				value={appState.getAppDefaults().comment}
 				debounceTime={250}
 			/>
-		</section>
+		</fieldset>
 	</section>
 {/snippet}
 
 <style>
-	.pk-dialog-content {
+	fieldset {
+		border: 2px solid #57808e;
+		border-radius: 5px;
+		padding: 0.5rem 1rem;
+
+		legend {
+			padding-inline: 0.5rem;
+		}
+
+		:global(.pk-tab-group) {
+			margin: 0;
+		}
+	}
+
+	.pk-dialog-section {
 		display: flex;
 		flex-direction: column;
 		gap: var(--dialog-spacing);
 
 		.pk-dialog-description {
-			margin-bottom: 1rem;
-
 			p {
 				line-height: 1.6;
-				max-width: 60ch;
 				letter-spacing: 0.02em;
+				word-spacing: 0.05em;
 			}
-		}
-
-		.pk-button {
-			align-self: flex-start; /* Prevent restore button from taking up full row */
 		}
 
 		.pk-defaults {
 			display: flex;
-			gap: 3rem;
-		}
-
-		.pk-input-group {
-			display: flex;
 			flex-direction: column;
-			justify-content: space-between;
-			gap: 1rem;
+			gap: var(--dialog-spacing);
+			padding-bottom: 1rem;
 
 			.pk-btn-group {
 				display: flex;
-				align-items: center;
-				gap: 1rem;
+				gap: var(--dialog-spacing);
+			}
+
+			/* Reset Button an das Ende */
+			.pk-button:last-child {
+				margin-left: auto; /* Schiebt den Button nach rechts */
+			}
+		}
+	}
+
+	@media (max-width: 600px) {
+		.pk-button {
+			max-width: 44px;
+
+			span {
+				display: none;
 			}
 		}
 	}

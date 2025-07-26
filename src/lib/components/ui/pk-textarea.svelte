@@ -39,7 +39,6 @@
 <style>
 	textarea {
 		min-height: 118px;
-		max-width: 350px;
 	}
 
 	.pk-comment {

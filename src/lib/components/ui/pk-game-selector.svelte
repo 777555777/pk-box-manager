@@ -37,4 +37,14 @@
 		display: flex;
 		flex-direction: column;
 	}
+	.pk-select-wrapper {
+		position: relative;
+		width: 100%; /* Take up full width */
+	}
+
+	.pk-select {
+		/* Select takes up full width of the wrapper 
+		and prevent caret from overflowing */
+		width: 100%;
+	}
 </style>

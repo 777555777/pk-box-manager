@@ -352,6 +352,8 @@ body {
 	border-image-outset: 0;
 	border-image-width: 9px;
 
+	text-overflow: ellipsis;
+
 	&:hover {
 		filter: brightness(1.15);
 	}
@@ -381,6 +383,8 @@ body {
 
 .pk-select-wrapper {
 	position: relative;
+	display: inline-block;
+	width: 100%;
 }
 
 .pk-select-arrow {
@@ -433,5 +437,3 @@ body {
 		color: var(--ui-text-disabled);
 	}
 }
-
-/* Toggle */
