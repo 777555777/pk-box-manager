@@ -105,25 +105,27 @@
 {#snippet pokedexDialogContent()}
 	<fieldset class="pk-fieldset pk-dex-filter-options">
 		<legend>Pokedex Filters</legend>
-		<div class="pk-btn-group">
-			<PkToggle
-				label="Base Dex"
-				activeColor="hsla(115, 58%, 77%, 0.6)"
-				bind:checked={showBaseDex}
-			/>
-			<PkToggle
-				label="Forms Dex"
-				activeColor="hsla(115, 58%, 77%, 0.6)"
-				bind:checked={showFormsDex}
-			/>
-			<PkToggle
-				label="Custom Dex"
-				activeColor="hsla(115, 58%, 77%, 0.6)"
-				bind:checked={showCustomDex}
-			/>
-		</div>
-		<div class="pk-btn-group">
-			<PkImport />
+		<div class="pk-filter-container">
+			<div class="pk-btn-group pk-filter-toggles">
+				<PkToggle
+					label="Base Dex"
+					activeColor="hsla(115, 58%, 77%, 0.6)"
+					bind:checked={showBaseDex}
+				/>
+				<PkToggle
+					label="Forms Dex"
+					activeColor="hsla(115, 58%, 77%, 0.6)"
+					bind:checked={showFormsDex}
+				/>
+				<PkToggle
+					label="Custom Dex"
+					activeColor="hsla(115, 58%, 77%, 0.6)"
+					bind:checked={showCustomDex}
+				/>
+			</div>
+			<div class="pk-btn-group pk-filter-actions">
+				<PkImport />
+			</div>
 		</div>
 	</fieldset>
 	<section class="pk-pokedex-section">
@@ -145,28 +147,61 @@
 
 <style>
 	.pk-dex-filter-options {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
 		margin-bottom: 1rem;
+
+		.pk-filter-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 3rem;
+		}
+
 		.pk-btn-group {
 			display: flex;
 			gap: 0.5rem;
+		}
+	}
+
+	/* Responsive Filter-Optionen */
+	@media (max-width: 768px) {
+		.pk-dex-filter-options {
+			.pk-filter-container {
+				flex-direction: column;
+				justify-content: center;
+				gap: 1rem;
+			}
+		}
+	}
+
+	@media (max-width: 520px) {
+		.pk-dex-filter-options {
+			.pk-filter-toggles {
+				flex-direction: column;
+				gap: 0.75rem;
+				width: 100%;
+				padding-inline: 2rem;
+			}
 		}
 	}
 	.pk-pokedex-section {
 		padding-bottom: 1rem;
 		padding-inline: 2rem;
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 		place-items: center;
-		margin: 0 auto;
 		gap: 2rem;
 		max-height: 680px;
 		overflow-y: scroll;
 
 		scrollbar-color: #444450 #717186;
 
-		mask: linear-gradient(to bottom, black 94%, black 92%, transparent 100%);
+		mask: var(--scroll-indicator-gradient);
+	}
+
+	@media (max-width: 768px) {
+		.pk-pokedex-section {
+			gap: 1rem;
+			padding-bottom: 2rem;
+		}
 	}
 </style>

@@ -91,7 +91,10 @@
 	style="display: none;"
 	onchange={readImportFile}
 />
-<button class="pk-button" onclick={() => fileInput.click()}><span>Import Dex</span></button>
+<button class="pk-button" onclick={() => fileInput.click()}>
+	<img src="/ui/file-import.svg" alt="" />
+	<span>Import Dex</span>
+</button>
 
 {#snippet infoDialogContent()}
 	<div class="pk-dialog-description">

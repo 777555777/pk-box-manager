@@ -342,7 +342,7 @@
 
 			overflow-y: scroll;
 			scrollbar-color: #444450 #717186;
-			mask: linear-gradient(to bottom, black 94%, black 92%, transparent 100%);
+			mask: var(--scroll-indicator-gradient);
 		}
 
 		.pk-preferences-section .pk-settings-content {
