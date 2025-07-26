@@ -103,7 +103,7 @@
 	size="L"
 />
 {#snippet pokedexDialogContent()}
-	<fieldset class="pk-dex-filter-options">
+	<fieldset class="pk-fieldset pk-dex-filter-options">
 		<legend>Pokedex Filters</legend>
 		<div class="pk-btn-group">
 			<PkToggle
@@ -152,20 +152,6 @@
 		.pk-btn-group {
 			display: flex;
 			gap: 0.5rem;
-		}
-	}
-
-	fieldset {
-		border: 2px solid #57808e;
-		border-radius: 5px;
-		padding: 0.5rem 1rem;
-
-		legend {
-			padding-inline: 0.5rem;
-		}
-
-		:global(.pk-tab-group) {
-			margin: 0;
 		}
 	}
 	.pk-pokedex-section {

@@ -103,7 +103,9 @@
 			<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
 		</section>
 		<div class="separator"></div>
-		<PkRadioGroup bind:currentOption {optionConfig} />
+		<div class="pk-tab-group">
+			<PkRadioGroup bind:currentOption {optionConfig} />
+		</div>
 		{#if currentOption === 'stats'}
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Status values</h3>
@@ -148,6 +150,10 @@
 			flex-direction: column;
 			height: 100%;
 			overflow-y: auto;
+
+			.pk-tab-group {
+				margin: 0 auto;
+			}
 		}
 	}
 

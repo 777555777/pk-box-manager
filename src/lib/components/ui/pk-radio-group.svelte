@@ -34,8 +34,6 @@
 
 <style>
 	.pk-tab-group {
-		margin: 0 auto;
-
 		padding-inline: 6px;
 		padding-block: 12px;
 		max-height: 44px;

@@ -60,7 +60,7 @@
 			</p>
 		</section>
 
-		<fieldset class="pk-defaults">
+		<fieldset class="pk-fieldset pk-defaults">
 			<legend>Default Settings</legend>
 			<div class="pk-btn-group">
 				<!-- Ball -->
@@ -102,20 +102,6 @@
 {/snippet}
 
 <style>
-	fieldset {
-		border: 2px solid #57808e;
-		border-radius: 5px;
-		padding: 0.5rem 1rem;
-
-		legend {
-			padding-inline: 0.5rem;
-		}
-
-		:global(.pk-tab-group) {
-			margin: 0;
-		}
-	}
-
 	.pk-dialog-section {
 		display: flex;
 		flex-direction: column;
@@ -133,7 +119,6 @@
 			display: flex;
 			flex-direction: column;
 			gap: var(--dialog-spacing);
-			padding-bottom: 1rem;
 
 			.pk-btn-group {
 				display: flex;

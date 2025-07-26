@@ -96,7 +96,7 @@
 	<section class="pk-dialog-content">
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
-			<fieldset class="pk-language-options" disabled>
+			<fieldset class="pk-fieldset pk-language-options" disabled>
 				<legend>Language</legend>
 				<div class="pk-radio-group">
 					<PkRadioGroup
@@ -107,7 +107,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-box-sprite-options" disabled>
+			<fieldset class="pk-fieldset pk-box-sprite-options" disabled>
 				<legend>Box Sprites</legend>
 				<div class="pk-box-sprite-content">
 					<PkRadioGroup
@@ -152,7 +152,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-font-options">
+			<fieldset class="pk-fieldset pk-font-options">
 				<legend>Font</legend>
 				<div class="pk-font-content">
 					<PkRadioGroup
@@ -173,7 +173,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="pk-badge-cycle-options">
+			<fieldset class="pk-fieldset pk-badge-cycle-options">
 				<legend>Badge Cycle options:</legend>
 				<div class="pk-badge-content">
 					<div class="pk-badge-element">
@@ -235,19 +235,6 @@
 		flex-direction: column;
 		gap: 1rem;
 
-		fieldset {
-			border: 2px solid #57808e;
-			border-radius: 5px;
-			padding: 0.5rem 1rem;
-
-			legend {
-				padding-inline: 0.5rem;
-			}
-
-			:global(.pk-tab-group) {
-				margin: 0;
-			}
-		}
 		.separator {
 			background-color: rgba(0, 0, 0, 0.1);
 		}
