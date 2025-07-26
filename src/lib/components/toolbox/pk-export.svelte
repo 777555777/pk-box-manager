@@ -2,15 +2,30 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 
+	let {
+		dexName,
+		disabled = false,
+		hideLabel = false,
+		icon = '',
+		label = '',
+		id = crypto.randomUUID()
+	}: {
+		dexName: string
+		disabled?: boolean
+		hideLabel?: boolean
+		icon?: string
+		label?: string
+		id?: string
+	} = $props()
+
 	function exportCurrentDex() {
 		try {
-			const selectedDexName = storageHandler.loadSelectedPokedexName()
-			let selectedPokedex = storageHandler.loadPokedex(selectedDexName)
+			let selectedPokedex = storageHandler.loadPokedex(dexName)
 
 			// Wenn der Dex nicht exsistiert, initialisiere ihn und lade ihn erneut
 			if (!selectedPokedex) {
-				storageHandler.initPokedex(pkState.getCachedOrder(selectedDexName), selectedDexName)
-				selectedPokedex = storageHandler.loadPokedex(selectedDexName)
+				storageHandler.initPokedex(pkState.getCachedOrder(dexName), dexName)
+				selectedPokedex = storageHandler.loadPokedex(dexName)
 			}
 
 			const dexState = JSON.stringify(selectedPokedex, null, 2)
@@ -28,7 +43,7 @@
 			// Erstelle ein temporäres a-Element zum Herunterladen
 			const a = document.createElement('a')
 			a.href = url
-			a.download = `export-${new Date().toISOString().slice(0, 10)}-${selectedDexName}` // Dateiname für den Download
+			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexName}` // Dateiname für den Download
 
 			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
 			document.body.appendChild(a)
@@ -43,4 +58,13 @@
 	}
 </script>
 
-<button class="pk-button" onclick={exportCurrentDex}><span>Export Dex</span></button>
+<button class="pk-button" {id} onclick={exportCurrentDex} {disabled}>
+	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
+		{#if icon}
+			<img src={icon} alt="" />
+		{/if}
+		{#if label}
+			<span class={hideLabel ? 'sr-only' : ''}>{label}</span>
+		{/if}
+	</label>
+</button>

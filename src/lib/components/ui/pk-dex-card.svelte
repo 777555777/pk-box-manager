@@ -1,10 +1,12 @@
 <script lang="ts">
+	import PkExport from '../toolbox/pk-export.svelte'
 	import PkProgressBar from './pk-progress-bar.svelte'
 
 	let { dexTitle, dexName, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
 
 	// Deletion state
 	let isDeleting = $state(false)
+	let isAvailableInClient = $derived.by(() => counter.limit !== 0)
 	let cardElement: HTMLElement | undefined
 
 	// Handle dex selection
@@ -12,6 +14,11 @@
 		if (onSelect) {
 			onSelect(dexName)
 		}
+	}
+
+	// Handle delete toggle
+	function toggleDelete() {
+		isDeleting = !isDeleting
 	}
 
 	// Handle dex reset
@@ -68,6 +75,11 @@
 		class="pk-dex-card-image {!isSelected ? 'unselected' : ''}"
 		style="background-image: url({imgUrl})"
 	>
+		<!-- Delete Button -->
+		<button class="delete-button" onclick={toggleDelete} disabled={!isAvailableInClient}>
+			<img src="/ui/x-icon.svg" alt="Delete" />
+		</button>
+
 		{#if isDeleting}
 			{@render confirmDeletion()}
 		{:else}
@@ -77,25 +89,21 @@
 
 	<section class="pk-dex-card-actions">
 		<!-- Select Button -->
-		<button class="pk-button" onclick={handleDexSelect}>Select Dex</button>
-		<!-- Delete / Reset Button -->
-		<button
-			class="pk-button"
-			onclick={() => {
-				isDeleting = true
-			}}
-			disabled={counter.limit === 0}
+		<button class="pk-button" onclick={handleDexSelect}
+			>{!isAvailableInClient ? 'Load Dex' : 'Select Dex'}</button
 		>
-			<img src="/ui/trash-alt-solid.svg" alt="" />
-		</button>
+		<!-- Export Button -->
+		<PkExport
+			{dexName}
+			icon={'/ui/download.svg'}
+			hideLabel={true}
+			disabled={!isAvailableInClient}
+		/>
 	</section>
 </article>
 
 {#snippet confirmDeletion()}
 	<div class="delete-confirmation">
-		<button class="close-button" onclick={cancelDelete}>
-			<img src="/ui/x-icon.svg" alt="Schließen" />
-		</button>
 		<h4>Delete Progress?</h4>
 		<div class="delete-actions">
 			<a class="danger" href="#top" onclick={confirmDelete}>Delete</a>
@@ -142,6 +150,37 @@
 			.pk-dex-card-image .pk-dex-card-overlay {
 				opacity: 1;
 			}
+		}
+	}
+
+	.delete-button {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		background-color: rgba(128, 128, 128, 0.65);
+		border: none;
+		padding: 5px;
+		border-radius: 5px;
+		display: grid;
+		place-items: center;
+		transition: background-color 0.2s ease;
+		cursor: pointer;
+		z-index: 10;
+
+		&:hover:not(:disabled) {
+			background-color: rgba(128, 128, 128, 0.5);
+		}
+
+		&:disabled {
+			background-color: rgba(128, 128, 128, 0.5);
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		img {
+			width: 1rem;
+			height: 1rem;
+			filter: brightness(0) invert(1);
 		}
 	}
 
@@ -244,30 +283,6 @@
 		position: relative;
 		z-index: 2;
 		cursor: text;
-
-		.close-button {
-			position: absolute;
-			top: 8px;
-			right: 8px;
-			background-color: rgba(128, 128, 128, 0.5);
-			border: none;
-			padding: 5px;
-			border-radius: 5px;
-			display: grid;
-			place-items: center;
-			transition: background-color 0.2s ease;
-			cursor: pointer;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.2);
-			}
-
-			img {
-				width: 1rem;
-				height: 1rem;
-				filter: brightness(0) invert(1);
-			}
-		}
 
 		.delete-actions {
 			display: flex;

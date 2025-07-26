@@ -4,8 +4,8 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import PkDexCard from '$lib/components/ui/pk-dex-card.svelte'
-	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
+	import PkToggle from '../ui/pk-toggle.svelte'
 
 	// TODO: Placeholder, replace with actual background images
 	const backgroundImages = [
@@ -15,9 +15,41 @@
 		'/ui/HGSS_Viridian_Forest-Day.png'
 	]
 
+	// Filter state - National and Forms active by default, Custom inactive
+	let showBaseDex = $state(true) // Basis-Pokédexes (ohne Forms)
+	let showFormsDex = $state(true) // Pokédexes mit alternativen Formen
+	let showCustomDex = $state(false) // Selbst erstellte Pokédexes
+
 	// Get current selected dex name - use derived for reactive reading
 	let selectedDexName = $derived(appState.getCurrentPokedexName())
-	let pokedexList = $derived(pkState.getAllPokedexes())
+	let allPokedexes = $derived(pkState.getAllPokedexes())
+
+	// Filter pokedexes based on toggle states
+	let pokedexList = $derived.by(() => {
+		console.log(allPokedexes)
+		return allPokedexes.filter((pokedex) => {
+			const dexName = pokedex.name
+
+			// Check if it's a National dex
+			const isNational = dexName.startsWith('national-dex')
+			if (isNational && showBaseDex) return true
+
+			// Check if it's a Forms dex (but not National)
+			const isForms = dexName.includes('-forms.json') && !isNational
+			if (isForms && showFormsDex) return true
+
+			// Check if it's a Custom dex (user-created)
+			const isCustom = pokedex.sortOrder?.type === 'client'
+			if (isCustom && showCustomDex) return true
+
+			// Check if it's a regular generation dex (not forms, not national, not custom)
+			const isRegular =
+				!dexName.includes('-forms.json') && !isNational && pokedex.sortOrder?.type !== 'client'
+			if (isRegular && showBaseDex) return true // Regular generation dexes are grouped with National
+
+			return false
+		})
+	})
 
 	let pokedexDialog: PkDialogElement
 
@@ -71,6 +103,29 @@
 />
 
 {#snippet pokedexDialogContent()}
+	<fieldset class="pk-dex-filter-options">
+		<legend>Pokedex Filters</legend>
+		<div class="pk-btn-group">
+			<PkToggle
+				label="Base Dex"
+				activeColor="hsla(115, 58%, 77%, 0.6)"
+				bind:checked={showBaseDex}
+			/>
+			<PkToggle
+				label="Forms Dex"
+				activeColor="hsla(115, 58%, 77%, 0.6)"
+				bind:checked={showFormsDex}
+			/>
+			<PkToggle
+				label="Custom Dex"
+				activeColor="hsla(115, 58%, 77%, 0.6)"
+				bind:checked={showCustomDex}
+			/>
+		</div>
+		<div class="pk-btn-group">
+			<PkImport />
+		</div>
+	</fieldset>
 	<section class="pk-pokedex-section">
 		{#each pokedexList as pokedex, index}
 			<PkDexCard
@@ -86,153 +141,46 @@
 			/>
 		{/each}
 	</section>
-	<section class="pk-option-section">
-		<h3 class="section-title text-large">Pokedex Data Management</h3>
-
-		<div class="option-group">
-			<div class="option-item">
-				<div class="option-header">
-					<img src="/ui/download.svg" alt="Export" class="option-icon" />
-					<span class="option-label">Export Data</span>
-				</div>
-				<p class="option-description text-small">
-					Export the selected Pokedex to a <abbr>.json</abbr> file
-				</p>
-				<PkExport />
-			</div>
-
-			<div class="option-item">
-				<div class="option-header">
-					<img src="/ui/save-solid.svg" alt="Import" class="option-icon" />
-					<span class="option-label">Import Data</span>
-				</div>
-				<p class="option-description text-small">Import a Pokedex from a <abbr>.json</abbr> file</p>
-				<PkImport />
-			</div>
-		</div>
-	</section>
 {/snippet}
 
 <style>
+	.pk-dex-filter-options {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		.pk-btn-group {
+			display: flex;
+			gap: 0.5rem;
+		}
+	}
+
+	fieldset {
+		border: 2px solid #57808e;
+		border-radius: 5px;
+		padding: 0.5rem 1rem;
+
+		legend {
+			padding-inline: 0.5rem;
+		}
+
+		:global(.pk-tab-group) {
+			margin: 0;
+		}
+	}
 	.pk-pokedex-section {
 		padding-bottom: 1rem;
-		padding-inline: 1rem;
+		padding-inline: 2rem;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		place-items: center;
 		margin: 0 auto;
 		gap: 2rem;
-		max-height: 360px;
+		max-height: 680px;
 		overflow-y: scroll;
 
 		scrollbar-color: #444450 #717186;
 
 		mask: linear-gradient(to bottom, black 94%, black 92%, transparent 100%);
-	}
-
-	.pk-option-section {
-		border-width: 9px solid;
-		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
-		border-image-outset: 0;
-		border-image-width: 9px;
-
-		padding: 1.5rem;
-		margin-top: 1rem;
-		position: relative;
-		overflow: hidden;
-		margin-inline: 1rem;
-
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-
-		z-index: 1;
-
-		.section-title {
-			margin: 0 0 1.5rem 0;
-			text-align: center;
-		}
-
-		.option-group {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-			gap: 1.5rem;
-			align-items: stretch;
-			justify-content: center;
-			max-width: 60rem;
-			width: 100%;
-		}
-
-		.option-item {
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-			padding: 1.25rem;
-			background-color: #618e9e;
-			min-width: 200px;
-			max-width: 260px;
-			width: 100%;
-			justify-self: center;
-			text-wrap: balance;
-
-			--clip-path-pixel-size: 3px;
-
-			clip-path: polygon(
-				0% calc(0% + var(--clip-path-pixel-size)),
-				calc(0% + var(--clip-path-pixel-size)) calc(0% + var(--clip-path-pixel-size)),
-				calc(0% + var(--clip-path-pixel-size)) 0%,
-				calc(100% - var(--clip-path-pixel-size)) 0%,
-				calc(100% - var(--clip-path-pixel-size)) calc(0% + var(--clip-path-pixel-size)),
-				100% calc(0% + var(--clip-path-pixel-size)),
-				100% calc(100% - var(--clip-path-pixel-size)),
-				calc(100% - var(--clip-path-pixel-size)) calc(100% - var(--clip-path-pixel-size)),
-				calc(100% - var(--clip-path-pixel-size)) 100%,
-				calc(0% + var(--clip-path-pixel-size)) 100%,
-				calc(0% + var(--clip-path-pixel-size)) calc(100% - var(--clip-path-pixel-size)),
-				0% calc(100% - var(--clip-path-pixel-size))
-			);
-
-			border: 2px solid rgba(93, 93, 111, 0.2);
-		}
-
-		.option-header {
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			margin-bottom: 0.5rem;
-			justify-content: center;
-		}
-
-		.option-icon {
-			width: 1.5rem;
-			height: 1.5rem;
-			filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-		}
-
-		.option-description {
-			color: rgba(255, 255, 255, 0.7);
-			text-align: center;
-			min-height: 2.4em;
-			line-height: 1.4;
-		}
-	}
-
-	/* Mobile Responsive */
-	@media (max-width: 768px) {
-		.pk-option-section {
-			margin-inline: 1rem;
-			padding: 1.5rem;
-
-			.option-group {
-				grid-template-columns: 1fr;
-				gap: 1.5rem;
-			}
-
-			.option-item {
-				max-width: none;
-				min-width: auto;
-			}
-		}
 	}
 </style>

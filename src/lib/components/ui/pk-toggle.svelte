@@ -5,7 +5,7 @@
 		label = '',
 		hideLabel = false,
 		onUpdate = () => {},
-		checked = false,
+		checked = $bindable(false),
 		disabled = false,
 		id = crypto.randomUUID()
 	} = $props()
