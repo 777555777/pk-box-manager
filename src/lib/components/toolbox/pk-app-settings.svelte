@@ -93,12 +93,12 @@
 />
 
 {#snippet appSettingsDialogContent()}
-	<section class="pk-dialog-content">
+	<section class="pk-dialog-section">
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
 			<fieldset class="pk-fieldset pk-language-options" disabled>
 				<legend>Language</legend>
-				<div class="pk-radio-group">
+				<div class="pk-settings-content pk-radio-group">
 					<PkRadioGroup
 						bind:currentOption={settings.language}
 						optionConfig={appLanguageConfig}
@@ -109,7 +109,7 @@
 
 			<fieldset class="pk-fieldset pk-box-sprite-options" disabled>
 				<legend>Box Sprites</legend>
-				<div class="pk-box-sprite-content">
+				<div class="pk-settings-content pk-box-sprite-content">
 					<PkRadioGroup
 						bind:currentOption={settings.boxSprites}
 						optionConfig={boxSpriteConfig}
@@ -154,7 +154,7 @@
 
 			<fieldset class="pk-fieldset pk-font-options">
 				<legend>Font</legend>
-				<div class="pk-font-content">
+				<div class="pk-settings-content pk-font-content">
 					<PkRadioGroup
 						bind:currentOption={settings.font}
 						optionConfig={fontConfig}
@@ -175,14 +175,14 @@
 
 			<fieldset class="pk-fieldset pk-badge-cycle-options">
 				<legend>Badge Cycle options:</legend>
-				<div class="pk-badge-content">
+				<div class="pk-settings-content pk-badge-content">
 					<div class="pk-badge-element">
 						<PkRadioGroup
 							bind:currentOption={settings.badgeCycleOption}
 							optionConfig={badgeCycleConfig}
 							onUpdate={updateBadgeCycleOption}
 						/>
-						<p class="text-small">
+						<p class="pk-paragraph text-small">
 							Only displays the Badge icon for Ribbons and Marks when the here configured Ribbon or
 							Mark is marked as completed
 						</p>
@@ -230,7 +230,7 @@
 {/snippet}
 
 <style>
-	.pk-dialog-content {
+	.pk-dialog-section {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
@@ -238,111 +238,129 @@
 		.separator {
 			background-color: rgba(0, 0, 0, 0.1);
 		}
-
-		.pk-preferences-section {
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-		}
 	}
 
-	/* Sprite Styles */
-	.pk-box-sprite-content {
+	.pk-preferences-section {
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		gap: 5rem;
+		flex-direction: column;
+		gap: 1rem;
 
-		.example {
+		.pk-settings-content {
 			display: flex;
-			gap: 1rem;
-			text-align: center;
+			flex-direction: row;
+			justify-content: space-between;
+			gap: 3rem;
+		}
 
-			.pk-demo-slot {
-				--target-size: 64;
-				--original-size: 96;
-				--scale-factor: calc(var(--target-size) / var(--original-size));
+		/* Sprite Styles */
+		.pk-box-sprite-content {
+			.example {
+				display: flex;
+				gap: 1rem;
+				text-align: center;
 
-				width: calc(var(--target-size) * 1px);
-				height: calc(var(--target-size) * 1px);
-				/* cursor: pointer; */
-
-				position: relative;
-				overflow: hidden;
-
-				border: none;
-				background-color: #82829a;
-				outline: 2px solid hsl(0, 0%, 40%, 0.2);
-				outline-offset: -2px;
-				border-radius: 5px;
-
-				img {
-					width: calc(var(--original-size) * 1px);
-					height: calc(var(--original-size) * 1px);
-					object-fit: none;
-					transform: scale(var(--scale-factor));
-					transform-origin: top left;
-
-					image-rendering: auto;
-					filter: brightness(var(--grayscale));
-				}
-			}
-
-			@media (max-width: 1500px) {
 				.pk-demo-slot {
-					--target-size: 58;
+					--target-size: 64;
+					--original-size: 96;
+					--scale-factor: calc(var(--target-size) / var(--original-size));
+
+					width: calc(var(--target-size) * 1px);
+					height: calc(var(--target-size) * 1px);
+					/* cursor: pointer; */
+
+					position: relative;
+					overflow: hidden;
+
+					border: none;
+					background-color: #82829a;
+					outline: 2px solid hsl(0, 0%, 40%, 0.2);
+					outline-offset: -2px;
+					border-radius: 5px;
+
+					img {
+						width: calc(var(--original-size) * 1px);
+						height: calc(var(--original-size) * 1px);
+						object-fit: none;
+						transform: scale(var(--scale-factor));
+						transform-origin: top left;
+
+						image-rendering: auto;
+						filter: brightness(var(--grayscale));
+					}
+				}
+
+				@media (max-width: 1500px) {
+					.pk-demo-slot {
+						--target-size: 58;
+					}
 				}
 			}
 		}
-	}
 
-	/* Font Styles */
-	.pk-font-content {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		gap: 5rem;
+		/* Font Styles */
+		.pk-font-content {
+			.example {
+				display: flex;
+				gap: 1rem;
+				text-align: center;
+				.pixel-font-example {
+					font-family: 'vt323regular';
+				}
 
-		.example {
-			display: flex;
-			gap: 1rem;
-			text-align: center;
-			.pixel-font-example {
-				font-family: 'vt323regular';
+				.system-font-example {
+					font-family: var(--system-fonts);
+				}
+
+				p {
+					background-color: #717186;
+					padding: 0.5rem;
+					border-radius: 5px;
+				}
 			}
+		}
 
-			.system-font-example {
-				font-family: var(--system-fonts);
+		/* Badge Styles */
+		.pk-badge-content {
+			.pk-badge-cycle-pickers {
+				display: flex;
+				gap: 1rem;
 			}
 
 			p {
-				background-color: #717186;
-				padding: 0.5rem;
-				border-radius: 5px;
+				margin-top: 1rem;
+				max-width: 30em;
 			}
 		}
 	}
 
-	/* Badge Styles */
-	.pk-badge-content {
-		display: flex;
-		justify-content: space-between;
-		gap: 5rem;
+	/* TODO: Dropdown menus are cut off / cause the container to grow in the Y axis at the moment */
+	@media (max-width: 730px) {
+		.pk-preferences-section {
+			max-height: 30rem;
+			padding-inline: 2rem;
+			padding-bottom: 1.5rem;
 
-		p {
-			max-width: 30em;
+			overflow-y: scroll;
+			scrollbar-color: #444450 #717186;
+			mask: linear-gradient(to bottom, black 94%, black 92%, transparent 100%);
 		}
 
-		.pk-badge-element {
-			display: flex;
+		.pk-preferences-section .pk-settings-content {
 			flex-direction: column;
-			align-items: flex-start;
+			align-items: center;
 			gap: 1rem;
-		}
 
-		.pk-badge-cycle-pickers {
-			display: flex;
-			gap: 1rem;
+			.pk-badge-element {
+				text-align: center;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+	}
+
+	@media (max-width: 520px) {
+		.pk-preferences-section {
+			padding-inline: 1rem;
 		}
 	}
 

@@ -144,6 +144,11 @@ body {
 	font-size: var(--huge-font-size);
 }
 
+.pk-paragraph {
+	letter-spacing: 0.02em;
+	word-spacing: 0.05em;
+}
+
 /* ==================== */
 
 /* Animierter Hintergrund-Layer */

@@ -53,12 +53,10 @@
 />
 {#snippet defaultsDialogContent()}
 	<section class="pk-dialog-section">
-		<section class="pk-dialog-description">
-			<p>
-				This menu allows you to set default values for new Pokémon. These defaults will be applied
-				when you mark a Pokémon as captured for the first time.
-			</p>
-		</section>
+		<p class="pk-paragraph">
+			This menu allows you to set default values for new Pokémon. These defaults will be applied
+			when you mark a Pokémon as captured for the first time.
+		</p>
 
 		<fieldset class="pk-fieldset pk-defaults">
 			<legend>Default Settings</legend>
@@ -107,12 +105,8 @@
 		flex-direction: column;
 		gap: var(--dialog-spacing);
 
-		.pk-dialog-description {
-			p {
-				line-height: 1.6;
-				letter-spacing: 0.02em;
-				word-spacing: 0.05em;
-			}
+		p {
+			margin-bottom: 1rem;
 		}
 
 		.pk-defaults {

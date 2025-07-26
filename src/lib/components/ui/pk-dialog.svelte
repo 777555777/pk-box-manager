@@ -164,11 +164,11 @@
 		background-color: rgba(0, 0, 0, 0.5);
 	}
 
-	/* Responsive Anpassungen für kleinere Bildschirme */
-	@media (max-height: 800px) {
-		dialog {
-			margin-top: -5vh;
-			max-height: 95vh;
+	/* Tablet - L wird zu M, M bleibt M, S bleibt S */
+	@media (max-width: 1024px) {
+		.dialog-size-L {
+			width: 90vw;
+			min-width: 90vw;
 		}
 	}
 
@@ -183,23 +183,21 @@
 
 		dialog {
 			margin-top: -5vh;
-			max-height: 90vh;
-		}
-	}
-
-	/* Tablet - L wird zu M, M bleibt M, S bleibt S */
-	@media (max-width: 1024px) {
-		.dialog-size-L {
-			width: var(--dialog-size-m);
-			min-width: var(--dialog-size-m);
+			max-height: 95vh;
 		}
 	}
 
 	/* Sehr kleine Bildschirme - S wird noch kleiner */
 	@media (max-width: 520px) {
-		.dialog-size-S {
+		.dialog-size-S,
+		.dialog-size-M,
+		.dialog-size-L {
 			width: 95vw;
 			min-width: 95vw;
+		}
+
+		.pk-dialog-content {
+			padding-inline: 0.5rem;
 		}
 	}
 </style>
