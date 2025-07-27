@@ -29,6 +29,7 @@
 	}
 
 	input[type='checkbox']:checked + label {
+		width: 100%;
 		background-color: var(--active-background);
 		clip-path: polygon(
 			3px calc(100% - 6px),

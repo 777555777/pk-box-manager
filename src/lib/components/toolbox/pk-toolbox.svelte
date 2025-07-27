@@ -88,7 +88,7 @@
 
 			<button class="pk-button" onclick={openDefaultDialog}>
 				<img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
-				<span>Defaults</span>
+				<span class={appState.hasModifiedDefaults() ? 'modified' : ''}>Defaults</span>
 			</button>
 		</div>
 

@@ -29,7 +29,7 @@
 	// Conditional badge display logic
 	function shouldShowRibbonBadge(): boolean {
 		// If not using conditional display, show if Pokemon has any ribbons
-		if (appSettings.badgeCycleOption !== 'conditional') {
+		if (appSettings.badgeCycleOption !== 'filter') {
 			return pokemonState.ribbons.length > 0
 		}
 
@@ -40,7 +40,7 @@
 
 	function shouldShowMarkBadge(): boolean {
 		// If not using conditional display, show if Pokemon has any marks
-		if (appSettings.badgeCycleOption !== 'conditional') {
+		if (appSettings.badgeCycleOption !== 'filter') {
 			return pokemonState.marks.length > 0
 		}
 
@@ -68,7 +68,7 @@
 {/if}
 {#if badgeDisplay === 'ribbon' && shouldShowRibbonBadge()}
 	{@const displayRibbon =
-		appSettings.badgeCycleOption === 'conditional'
+		appSettings.badgeCycleOption === 'filter'
 			? appSettings.conditionalBadgeDisplay.ribbon
 			: pokemonState.ribbons[0]}
 	<img
@@ -80,7 +80,7 @@
 {/if}
 {#if badgeDisplay === 'mark' && shouldShowMarkBadge()}
 	{@const displayMark =
-		appSettings.badgeCycleOption === 'conditional'
+		appSettings.badgeCycleOption === 'filter'
 			? appSettings.conditionalBadgeDisplay.mark
 			: pokemonState.marks[0]}
 	<img
