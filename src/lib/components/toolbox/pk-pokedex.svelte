@@ -30,12 +30,8 @@
 		return allPokedexes.filter((pokedex) => {
 			const dexName = pokedex.name
 
-			// Check if it's a National dex
-			const isNational = dexName.startsWith('national-dex')
-			if (isNational && showBaseDex) return true
-
 			// Check if it's a Forms dex (but not National)
-			const isForms = dexName.includes('-forms.json') && !isNational
+			const isForms = dexName.includes('-forms.json')
 			if (isForms && showFormsDex) return true
 
 			// Check if it's a Custom dex (user-created)
@@ -43,8 +39,7 @@
 			if (isCustom && showCustomDex) return true
 
 			// Check if it's a regular generation dex (not forms, not national, not custom)
-			const isRegular =
-				!dexName.includes('-forms.json') && !isNational && pokedex.sortOrder?.type !== 'client'
+			const isRegular = !dexName.includes('-forms.json') && pokedex.sortOrder?.type !== 'client'
 			if (isRegular && showBaseDex) return true // Regular generation dexes are grouped with National
 
 			return false
@@ -190,7 +185,7 @@
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 		place-items: center;
 		gap: 2rem;
-		max-height: 680px;
+		height: 680px;
 		overflow-y: scroll;
 
 		scrollbar-color: #444450 #717186;

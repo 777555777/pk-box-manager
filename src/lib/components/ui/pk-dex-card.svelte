@@ -57,7 +57,15 @@
 	})
 </script>
 
-<article class="pk-dex-card {isDeleting ? 'deleting' : ''}" bind:this={cardElement}>
+<article
+	class="pk-dex-card {isDeleting ? 'deleting' : ''} {isSelected
+		? 'selected'
+		: ''} {isAvailableInClient ? '' : 'not-loaded'}"
+	bind:this={cardElement}
+>
+	{#if !isAvailableInClient}
+		<div class="pk-card-dim-overlay"></div>
+	{/if}
 	<section class="pk-dex-card-header">
 		<div class="pk-dex-card-title">
 			<h3 class="text-base">{dexTitle}</h3>
@@ -76,10 +84,11 @@
 		style="background-image: url({imgUrl})"
 	>
 		<!-- Delete Button -->
-		<button class="delete-button" onclick={toggleDelete} disabled={!isAvailableInClient}>
-			<img src="/ui/x-icon.svg" alt="Delete" />
-		</button>
-
+		{#if isAvailableInClient}
+			<button class="delete-button" onclick={toggleDelete} disabled={!isAvailableInClient}>
+				<img src="/ui/x-icon.svg" alt="Delete" />
+			</button>
+		{/if}
 		{#if isDeleting}
 			{@render confirmDeletion()}
 		{:else}
@@ -141,6 +150,16 @@
 		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
 		border-image-outset: 0;
 		border-image-width: 9px;
+		&.selected {
+			border-image: url('/ui/textarea-select-focus.webp') 9 fill stretch;
+			border-image-outset: 0;
+			border-image-width: 9px;
+		}
+
+		.pk-dex-card-actions button {
+			position: relative;
+			z-index: 2; /* Über dem Overlay */
+		}
 
 		&.deleting {
 			background-color: rgba(239, 68, 68, 0.1);
@@ -234,6 +253,14 @@
 			background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
 			z-index: 1;
 		}
+	}
+
+	.pk-card-dim-overlay {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.3); /* Dunkler, wie brightness(0.7) */
+		z-index: 1;
+		pointer-events: none; /* Klicks gehen durch */
 	}
 
 	.pk-dex-card-overlay {
