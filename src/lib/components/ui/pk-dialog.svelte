@@ -95,16 +95,25 @@
 		position: fixed;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -55%);
+		transform: translate(-50%, -50%);
 		overflow: visible;
-		max-height: 90vh;
+		max-height: 95vh;
 		max-width: 90vw;
 		color: var(--ui-text-color);
 		background: transparent;
 
+		/* Nur anwenden wenn der Dialog geöffnet ist */
+		&[open] {
+			display: flex;
+			flex-direction: column;
+		}
+
 		.pk-ui-section-inner {
 			padding: var(--dialog-spacing);
-			max-height: inherit;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
 		}
 	}
 
@@ -128,6 +137,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex-shrink: 0; /* Header soll nicht schrumpfen */
 
 		button {
 			margin-left: 2rem;
@@ -141,6 +151,10 @@
 		margin-block: calc(var(--dialog-spacing) * 2);
 		flex: 1;
 		padding-inline: 1rem;
+		overflow-y: auto;
+		min-height: 0; /* Wichtig für Flexbox-Scrolling */
+
+		scrollbar-color: #444450 #717186;
 
 		.pk-dialog-description p {
 			background-color: red;
@@ -153,6 +167,7 @@
 
 	.pk-dialog-footer {
 		display: flex;
+		flex-shrink: 0; /* Footer soll nicht schrumpfen */
 		justify-content: flex-end;
 
 		.pk-button:nth-child(2) {
@@ -182,7 +197,6 @@
 		}
 
 		dialog {
-			margin-top: -5vh;
 			max-height: 95vh;
 		}
 	}

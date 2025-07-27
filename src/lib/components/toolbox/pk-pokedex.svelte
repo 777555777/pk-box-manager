@@ -109,17 +109,17 @@
 			<div class="pk-btn-group pk-filter-toggles">
 				<PkToggle
 					label="Base Dex"
-					activeColor="hsla(115, 58%, 77%, 0.6)"
+					activeColor="hsla(125, 100%, 30%, 0.55)"
 					bind:checked={showBaseDex}
 				/>
 				<PkToggle
 					label="Forms Dex"
-					activeColor="hsla(115, 58%, 77%, 0.6)"
+					activeColor="hsla(125, 100%, 30%, 0.55)"
 					bind:checked={showFormsDex}
 				/>
 				<PkToggle
 					label="Custom Dex"
-					activeColor="hsla(115, 58%, 77%, 0.6)"
+					activeColor="hsla(125, 100%, 30%, 0.55)"
 					bind:checked={showCustomDex}
 				/>
 			</div>
@@ -184,7 +184,7 @@
 		}
 	}
 	.pk-pokedex-section {
-		padding-bottom: 1rem;
+		padding-bottom: 2rem;
 		padding-inline: 2rem;
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
