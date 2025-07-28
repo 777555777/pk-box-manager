@@ -4,6 +4,7 @@
 	import { getBackgroundStyle, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkPagination from '../ui/pk-pagination.svelte'
+	import PkPortal from '../ui/pk-portal.svelte'
 
 	let {
 		title,
@@ -21,6 +22,7 @@
 
 	// Computed property für showTray basierend auf AppState
 	let showTray = $derived(appState.isDropdownOpen(id))
+	let buttonRef = $state<HTMLElement | null>(null)
 
 	function selectWallpaper(wallpaper: WallpapersType) {
 		onUpdate(wallpaper)
@@ -109,7 +111,7 @@
 		titleSpriteData
 	)}
 >
-	<button onclick={toggleSelectorTray}>
+	<button onclick={toggleSelectorTray} bind:this={buttonRef}>
 		<h2 class="text-huge">{formatBoxTitle(title)}</h2>
 	</button>
 	{#if appState.isDropdownOpen(id)}
@@ -118,27 +120,29 @@
 </header>
 
 {#snippet selectorTray()}
-	<section class="pk-selector-tray" bind:this={trayRef}>
-		<!-- Wallpaper Options -->
-		<div class="wallpaper-grid">
-			{#each paginatedData as [key, value]: [string, TitlesType]}
-				<button
-					class="wallpaper-option"
-					onclick={() => {
-						selectWallpaper(key.replace('-title', '') as WallpapersType)
-					}}
-				>
-					<img
-						src="/spritesheets/util/st1.webp"
-						style={setCssPosition(getTitlePosition(key as TitlesType))}
-						alt={key}
-					/>
-				</button>
-			{/each}
-		</div>
+	<PkPortal show={showTray} trigger={buttonRef} onClickOutside={handleClickOutside}>
+		<section class="pk-selector-tray" bind:this={trayRef}>
+			<!-- Wallpaper Options -->
+			<div class="wallpaper-grid">
+				{#each paginatedData as [key, value]: [string, TitlesType]}
+					<button
+						class="wallpaper-option"
+						onclick={() => {
+							selectWallpaper(key.replace('-title', '') as WallpapersType)
+						}}
+					>
+						<img
+							src="/spritesheets/util/st1.webp"
+							style={setCssPosition(getTitlePosition(key as TitlesType))}
+							alt={key}
+						/>
+					</button>
+				{/each}
+			</div>
 
-		<PkPagination data={Titles} itemsPerPage={4} onPageChange={handlePageChange} />
-	</section>
+			<PkPagination data={Titles} itemsPerPage={4} onPageChange={handlePageChange} />
+		</section>
+	</PkPortal>
 {/snippet}
 
 <style>
@@ -195,8 +199,8 @@
 
 		/* Position below trigger Button */
 		position: absolute;
-		top: 100%;
-		z-index: 2;
+		transform: translateX(-50%);
+		top: calc(100% + 26px);
 
 		/* Styling */
 		image-rendering: pixelated;

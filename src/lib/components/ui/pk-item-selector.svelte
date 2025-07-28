@@ -2,6 +2,7 @@
 	import { setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkIconGrid from './pk-icon-grid.svelte'
+	import PkPortal from './pk-portal.svelte'
 
 	let {
 		label = '',
@@ -34,6 +35,7 @@
 	} = $props()
 
 	let trayRef = $state<HTMLElement | null>(null)
+	let buttonRef = $state<HTMLElement | null>(null)
 	let showTray = $derived(appState.isDropdownOpen(id))
 
 	// Calculate the height of the selector tray content based on itemsPerPage and iconsPerRow
@@ -67,16 +69,6 @@
 		onUpdate(value)
 		appState.closeDropdown() // Schließe nach Auswahl
 	}
-
-	$effect(() => {
-		if (showTray) {
-			document.addEventListener('click', handleClickOutside)
-		}
-
-		return () => {
-			document.removeEventListener('click', handleClickOutside)
-		}
-	})
 </script>
 
 <div
@@ -89,29 +81,31 @@
 	{#if label}
 		<label for={id}>{label}</label>
 	{/if}
-	<button {id} class="pk-button" onclick={toggleSelectorTray} {disabled}>
+	<button {id} class="pk-button" onclick={toggleSelectorTray} {disabled} bind:this={buttonRef}>
 		<img src={spriteUrl} style={setCssPosition(getPosition(selectedItem))} alt={selectedItem} />
 	</button>
 	{#if showTray}
-		<section class="pk-selector-tray" bind:this={trayRef}>
-			<PkIconGrid
-				{data}
-				{getPosition}
-				{spriteUrl}
-				{itemsPerPage}
-				{disabled}
-				onUpdate={handleItemUpdate}
-				{activeItems}
-				showBackground={false}
-				alwaysActive={true}
-				fixedHeight={true}
-				--icons-per-row={iconsPerRow}
-				--icon-original-size={iconOriginalSize}
-				--icon-target-size={iconTargetSize}
-				--icon-scale-factor={iconTargetSize / iconOriginalSize}
-				--calculated-height={calculatedHeight}
-			/>
-		</section>
+		<PkPortal show={showTray} trigger={buttonRef} onClickOutside={handleClickOutside}>
+			<section class="pk-selector-tray" bind:this={trayRef}>
+				<PkIconGrid
+					{data}
+					{getPosition}
+					{spriteUrl}
+					{itemsPerPage}
+					{disabled}
+					onUpdate={handleItemUpdate}
+					{activeItems}
+					showBackground={false}
+					alwaysActive={true}
+					fixedHeight={true}
+					--icons-per-row={iconsPerRow}
+					--icon-original-size={iconOriginalSize}
+					--icon-target-size={iconTargetSize}
+					--icon-scale-factor={iconTargetSize / iconOriginalSize}
+					--calculated-height={calculatedHeight}
+				/>
+			</section>
+		</PkPortal>
 	{/if}
 </div>
 
@@ -142,9 +136,6 @@
 		background-color: transparent;
 		width: fit-content;
 		padding: 6px;
-
-		position: absolute;
-		z-index: 2;
 
 		image-rendering: pixelated;
 		border-width: 9px solid;
