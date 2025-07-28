@@ -4,6 +4,7 @@
 		activeColor = 'hsla(0, 0, 40%, 0.6)',
 		label = '',
 		hideLabel = false,
+		tooltip = '',
 		onUpdate = () => {},
 		checked = $bindable(false),
 		disabled = false,
@@ -11,7 +12,12 @@
 	} = $props()
 </script>
 
-<button style="--active-background: {activeColor}" class="pk-button" {disabled}>
+<button
+	style="--active-background: {activeColor}"
+	class="pk-button {tooltip ? 'pk-tooltip' : ''}"
+	{disabled}
+	data-tooltip={tooltip}
+>
 	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
 	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
 		{#if icon}

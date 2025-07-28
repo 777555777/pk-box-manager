@@ -91,7 +91,11 @@
 	style="display: none;"
 	onchange={readImportFile}
 />
-<button class="pk-button" onclick={() => fileInput.click()}>
+<button
+	class="pk-button pk-tooltip"
+	onclick={() => fileInput.click()}
+	data-tooltip="Import a Pokedex from a JSON file"
+>
 	<img src="/ui/file-import.svg" alt="" />
 	<span>Import Dex</span>
 </button>

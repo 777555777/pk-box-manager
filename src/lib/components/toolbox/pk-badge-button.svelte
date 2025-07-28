@@ -24,7 +24,11 @@
 	}
 </script>
 
-<button class="pk-button pk-badge-cycle-button" onclick={cycleBadgeDisplay}>
+<button
+	class="pk-button pk-tooltip pk-badge-cycle-button"
+	onclick={cycleBadgeDisplay}
+	data-tooltip="Cycle through Box Badges (B)"
+>
 	<div class="pk-badge-options">
 		<!-- Off state -->
 		{#if badgeDisplay === false}

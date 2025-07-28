@@ -22,8 +22,13 @@
 	})
 </script>
 
-<button class="pk-button" onclick={resetPokemon} {disabled} title="Reset Pokemon (Q)"
-	><img src={icon} alt="" />
+<button
+	class="pk-button pk-tooltip"
+	onclick={resetPokemon}
+	{disabled}
+	data-tooltip="Reset Pokemon (Q)"
+>
+	<img src={icon} alt="" />
 </button>
 
 <style>

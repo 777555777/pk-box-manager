@@ -25,12 +25,27 @@
 			pkState.updateSelectedPokemon(pokemonIdentifier)
 		}
 	}
+
+	function capitalizeFirstLetter(val: string) {
+		return (String(val).charAt(0).toUpperCase() + String(val).slice(1)).trim()
+	}
+
+	function formatPokemonDisplayName(pokemonIdentifier: any) {
+		// remove the national id part and replace dashes with spaces
+		// e.g. "Dudunsparce three segment"
+		const parts = pokemonIdentifier.split('-')
+		const name = parts.slice(1).join(' ')
+		return capitalizeFirstLetter(name)
+	}
 </script>
 
 <button
-	class="pk-slot {pokemonState.shiny ? 'pk-shiny-slot' : ''} {isSelected ? 'selected' : ''}"
+	class="pk-slot {pokemonState.shiny ? 'pk-shiny-slot' : ''} {isSelected
+		? 'selected'
+		: ''} pk-tooltip"
 	{onclick}
 	style="--grayscale: {pokemonState.captured ? '100%' : '0%'}"
+	data-tooltip={formatPokemonDisplayName(pokemonIdentifier)}
 >
 	{#if isSelected}
 		<div class="pk-slot-cursor"></div>
@@ -62,7 +77,7 @@
 		justify-content: center;
 
 		position: relative;
-		overflow: hidden;
+		overflow: visible;
 
 		border: none;
 		background-color: transparent;
@@ -71,6 +86,7 @@
 		border-radius: 5px;
 
 		&:hover {
+			z-index: 2;
 			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 			background-color: hsla(0, 0%, 80%, 0.25);
 
@@ -124,7 +140,7 @@
 		background-size: 38px 38px;
 		background-repeat: no-repeat;
 		background-position: center;
-		z-index: 1;
+		z-index: 5;
 		pointer-events: none;
 		isolation: isolate;
 	}

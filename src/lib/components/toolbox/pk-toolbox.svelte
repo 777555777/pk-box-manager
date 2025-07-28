@@ -65,8 +65,12 @@
 	<section class="pk-ui-section-inner">
 		<div class="pk-pokedex-data">
 			<div class="pk-toolbox-btn-group">
-				<button class="pk-button" onclick={openPokedexDialog}
-					><img src="/ui/folder-open.svg" alt="" />
+				<button
+					class="pk-button pk-tooltip"
+					onclick={openPokedexDialog}
+					data-tooltip="Open Pokedex configurations"
+				>
+					<img src="/ui/folder-open.svg" alt="" />
 					<span>Pokedex</span></button
 				>
 			</div>
@@ -80,13 +84,18 @@
 				activeColor="hsla(0, 100%, 30%, 0.6)"
 				label="Viewer Mode"
 				hideLabel={true}
+				tooltip="Toggle Viewer Mode (V)"
 				checked={viewerMode}
 				onUpdate={toggleViewerMode}
 			/>
 
 			<PkBadgeButton />
 
-			<button class="pk-button" onclick={openDefaultDialog}>
+			<button
+				class="pk-button pk-tooltip"
+				onclick={openDefaultDialog}
+				data-tooltip="Open edit defaults"
+			>
 				<img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
 				<span class={appState.hasModifiedDefaults() ? 'modified' : ''}>Defaults</span>
 			</button>
@@ -94,7 +103,11 @@
 
 		<div class="separator-vertical"></div>
 
-		<button class="pk-button" onclick={openAppSettingsDialog}>
+		<button
+			class="pk-button pk-tooltip"
+			onclick={openAppSettingsDialog}
+			data-tooltip="Open App Settings"
+		>
 			<img src="/ui/cog.svg" alt="" />
 			<span>Settings</span>
 		</button>

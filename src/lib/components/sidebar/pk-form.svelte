@@ -45,7 +45,6 @@
 						width="44px"
 						src={`/origin-marks/${deriveOriginMark()}.webp`}
 						alt={`${deriveOriginMark()} origin mark`}
-						title={`${deriveOriginMark()} origin mark`}
 					/>
 				{/if}
 			</div>
