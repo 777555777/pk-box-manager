@@ -225,6 +225,7 @@ body {
 :root {
 	--ui-text-color: #fff;
 	--ui-text-disabled: #c5c5c5;
+	--ui-text-active: #ffb267;
 
 	--ui-form-element-height: 44px;
 	--ui-section-background-color: #618e9e;

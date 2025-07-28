@@ -106,7 +106,7 @@
 	}
 
 	.pk-tab-group input[type='radio']:checked + label {
-		color: #ffb267;
+		color: var(--ui-text-active);
 	}
 
 	.pk-tab-group input[type='radio']:focus-visible + label {
