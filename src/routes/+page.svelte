@@ -75,7 +75,6 @@
 	main {
 		display: flex;
 		height: 100dvh;
-		gap: 4rem;
 		max-width: 94%;
 		margin: 0 auto;
 	}
@@ -85,17 +84,11 @@
 		max-width: none;
 		margin: 0;
 		display: flex;
-		gap: 2rem;
 		justify-content: center;
 		align-items: flex-start;
 		height: 100dvh;
 		overflow-y: auto;
+		overflow-x: visible;
 		scrollbar-width: none;
-	}
-
-	@media (max-width: 1350px) {
-		main {
-			gap: 2rem;
-		}
 	}
 </style>

@@ -21,8 +21,15 @@
 		justify-items: center;
 		padding-top: 8rem;
 		padding-bottom: 2rem;
+		padding-right: 4rem; /* Prevent Tooltips from beeing cut off, used instead of gap: 4rem; */
 
-		overflow-y: scroll;
+		overflow-y: auto;
 		scrollbar-width: none;
+	}
+
+	@media (max-width: 1350px) {
+		.pk-box-container {
+			padding-right: 2rem;
+		}
 	}
 </style>
