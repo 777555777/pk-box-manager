@@ -6,9 +6,7 @@
 		dexName,
 		disabled = false,
 		hideLabel = false,
-		icon = '',
-		label = '',
-		id = crypto.randomUUID()
+		icon = ''
 	}: {
 		dexName: string
 		disabled?: boolean
@@ -58,13 +56,11 @@
 	}
 </script>
 
-<button class="pk-button" {id} onclick={exportCurrentDex} {disabled}>
-	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
-		{#if icon}
-			<img src={icon} alt="" />
-		{/if}
-		{#if label}
-			<span class={hideLabel ? 'sr-only' : ''}>{label}</span>
-		{/if}
-	</label>
+<button class="pk-button" onclick={exportCurrentDex} {disabled}>
+	{#if icon}
+		<img src={icon} alt={hideLabel ? 'Export' : ''} />
+	{/if}
+	{#if !hideLabel}
+		<span>Export</span>
+	{/if}
 </button>
