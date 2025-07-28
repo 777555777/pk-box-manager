@@ -48,9 +48,15 @@
 		dialogElement.close()
 		hotkeyManager.enableAll()
 	}
+
+	function handleCancel() {
+		// Wird aufgerufen wenn ESC gedrückt wird
+		onCancel()
+		hotkeyManager.enableAll()
+	}
 </script>
 
-<dialog class="pk-ui-section dialog-size-{size}" bind:this={dialogElement}>
+<dialog class="pk-ui-section dialog-size-{size}" bind:this={dialogElement} oncancel={handleCancel}>
 	<section class="pk-ui-section-inner">
 		<section class="pk-dialog-header">
 			<h2>{headline}</h2>
