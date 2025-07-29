@@ -69,7 +69,7 @@
 
 				<!-- Shiny -->
 				<PkToggle
-					icon="/ui/sparkle.svg"
+					icon="/ui/sparkles-solid.svg"
 					activeColor="hsla(125, 100%, 30%, 0.55)"
 					hideLabel={true}
 					onUpdate={toggleShiny}
