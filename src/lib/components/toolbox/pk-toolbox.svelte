@@ -123,7 +123,7 @@
 		/* Positioning */
 		position: fixed;
 		top: 0;
-		z-index: 5;
+		z-index: 30;
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * 18px));

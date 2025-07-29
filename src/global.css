@@ -495,7 +495,7 @@ body {
 		opacity: 0;
 		visibility: hidden;
 		pointer-events: none;
-		z-index: 100;
+		z-index: 10;
 
 		transition:
 			opacity 300ms ease-in-out,

@@ -4,7 +4,6 @@
 	import { getBackgroundStyle, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkPagination from '../ui/pk-pagination.svelte'
-	import PkPortal from '../ui/pk-portal.svelte'
 
 	let {
 		title,
@@ -120,29 +119,27 @@
 </header>
 
 {#snippet selectorTray()}
-	<PkPortal show={showTray} trigger={buttonRef} onClickOutside={handleClickOutside}>
-		<section class="pk-selector-tray" bind:this={trayRef}>
-			<!-- Wallpaper Options -->
-			<div class="wallpaper-grid">
-				{#each paginatedData as [key, value]: [string, TitlesType]}
-					<button
-						class="wallpaper-option"
-						onclick={() => {
-							selectWallpaper(key.replace('-title', '') as WallpapersType)
-						}}
-					>
-						<img
-							src="/spritesheets/util/st1.webp"
-							style={setCssPosition(getTitlePosition(key as TitlesType))}
-							alt={key}
-						/>
-					</button>
-				{/each}
-			</div>
+	<section class="pk-selector-tray" bind:this={trayRef}>
+		<!-- Wallpaper Options -->
+		<div class="wallpaper-grid">
+			{#each paginatedData as [key, value]: [string, TitlesType]}
+				<button
+					class="wallpaper-option"
+					onclick={() => {
+						selectWallpaper(key.replace('-title', '') as WallpapersType)
+					}}
+				>
+					<img
+						src="/spritesheets/util/st1.webp"
+						style={setCssPosition(getTitlePosition(key as TitlesType))}
+						alt={key}
+					/>
+				</button>
+			{/each}
+		</div>
 
-			<PkPagination data={Titles} itemsPerPage={4} onPageChange={handlePageChange} />
-		</section>
-	</PkPortal>
+		<PkPagination data={Titles} itemsPerPage={4} onPageChange={handlePageChange} />
+	</section>
 {/snippet}
 
 <style>
@@ -197,10 +194,9 @@
 		width: fit-content;
 		padding: 12px;
 
-		/* Position below trigger Button */
 		position: absolute;
-		transform: translateX(-50%);
-		top: calc(100% + 26px);
+		top: 100%;
+		z-index: 20; /* 10 More then Tooltips */
 
 		/* Styling */
 		image-rendering: pixelated;

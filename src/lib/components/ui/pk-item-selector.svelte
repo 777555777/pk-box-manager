@@ -2,7 +2,6 @@
 	import { setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkIconGrid from './pk-icon-grid.svelte'
-	import PkPortal from './pk-portal.svelte'
 
 	let {
 		label = '',
@@ -69,6 +68,16 @@
 		onUpdate(value)
 		appState.closeDropdown() // Schließe nach Auswahl
 	}
+
+	$effect(() => {
+		if (trayRef && showTray) {
+			document.addEventListener('click', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	})
 </script>
 
 <div
@@ -85,27 +94,25 @@
 		<img src={spriteUrl} style={setCssPosition(getPosition(selectedItem))} alt={selectedItem} />
 	</button>
 	{#if showTray}
-		<PkPortal show={showTray} trigger={buttonRef} onClickOutside={handleClickOutside}>
-			<section class="pk-selector-tray" bind:this={trayRef}>
-				<PkIconGrid
-					{data}
-					{getPosition}
-					{spriteUrl}
-					{itemsPerPage}
-					{disabled}
-					onUpdate={handleItemUpdate}
-					{activeItems}
-					showBackground={false}
-					alwaysActive={true}
-					fixedHeight={true}
-					--icons-per-row={iconsPerRow}
-					--icon-original-size={iconOriginalSize}
-					--icon-target-size={iconTargetSize}
-					--icon-scale-factor={iconTargetSize / iconOriginalSize}
-					--calculated-height={calculatedHeight}
-				/>
-			</section>
-		</PkPortal>
+		<section class="pk-selector-tray" bind:this={trayRef}>
+			<PkIconGrid
+				{data}
+				{getPosition}
+				{spriteUrl}
+				{itemsPerPage}
+				{disabled}
+				onUpdate={handleItemUpdate}
+				{activeItems}
+				showBackground={false}
+				alwaysActive={true}
+				fixedHeight={true}
+				--icons-per-row={iconsPerRow}
+				--icon-original-size={iconOriginalSize}
+				--icon-target-size={iconTargetSize}
+				--icon-scale-factor={iconTargetSize / iconOriginalSize}
+				--calculated-height={calculatedHeight}
+			/>
+		</section>
 	{/if}
 </div>
 
@@ -136,6 +143,9 @@
 		background-color: transparent;
 		width: fit-content;
 		padding: 6px;
+
+		position: fixed;
+		z-index: 20;
 
 		image-rendering: pixelated;
 		border-width: 9px solid;
