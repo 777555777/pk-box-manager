@@ -19,7 +19,7 @@
 	}
 
 	function updateBoxSprites(newBoxSprites: string) {
-		appState.updateAppSettings({ boxSprites: newBoxSprites as 'default' | 'scaled' | 'classic' })
+		appState.updateAppSettings({ boxSprites: newBoxSprites as 'default' | 'scaled' })
 	}
 
 	function updateFont(newFont: string) {
@@ -66,8 +66,7 @@
 
 	const boxSpriteConfig = [
 		{ tabId: 'default', label: 'Default' },
-		{ tabId: 'scaled', label: 'Scaled' },
-		{ tabId: 'classic', label: 'Classic' }
+		{ tabId: 'scaled', label: 'Scaled' }
 	]
 
 	const appLanguageConfig = [
@@ -137,17 +136,6 @@
 							</div>
 							<small>Scaled</small>
 						</div>
-
-						<div class="example-element">
-							<div class="pk-demo-slot">
-								<img
-									src={`/spritesheets/pokemon/sp1.webp`}
-									alt="classic box sprite example"
-									style={setCssPosition({ x: -96, y: 0 })}
-								/>
-							</div>
-							<small>Classic</small>
-						</div>
 					</div>
 				</div>
 			</fieldset>
@@ -162,11 +150,11 @@
 					/>
 					<div class="example">
 						<div class="pixel-font-example">
-							<p>0001 Bulbasaur</p>
+							<p>Bulbasaur</p>
 							<small>Pixel Font</small>
 						</div>
 						<div class="system-font-example">
-							<p>0001 Bulbasaur</p>
+							<p>Bulbasaur</p>
 							<small>System Font</small>
 						</div>
 					</div>
@@ -234,7 +222,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-
 		.separator {
 			background-color: rgba(0, 0, 0, 0.1);
 		}
@@ -244,7 +231,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-
 		.pk-settings-content {
 			display: flex;
 			flex-direction: row;
@@ -333,22 +319,20 @@
 		}
 	}
 
-	/* TODO: Dropdown menus are cut off / cause the container to grow in the Y axis at the moment */
+	/* Mobile responsive layout */
 	@media (max-width: 730px) {
 		.pk-preferences-section {
-			max-height: 30rem;
+			max-height: 60vh;
 			padding-inline: 2rem;
 			padding-bottom: 1.5rem;
 
-			overflow-y: scroll;
 			scrollbar-color: #444450 #717186;
-			mask: var(--scroll-indicator-gradient);
 		}
 
 		.pk-preferences-section .pk-settings-content {
 			flex-direction: column;
 			align-items: center;
-			gap: 1rem;
+			gap: 0.75rem; /* Reduzierte Gaps */
 
 			.pk-badge-element {
 				text-align: center;
@@ -356,11 +340,23 @@
 				align-items: center;
 			}
 		}
+
+		/* Hotkey-Sektion Ausblenden weil keine Tastatur */
+		.pk-hotkey-section,
+		.separator {
+			display: none;
+		}
 	}
 
-	@media (max-width: 520px) {
+	@media (max-width: 460px) {
 		.pk-preferences-section {
+			max-height: 98vh;
+			height: 98vh;
 			padding-inline: 1rem;
+		}
+
+		fieldset.pk-fieldset .pk-settings-content .example {
+			display: none;
 		}
 	}
 

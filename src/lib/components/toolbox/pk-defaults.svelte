@@ -135,4 +135,11 @@
 			}
 		}
 	}
+
+	@media (max-width: 460px) {
+		.pk-dialog-section {
+			height: 98vh;
+			padding-inline: 1rem;
+		}
+	}
 </style>

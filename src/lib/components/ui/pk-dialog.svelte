@@ -157,9 +157,8 @@
 		margin-block: calc(var(--dialog-spacing) * 2);
 		flex: 1;
 		padding-inline: 1rem;
-		overflow-y: auto;
 		min-height: 0; /* Wichtig für Flexbox-Scrolling */
-
+		overflow-y: scroll;
 		scrollbar-color: #444450 #717186;
 
 		.pk-dialog-description p {
@@ -214,10 +213,31 @@
 		.dialog-size-L {
 			width: 95vw;
 			min-width: 95vw;
+			max-width: 95vw;
 		}
 
 		.pk-dialog-content {
 			padding-inline: 0.5rem;
+			margin-block: calc(var(--dialog-spacing) * 1);
+		}
+	}
+
+	/* Vollbild-Modus für sehr kleine Bildschirme */
+	@media (max-width: 460px) {
+		.dialog-size-S,
+		.dialog-size-M,
+		.dialog-size-L {
+			width: 100vw;
+			min-width: 100vw;
+			max-width: 100vw;
+			max-height: 100vh;
+			top: 0;
+			left: 0;
+			transform: none; /* Entfernt die Zentrierung */
+		}
+
+		.pk-dialog-content {
+			padding-inline: 0.25rem;
 		}
 	}
 </style>

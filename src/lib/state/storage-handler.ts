@@ -58,7 +58,7 @@ export interface BoxData {
 
 export interface AppSettings {
 	language: 'en' | 'de'
-	boxSprites: 'default' | 'scaled' | 'classic'
+	boxSprites: 'default' | 'scaled'
 	font: 'pixel' | 'system'
 	badgeCycleOption: 'default' | 'filter'
 	badgeDisplay: BadgeDisplayMode

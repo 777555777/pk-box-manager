@@ -26,7 +26,6 @@
 
 	// Filter pokedexes based on toggle states
 	let pokedexList = $derived.by(() => {
-		console.log(allPokedexes)
 		return allPokedexes.filter((pokedex) => {
 			const dexName = pokedex.name
 
@@ -59,8 +58,6 @@
 	}
 
 	async function handlePokedexSelect(dexName: string) {
-		console.log('Selecting pokedex:', dexName)
-
 		// Load the new dex state
 		await pkState.switchPokedex(dexName)
 
@@ -97,32 +94,66 @@
 	cancelBtnText="Close"
 	size="L"
 />
+
 {#snippet pokedexDialogContent()}
-	<fieldset class="pk-fieldset pk-dex-filter-options">
-		<legend>Pokedex Filters</legend>
-		<div class="pk-filter-container">
-			<div class="pk-btn-group pk-filter-toggles">
-				<PkToggle
-					label="Base Dex"
-					activeColor="hsla(125, 100%, 30%, 0.55)"
-					bind:checked={showBaseDex}
-				/>
-				<PkToggle
-					label="Forms Dex"
-					activeColor="hsla(125, 100%, 30%, 0.55)"
-					bind:checked={showFormsDex}
-				/>
-				<PkToggle
-					label="Custom Dex"
-					activeColor="hsla(125, 100%, 30%, 0.55)"
-					bind:checked={showCustomDex}
-				/>
+	<!-- Mobile: Details/Summary Layout -->
+	<div class="mobile-filter-accordion">
+		<details class="pk-filter-details">
+			<summary>Pokedex Filters</summary>
+			<div class="pk-filter-container">
+				<div class="pk-btn-group pk-filter-toggles">
+					<PkToggle
+						label="Base Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showBaseDex}
+					/>
+					<PkToggle
+						label="Forms Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showFormsDex}
+					/>
+					<PkToggle
+						label="Custom Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showCustomDex}
+					/>
+				</div>
+				<div class="pk-btn-group pk-filter-actions">
+					<PkImport />
+				</div>
 			</div>
-			<div class="pk-btn-group pk-filter-actions">
-				<PkImport />
+		</details>
+	</div>
+
+	<!-- Desktop: Fieldset Layout -->
+	<div class="desktop-filter-fieldset">
+		<fieldset class="pk-fieldset pk-dex-filter-options">
+			<legend>Pokedex Filters</legend>
+			<div class="pk-filter-container">
+				<div class="pk-btn-group pk-filter-toggles">
+					<PkToggle
+						label="Base Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showBaseDex}
+					/>
+					<PkToggle
+						label="Forms Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showFormsDex}
+					/>
+					<PkToggle
+						label="Custom Dex"
+						activeColor="hsla(125, 100%, 30%, 0.55)"
+						bind:checked={showCustomDex}
+					/>
+				</div>
+				<div class="pk-btn-group pk-filter-actions">
+					<PkImport />
+				</div>
 			</div>
-		</div>
-	</fieldset>
+		</fieldset>
+	</div>
+
 	<section class="pk-pokedex-section">
 		{#each pokedexList as pokedex, index}
 			<PkDexCard
@@ -141,6 +172,47 @@
 {/snippet}
 
 <style>
+	/* Mobile Accordion Styles */
+	.mobile-filter-accordion {
+		display: none; /* Hidden by default, shown on mobile */
+	}
+
+	.pk-filter-details {
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		border-radius: 5px;
+
+		summary {
+			padding: 0.75rem 1rem;
+			cursor: pointer;
+			background-color: rgba(0, 0, 0, 0.05);
+			font-weight: 500;
+			user-select: none;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+		}
+
+		.pk-filter-container {
+			padding: 1rem;
+			border-top: 1px solid rgba(0, 0, 0, 0.1);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 1rem;
+
+			.pk-btn-group {
+				display: flex;
+				gap: 0.5rem;
+			}
+		}
+	}
+
+	/* Desktop Fieldset Styles */
+	.desktop-filter-fieldset {
+		display: block;
+	}
+
 	.pk-dex-filter-options {
 		margin-bottom: 1rem;
 
@@ -159,23 +231,36 @@
 
 	/* Responsive Filter-Optionen */
 	@media (max-width: 768px) {
-		.pk-dex-filter-options {
-			.pk-filter-container {
-				flex-direction: column;
-				justify-content: center;
-				gap: 1rem;
-			}
+		/* Mobile: Show accordion, hide fieldset */
+		.mobile-filter-accordion {
+			display: block;
+		}
+
+		.desktop-filter-fieldset {
+			display: none;
+		}
+
+		/* Mobile-specific styling for accordion content */
+		.pk-filter-details .pk-filter-container {
+			flex-direction: column;
+			justify-content: center;
+			gap: 1rem;
 		}
 	}
 
 	@media (max-width: 520px) {
-		.pk-dex-filter-options {
-			.pk-filter-toggles {
-				flex-direction: column;
-				gap: 0.75rem;
-				width: 100%;
-				padding-inline: 2rem;
-			}
+		.pk-filter-details .pk-filter-toggles {
+			flex-direction: column;
+			gap: 0.75rem;
+			width: 100%;
+		}
+
+		.pk-filter-details .pk-filter-container {
+			padding: 0.75rem;
+		}
+
+		.pk-filter-details summary {
+			padding: 0.5rem 0.75rem;
 		}
 	}
 	.pk-pokedex-section {
@@ -197,6 +282,12 @@
 		.pk-pokedex-section {
 			gap: 1rem;
 			padding-bottom: 2rem;
+		}
+	}
+
+	@media (max-width: 460px) {
+		.pk-fieldset {
+			margin-bottom: 0;
 		}
 	}
 </style>
