@@ -36,6 +36,16 @@
 
 	input[type='checkbox']:checked + label {
 		width: 100%;
+		position: relative;
+	}
+
+	input[type='checkbox']:checked + label::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		background-color: var(--active-background);
 		clip-path: polygon(
 			3px calc(100% - 6px),
@@ -52,6 +62,7 @@
 			3px 6px
 		);
 		mix-blend-mode: color-dodge;
+		pointer-events: none;
 	}
 
 	.pk-button img {
@@ -69,7 +80,7 @@
 
 		height: 44px;
 		min-width: 44px;
-		width: auto;
+		width: 100%;
 		cursor: pointer;
 	}
 
