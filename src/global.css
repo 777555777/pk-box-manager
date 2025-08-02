@@ -477,7 +477,7 @@ body {
 
 		/* Lösung 1: Intrinsic Sizing - passt sich dem Inhalt an */
 		width: max-content;
-		max-width: 25ch;
+		max-width: 18ch;
 
 		/* Lösung 2: Alternative mit min-content für kompaktere Darstellung */
 		/* width: min-content; */

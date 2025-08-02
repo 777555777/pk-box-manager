@@ -19,17 +19,9 @@
 		row-gap: 3rem;
 		column-gap: 2rem;
 		justify-items: center;
-		padding-top: 8rem;
-		padding-bottom: 2rem;
-		padding-right: 4rem; /* Prevent Tooltips from beeing cut off, used instead of gap: 4rem; */
+		padding: 8rem 2rem 2rem 2rem; /* Padding left and right to prevent Tooltips from beeing cut off */
 
 		overflow-y: auto;
 		scrollbar-width: none;
-	}
-
-	@media (max-width: 1350px) {
-		.pk-box-container {
-			padding-right: 2rem;
-		}
 	}
 </style>

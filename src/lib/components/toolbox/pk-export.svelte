@@ -56,7 +56,12 @@
 	}
 </script>
 
-<button class="pk-button" onclick={exportCurrentDex} {disabled}>
+<button
+	class="pk-button pk-tooltip"
+	data-tooltip={hideLabel ? 'Export Pokedex' : ''}
+	onclick={exportCurrentDex}
+	{disabled}
+>
 	{#if icon}
 		<img src={icon} alt={hideLabel ? 'Export' : ''} />
 	{/if}

@@ -85,7 +85,12 @@
 	>
 		<!-- Delete Button -->
 		{#if isAvailableInClient}
-			<button class="delete-button" onclick={toggleDelete} disabled={!isAvailableInClient}>
+			<button
+				class="delete-button pk-tooltip"
+				data-tooltip="Reset Pokedex"
+				onclick={toggleDelete}
+				disabled={!isAvailableInClient}
+			>
 				<img src="/ui/x-icon.svg" alt="Delete" />
 			</button>
 		{/if}
