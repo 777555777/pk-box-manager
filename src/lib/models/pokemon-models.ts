@@ -1407,7 +1407,7 @@ export const Pokemon = {
       y: -1248
     }
   },
-  "0201-unown": {
+  "0201-unown-a": {
     sheet: "sp1",
     pos: {
       x: -576,
@@ -4662,7 +4662,7 @@ export const Pokemon = {
       y: -384
     }
   },
-  "0666-vivillon": {
+  "0666-vivillon-meadow": {
     sheet: "sp3",
     pos: {
       x: -576,
@@ -5026,7 +5026,7 @@ export const Pokemon = {
       y: -672
     }
   },
-  "0718-zygarde-50": {
+  "0718-zygarde-50%": {
     sheet: "sp3",
     pos: {
       x: -1248,
@@ -6083,7 +6083,7 @@ export const Pokemon = {
       y: -1632
     }
   },
-  "0869-alcremie": {
+  "0869-alcremie-vanilla-cream-strawberry": {
     sheet: "sp3",
     pos: {
       x: -1344,

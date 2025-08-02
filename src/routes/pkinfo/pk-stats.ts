@@ -27,6 +27,27 @@ export const pkStats = {
 		abilities: ['Overgrow', 'Chlorophyll*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0003-venusaur-female': {
+		originRegion: 'Kanto',
+		stats: [80, 82, 83, 100, 100, 80],
+		types: ['Grass', 'Poison'],
+		abilities: ['Overgrow', 'Chlorophyll*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0003-venusaur-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [80, 82, 83, 100, 100, 80],
+		types: ['Grass', 'Poison'],
+		abilities: ['Overgrow', 'Chlorophyll*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0003-venusaur-gigantamax-female': {
+		originRegion: 'Kanto',
+		stats: [80, 82, 83, 100, 100, 80],
+		types: ['Grass', 'Poison'],
+		abilities: ['Overgrow', 'Chlorophyll*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0004-charmander': {
 		originRegion: 'Kanto',
 		stats: [39, 52, 43, 60, 50, 65],
@@ -42,6 +63,13 @@ export const pkStats = {
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0006-charizard': {
+		originRegion: 'Kanto',
+		stats: [78, 84, 78, 109, 85, 100],
+		types: ['Fire', 'Flying'],
+		abilities: ['Blaze', 'Solar Power*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0006-charizard-gigantamax': {
 		originRegion: 'Kanto',
 		stats: [78, 84, 78, 109, 85, 100],
 		types: ['Fire', 'Flying'],
@@ -69,6 +97,13 @@ export const pkStats = {
 		abilities: ['Torrent', 'Rain Dish*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0009-blastoise-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [79, 83, 100, 85, 105, 78],
+		types: ['Water'],
+		abilities: ['Torrent', 'Rain Dish*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0010-caterpie': {
 		originRegion: 'Kanto',
 		stats: [45, 30, 35, 20, 20, 45],
@@ -84,6 +119,27 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0012-butterfree': {
+		originRegion: 'Kanto',
+		stats: [60, 45, 50, 90, 80, 70],
+		types: ['Bug', 'Flying'],
+		abilities: ['Compound Eyes', 'Tinted Lens*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0012-butterfree-female': {
+		originRegion: 'Kanto',
+		stats: [60, 45, 50, 90, 80, 70],
+		types: ['Bug', 'Flying'],
+		abilities: ['Compound Eyes', 'Tinted Lens*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0012-butterfree-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [60, 45, 50, 90, 80, 70],
+		types: ['Bug', 'Flying'],
+		abilities: ['Compound Eyes', 'Tinted Lens*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0012-butterfree-gigantamax-female': {
 		originRegion: 'Kanto',
 		stats: [60, 45, 50, 90, 80, 70],
 		types: ['Bug', 'Flying'],
@@ -139,7 +195,35 @@ export const pkStats = {
 		abilities: ['Run Away', 'Guts', 'Hustle*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0019-rattata-alolan': {
+		originRegion: 'Alola',
+		stats: [30, 56, 35, 25, 35, 72],
+		types: ['Dark', 'Normal'],
+		abilities: ['Gluttony', 'Hustle', 'Thick Fat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0019-rattata-female': {
+		originRegion: 'Kanto',
+		stats: [30, 56, 35, 25, 35, 72],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Guts', 'Hustle*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0020-raticate': {
+		originRegion: 'Kanto',
+		stats: [55, 81, 60, 50, 70, 97],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Guts', 'Hustle*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0020-raticate-alolan': {
+		originRegion: 'Alola',
+		stats: [75, 71, 70, 40, 80, 77],
+		types: ['Dark', 'Normal'],
+		abilities: ['Gluttony', 'Hustle', 'Thick Fat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0020-raticate-female': {
 		originRegion: 'Kanto',
 		stats: [55, 81, 60, 50, 70, 97],
 		types: ['Normal'],
@@ -181,7 +265,98 @@ export const pkStats = {
 		abilities: ['Static', 'Lightning Rod*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0025-pikachu-cap-alola': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-hoenn': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-kalos': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-original': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-partner': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-sinnoh': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-unova': {
+		originRegion: 'Alola',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-cap-world': {
+		originRegion: 'Galar',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0025-pikachu-female': {
+		originRegion: 'Kanto',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0025-pikachu-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0025-pikachu-gigantamax-female': {
+		originRegion: 'Kanto',
+		stats: [35, 55, 40, 50, 50, 90],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0026-raichu': {
+		originRegion: 'Kanto',
+		stats: [60, 90, 55, 90, 80, 110],
+		types: ['Electric'],
+		abilities: ['Static', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0026-raichu-alolan': {
+		originRegion: 'Alola',
+		stats: [60, 85, 50, 95, 85, 110],
+		types: ['Electric', 'Psychic'],
+		abilities: ['Surge Surfer'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0026-raichu-female': {
 		originRegion: 'Kanto',
 		stats: [60, 90, 55, 90, 80, 110],
 		types: ['Electric'],
@@ -195,11 +370,25 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Sand Rush*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0027-sandshrew-alolan': {
+		originRegion: 'Alola',
+		stats: [50, 75, 90, 10, 35, 40],
+		types: ['Ice', 'Steel'],
+		abilities: ['Snow Cloak', 'Slush Rush'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0028-sandslash': {
 		originRegion: 'Kanto',
 		stats: [75, 100, 110, 45, 55, 65],
 		types: ['Ground'],
 		abilities: ['Sand Veil', 'Sand Rush*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0028-sandslash-alolan': {
+		originRegion: 'Alola',
+		stats: [75, 100, 120, 25, 65, 65],
+		types: ['Ice', 'Steel'],
+		abilities: ['Snow Cloak', 'Slush Rush'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0029-nidoran-f': {
@@ -265,12 +454,26 @@ export const pkStats = {
 		abilities: ['Flash Fire', 'Drought*'],
 		genderRatio: { male: 25, female: 75 }
 	},
+	'0037-vulpix-alolan': {
+		originRegion: 'Alola',
+		stats: [38, 41, 40, 50, 65, 65],
+		types: ['Ice'],
+		abilities: ['Snow Cloak', 'Snow Warning'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0038-ninetales': {
 		originRegion: 'Kanto',
 		stats: [73, 76, 75, 81, 100, 100],
 		types: ['Fire'],
 		abilities: ['Flash Fire', 'Drought*'],
 		genderRatio: { male: 25, female: 75 }
+	},
+	'0038-ninetales-alolan': {
+		originRegion: 'Alola',
+		stats: [73, 67, 75, 81, 100, 109],
+		types: ['Ice', 'Fairy'],
+		abilities: ['Snow Cloak', 'Snow Warning'],
+		genderRatio: { male: 50, female: 50 }
 	},
 	'0039-jigglypuff': {
 		originRegion: 'Kanto',
@@ -293,7 +496,21 @@ export const pkStats = {
 		abilities: ['Inner Focus', 'Infiltrator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0041-zubat-female': {
+		originRegion: 'Kanto',
+		stats: [40, 45, 35, 30, 40, 55],
+		types: ['Poison', 'Flying'],
+		abilities: ['Inner Focus', 'Infiltrator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0042-golbat': {
+		originRegion: 'Kanto',
+		stats: [75, 80, 70, 65, 75, 90],
+		types: ['Poison', 'Flying'],
+		abilities: ['Inner Focus', 'Infiltrator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0042-golbat-female': {
 		originRegion: 'Kanto',
 		stats: [75, 80, 70, 65, 75, 90],
 		types: ['Poison', 'Flying'],
@@ -314,7 +531,21 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Stench*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0044-gloom-female': {
+		originRegion: 'Kanto',
+		stats: [60, 65, 70, 85, 75, 40],
+		types: ['Grass', 'Poison'],
+		abilities: ['Chlorophyll', 'Stench*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0045-vileplume': {
+		originRegion: 'Kanto',
+		stats: [75, 80, 85, 110, 90, 50],
+		types: ['Grass', 'Poison'],
+		abilities: ['Chlorophyll', 'Effect Spore*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0045-vileplume-female': {
 		originRegion: 'Kanto',
 		stats: [75, 80, 85, 110, 90, 50],
 		types: ['Grass', 'Poison'],
@@ -356,6 +587,13 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Arena Trap', 'Sand Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0050-diglett-alolan': {
+		originRegion: 'Alola',
+		stats: [10, 55, 30, 35, 45, 90],
+		types: ['Ground', 'Steel'],
+		abilities: ['Sand Veil', 'Tangling Hair', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0051-dugtrio': {
 		originRegion: 'Kanto',
 		stats: [35, 100, 50, 50, 70, 120],
@@ -363,7 +601,35 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Arena Trap', 'Sand Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0051-dugtrio-alolan': {
+		originRegion: 'Alola',
+		stats: [35, 100, 60, 50, 70, 110],
+		types: ['Ground', 'Steel'],
+		abilities: ['Sand Veil', 'Tangling Hair', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0052-meowth': {
+		originRegion: 'Kanto',
+		stats: [40, 45, 35, 40, 40, 90],
+		types: ['Normal'],
+		abilities: ['Pickup', 'Technician', 'Unnerve*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0052-meowth-alolan': {
+		originRegion: 'Alola',
+		stats: [40, 35, 35, 50, 40, 90],
+		types: ['Dark'],
+		abilities: ['Pickup', 'Technician', 'Rattled*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0052-meowth-galarian': {
+		originRegion: 'Galar',
+		stats: [50, 65, 55, 40, 40, 40],
+		types: ['Steel'],
+		abilities: ['Pickup', 'Tough Claws', 'Unnerve*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0052-meowth-gigantamax': {
 		originRegion: 'Kanto',
 		stats: [40, 45, 35, 40, 40, 90],
 		types: ['Normal'],
@@ -375,6 +641,13 @@ export const pkStats = {
 		stats: [65, 70, 60, 65, 65, 115],
 		types: ['Normal'],
 		abilities: ['Limber', 'Technician', 'Unnerve*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0053-persian-alolan': {
+		originRegion: 'Alola',
+		stats: [65, 60, 60, 75, 65, 115],
+		types: ['Dark'],
+		abilities: ['Fur Coat', 'Technician', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0054-psyduck': {
@@ -412,11 +685,25 @@ export const pkStats = {
 		abilities: ['Intimidate', 'Flash Fire', 'Justified*'],
 		genderRatio: { male: 75, female: 25 }
 	},
+	'0058-growlithe-hisuian': {
+		originRegion: 'Hisui',
+		stats: [60, 75, 45, 65, 50, 55],
+		types: ['Fire', 'Rock'],
+		abilities: ['Intimidate', 'Flash Fire', 'Rock Head*'],
+		genderRatio: { male: 75, female: 25 }
+	},
 	'0059-arcanine': {
 		originRegion: 'Kanto',
 		stats: [90, 110, 80, 100, 80, 95],
 		types: ['Fire'],
 		abilities: ['Intimidate', 'Flash Fire', 'Justified*'],
+		genderRatio: { male: 75, female: 25 }
+	},
+	'0059-arcanine-hisuian': {
+		originRegion: 'Hisui',
+		stats: [95, 115, 80, 95, 80, 90],
+		types: ['Fire', 'Rock'],
+		abilities: ['Intimidate', 'Flash Fire', 'Rock Head*'],
 		genderRatio: { male: 75, female: 25 }
 	},
 	'0060-poliwag': {
@@ -454,7 +741,21 @@ export const pkStats = {
 		abilities: ['Synchronize', 'Inner Focus', 'Magic Guard*'],
 		genderRatio: { male: 75, female: 25 }
 	},
+	'0064-kadabra-female': {
+		originRegion: 'Kanto',
+		stats: [40, 35, 30, 120, 70, 105],
+		types: ['Psychic'],
+		abilities: ['Synchronize', 'Inner Focus', 'Magic Guard*'],
+		genderRatio: { male: 75, female: 25 }
+	},
 	'0065-alakazam': {
+		originRegion: 'Kanto',
+		stats: [55, 50, 45, 135, 95, 120],
+		types: ['Psychic'],
+		abilities: ['Synchronize', 'Inner Focus', 'Magic Guard*'],
+		genderRatio: { male: 75, female: 25 }
+	},
+	'0065-alakazam-female': {
 		originRegion: 'Kanto',
 		stats: [55, 50, 45, 135, 95, 120],
 		types: ['Psychic'],
@@ -476,6 +777,13 @@ export const pkStats = {
 		genderRatio: { male: 75, female: 25 }
 	},
 	'0068-machamp': {
+		originRegion: 'Kanto',
+		stats: [90, 130, 80, 65, 85, 55],
+		types: ['Fighting'],
+		abilities: ['Guts', 'No Guard', 'Steadfast*'],
+		genderRatio: { male: 75, female: 25 }
+	},
+	'0068-machamp-gigantamax': {
 		originRegion: 'Kanto',
 		stats: [90, 130, 80, 65, 85, 55],
 		types: ['Fighting'],
@@ -524,11 +832,25 @@ export const pkStats = {
 		abilities: ['Rock Head', 'Sturdy', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0074-geodude-alolan': {
+		originRegion: 'Alola',
+		stats: [40, 80, 100, 30, 30, 20],
+		types: ['Rock', 'Electric'],
+		abilities: ['Magnet Pull', 'Sturdy', 'Galvanize*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0075-graveler': {
 		originRegion: 'Kanto',
 		stats: [55, 95, 115, 45, 45, 35],
 		types: ['Rock', 'Ground'],
 		abilities: ['Rock Head', 'Sturdy', 'Sand Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0075-graveler-alolan': {
+		originRegion: 'Alola',
+		stats: [55, 95, 115, 45, 45, 35],
+		types: ['Rock', 'Electric'],
+		abilities: ['Magnet Pull', 'Sturdy', 'Galvanize*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0076-golem': {
@@ -538,11 +860,25 @@ export const pkStats = {
 		abilities: ['Rock Head', 'Sturdy', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0076-golem-alolan': {
+		originRegion: 'Alola',
+		stats: [80, 120, 130, 55, 65, 45],
+		types: ['Rock', 'Electric'],
+		abilities: ['Magnet Pull', 'Sturdy', 'Galvanize*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0077-ponyta': {
 		originRegion: 'Kanto',
 		stats: [50, 85, 55, 65, 65, 90],
 		types: ['Fire'],
 		abilities: ['Run Away', 'Flash Fire', 'Flame Body*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0077-ponyta-galarian': {
+		originRegion: 'Galar',
+		stats: [50, 85, 55, 65, 65, 90],
+		types: ['Psychic'],
+		abilities: ['Run Away', 'Pastel Veil', 'Anticipation*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0078-rapidash': {
@@ -552,6 +888,13 @@ export const pkStats = {
 		abilities: ['Run Away', 'Flash Fire', 'Flame Body*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0078-rapidash-galarian': {
+		originRegion: 'Kanto',
+		stats: [65, 100, 70, 80, 80, 105],
+		types: ['Fire'],
+		abilities: ['Run Away', 'Pastel Veil', 'Anticipation*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0079-slowpoke': {
 		originRegion: 'Kanto',
 		stats: [90, 65, 65, 40, 40, 15],
@@ -559,11 +902,25 @@ export const pkStats = {
 		abilities: ['Oblivious', 'Own Tempo', 'Regenerator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0079-slowpoke-galarian': {
+		originRegion: 'Galar',
+		stats: [90, 65, 65, 40, 40, 15],
+		types: ['Psychic'],
+		abilities: ['Gluttony', 'Own Tempo', 'Regenerator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0080-slowbro': {
 		originRegion: 'Kanto',
 		stats: [95, 75, 110, 100, 80, 30],
 		types: ['Water', 'Psychic'],
 		abilities: ['Oblivious', 'Own Tempo', 'Regenerator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0080-slowbro-galarian': {
+		originRegion: 'Galar',
+		stats: [95, 100, 95, 100, 70, 30],
+		types: ['Poison', 'Psychic'],
+		abilities: ['Quick Draw', 'Own Tempo', 'Regenerator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0081-magnemite': {
@@ -587,6 +944,13 @@ export const pkStats = {
 		abilities: ['Keen Eye', 'Inner Focus', 'Defiant*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0083-farfetchd-galarian': {
+		originRegion: 'Galar',
+		stats: [52, 95, 55, 58, 62, 55],
+		types: ['Fighting'],
+		abilities: ['Steadfast', 'Scrappy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0084-doduo': {
 		originRegion: 'Kanto',
 		stats: [35, 85, 45, 35, 35, 75],
@@ -594,7 +958,21 @@ export const pkStats = {
 		abilities: ['Run Away', 'Early Bird', 'Tangled Feet*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0084-doduo-female': {
+		originRegion: 'Kanto',
+		stats: [35, 85, 45, 35, 35, 75],
+		types: ['Normal', 'Flying'],
+		abilities: ['Run Away', 'Early Bird', 'Tangled Feet*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0085-dodrio': {
+		originRegion: 'Kanto',
+		stats: [60, 110, 70, 60, 60, 110],
+		types: ['Normal', 'Flying'],
+		abilities: ['Run Away', 'Early Bird', 'Tangled Feet*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0085-dodrio-female': {
 		originRegion: 'Kanto',
 		stats: [60, 110, 70, 60, 60, 110],
 		types: ['Normal', 'Flying'],
@@ -622,11 +1000,25 @@ export const pkStats = {
 		abilities: ['Stench', 'Sticky Hold', 'Poison Touch*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0088-grimer-alolan': {
+		originRegion: 'Alola',
+		stats: [80, 80, 50, 40, 50, 25],
+		types: ['Poison', 'Dark'],
+		abilities: ['Poison Touch', 'Gluttony', 'Power of Alchemy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0089-muk': {
 		originRegion: 'Kanto',
 		stats: [105, 105, 75, 65, 100, 50],
 		types: ['Poison'],
 		abilities: ['Stench', 'Sticky Hold', 'Poison Touch*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0089-muk-alolan': {
+		originRegion: 'Alola',
+		stats: [105, 105, 75, 65, 100, 50],
+		types: ['Poison', 'Dark'],
+		abilities: ['Poison Touch', 'Gluttony', 'Power of Alchemy*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0090-shellder': {
@@ -664,6 +1056,13 @@ export const pkStats = {
 		abilities: ['Cursed Body'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0094-gengar-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [60, 65, 60, 130, 75, 110],
+		types: ['Ghost', 'Poison'],
+		abilities: ['Cursed Body'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0095-onix': {
 		originRegion: 'Kanto',
 		stats: [35, 45, 160, 30, 45, 70],
@@ -685,6 +1084,13 @@ export const pkStats = {
 		abilities: ['Insomnia', 'Forewarn', 'Inner Focus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0097-hypno-female': {
+		originRegion: 'Kanto',
+		stats: [85, 73, 70, 73, 115, 67],
+		types: ['Psychic'],
+		abilities: ['Insomnia', 'Forewarn', 'Inner Focus*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0098-krabby': {
 		originRegion: 'Kanto',
 		stats: [30, 105, 90, 25, 25, 50],
@@ -699,6 +1105,13 @@ export const pkStats = {
 		abilities: ['Hyper Cutter', 'Shell Armor', 'Sheer Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0099-kingler-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [55, 130, 115, 50, 50, 75],
+		types: ['Water'],
+		abilities: ['Hyper Cutter', 'Shell Armor', 'Sheer Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0100-voltorb': {
 		originRegion: 'Kanto',
 		stats: [40, 30, 50, 55, 55, 100],
@@ -706,10 +1119,24 @@ export const pkStats = {
 		abilities: ['Soundproof', 'Static', 'Aftermath*'],
 		genderRatio: { male: null, female: null }
 	},
+	'0100-voltorb-hisuian': {
+		originRegion: 'Hisui',
+		stats: [40, 30, 50, 55, 55, 100],
+		types: ['Electric', 'Grass'],
+		abilities: ['Soundproof', 'Static', 'Aftermath*'],
+		genderRatio: { male: null, female: null }
+	},
 	'0101-electrode': {
 		originRegion: 'Kanto',
 		stats: [60, 50, 70, 80, 80, 150],
 		types: ['Electric'],
+		abilities: ['Soundproof', 'Static', 'Aftermath*'],
+		genderRatio: { male: null, female: null }
+	},
+	'0101-electrode-hisuian': {
+		originRegion: 'Hisui',
+		stats: [60, 50, 70, 80, 80, 150],
+		types: ['Electric', 'Grass'],
 		abilities: ['Soundproof', 'Static', 'Aftermath*'],
 		genderRatio: { male: null, female: null }
 	},
@@ -727,6 +1154,13 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Harvest*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0103-exeggutor-alolan': {
+		originRegion: 'Alola',
+		stats: [95, 105, 85, 125, 75, 45],
+		types: ['Grass', 'Dragon'],
+		abilities: ['Frisk', 'Harvest'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0104-cubone': {
 		originRegion: 'Kanto',
 		stats: [50, 50, 95, 40, 50, 35],
@@ -739,6 +1173,13 @@ export const pkStats = {
 		stats: [60, 80, 110, 50, 80, 45],
 		types: ['Ground'],
 		abilities: ['Rock Head', 'Lightning Rod', 'Battle Armor*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0105-marowak-alolan': {
+		originRegion: 'Alola',
+		stats: [60, 80, 110, 50, 80, 45],
+		types: ['Fire', 'Ghost'],
+		abilities: ['Cursed Body', 'Lightning Rod', 'Rock Head*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0106-hitmonlee': {
@@ -776,6 +1217,13 @@ export const pkStats = {
 		abilities: ['Levitate'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0110-weezing-galarian': {
+		originRegion: 'Galar',
+		stats: [65, 90, 120, 85, 70, 60],
+		types: ['Poison', 'Fairy'],
+		abilities: ['Levitate', 'Neutralizing Gas', 'Misty Surge*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0111-rhyhorn': {
 		originRegion: 'Kanto',
 		stats: [80, 85, 95, 30, 30, 25],
@@ -783,7 +1231,21 @@ export const pkStats = {
 		abilities: ['Lightning Rod', 'Rock Head', 'Reckless*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0111-rhyhorn-female': {
+		originRegion: 'Kanto',
+		stats: [80, 85, 95, 30, 30, 25],
+		types: ['Ground', 'Rock'],
+		abilities: ['Lightning Rod', 'Rock Head', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0112-rhydon': {
+		originRegion: 'Kanto',
+		stats: [105, 130, 120, 45, 45, 40],
+		types: ['Ground', 'Rock'],
+		abilities: ['Lightning Rod', 'Rock Head', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0112-rhydon-female': {
 		originRegion: 'Kanto',
 		stats: [105, 130, 120, 45, 45, 40],
 		types: ['Ground', 'Rock'],
@@ -832,7 +1294,21 @@ export const pkStats = {
 		abilities: ['Swift Swim', 'Water Veil', 'Lightning Rod*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0118-goldeen-female': {
+		originRegion: 'Kanto',
+		stats: [45, 67, 60, 35, 50, 63],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Water Veil', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0119-seaking': {
+		originRegion: 'Kanto',
+		stats: [80, 92, 65, 65, 80, 68],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Water Veil', 'Lightning Rod*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0119-seaking-female': {
 		originRegion: 'Kanto',
 		stats: [80, 92, 65, 65, 80, 68],
 		types: ['Water'],
@@ -860,7 +1336,21 @@ export const pkStats = {
 		abilities: ['Soundproof', 'Filter', 'Technician*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0122-mr-mime-galarian': {
+		originRegion: 'Galar',
+		stats: [50, 65, 65, 90, 90, 100],
+		types: ['Ice', 'Psychic'],
+		abilities: ['Vital Spirit', 'Screen Cleaner', 'Ice Body*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0123-scyther': {
+		originRegion: 'Kanto',
+		stats: [70, 110, 80, 55, 80, 105],
+		types: ['Bug', 'Flying'],
+		abilities: ['Swarm', 'Technician', 'Steadfast*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0123-scyther-female': {
 		originRegion: 'Kanto',
 		stats: [70, 110, 80, 55, 80, 105],
 		types: ['Bug', 'Flying'],
@@ -902,7 +1392,35 @@ export const pkStats = {
 		abilities: ['Intimidate', 'Anger Point', 'Sheer Force*'],
 		genderRatio: { male: 100, female: 0 }
 	},
+	'0128-tauros-paldean-aqua': {
+		originRegion: 'Paldea',
+		stats: [75, 110, 105, 30, 70, 100],
+		types: ['Fighting', 'Water'],
+		abilities: ['Intimidate', 'Anger Point', 'Cud Chew*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0128-tauros-paldean-blaze': {
+		originRegion: 'Paldea',
+		stats: [75, 110, 105, 30, 70, 100],
+		types: ['Fighting', 'Fire'],
+		abilities: ['Intimidate', 'Anger Point', 'Cud Chew*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0128-tauros-paldean-combat': {
+		originRegion: 'Paldea',
+		stats: [75, 110, 105, 30, 70, 100],
+		types: ['Fighting'],
+		abilities: ['Intimidate', 'Anger Point', 'Cud Chew*'],
+		genderRatio: { male: 100, female: 0 }
+	},
 	'0129-magikarp': {
+		originRegion: 'Kanto',
+		stats: [20, 10, 55, 15, 20, 80],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Rattled*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0129-magikarp-female': {
 		originRegion: 'Kanto',
 		stats: [20, 10, 55, 15, 20, 80],
 		types: ['Water'],
@@ -916,7 +1434,21 @@ export const pkStats = {
 		abilities: ['Intimidate', 'Moxie*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0130-gyarados-female': {
+		originRegion: 'Kanto',
+		stats: [95, 125, 79, 60, 100, 81],
+		types: ['Water', 'Flying'],
+		abilities: ['Intimidate', 'Moxie*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0131-lapras': {
+		originRegion: 'Kanto',
+		stats: [130, 85, 80, 85, 95, 60],
+		types: ['Water', 'Ice'],
+		abilities: ['Water Absorb', 'Shell Armor', 'Hydration*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0131-lapras-gigantamax': {
 		originRegion: 'Kanto',
 		stats: [130, 85, 80, 85, 95, 60],
 		types: ['Water', 'Ice'],
@@ -931,6 +1463,27 @@ export const pkStats = {
 		genderRatio: { male: null, female: null }
 	},
 	'0133-eevee': {
+		originRegion: 'Kanto',
+		stats: [55, 55, 50, 45, 65, 55],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Adaptability', 'Anticipation*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0133-eevee-female': {
+		originRegion: 'Kanto',
+		stats: [55, 55, 50, 45, 65, 55],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Adaptability', 'Anticipation*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0133-eevee-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [55, 55, 50, 45, 65, 55],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Adaptability', 'Anticipation*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0133-eevee-gigantamax-female': {
 		originRegion: 'Kanto',
 		stats: [55, 55, 50, 45, 65, 55],
 		types: ['Normal'],
@@ -1007,11 +1560,25 @@ export const pkStats = {
 		abilities: ['Immunity', 'Thick Fat', 'Gluttony*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0143-snorlax-gigantamax': {
+		originRegion: 'Kanto',
+		stats: [160, 110, 65, 65, 110, 30],
+		types: ['Normal'],
+		abilities: ['Immunity', 'Thick Fat', 'Gluttony*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0144-articuno': {
 		originRegion: 'Kanto',
 		stats: [90, 85, 100, 95, 125, 85],
 		types: ['Ice', 'Flying'],
 		abilities: ['Pressure', 'Snow Cloak*'],
+		genderRatio: { male: null, female: null }
+	},
+	'0144-articuno-galarian': {
+		originRegion: 'Galar',
+		stats: [90, 85, 85, 125, 100, 95],
+		types: ['Psychic', 'Flying'],
+		abilities: ['Competitive'],
 		genderRatio: { male: null, female: null }
 	},
 	'0145-zapdos': {
@@ -1021,11 +1588,25 @@ export const pkStats = {
 		abilities: ['Pressure', 'Static*'],
 		genderRatio: { male: null, female: null }
 	},
+	'0145-zapdos-galarian': {
+		originRegion: 'Galar',
+		stats: [90, 125, 90, 85, 90, 100],
+		types: ['Fighting', 'Flying'],
+		abilities: ['Defiant'],
+		genderRatio: { male: null, female: null }
+	},
 	'0146-moltres': {
 		originRegion: 'Kanto',
 		stats: [90, 100, 90, 125, 85, 90],
 		types: ['Fire', 'Flying'],
 		abilities: ['Pressure', 'Flame Body*'],
+		genderRatio: { male: null, female: null }
+	},
+	'0146-moltres-galarian': {
+		originRegion: 'Galar',
+		stats: [90, 85, 90, 100, 125, 90],
+		types: ['Dark', 'Flying'],
+		abilities: ['Berserk'],
 		genderRatio: { male: null, female: null }
 	},
 	'0147-dratini': {
@@ -1087,6 +1668,13 @@ export const pkStats = {
 		abilities: ['Overgrow', 'Leaf Guard*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0154-meganium-female': {
+		originRegion: 'Johto',
+		stats: [80, 82, 100, 83, 100, 80],
+		types: ['Grass'],
+		abilities: ['Overgrow', 'Leaf Guard*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0155-cyndaquil': {
 		originRegion: 'Johto',
 		stats: [39, 52, 43, 60, 50, 65],
@@ -1106,6 +1694,13 @@ export const pkStats = {
 		stats: [78, 84, 78, 109, 85, 100],
 		types: ['Fire'],
 		abilities: ['Blaze', 'Flash Fire*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0157-typhlosion-hisuian': {
+		originRegion: 'Hisui',
+		stats: [73, 84, 78, 119, 85, 95],
+		types: ['Fire', 'Ghost'],
+		abilities: ['Blaze', 'Frisk*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0158-totodile': {
@@ -1164,7 +1759,21 @@ export const pkStats = {
 		abilities: ['Swarm', 'Early Bird', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0165-ledyba-female': {
+		originRegion: 'Johto',
+		stats: [40, 20, 30, 40, 80, 55],
+		types: ['Bug', 'Flying'],
+		abilities: ['Swarm', 'Early Bird', 'Rattled*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0166-ledian': {
+		originRegion: 'Johto',
+		stats: [55, 35, 50, 55, 110, 85],
+		types: ['Bug', 'Flying'],
+		abilities: ['Swarm', 'Early Bird', 'Iron Fist*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0166-ledian-female': {
 		originRegion: 'Johto',
 		stats: [55, 35, 50, 55, 110, 85],
 		types: ['Bug', 'Flying'],
@@ -1255,6 +1864,13 @@ export const pkStats = {
 		abilities: ['Synchronize', 'Early Bird', 'Magic Bounce*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0178-xatu-female': {
+		originRegion: 'Johto',
+		stats: [65, 75, 70, 95, 70, 95],
+		types: ['Psychic', 'Flying'],
+		abilities: ['Synchronize', 'Early Bird', 'Magic Bounce*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0179-mareep': {
 		originRegion: 'Johto',
 		stats: [55, 40, 40, 65, 45, 35],
@@ -1304,7 +1920,21 @@ export const pkStats = {
 		abilities: ['Sturdy', 'Rock Head', 'Rattled*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0185-sudowoodo-female': {
+		originRegion: 'Johto',
+		stats: [70, 100, 115, 30, 65, 30],
+		types: ['Rock'],
+		abilities: ['Sturdy', 'Rock Head', 'Rattled*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0186-politoed': {
+		originRegion: 'Johto',
+		stats: [90, 75, 75, 90, 100, 70],
+		types: ['Water'],
+		abilities: ['Water Absorb', 'Damp', 'Drizzle*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0186-politoed-female': {
 		originRegion: 'Johto',
 		stats: [90, 75, 75, 90, 100, 70],
 		types: ['Water'],
@@ -1339,6 +1969,13 @@ export const pkStats = {
 		abilities: ['Run Away', 'Pickup', 'Skill Link*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0190-aipom-female': {
+		originRegion: 'Johto',
+		stats: [55, 70, 55, 40, 55, 85],
+		types: ['Normal'],
+		abilities: ['Run Away', 'Pickup', 'Skill Link*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0191-sunkern': {
 		originRegion: 'Johto',
 		stats: [30, 30, 30, 30, 30, 30],
@@ -1367,7 +2004,28 @@ export const pkStats = {
 		abilities: ['Damp', 'Water Absorb', 'Unaware*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0194-wooper-female': {
+		originRegion: 'Johto',
+		stats: [55, 45, 45, 25, 25, 15],
+		types: ['Water', 'Ground'],
+		abilities: ['Damp', 'Water Absorb', 'Unaware*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0194-wooper-paldean': {
+		originRegion: 'Paldea',
+		stats: [55, 45, 45, 25, 25, 15],
+		types: ['Poison', 'Ground'],
+		abilities: ['Poison Point', 'Water Absorb', 'Unaware*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0195-quagsire': {
+		originRegion: 'Johto',
+		stats: [95, 85, 85, 65, 65, 35],
+		types: ['Water', 'Ground'],
+		abilities: ['Damp', 'Water Absorb', 'Unaware*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0195-quagsire-female': {
 		originRegion: 'Johto',
 		stats: [95, 85, 85, 65, 65, 35],
 		types: ['Water', 'Ground'],
@@ -1395,11 +2053,25 @@ export const pkStats = {
 		abilities: ['Insomnia', 'Super Luck', 'Prankster*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0198-murkrow-female': {
+		originRegion: 'Johto',
+		stats: [60, 85, 42, 85, 42, 91],
+		types: ['Dark', 'Flying'],
+		abilities: ['Insomnia', 'Super Luck', 'Prankster*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0199-slowking': {
 		originRegion: 'Johto',
 		stats: [95, 75, 80, 100, 110, 30],
 		types: ['Water', 'Psychic'],
 		abilities: ['Oblivious', 'Own Tempo', 'Regenerator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0199-slowking-galarian': {
+		originRegion: 'Galar',
+		stats: [95, 65, 80, 110, 110, 30],
+		types: ['Poison', 'Psychic'],
+		abilities: ['Curious Medicine', 'Own Tempo', 'Regenerator*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0200-misdreavus': {
@@ -1416,6 +2088,202 @@ export const pkStats = {
 		abilities: ['Levitate'],
 		genderRatio: { male: null, female: null }
 	},
+	'0201-unown-a': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-b': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-c': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-d': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-e': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-f': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-g': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-h': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-i': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-j': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-k': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-l': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-m': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-n': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-o': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-p': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-q': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-r': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-s': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-t': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-u': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-v': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-w': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-x': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-y': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-z': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-!': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0201-unown-?': {
+		originRegion: 'Johto',
+		stats: [48, 72, 48, 72, 48, 48],
+		types: ['Psychic'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
 	'0202-wobbuffet': {
 		originRegion: 'Johto',
 		stats: [190, 33, 58, 33, 58, 33],
@@ -1423,7 +2291,21 @@ export const pkStats = {
 		abilities: ['Shadow Tag', 'Telepathy*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0202-wobbuffet-female': {
+		originRegion: 'Johto',
+		stats: [190, 33, 58, 33, 58, 33],
+		types: ['Psychic'],
+		abilities: ['Shadow Tag', 'Telepathy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0203-girafarig': {
+		originRegion: 'Johto',
+		stats: [70, 80, 65, 90, 65, 85],
+		types: ['Normal', 'Psychic'],
+		abilities: ['Inner Focus', 'Early Bird', 'Sap Sipper*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0203-girafarig-female': {
 		originRegion: 'Johto',
 		stats: [70, 80, 65, 90, 65, 85],
 		types: ['Normal', 'Psychic'],
@@ -1458,7 +2340,21 @@ export const pkStats = {
 		abilities: ['Hyper Cutter', 'Sand Veil', 'Immunity*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0207-gligar-female': {
+		originRegion: 'Johto',
+		stats: [65, 75, 105, 35, 65, 85],
+		types: ['Ground', 'Flying'],
+		abilities: ['Hyper Cutter', 'Sand Veil', 'Immunity*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0208-steelix': {
+		originRegion: 'Johto',
+		stats: [75, 85, 200, 55, 65, 30],
+		types: ['Steel', 'Ground'],
+		abilities: ['Rock Head', 'Sturdy', 'Sheer Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0208-steelix-female': {
 		originRegion: 'Johto',
 		stats: [75, 85, 200, 55, 65, 30],
 		types: ['Steel', 'Ground'],
@@ -1486,7 +2382,21 @@ export const pkStats = {
 		abilities: ['Poison Point', 'Swift Swim', 'Intimidate*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0211-qwilfish-hisuian': {
+		originRegion: 'Hisui',
+		stats: [65, 95, 85, 55, 55, 85],
+		types: ['Dark', 'Poison'],
+		abilities: ['Poison Point', 'Swift Swim', 'Intimidate*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0212-scizor': {
+		originRegion: 'Johto',
+		stats: [70, 130, 100, 55, 80, 65],
+		types: ['Bug', 'Steel'],
+		abilities: ['Swarm', 'Technician', 'Light Metal*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0212-scizor-female': {
 		originRegion: 'Johto',
 		stats: [70, 130, 100, 55, 80, 65],
 		types: ['Bug', 'Steel'],
@@ -1507,10 +2417,38 @@ export const pkStats = {
 		abilities: ['Swarm', 'Guts', 'Moxie*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0214-heracross-female': {
+		originRegion: 'Johto',
+		stats: [80, 125, 75, 40, 95, 85],
+		types: ['Bug', 'Fighting'],
+		abilities: ['Swarm', 'Guts', 'Moxie*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0215-sneasel': {
 		originRegion: 'Johto',
 		stats: [55, 95, 55, 35, 75, 115],
 		types: ['Dark', 'Ice'],
+		abilities: ['Inner Focus', 'Keen Eye', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0215-sneasel-female': {
+		originRegion: 'Johto',
+		stats: [55, 95, 55, 35, 75, 115],
+		types: ['Dark', 'Ice'],
+		abilities: ['Inner Focus', 'Keen Eye', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0215-sneasel-hisuian': {
+		originRegion: 'Hisui',
+		stats: [55, 95, 55, 35, 75, 115],
+		types: ['Fighting', 'Poison'],
+		abilities: ['Inner Focus', 'Keen Eye', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0215-sneasel-hisuian-female': {
+		originRegion: 'Hisui',
+		stats: [55, 95, 55, 35, 75, 115],
+		types: ['Fighting', 'Poison'],
 		abilities: ['Inner Focus', 'Keen Eye', 'Pickpocket*'],
 		genderRatio: { male: 50, female: 50 }
 	},
@@ -1522,6 +2460,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0217-ursaring': {
+		originRegion: 'Johto',
+		stats: [90, 130, 75, 75, 75, 55],
+		types: ['Normal'],
+		abilities: ['Guts', 'Quick Feet', 'Unnerve*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0217-ursaring-female': {
 		originRegion: 'Johto',
 		stats: [90, 130, 75, 75, 75, 55],
 		types: ['Normal'],
@@ -1556,11 +2501,25 @@ export const pkStats = {
 		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0221-piloswine-female': {
+		originRegion: 'Johto',
+		stats: [100, 100, 80, 60, 60, 50],
+		types: ['Ice', 'Ground'],
+		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0222-corsola': {
 		originRegion: 'Johto',
 		stats: [65, 55, 95, 65, 95, 35],
 		types: ['Water', 'Rock'],
 		abilities: ['Hustle', 'Natural Cure', 'Regenerator*'],
+		genderRatio: { male: 25, female: 75 }
+	},
+	'0222-corsola-galarian': {
+		originRegion: 'Galar',
+		stats: [60, 55, 100, 65, 100, 30],
+		types: ['Ghost'],
+		abilities: ['Weak Armor', 'Cursed Body*'],
 		genderRatio: { male: 25, female: 75 }
 	},
 	'0223-remoraid': {
@@ -1571,6 +2530,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0224-octillery': {
+		originRegion: 'Johto',
+		stats: [75, 105, 75, 105, 75, 45],
+		types: ['Water'],
+		abilities: ['Suction Cups', 'Sniper', 'Moody*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0224-octillery-female': {
 		originRegion: 'Johto',
 		stats: [75, 105, 75, 105, 75, 45],
 		types: ['Water'],
@@ -1612,6 +2578,13 @@ export const pkStats = {
 		abilities: ['Early Bird', 'Flash Fire', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0229-houndoom-female': {
+		originRegion: 'Johto',
+		stats: [75, 90, 50, 110, 80, 95],
+		types: ['Dark', 'Fire'],
+		abilities: ['Early Bird', 'Flash Fire', 'Unnerve*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0230-kingdra': {
 		originRegion: 'Johto',
 		stats: [75, 95, 95, 95, 95, 85],
@@ -1627,6 +2600,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0232-donphan': {
+		originRegion: 'Johto',
+		stats: [90, 120, 120, 60, 60, 50],
+		types: ['Ground'],
+		abilities: ['Sturdy', 'Sand Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0232-donphan-female': {
 		originRegion: 'Johto',
 		stats: [90, 120, 120, 60, 60, 50],
 		types: ['Ground'],
@@ -1797,6 +2777,13 @@ export const pkStats = {
 		abilities: ['Blaze', 'Speed Boost*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0255-torchic-female': {
+		originRegion: 'Hoenn',
+		stats: [45, 60, 40, 70, 50, 45],
+		types: ['Fire'],
+		abilities: ['Blaze', 'Speed Boost*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0256-combusken': {
 		originRegion: 'Hoenn',
 		stats: [60, 85, 60, 85, 60, 55],
@@ -1804,7 +2791,21 @@ export const pkStats = {
 		abilities: ['Blaze', 'Speed Boost*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0256-combusken-female': {
+		originRegion: 'Hoenn',
+		stats: [60, 85, 60, 85, 60, 55],
+		types: ['Fire', 'Fighting'],
+		abilities: ['Blaze', 'Speed Boost*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0257-blaziken': {
+		originRegion: 'Hoenn',
+		stats: [80, 120, 70, 110, 70, 80],
+		types: ['Fire', 'Fighting'],
+		abilities: ['Blaze', 'Speed Boost*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0257-blaziken-female': {
 		originRegion: 'Hoenn',
 		stats: [80, 120, 70, 110, 70, 80],
 		types: ['Fire', 'Fighting'],
@@ -1853,10 +2854,24 @@ export const pkStats = {
 		abilities: ['Pickup', 'Gluttony', 'Quick Feet*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0263-zigzagoon-galarian': {
+		originRegion: 'Galar',
+		stats: [38, 30, 41, 30, 41, 60],
+		types: ['Dark', 'Normal'],
+		abilities: ['Pickup', 'Gluttony', 'Quick Feet*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0264-linoone': {
 		originRegion: 'Hoenn',
 		stats: [78, 70, 61, 50, 61, 100],
 		types: ['Normal'],
+		abilities: ['Pickup', 'Gluttony', 'Quick Feet*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0264-linoone-galarian': {
+		originRegion: 'Galar',
+		stats: [78, 70, 61, 50, 61, 100],
+		types: ['Dark', 'Normal'],
 		abilities: ['Pickup', 'Gluttony', 'Quick Feet*'],
 		genderRatio: { male: 50, female: 50 }
 	},
@@ -1881,6 +2896,13 @@ export const pkStats = {
 		abilities: ['Swarm', 'Rivalry*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0267-beautifly-female': {
+		originRegion: 'Hoenn',
+		stats: [60, 70, 50, 100, 50, 65],
+		types: ['Bug', 'Flying'],
+		abilities: ['Swarm', 'Rivalry*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0268-cascoon': {
 		originRegion: 'Hoenn',
 		stats: [50, 35, 55, 25, 25, 15],
@@ -1889,6 +2911,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0269-dustox': {
+		originRegion: 'Hoenn',
+		stats: [60, 50, 70, 50, 90, 65],
+		types: ['Bug', 'Poison'],
+		abilities: ['Shield Dust', 'Compound Eyes*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0269-dustox-female': {
 		originRegion: 'Hoenn',
 		stats: [60, 50, 70, 50, 90, 65],
 		types: ['Bug', 'Poison'],
@@ -1916,6 +2945,13 @@ export const pkStats = {
 		abilities: ['Swift Swim', 'Rain Dish', 'Own Tempo*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0272-ludicolo-female': {
+		originRegion: 'Hoenn',
+		stats: [80, 70, 70, 90, 100, 70],
+		types: ['Water', 'Grass'],
+		abilities: ['Swift Swim', 'Rain Dish', 'Own Tempo*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0273-seedot': {
 		originRegion: 'Hoenn',
 		stats: [40, 40, 50, 30, 30, 30],
@@ -1930,7 +2966,21 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Early Bird', 'Pickpocket*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0274-nuzleaf-female': {
+		originRegion: 'Hoenn',
+		stats: [70, 70, 40, 60, 40, 60],
+		types: ['Grass', 'Dark'],
+		abilities: ['Chlorophyll', 'Early Bird', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0275-shiftry': {
+		originRegion: 'Hoenn',
+		stats: [90, 100, 60, 90, 60, 80],
+		types: ['Grass', 'Dark'],
+		abilities: ['Chlorophyll', 'Early Bird', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0275-shiftry-female': {
 		originRegion: 'Hoenn',
 		stats: [90, 100, 60, 90, 60, 80],
 		types: ['Grass', 'Dark'],
@@ -2161,7 +3211,21 @@ export const pkStats = {
 		abilities: ['Pure Power', 'Telepathy*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0307-meditite-female': {
+		originRegion: 'Hoenn',
+		stats: [30, 40, 55, 40, 55, 60],
+		types: ['Fighting', 'Psychic'],
+		abilities: ['Pure Power', 'Telepathy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0308-medicham': {
+		originRegion: 'Hoenn',
+		stats: [60, 60, 75, 60, 75, 80],
+		types: ['Fighting', 'Psychic'],
+		abilities: ['Pure Power', 'Telepathy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0308-medicham-female': {
 		originRegion: 'Hoenn',
 		stats: [60, 60, 75, 60, 75, 80],
 		types: ['Fighting', 'Psychic'],
@@ -2217,6 +3281,13 @@ export const pkStats = {
 		abilities: ['Natural Cure', 'Poison Point', 'Leaf Guard*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0315-roselia-female': {
+		originRegion: 'Hoenn',
+		stats: [50, 60, 45, 100, 80, 65],
+		types: ['Grass', 'Poison'],
+		abilities: ['Natural Cure', 'Poison Point', 'Leaf Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0316-gulpin': {
 		originRegion: 'Hoenn',
 		stats: [70, 43, 53, 43, 53, 40],
@@ -2224,7 +3295,21 @@ export const pkStats = {
 		abilities: ['Liquid Ooze', 'Sticky Hold', 'Gluttony*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0316-gulpin-female': {
+		originRegion: 'Hoenn',
+		stats: [70, 43, 53, 43, 53, 40],
+		types: ['Poison'],
+		abilities: ['Liquid Ooze', 'Sticky Hold', 'Gluttony*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0317-swalot': {
+		originRegion: 'Hoenn',
+		stats: [100, 73, 83, 73, 83, 55],
+		types: ['Poison'],
+		abilities: ['Liquid Ooze', 'Sticky Hold', 'Gluttony*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0317-swalot-female': {
 		originRegion: 'Hoenn',
 		stats: [100, 73, 83, 73, 83, 55],
 		types: ['Poison'],
@@ -2266,7 +3351,21 @@ export const pkStats = {
 		abilities: ['Oblivious', 'Simple', 'Own Tempo*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0322-numel-female': {
+		originRegion: 'Hoenn',
+		stats: [60, 60, 40, 65, 45, 35],
+		types: ['Fire', 'Ground'],
+		abilities: ['Oblivious', 'Simple', 'Own Tempo*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0323-camerupt': {
+		originRegion: 'Hoenn',
+		stats: [70, 100, 70, 105, 75, 40],
+		types: ['Fire', 'Ground'],
+		abilities: ['Magma Armor', 'Solid Rock', 'Anger Point*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0323-camerupt-female': {
 		originRegion: 'Hoenn',
 		stats: [70, 100, 70, 105, 75, 40],
 		types: ['Fire', 'Ground'],
@@ -2330,6 +3429,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0332-cacturne': {
+		originRegion: 'Hoenn',
+		stats: [70, 115, 60, 115, 60, 55],
+		types: ['Grass', 'Dark'],
+		abilities: ['Sand Veil', 'Water Absorb*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0332-cacturne-female': {
 		originRegion: 'Hoenn',
 		stats: [70, 115, 60, 115, 60, 55],
 		types: ['Grass', 'Dark'],
@@ -2456,6 +3562,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0350-milotic': {
+		originRegion: 'Hoenn',
+		stats: [95, 60, 79, 100, 125, 81],
+		types: ['Water'],
+		abilities: ['Marvel Scale', 'Competitive', 'Cute Charm*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0350-milotic-female': {
 		originRegion: 'Hoenn',
 		stats: [95, 60, 79, 100, 125, 81],
 		types: ['Water'],
@@ -2595,6 +3708,13 @@ export const pkStats = {
 		abilities: ['Swift Swim', 'Rock Head', 'Sturdy*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0369-relicanth-female': {
+		originRegion: 'Hoenn',
+		stats: [100, 90, 130, 45, 65, 55],
+		types: ['Water', 'Rock'],
+		abilities: ['Swift Swim', 'Rock Head', 'Sturdy*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0370-luvdisc': {
 		originRegion: 'Hoenn',
 		stats: [43, 30, 55, 40, 65, 97],
@@ -2714,6 +3834,27 @@ export const pkStats = {
 		abilities: ['Pressure'],
 		genderRatio: { male: null, female: null }
 	},
+	'0386-deoxys-attack': {
+		originRegion: 'Hoenn',
+		stats: [50, 180, 20, 180, 20, 150],
+		types: ['Psychic'],
+		abilities: ['Pressure'],
+		genderRatio: { male: null, female: null }
+	},
+	'0386-deoxys-defense': {
+		originRegion: 'Hoenn',
+		stats: [50, 70, 160, 70, 160, 90],
+		types: ['Psychic'],
+		abilities: ['Pressure'],
+		genderRatio: { male: null, female: null }
+	},
+	'0386-deoxys-speed': {
+		originRegion: 'Hoenn',
+		stats: [50, 95, 90, 95, 90, 180],
+		types: ['Psychic'],
+		abilities: ['Pressure'],
+		genderRatio: { male: null, female: null }
+	},
 	// ===================================================================================
 	// ==================================== Gen 3 End ====================================
 	// ===================================================================================
@@ -2787,7 +3928,21 @@ export const pkStats = {
 		abilities: ['Keen Eye', 'Reckless*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0396-starly-female': {
+		originRegion: 'Sinnoh',
+		stats: [40, 55, 30, 30, 30, 60],
+		types: ['Normal', 'Flying'],
+		abilities: ['Keen Eye', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0397-staravia': {
+		originRegion: 'Sinnoh',
+		stats: [55, 75, 50, 40, 40, 80],
+		types: ['Normal', 'Flying'],
+		abilities: ['Intimidate', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0397-staravia-female': {
 		originRegion: 'Sinnoh',
 		stats: [55, 75, 50, 40, 40, 80],
 		types: ['Normal', 'Flying'],
@@ -2801,7 +3956,21 @@ export const pkStats = {
 		abilities: ['Intimidate', 'Reckless*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0398-staraptor-female': {
+		originRegion: 'Sinnoh',
+		stats: [85, 120, 70, 50, 60, 100],
+		types: ['Normal', 'Flying'],
+		abilities: ['Intimidate', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0399-bidoof': {
+		originRegion: 'Sinnoh',
+		stats: [59, 45, 40, 35, 40, 31],
+		types: ['Normal'],
+		abilities: ['Simple', 'Unaware', 'Moody*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0399-bidoof-female': {
 		originRegion: 'Sinnoh',
 		stats: [59, 45, 40, 35, 40, 31],
 		types: ['Normal'],
@@ -2815,7 +3984,21 @@ export const pkStats = {
 		abilities: ['Simple', 'Unaware', 'Moody*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0400-bibarel-female': {
+		originRegion: 'Sinnoh',
+		stats: [79, 85, 60, 55, 60, 71],
+		types: ['Normal', 'Water'],
+		abilities: ['Simple', 'Unaware', 'Moody*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0401-kricketot': {
+		originRegion: 'Sinnoh',
+		stats: [37, 25, 41, 25, 41, 25],
+		types: ['Bug'],
+		abilities: ['Shed Skin', 'Run Away*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0401-kricketot-female': {
 		originRegion: 'Sinnoh',
 		stats: [37, 25, 41, 25, 41, 25],
 		types: ['Bug'],
@@ -2829,7 +4012,21 @@ export const pkStats = {
 		abilities: ['Swarm', 'Technician*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0402-kricketune-female': {
+		originRegion: 'Sinnoh',
+		stats: [77, 85, 51, 55, 51, 65],
+		types: ['Bug'],
+		abilities: ['Swarm', 'Technician*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0403-shinx': {
+		originRegion: 'Sinnoh',
+		stats: [45, 65, 34, 40, 34, 45],
+		types: ['Electric'],
+		abilities: ['Rivalry', 'Intimidate', 'Guts*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0403-shinx-female': {
 		originRegion: 'Sinnoh',
 		stats: [45, 65, 34, 40, 34, 45],
 		types: ['Electric'],
@@ -2843,7 +4040,21 @@ export const pkStats = {
 		abilities: ['Rivalry', 'Intimidate', 'Guts*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0404-luxio-female': {
+		originRegion: 'Sinnoh',
+		stats: [60, 85, 49, 60, 49, 60],
+		types: ['Electric'],
+		abilities: ['Rivalry', 'Intimidate', 'Guts*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0405-luxray': {
+		originRegion: 'Sinnoh',
+		stats: [80, 120, 79, 95, 79, 70],
+		types: ['Electric'],
+		abilities: ['Rivalry', 'Intimidate', 'Guts*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0405-luxray-female': {
 		originRegion: 'Sinnoh',
 		stats: [80, 120, 79, 95, 79, 70],
 		types: ['Electric'],
@@ -2858,6 +4069,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0407-roserade': {
+		originRegion: 'Sinnoh',
+		stats: [60, 70, 65, 125, 105, 90],
+		types: ['Grass', 'Poison'],
+		abilities: ['Natural Cure', 'Poison Point', 'Technician*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0407-roserade-female': {
 		originRegion: 'Sinnoh',
 		stats: [60, 70, 65, 125, 105, 90],
 		types: ['Grass', 'Poison'],
@@ -2899,10 +4117,38 @@ export const pkStats = {
 		abilities: ['Shed Skin', 'Overcoat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0412-burmy-sandy': {
+		originRegion: 'Sinnoh',
+		stats: [40, 29, 45, 29, 45, 36],
+		types: ['Bug'],
+		abilities: ['Shed Skin', 'Overcoat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0412-burmy-trash': {
+		originRegion: 'Sinnoh',
+		stats: [40, 29, 45, 29, 45, 36],
+		types: ['Bug'],
+		abilities: ['Shed Skin', 'Overcoat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0413-wormadam-plant': {
 		originRegion: 'Sinnoh',
 		stats: [60, 59, 85, 79, 105, 36],
 		types: ['Bug', 'Grass'],
+		abilities: ['Anticipation', 'Overcoat*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0413-wormadam-sandy': {
+		originRegion: 'Sinnoh',
+		stats: [60, 59, 85, 79, 105, 36],
+		types: ['Bug', 'Ground'],
+		abilities: ['Anticipation', 'Overcoat*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0413-wormadam-trash': {
+		originRegion: 'Sinnoh',
+		stats: [60, 59, 85, 79, 105, 36],
+		types: ['Bug', 'Steel'],
 		abilities: ['Anticipation', 'Overcoat*'],
 		genderRatio: { male: 0, female: 100 }
 	},
@@ -2914,6 +4160,13 @@ export const pkStats = {
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0415-combee': {
+		originRegion: 'Sinnoh',
+		stats: [30, 30, 42, 30, 42, 70],
+		types: ['Bug', 'Flying'],
+		abilities: ['Honey Gather', 'Hustle*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0415-combee-female': {
 		originRegion: 'Sinnoh',
 		stats: [30, 30, 42, 30, 42, 70],
 		types: ['Bug', 'Flying'],
@@ -2934,6 +4187,13 @@ export const pkStats = {
 		abilities: ['Run Away', 'Pickup', 'Volt Absorb*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0417-pachirisu-female': {
+		originRegion: 'Sinnoh',
+		stats: [60, 45, 70, 45, 90, 95],
+		types: ['Electric'],
+		abilities: ['Run Away', 'Pickup', 'Volt Absorb*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0418-buizel': {
 		originRegion: 'Sinnoh',
 		stats: [55, 65, 35, 60, 30, 85],
@@ -2941,7 +4201,21 @@ export const pkStats = {
 		abilities: ['Swift Swim', 'Water Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0418-buizel-female': {
+		originRegion: 'Sinnoh',
+		stats: [55, 65, 35, 60, 30, 85],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Water Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0419-floatzel': {
+		originRegion: 'Sinnoh',
+		stats: [85, 105, 55, 85, 50, 115],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Water Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0419-floatzel-female': {
 		originRegion: 'Sinnoh',
 		stats: [85, 105, 55, 85, 50, 115],
 		types: ['Water'],
@@ -2969,6 +4243,13 @@ export const pkStats = {
 		abilities: ['Sticky Hold', 'Storm Drain', 'Sand Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0422-shellos-east': {
+		originRegion: 'Sinnoh',
+		stats: [76, 48, 48, 57, 62, 34],
+		types: ['Water'],
+		abilities: ['Sticky Hold', 'Storm Drain', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0423-gastrodon': {
 		originRegion: 'Sinnoh',
 		stats: [111, 83, 68, 92, 82, 39],
@@ -2976,7 +4257,21 @@ export const pkStats = {
 		abilities: ['Sticky Hold', 'Storm Drain', 'Sand Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0423-gastrodon-east': {
+		originRegion: 'Sinnoh',
+		stats: [111, 83, 68, 92, 82, 39],
+		types: ['Water', 'Ground'],
+		abilities: ['Sticky Hold', 'Storm Drain', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0424-ambipom': {
+		originRegion: 'Sinnoh',
+		stats: [75, 100, 66, 60, 66, 115],
+		types: ['Normal'],
+		abilities: ['Technician', 'Pickup', 'Skill Link*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0424-ambipom-female': {
 		originRegion: 'Sinnoh',
 		stats: [75, 100, 66, 60, 66, 115],
 		types: ['Normal'],
@@ -3116,6 +4411,13 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Rough Skin*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0443-gible-female': {
+		originRegion: 'Sinnoh',
+		stats: [58, 70, 45, 40, 45, 42],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Sand Veil', 'Rough Skin*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0444-gabite': {
 		originRegion: 'Sinnoh',
 		stats: [68, 90, 65, 50, 55, 82],
@@ -3123,7 +4425,21 @@ export const pkStats = {
 		abilities: ['Sand Veil', 'Rough Skin*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0444-gabite-female': {
+		originRegion: 'Sinnoh',
+		stats: [68, 90, 65, 50, 55, 82],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Sand Veil', 'Rough Skin*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0445-garchomp': {
+		originRegion: 'Sinnoh',
+		stats: [108, 130, 95, 80, 85, 102],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Sand Veil', 'Rough Skin*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0445-garchomp-female': {
 		originRegion: 'Sinnoh',
 		stats: [108, 130, 95, 80, 85, 102],
 		types: ['Dragon', 'Ground'],
@@ -3158,7 +4474,21 @@ export const pkStats = {
 		abilities: ['Sand Stream', 'Sand Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0449-hippopotas-female': {
+		originRegion: 'Sinnoh',
+		stats: [68, 72, 78, 38, 42, 32],
+		types: ['Ground'],
+		abilities: ['Sand Stream', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0450-hippowdon': {
+		originRegion: 'Sinnoh',
+		stats: [108, 112, 118, 68, 72, 47],
+		types: ['Ground'],
+		abilities: ['Sand Stream', 'Sand Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0450-hippowdon-female': {
 		originRegion: 'Sinnoh',
 		stats: [108, 112, 118, 68, 72, 47],
 		types: ['Ground'],
@@ -3186,7 +4516,21 @@ export const pkStats = {
 		abilities: ['Anticipation', 'Dry Skin', 'Poison Touch*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0453-croagunk-female': {
+		originRegion: 'Sinnoh',
+		stats: [48, 61, 40, 61, 40, 50],
+		types: ['Poison', 'Fighting'],
+		abilities: ['Anticipation', 'Dry Skin', 'Poison Touch*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0454-toxicroak': {
+		originRegion: 'Sinnoh',
+		stats: [83, 106, 65, 86, 65, 85],
+		types: ['Poison', 'Fighting'],
+		abilities: ['Anticipation', 'Dry Skin', 'Poison Touch*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0454-toxicroak-female': {
 		originRegion: 'Sinnoh',
 		stats: [83, 106, 65, 86, 65, 85],
 		types: ['Poison', 'Fighting'],
@@ -3207,7 +4551,21 @@ export const pkStats = {
 		abilities: ['Swift Swim', 'Storm Drain', 'Water Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0456-finneon-female': {
+		originRegion: 'Sinnoh',
+		stats: [49, 49, 56, 49, 61, 66],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Storm Drain', 'Water Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0457-lumineon': {
+		originRegion: 'Sinnoh',
+		stats: [69, 69, 76, 69, 86, 91],
+		types: ['Water'],
+		abilities: ['Swift Swim', 'Storm Drain', 'Water Veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0457-lumineon-female': {
 		originRegion: 'Sinnoh',
 		stats: [69, 69, 76, 69, 86, 91],
 		types: ['Water'],
@@ -3228,6 +4586,13 @@ export const pkStats = {
 		abilities: ['Snow Warning', 'Soundproof*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0459-snover-female': {
+		originRegion: 'Sinnoh',
+		stats: [60, 62, 50, 62, 60, 40],
+		types: ['Grass', 'Ice'],
+		abilities: ['Snow Warning', 'Soundproof*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0460-abomasnow': {
 		originRegion: 'Sinnoh',
 		stats: [90, 92, 75, 92, 85, 60],
@@ -3235,7 +4600,21 @@ export const pkStats = {
 		abilities: ['Snow Warning', 'Soundproof*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0460-abomasnow-female': {
+		originRegion: 'Sinnoh',
+		stats: [90, 92, 75, 92, 85, 60],
+		types: ['Grass', 'Ice'],
+		abilities: ['Snow Warning', 'Soundproof*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0461-weavile': {
+		originRegion: 'Sinnoh',
+		stats: [70, 120, 65, 45, 85, 125],
+		types: ['Dark', 'Ice'],
+		abilities: ['Pressure', 'Pickpocket*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0461-weavile-female': {
 		originRegion: 'Sinnoh',
 		stats: [70, 120, 65, 45, 85, 125],
 		types: ['Dark', 'Ice'],
@@ -3263,7 +4642,21 @@ export const pkStats = {
 		abilities: ['Lightning Rod', 'Solid Rock', 'Reckless*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0464-rhyperior-female': {
+		originRegion: 'Sinnoh',
+		stats: [115, 140, 130, 55, 55, 40],
+		types: ['Ground', 'Rock'],
+		abilities: ['Lightning Rod', 'Solid Rock', 'Reckless*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0465-tangrowth': {
+		originRegion: 'Sinnoh',
+		stats: [100, 100, 125, 110, 50, 50],
+		types: ['Grass'],
+		abilities: ['Chlorophyll', 'Leaf Guard', 'Regenerator*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0465-tangrowth-female': {
 		originRegion: 'Sinnoh',
 		stats: [100, 100, 125, 110, 50, 50],
 		types: ['Grass'],
@@ -3326,6 +4719,13 @@ export const pkStats = {
 		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0473-mamoswine-female': {
+		originRegion: 'Sinnoh',
+		stats: [110, 130, 80, 70, 60, 80],
+		types: ['Ice', 'Ground'],
+		abilities: ['Oblivious', 'Snow Cloak', 'Thick Fat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0474-porygon-z': {
 		originRegion: 'Sinnoh',
 		stats: [85, 80, 70, 135, 75, 90],
@@ -3365,6 +4765,41 @@ export const pkStats = {
 		originRegion: 'Sinnoh',
 		stats: [50, 50, 77, 95, 77, 91],
 		types: ['Electric', 'Ghost'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0479-rotom-heat': {
+		originRegion: 'Sinnoh',
+		stats: [50, 65, 107, 105, 107, 86],
+		types: ['Electric', 'Fire'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0479-rotom-wash': {
+		originRegion: 'Sinnoh',
+		stats: [50, 65, 107, 105, 107, 86],
+		types: ['Electric', 'Water'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0479-rotom-frost': {
+		originRegion: 'Sinnoh',
+		stats: [50, 65, 107, 105, 107, 86],
+		types: ['Electric', 'Ice'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0479-rotom-fan': {
+		originRegion: 'Sinnoh',
+		stats: [50, 65, 107, 105, 107, 86],
+		types: ['Electric', 'Flying'],
+		abilities: ['Levitate'],
+		genderRatio: { male: null, female: null }
+	},
+	'0479-rotom-mow': {
+		originRegion: 'Sinnoh',
+		stats: [50, 65, 107, 105, 107, 86],
+		types: ['Electric', 'Grass'],
 		abilities: ['Levitate'],
 		genderRatio: { male: null, female: null }
 	},
@@ -3459,6 +4894,13 @@ export const pkStats = {
 		abilities: ['Natural Cure'],
 		genderRatio: { male: null, female: null }
 	},
+	'0492-shaymin-sky': {
+		originRegion: 'Sinnoh',
+		stats: [100, 103, 75, 120, 75, 127],
+		types: ['Grass', 'Flying'],
+		abilities: ['Serene Grace'],
+		genderRatio: { male: null, female: null }
+	},
 	'0493-arceus': {
 		originRegion: 'Sinnoh',
 		stats: [120, 120, 120, 120, 120, 120],
@@ -3537,6 +4979,13 @@ export const pkStats = {
 		stats: [95, 100, 85, 108, 70, 70],
 		types: ['Water'],
 		abilities: ['Torrent', 'Shell Armor*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0503-samurott-hisuian': {
+		originRegion: 'Hisui',
+		stats: [90, 108, 80, 100, 65, 85],
+		types: ['Water', 'Dark'],
+		abilities: ['Torrent', 'Sharpness*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0504-patrat': {
@@ -3659,6 +5108,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0521-unfezant': {
+		originRegion: 'Unova',
+		stats: [80, 115, 80, 65, 55, 93],
+		types: ['Normal', 'Flying'],
+		abilities: ['Big Pecks', 'Super Luck', 'Rivalry*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0521-unfezant-female': {
 		originRegion: 'Unova',
 		stats: [80, 115, 80, 65, 55, 93],
 		types: ['Normal', 'Flying'],
@@ -3861,11 +5317,32 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Own Tempo', 'Leaf Guard*'],
 		genderRatio: { male: 0, female: 100 }
 	},
+	'0549-lilligant-hisuian': {
+		originRegion: 'Hisui',
+		stats: [70, 105, 75, 50, 75, 105],
+		types: ['Grass', 'Fighting'],
+		abilities: ['Chlorophyll', 'Hustle', 'Leaf Guard*'],
+		genderRatio: { male: 0, female: 100 }
+	},
 	'0550-basculin-red-striped': {
 		originRegion: 'Unova',
 		stats: [70, 92, 65, 80, 55, 98],
 		types: ['Water'],
 		abilities: ['Reckless', 'Adaptability', 'Mold Breaker*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0550-basculin-blue-striped': {
+		originRegion: 'Unova',
+		stats: [70, 92, 65, 80, 55, 98],
+		types: ['Water'],
+		abilities: ['Rock Head', 'Adaptability', 'Mold Breaker*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0550-basculin-white-striped': {
+		originRegion: 'Unova',
+		stats: [70, 92, 65, 80, 55, 98],
+		types: ['Water'],
+		abilities: ['Rattled', 'Adaptability', 'Mold Breaker*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0551-sandile': {
@@ -3896,11 +5373,25 @@ export const pkStats = {
 		abilities: ['Hustle', 'Inner Focus*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0554-darumaka-galarian': {
+		originRegion: 'Galar',
+		stats: [70, 90, 45, 15, 45, 50],
+		types: ['Ice'],
+		abilities: ['Hustle', 'Inner Focus*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0555-darmanitan-standard': {
 		originRegion: 'Unova',
 		stats: [105, 140, 55, 30, 55, 95],
 		types: ['Fire'],
 		abilities: ['Sheer Force', 'Zen Mode*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0555-darmanitan-galarian': {
+		originRegion: 'Galar',
+		stats: [105, 160, 55, 30, 55, 135],
+		types: ['Ice', 'Fire'],
+		abilities: ['Gorilla Tactics', 'Zen Mode*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0556-maractus': {
@@ -3952,6 +5443,13 @@ export const pkStats = {
 		abilities: ['Mummy'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0562-yamask-galarian': {
+		originRegion: 'Galar',
+		stats: [38, 55, 85, 30, 65, 30],
+		types: ['Ground', 'Ghost'],
+		abilities: ['Wandering Spirit'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0563-cofagrigus': {
 		originRegion: 'Unova',
 		stats: [58, 50, 145, 95, 105, 30],
@@ -4001,6 +5499,13 @@ export const pkStats = {
 		abilities: ['Stench', 'Weak Armor', 'Aftermath*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0569-garbodor-gigantamax': {
+		originRegion: 'Unova',
+		stats: [80, 95, 82, 60, 82, 75],
+		types: ['Poison'],
+		abilities: ['Stench', 'Weak Armor', 'Aftermath*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0570-zorua': {
 		originRegion: 'Unova',
 		stats: [40, 65, 40, 80, 40, 65],
@@ -4008,10 +5513,24 @@ export const pkStats = {
 		abilities: ['Illusion'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0570-zorua-hisuian': {
+		originRegion: 'Hisui',
+		stats: [35, 60, 40, 85, 40, 70],
+		types: ['Normal', 'Ghost'],
+		abilities: ['Illusion'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0571-zoroark': {
 		originRegion: 'Unova',
 		stats: [60, 105, 60, 120, 60, 105],
 		types: ['Dark'],
+		abilities: ['Illusion'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0571-zoroark-hisuian': {
+		originRegion: 'Hisui',
+		stats: [55, 100, 60, 125, 60, 110],
+		types: ['Normal', 'Ghost'],
 		abilities: ['Illusion'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
@@ -4113,7 +5632,49 @@ export const pkStats = {
 		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0585-deerling-summer': {
+		originRegion: 'Unova',
+		stats: [60, 60, 50, 40, 50, 75],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0585-deerling-autum': {
+		originRegion: 'Unova',
+		stats: [60, 60, 50, 40, 50, 75],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0585-deerling-winter': {
+		originRegion: 'Unova',
+		stats: [60, 60, 50, 40, 50, 75],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0586-sawsbuck': {
+		originRegion: 'Unova',
+		stats: [80, 100, 70, 60, 70, 95],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0586-sawsbuck-summer': {
+		originRegion: 'Unova',
+		stats: [80, 100, 70, 60, 70, 95],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0586-sawsbuck-autum': {
+		originRegion: 'Unova',
+		stats: [80, 100, 70, 60, 70, 95],
+		types: ['Normal', 'Grass'],
+		abilities: ['Chlorophyll', 'Sap Sipper', 'Serene Grace*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0586-sawsbuck-winter': {
 		originRegion: 'Unova',
 		stats: [80, 100, 70, 60, 70, 95],
 		types: ['Normal', 'Grass'],
@@ -4162,7 +5723,21 @@ export const pkStats = {
 		abilities: ['Water Absorb', 'Cursed Body', 'Damp*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0592-frillish-female': {
+		originRegion: 'Unova',
+		stats: [55, 40, 50, 65, 85, 40],
+		types: ['Water', 'Ghost'],
+		abilities: ['Water Absorb', 'Cursed Body', 'Damp*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0593-jellicent': {
+		originRegion: 'Unova',
+		stats: [100, 60, 70, 85, 105, 60],
+		types: ['Water', 'Ghost'],
+		abilities: ['Water Absorb', 'Cursed Body', 'Damp*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0593-jellicent-female': {
 		originRegion: 'Unova',
 		stats: [100, 60, 70, 85, 105, 60],
 		types: ['Water', 'Ghost'],
@@ -4344,6 +5919,13 @@ export const pkStats = {
 		abilities: ['Static', 'Limber', 'Sand Veil*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0618-stunfisk-galarian': {
+		originRegion: 'Galar',
+		stats: [109, 81, 99, 66, 84, 32],
+		types: ['Ground', 'Steel'],
+		abilities: ['Mimicry'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0619-mienfoo': {
 		originRegion: 'Unova',
 		stats: [45, 85, 50, 55, 50, 65],
@@ -4412,6 +5994,13 @@ export const pkStats = {
 		stats: [100, 123, 75, 57, 75, 80],
 		types: ['Normal', 'Flying'],
 		abilities: ['Keen Eye', 'Sheer Force', 'Defiant*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0628-braviary-hisuian': {
+		originRegion: 'Hisui',
+		stats: [110, 83, 70, 112, 70, 65],
+		types: ['Psychic', 'Flying'],
+		abilities: ['Keen Eye', 'Sheer Force', 'Tinted Lens*'],
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0629-vullaby': {
@@ -4505,11 +6094,25 @@ export const pkStats = {
 		abilities: ['Prankster', 'Defiant*'],
 		genderRatio: { male: 100, female: 0 }
 	},
+	'0641-tornadus-therian': {
+		originRegion: 'Unova',
+		stats: [79, 100, 80, 110, 90, 121],
+		types: ['Flying'],
+		abilities: ['Regenerator', 'Defiant*'],
+		genderRatio: { male: 100, female: 0 }
+	},
 	'0642-thundurus-incarnate': {
 		originRegion: 'Unova',
 		stats: [79, 115, 70, 125, 80, 111],
 		types: ['Electric', 'Flying'],
 		abilities: ['Prankster', 'Defiant*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0642-thundurus-therian': {
+		originRegion: 'Unova',
+		stats: [79, 105, 70, 145, 80, 101],
+		types: ['Electric', 'Flying'],
+		abilities: ['Volt Absorb', 'Defiant*'],
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0643-reshiram': {
@@ -4533,6 +6136,13 @@ export const pkStats = {
 		abilities: ['Sand Force', 'Sheer Force*'],
 		genderRatio: { male: 100, female: 0 }
 	},
+	'0645-landorus-therian': {
+		originRegion: 'Unova',
+		stats: [89, 145, 90, 105, 80, 91],
+		types: ['Ground', 'Flying'],
+		abilities: ['Intimidate', 'Sheer Force*'],
+		genderRatio: { male: 100, female: 0 }
+	},
 	'0646-kyurem': {
 		originRegion: 'Unova',
 		stats: [125, 130, 90, 130, 90, 95],
@@ -4541,6 +6151,13 @@ export const pkStats = {
 		genderRatio: { male: null, female: null }
 	},
 	'0647-keldeo-ordinary': {
+		originRegion: 'Unova',
+		stats: [91, 72, 90, 129, 90, 108],
+		types: ['Water', 'Fighting'],
+		abilities: ['Justified'],
+		genderRatio: { male: null, female: null }
+	},
+	'0647-keldeo-resolute': {
 		originRegion: 'Unova',
 		stats: [91, 72, 90, 129, 90, 108],
 		types: ['Water', 'Fighting'],
@@ -4627,6 +6244,13 @@ export const pkStats = {
 		abilities: ['Torrent', 'Protean*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0658-greninja-ash': {
+		originRegion: 'Alola',
+		stats: [72, 145, 67, 153, 71, 132],
+		types: ['Water', 'Dark'],
+		abilities: ['Torrent', 'Battle Bond*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0659-bunnelby': {
 		originRegion: 'Kalos',
 		stats: [38, 36, 38, 32, 36, 57],
@@ -4676,7 +6300,140 @@ export const pkStats = {
 		abilities: ['Shed Skin', 'Friend Guard*'],
 		genderRatio: { male: 50, female: 50 }
 	},
-	'0666-vivillon': {
+	'0666-vivillon-meadow': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-polar': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-tundra': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-continental': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-garden': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-elegant': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-icy-snow': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-modern': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-marine': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-archipelago': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-high-plains': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-sandstorm': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-river': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-monsoon': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-savanna': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-sun': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-ocean': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-jungle': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-fancy': {
+		originRegion: 'Kalos',
+		stats: [80, 52, 50, 90, 50, 89],
+		types: ['Bug', 'Flying'],
+		abilities: ['Shield Dust', 'Compound Eyes', 'Friend Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0666-vivillon-pokeball': {
 		originRegion: 'Kalos',
 		stats: [80, 52, 50, 90, 50, 89],
 		types: ['Bug', 'Flying'],
@@ -4697,7 +6454,42 @@ export const pkStats = {
 		abilities: ['Rivalry', 'Unnerve', 'Moxie*'],
 		genderRatio: { male: 12.5, female: 87.5 }
 	},
+	'0668-pyroar-female': {
+		originRegion: 'Kalos',
+		stats: [86, 68, 72, 109, 66, 106],
+		types: ['Fire', 'Normal'],
+		abilities: ['Rivalry', 'Unnerve', 'Moxie*'],
+		genderRatio: { male: 12.5, female: 87.5 }
+	},
 	'0669-flabebe': {
+		originRegion: 'Kalos',
+		stats: [44, 38, 39, 61, 79, 42],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0669-flabebe-yellow': {
+		originRegion: 'Kalos',
+		stats: [44, 38, 39, 61, 79, 42],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0669-flabebe-orange': {
+		originRegion: 'Kalos',
+		stats: [44, 38, 39, 61, 79, 42],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0669-flabebe-blue': {
+		originRegion: 'Kalos',
+		stats: [44, 38, 39, 61, 79, 42],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0669-flabebe-white': {
 		originRegion: 'Kalos',
 		stats: [44, 38, 39, 61, 79, 42],
 		types: ['Fairy'],
@@ -4711,7 +6503,63 @@ export const pkStats = {
 		abilities: ['Flower Veil', 'Symbiosis*'],
 		genderRatio: { male: 0, female: 100 }
 	},
+	'0670-floette-yellow': {
+		originRegion: 'Kalos',
+		stats: [54, 45, 47, 75, 98, 52],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0670-floette-orange': {
+		originRegion: 'Kalos',
+		stats: [54, 45, 47, 75, 98, 52],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0670-floette-blue': {
+		originRegion: 'Kalos',
+		stats: [54, 45, 47, 75, 98, 52],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0670-floette-white': {
+		originRegion: 'Kalos',
+		stats: [54, 45, 47, 75, 98, 52],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
 	'0671-florges': {
+		originRegion: 'Kalos',
+		stats: [78, 65, 68, 112, 154, 75],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0671-florges-yellow': {
+		originRegion: 'Kalos',
+		stats: [78, 65, 68, 112, 154, 75],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0671-florges-orange': {
+		originRegion: 'Kalos',
+		stats: [78, 65, 68, 112, 154, 75],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0671-florges-blue': {
+		originRegion: 'Kalos',
+		stats: [78, 65, 68, 112, 154, 75],
+		types: ['Fairy'],
+		abilities: ['Flower Veil', 'Symbiosis*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0671-florges-white': {
 		originRegion: 'Kalos',
 		stats: [78, 65, 68, 112, 154, 75],
 		types: ['Fairy'],
@@ -4753,6 +6601,69 @@ export const pkStats = {
 		abilities: ['Fur Coat'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0676-furfrou-heart': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-star': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-diamond': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-debutante': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-matron': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-dandy': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-la-reine': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-kabuki': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0676-furfrou-pharaoh': {
+		originRegion: 'Kalos',
+		stats: [75, 80, 60, 65, 90, 102],
+		types: ['Normal'],
+		abilities: ['Fur Coat'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0677-espurr': {
 		originRegion: 'Kalos',
 		stats: [62, 48, 54, 63, 60, 68],
@@ -4765,6 +6676,13 @@ export const pkStats = {
 		stats: [74, 48, 76, 83, 81, 104],
 		types: ['Psychic'],
 		abilities: ['Keen Eye', 'Infiltrator', 'Prankster*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0678-meowstic-female': {
+		originRegion: 'Kalos',
+		stats: [74, 48, 76, 83, 81, 104],
+		types: ['Psychic'],
+		abilities: ['Keen Eye', 'Infiltrator', 'Competitive*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0679-honedge': {
@@ -4956,11 +6874,25 @@ export const pkStats = {
 		abilities: ['Sap Sipper', 'Hydration', 'Gooey*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0705-sliggoo-hisuian': {
+		originRegion: 'Hisui',
+		stats: [58, 75, 83, 83, 113, 40],
+		types: ['Steel', 'Dragon'],
+		abilities: ['Sap Sipper', 'Shell Armor', 'Gooey*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0706-goodra': {
 		originRegion: 'Kalos',
 		stats: [90, 100, 70, 110, 150, 80],
 		types: ['Dragon'],
 		abilities: ['Sap Sipper', 'Hydration', 'Gooey*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0706-goodra-hisuian': {
+		originRegion: 'Hisui',
+		stats: [80, 100, 100, 110, 150, 60],
+		types: ['Steel', 'Dragon'],
+		abilities: ['Sap Sipper', 'Shell Armor', 'Gooey*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0707-klefki': {
@@ -4986,12 +6918,54 @@ export const pkStats = {
 	},
 	'0710-pumpkaboo-average': {
 		originRegion: 'Kalos',
+		stats: [49, 66, 70, 44, 55, 51],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0710-pumpkaboo-small': {
+		originRegion: 'Kalos',
+		stats: [44, 66, 70, 44, 55, 56],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0710-pumpkaboo-large': {
+		originRegion: 'Kalos',
+		stats: [54, 66, 70, 44, 55, 46],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0710-pumpkaboo-super': {
+		originRegion: 'Kalos',
 		stats: [59, 66, 70, 44, 55, 41],
 		types: ['Ghost', 'Grass'],
 		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0711-gourgeist-average': {
+		originRegion: 'Kalos',
+		stats: [65, 90, 122, 58, 75, 84],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0711-gourgeist-small': {
+		originRegion: 'Kalos',
+		stats: [55, 85, 122, 58, 75, 99],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0711-gourgeist-large': {
+		originRegion: 'Kalos',
+		stats: [75, 95, 122, 58, 75, 69],
+		types: ['Ghost', 'Grass'],
+		abilities: ['Pickup', 'Frisk', 'Insomnia*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0711-gourgeist-super': {
 		originRegion: 'Kalos',
 		stats: [85, 100, 122, 58, 75, 54],
 		types: ['Ghost', 'Grass'],
@@ -5010,6 +6984,13 @@ export const pkStats = {
 		stats: [95, 117, 184, 44, 46, 28],
 		types: ['Ice'],
 		abilities: ['Own Tempo', 'Ice Body', 'Sturdy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0713-avalugg-hisuian': {
+		originRegion: 'Hisui',
+		stats: [95, 127, 184, 34, 36, 38],
+		types: ['Ice', 'Rock'],
+		abilities: ['Strong Jaw', 'Ice Body', 'Sturdy*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0714-noibat': {
@@ -5040,11 +7021,32 @@ export const pkStats = {
 		abilities: ['Dark Aura'],
 		genderRatio: { male: null, female: null }
 	},
-	'0718-zygarde-50': {
+	'0718-zygarde-50%': {
 		originRegion: 'Kalos',
 		stats: [108, 100, 121, 81, 95, 95],
 		types: ['Dragon', 'Ground'],
 		abilities: ['Aura Break'],
+		genderRatio: { male: null, female: null }
+	},
+	'0718-zygarde-50%-power-construct': {
+		originRegion: 'Alola',
+		stats: [108, 100, 121, 81, 95, 95],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Power Construct'], // TODO: Does it also have Aura Break ?!
+		genderRatio: { male: null, female: null }
+	},
+	'0718-zygarde-10%': {
+		originRegion: 'Kalos',
+		stats: [54, 100, 71, 61, 85, 115],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Aura Break'],
+		genderRatio: { male: null, female: null }
+	},
+	'0718-zygarde-10%-power-construct': {
+		originRegion: 'Alola',
+		stats: [54, 100, 71, 61, 85, 115],
+		types: ['Dragon', 'Ground'],
+		abilities: ['Power Construct'], // TODO: Does it also have Aura Break ?!
 		genderRatio: { male: null, female: null }
 	},
 	'0719-diancie': {
@@ -5058,6 +7060,13 @@ export const pkStats = {
 		originRegion: 'Kalos',
 		stats: [80, 110, 60, 150, 130, 70],
 		types: ['Psychic', 'Ghost'],
+		abilities: ['Magician'],
+		genderRatio: { male: null, female: null }
+	},
+	'0720-hoopa-unbound': {
+		originRegion: 'Kalos',
+		stats: [80, 160, 60, 170, 130, 80],
+		types: ['Psychic', 'Dark'],
 		abilities: ['Magician'],
 		genderRatio: { male: null, female: null }
 	},
@@ -5090,6 +7099,13 @@ export const pkStats = {
 		stats: [78, 107, 75, 100, 100, 70],
 		types: ['Grass', 'Ghost'],
 		abilities: ['Overgrow', 'Long Reach*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0724-decidueye-hisuian': {
+		originRegion: 'Hisui',
+		stats: [88, 112, 80, 95, 95, 60],
+		types: ['Grass', 'Fighting'],
+		abilities: ['Overgrow', 'Scrappy*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0725-litten': {
@@ -5211,6 +7227,27 @@ export const pkStats = {
 		abilities: ['Dancer'],
 		genderRatio: { male: 25, female: 75 }
 	},
+	'0741-oricorio-pom-pom': {
+		originRegion: 'Alola',
+		stats: [75, 70, 70, 98, 70, 93],
+		types: ['Electric', 'Flying'],
+		abilities: ['Dancer'],
+		genderRatio: { male: 25, female: 75 }
+	},
+	'0741-oricorio-pau': {
+		originRegion: 'Alola',
+		stats: [75, 70, 70, 98, 70, 93],
+		types: ['Psychic', 'Flying'],
+		abilities: ['Dancer'],
+		genderRatio: { male: 25, female: 75 }
+	},
+	'0741-oricorio-sensu': {
+		originRegion: 'Alola',
+		stats: [75, 70, 70, 98, 70, 93],
+		types: ['Ghost', 'Flying'],
+		abilities: ['Dancer'],
+		genderRatio: { male: 25, female: 75 }
+	},
 	'0742-cutiefly': {
 		originRegion: 'Alola',
 		stats: [40, 45, 40, 55, 40, 84],
@@ -5232,11 +7269,32 @@ export const pkStats = {
 		abilities: ['Keen Eye', 'Vital Spirit', 'Steadfast*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0744-rockruff-own-tempo': {
+		originRegion: 'Alola',
+		stats: [45, 65, 40, 30, 40, 60],
+		types: ['Rock'],
+		abilities: ['Own Tempo'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0745-lycanroc-midday': {
 		originRegion: 'Alola',
 		stats: [75, 115, 65, 55, 65, 112],
 		types: ['Rock'],
 		abilities: ['Keen Eye', 'Sand Rush', 'Steadfast*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0745-lycanroc-midnight': {
+		originRegion: 'Alola',
+		stats: [85, 115, 75, 55, 75, 82],
+		types: ['Rock'],
+		abilities: ['Keen Eye', 'Vital Spirit', 'No Guard*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0745-lycanroc-dusk': {
+		originRegion: 'Alola',
+		stats: [75, 117, 65, 55, 65, 110],
+		types: ['Rock'],
+		abilities: ['Tough Claws'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0746-wishiwashi-solo': {
@@ -5442,6 +7500,48 @@ export const pkStats = {
 		abilities: ['Shields Down'],
 		genderRatio: { male: null, female: null }
 	},
+	'0774-minior-core-orange': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
+	'0774-minior-core-yellow': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
+	'0774-minior-core-green': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
+	'0774-minior-core-blue': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
+	'0774-minior-core-indigo': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
+	'0774-minior-core-violet': {
+		originRegion: 'Alola',
+		stats: [60, 60, 100, 60, 100, 60],
+		types: ['Rock', 'Flying'],
+		abilities: ['Shields Down'],
+		genderRatio: { male: null, female: null }
+	},
 	'0775-komala': {
 		originRegion: 'Alola',
 		stats: [65, 115, 65, 75, 95, 65],
@@ -5631,6 +7731,13 @@ export const pkStats = {
 		abilities: ['Soul Heart'],
 		genderRatio: { male: null, female: null }
 	},
+	'0801-magearna-original-color': {
+		originRegion: 'Galar',
+		stats: [80, 95, 115, 130, 115, 65],
+		types: ['Steel', 'Fairy'],
+		abilities: ['Soul Heart'],
+		genderRatio: { male: null, female: null }
+	},
 	'0802-marshadow': {
 		originRegion: 'Alola',
 		stats: [90, 125, 80, 90, 90, 125],
@@ -5690,6 +7797,13 @@ export const pkStats = {
 		abilities: ['Iron Fist'],
 		genderRatio: { male: null, female: null }
 	},
+	'0809-melmetal-gigantamax': {
+		originRegion: 'Unknown',
+		stats: [135, 143, 143, 80, 65, 34],
+		types: ['Steel'],
+		abilities: ['Iron Fist'],
+		genderRatio: { male: null, female: null }
+	},
 	// ===================================================================================
 	// ==================================== Gen ? End ====================================
 	// ===================================================================================
@@ -5708,6 +7822,13 @@ export const pkStats = {
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0812-rillaboom': {
+		originRegion: 'Galar',
+		stats: [100, 125, 90, 60, 70, 85],
+		types: ['Grass'],
+		abilities: ['Overgrow', 'Grassy-surge*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0812-rillaboom-gigantamax': {
 		originRegion: 'Galar',
 		stats: [100, 125, 90, 60, 70, 85],
 		types: ['Grass'],
@@ -5735,6 +7856,13 @@ export const pkStats = {
 		abilities: ['Blaze', 'Libero*'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0815-cinderace-gigantamax': {
+		originRegion: 'Galar',
+		stats: [80, 116, 75, 65, 75, 119],
+		types: ['Fire'],
+		abilities: ['Blaze', 'Libero*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0816-sobble': {
 		originRegion: 'Galar',
 		stats: [50, 40, 40, 70, 40, 70],
@@ -5750,6 +7878,13 @@ export const pkStats = {
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
 	'0818-inteleon': {
+		originRegion: 'Galar',
+		stats: [70, 85, 65, 125, 65, 120],
+		types: ['Water'],
+		abilities: ['Torrent', 'Sniper*'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0818-inteleon-gigantamax': {
 		originRegion: 'Galar',
 		stats: [70, 85, 65, 125, 65, 120],
 		types: ['Water'],
@@ -5791,6 +7926,13 @@ export const pkStats = {
 		abilities: ['Pressure', 'Unnerve', 'Mirror-armor*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0823-corviknight-gigantamax': {
+		originRegion: 'Galar',
+		stats: [98, 87, 105, 53, 85, 67],
+		types: ['Flying', 'Steel'],
+		abilities: ['Pressure', 'Unnerve', 'Mirror-armor*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0824-blipbug': {
 		originRegion: 'Galar',
 		stats: [25, 20, 20, 25, 45, 45],
@@ -5806,6 +7948,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0826-orbeetle': {
+		originRegion: 'Galar',
+		stats: [60, 45, 110, 80, 120, 90],
+		types: ['Bug', 'Psychic'],
+		abilities: ['Swarm', 'Frisk', 'Telepathy*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0826-orbeetle-gigantamax': {
 		originRegion: 'Galar',
 		stats: [60, 45, 110, 80, 120, 90],
 		types: ['Bug', 'Psychic'],
@@ -5868,6 +8017,13 @@ export const pkStats = {
 		abilities: ['Strong-jaw', 'Shell-armor', 'Swift-swim*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0834-drednaw-gigantamax': {
+		originRegion: 'Galar',
+		stats: [90, 115, 90, 48, 68, 74],
+		types: ['Water', 'Rock'],
+		abilities: ['Strong-jaw', 'Shell-armor', 'Swift-swim*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0835-yamper': {
 		originRegion: 'Galar',
 		stats: [59, 45, 50, 40, 50, 26],
@@ -5903,6 +8059,13 @@ export const pkStats = {
 		abilities: ['Steam-engine', 'Flame-body', 'Flash-fire*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0839-coalossal-gigantamax': {
+		originRegion: 'Galar',
+		stats: [110, 80, 120, 80, 90, 30],
+		types: ['Rock', 'Fire'],
+		abilities: ['Steam-engine', 'Flame-body', 'Flash-fire*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0840-applin': {
 		originRegion: 'Galar',
 		stats: [40, 40, 80, 40, 40, 20],
@@ -5917,7 +8080,21 @@ export const pkStats = {
 		abilities: ['Ripen', 'Gluttony', 'Hustle*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0841-flapple-gigantamax': {
+		originRegion: 'Galar',
+		stats: [70, 110, 80, 95, 60, 70],
+		types: ['Grass', 'Dragon'],
+		abilities: ['Ripen', 'Gluttony', 'Hustle*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0842-appletun': {
+		originRegion: 'Galar',
+		stats: [110, 85, 80, 100, 80, 30],
+		types: ['Grass', 'Dragon'],
+		abilities: ['Ripen', 'Gluttony', 'Thick-fat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0842-appletun-gigantamax': {
 		originRegion: 'Galar',
 		stats: [110, 85, 80, 100, 80, 30],
 		types: ['Grass', 'Dragon'],
@@ -5932,6 +8109,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0844-sandaconda': {
+		originRegion: 'Galar',
+		stats: [72, 107, 125, 65, 70, 71],
+		types: ['Ground'],
+		abilities: ['Sand-spit', 'Shed-skin', 'Sand-veil*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0844-sandaconda-gigantamax': {
 		originRegion: 'Galar',
 		stats: [72, 107, 125, 65, 70, 71],
 		types: ['Ground'],
@@ -5973,6 +8157,27 @@ export const pkStats = {
 		abilities: ['Punk-rock', 'Plus', 'Technician*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0849-toxtricity-gigantamax-amped': {
+		originRegion: 'Galar',
+		stats: [75, 98, 70, 114, 70, 75],
+		types: ['Electric', 'Poison'],
+		abilities: ['Punk-rock', 'Plus', 'Technician*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0849-toxtricity-low-key': {
+		originRegion: 'Galar',
+		stats: [75, 98, 70, 114, 70, 75],
+		types: ['Electric', 'Poison'],
+		abilities: ['Punk Rock', 'Minus', 'Technician*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0849-toxtricity-gigantamax-low-key': {
+		originRegion: 'Galar',
+		stats: [75, 98, 70, 114, 70, 75],
+		types: ['Electric', 'Poison'],
+		abilities: ['Punk Rock', 'Minus', 'Technician*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0850-sizzlipede': {
 		originRegion: 'Galar',
 		stats: [50, 65, 45, 50, 50, 45],
@@ -5981,6 +8186,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0851-centiskorch': {
+		originRegion: 'Galar',
+		stats: [100, 115, 65, 90, 90, 65],
+		types: ['Fire', 'Bug'],
+		abilities: ['Flash-fire', 'White-smoke', 'Flame-body*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0851-centiskorch-gigantamax': {
 		originRegion: 'Galar',
 		stats: [100, 115, 65, 90, 90, 65],
 		types: ['Fire', 'Bug'],
@@ -6008,7 +8220,21 @@ export const pkStats = {
 		abilities: ['Weak-armor', 'Cursed-body*'],
 		genderRatio: { male: null, female: null }
 	},
+	'0854-sinistea-antique': {
+		originRegion: 'Galar',
+		stats: [40, 45, 45, 74, 54, 50],
+		types: ['Ghost'],
+		abilities: ['Weak-armor', 'Cursed-body*'],
+		genderRatio: { male: null, female: null }
+	},
 	'0855-polteageist': {
+		originRegion: 'Galar',
+		stats: [60, 65, 65, 134, 114, 70],
+		types: ['Ghost'],
+		abilities: ['Weak-armor', 'Cursed-body*'],
+		genderRatio: { male: null, female: null }
+	},
+	'0855-polteageist-antique': {
 		originRegion: 'Galar',
 		stats: [60, 65, 65, 134, 114, 70],
 		types: ['Ghost'],
@@ -6036,6 +8262,13 @@ export const pkStats = {
 		abilities: ['Healer', 'Anticipation', 'Magic-bounce*'],
 		genderRatio: { male: 0, female: 100 }
 	},
+	'0858-hatterene-gigantamax': {
+		originRegion: 'Galar',
+		stats: [57, 90, 95, 136, 103, 29],
+		types: ['Psychic', 'Fairy'],
+		abilities: ['Healer', 'Anticipation', 'Magic-bounce*'],
+		genderRatio: { male: 0, female: 100 }
+	},
 	'0859-impidimp': {
 		originRegion: 'Galar',
 		stats: [45, 45, 30, 55, 40, 50],
@@ -6051,6 +8284,13 @@ export const pkStats = {
 		genderRatio: { male: 100, female: 0 }
 	},
 	'0861-grimmsnarl': {
+		originRegion: 'Galar',
+		stats: [95, 120, 65, 95, 75, 60],
+		types: ['Dark', 'Fairy'],
+		abilities: ['Prankster', 'Frisk', 'Pickpocket*'],
+		genderRatio: { male: 100, female: 0 }
+	},
+	'0861-grimmsnarl-gigantamax': {
 		originRegion: 'Galar',
 		stats: [95, 120, 65, 95, 75, 60],
 		types: ['Dark', 'Fairy'],
@@ -6106,7 +8346,448 @@ export const pkStats = {
 		abilities: ['Sweet-veil', 'Aroma-veil*'],
 		genderRatio: { male: 0, female: 100 }
 	},
-	'0869-alcremie': {
+	'0869-alcremie-vanilla-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-caramel-swirl-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-lemon-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-matcha-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-mint-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-rainbow-swirl-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-ruby-swirl-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-salted-cream-strawberry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-berry': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-clover': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-flower': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-love': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-ribbon': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-vanilla-cream-star': {
+		originRegion: 'Galar',
+		stats: [65, 60, 75, 110, 121, 64],
+		types: ['Fairy'],
+		abilities: ['Sweet-veil', 'Aroma-veil*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0869-alcremie-gigantamax': {
 		originRegion: 'Galar',
 		stats: [65, 60, 75, 110, 121, 64],
 		types: ['Fairy'],
@@ -6162,6 +8843,13 @@ export const pkStats = {
 		abilities: ['Inner-focus', 'Synchronize', 'Psychic-surge*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0876-indeedee-female': {
+		originRegion: 'Galar',
+		stats: [70, 55, 65, 95, 105, 85],
+		types: ['Psychic', 'Normal'],
+		abilities: ['Own Tempo', 'Synchronize', 'Psychic Surge'],
+		genderRatio: { male: 0, female: 100 }
+	},
 	'0877-morpeko-full-belly': {
 		originRegion: 'Galar',
 		stats: [58, 95, 58, 70, 58, 97],
@@ -6177,6 +8865,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0879-copperajah': {
+		originRegion: 'Galar',
+		stats: [122, 130, 69, 80, 69, 30],
+		types: ['Steel'],
+		abilities: ['Sheer-force', 'Heavy-metal*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0879-copperajah-gigantamax': {
 		originRegion: 'Galar',
 		stats: [122, 130, 69, 80, 69, 30],
 		types: ['Steel'],
@@ -6212,6 +8907,13 @@ export const pkStats = {
 		genderRatio: { male: null, female: null }
 	},
 	'0884-duraludon': {
+		originRegion: 'Galar',
+		stats: [70, 95, 115, 120, 50, 85],
+		types: ['Steel', 'Dragon'],
+		abilities: ['Light-metal', 'Heavy-metal', 'Stalwart*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0884-duraludon-gigantamax': {
 		originRegion: 'Galar',
 		stats: [70, 95, 115, 120, 50, 85],
 		types: ['Steel', 'Dragon'],
@@ -6274,7 +8976,35 @@ export const pkStats = {
 		abilities: ['Unseen-fist'],
 		genderRatio: { male: 87.5, female: 12.5 }
 	},
+	'0892-urshifu-gigantamax-single-strike': {
+		originRegion: 'Galar',
+		stats: [100, 130, 100, 63, 60, 97],
+		types: ['Fighting', 'Dark'],
+		abilities: ['Unseen-fist'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0892-urshifu-rapid-strike': {
+		originRegion: 'Galar',
+		stats: [100, 130, 100, 63, 60, 97],
+		types: ['Fighting', 'Water'],
+		abilities: ['Unseen Fist'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
+	'0892-urshifu-gigantamax-rapid-strike': {
+		originRegion: 'Galar',
+		stats: [100, 130, 100, 63, 60, 97],
+		types: ['Fighting', 'Water'],
+		abilities: ['Unseen Fist'],
+		genderRatio: { male: 87.5, female: 12.5 }
+	},
 	'0893-zarude': {
+		originRegion: 'Galar',
+		stats: [105, 120, 105, 70, 95, 105],
+		types: ['Dark', 'Grass'],
+		abilities: ['Leaf-guard'],
+		genderRatio: { male: null, female: null }
+	},
+	'0893-zarude-dada': {
 		originRegion: 'Galar',
 		stats: [105, 120, 105, 70, 95, 105],
 		types: ['Dark', 'Grass'],
@@ -6340,9 +9070,23 @@ export const pkStats = {
 		abilities: ['Guts', 'Bulletproof', 'Unnerve*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0901-ursaluna-bloodmoon': {
+		originRegion: 'Paldea',
+		stats: [113, 70, 120, 135, 65, 52],
+		types: ['Ground', 'Normal'],
+		abilities: [`Mind's Eye`],
+		genderRatio: { male: 100, female: 0 }
+	},
 	'0902-basculegion-male': {
 		originRegion: 'Hisui',
 		stats: [120, 112, 65, 80, 75, 78],
+		types: ['Water', 'Ghost'],
+		abilities: ['Rattled', 'Adaptability', 'Mold Breaker*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0902-basculegion-female': {
+		originRegion: 'Galar',
+		stats: [120, 92, 65, 100, 75, 78],
 		types: ['Water', 'Ghost'],
 		abilities: ['Rattled', 'Adaptability', 'Mold Breaker*'],
 		genderRatio: { male: 50, female: 50 }
@@ -6366,6 +9110,13 @@ export const pkStats = {
 		stats: [74, 115, 70, 135, 80, 106],
 		types: ['Fairy', 'Fly'],
 		abilities: ['Cute Charm', 'Contrary*'],
+		genderRatio: { male: 0, female: 100 }
+	},
+	'0905-enamorus-therian': {
+		originRegion: 'Hisui',
+		stats: [74, 115, 110, 135, 100, 46],
+		types: ['Fairy', 'Fly'],
+		abilities: ['Overcoat'],
 		genderRatio: { male: 0, female: 100 }
 	},
 	// ===================================================================================
@@ -6448,6 +9199,13 @@ export const pkStats = {
 		abilities: ['Lingering Aroma', 'Gluttony', 'Thick Fat*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0916-oinkologne-female': {
+		originRegion: 'Paldea',
+		stats: [115, 90, 70, 59, 90, 65],
+		types: ['Normal'],
+		abilities: ['Aroma Veil', 'Gluttony', 'Thick Fat*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0917-tarountula': {
 		originRegion: 'Paldea',
 		stats: [35, 41, 45, 29, 40, 20],
@@ -6511,6 +9269,13 @@ export const pkStats = {
 		abilities: ['Friend Guard', 'Cheek Pouch', 'Technician*'],
 		genderRatio: { male: null, female: null }
 	},
+	'0925-maushold-family3': {
+		originRegion: 'Paldea',
+		stats: [74, 75, 70, 65, 75, 111],
+		types: ['Normal'],
+		abilities: ['Friend Guard', 'Cheek Pouch', 'Technician*'],
+		genderRatio: { male: null, female: null }
+	},
 	'0926-fidough': {
 		originRegion: 'Paldea',
 		stats: [37, 55, 70, 30, 55, 65],
@@ -6551,6 +9316,27 @@ export const pkStats = {
 		stats: [82, 96, 51, 45, 51, 92],
 		types: ['Normal', 'Flying'],
 		abilities: ['Intimidate', 'Hustle', 'Guts*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0931-squawkabilly-blue': {
+		originRegion: 'Paldea',
+		stats: [82, 96, 51, 45, 51, 92],
+		types: ['Normal', 'Flying'],
+		abilities: ['Intimidate', 'Hustle', 'Guts*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0931-squawkabilly-yellow': {
+		originRegion: 'Paldea',
+		stats: [82, 96, 51, 45, 51, 92],
+		types: ['Normal', 'Flying'],
+		abilities: ['Intimidate', 'Hustle', 'Sheer Force*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0931-squawkabilly-white': {
+		originRegion: 'Paldea',
+		stats: [82, 96, 51, 45, 51, 92],
+		types: ['Normal', 'Flying'],
+		abilities: ['Intimidate', 'Hustle', 'Sheer Force*'],
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0932-nacli': {
@@ -6882,6 +9668,20 @@ export const pkStats = {
 		abilities: ['Commander', 'Storm Drain*'],
 		genderRatio: { male: 50, female: 50 }
 	},
+	'0978-tatsugiri-droopy': {
+		originRegion: 'Paldea',
+		stats: [68, 50, 60, 120, 95, 82],
+		types: ['Dragon', 'Water'],
+		abilities: ['Commander', 'Storm Drain*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0978-tatsugiri-stretchy': {
+		originRegion: 'Paldea',
+		stats: [68, 50, 60, 120, 95, 82],
+		types: ['Dragon', 'Water'],
+		abilities: ['Commander', 'Storm Drain*'],
+		genderRatio: { male: 50, female: 50 }
+	},
 	'0979-annihilape': {
 		originRegion: 'Paldea',
 		stats: [110, 115, 80, 50, 90, 90],
@@ -6904,6 +9704,13 @@ export const pkStats = {
 		genderRatio: { male: 50, female: 50 }
 	},
 	'0982-dudunsparce-two-segment': {
+		originRegion: 'Paldea',
+		stats: [125, 100, 80, 85, 75, 55],
+		types: ['Normal'],
+		abilities: ['Serene Grace', 'Run Away', 'Rattled*'],
+		genderRatio: { male: 50, female: 50 }
+	},
+	'0982-dudunsparce-three-segment': {
 		originRegion: 'Paldea',
 		stats: [125, 100, 80, 85, 75, 55],
 		types: ['Normal'],
@@ -7029,6 +9836,13 @@ export const pkStats = {
 		abilities: ['Rattled'],
 		genderRatio: { male: null, female: null }
 	},
+	'0999-gimmighoul-roaming': {
+		originRegion: 'Paldea',
+		stats: [45, 30, 25, 75, 45, 80],
+		types: ['Ghost'],
+		abilities: ['Run Away'],
+		genderRatio: { male: null, female: null }
+	},
 	'1000-gholdengo': {
 		originRegion: 'Paldea',
 		stats: [87, 60, 95, 133, 91, 84],
@@ -7120,7 +9934,21 @@ export const pkStats = {
 		abilities: ['Hospitality', 'Heatproof*'],
 		genderRatio: { male: null, female: null }
 	},
+	'1012-poltchageist-artisan': {
+		originRegion: 'Paldea',
+		stats: [40, 45, 45, 74, 54, 50],
+		types: ['Grass', 'Ghost'],
+		abilities: ['Hospitality', 'Heatproof*'],
+		genderRatio: { male: null, female: null }
+	},
 	'1013-sinistcha': {
+		originRegion: 'Paldea',
+		stats: [71, 60, 106, 121, 80, 70],
+		types: ['Grass', 'Ghost'],
+		abilities: ['Hospitality', 'Heatproof*'],
+		genderRatio: { male: null, female: null }
+	},
+	'1013-sinistcha-masterpiece': {
 		originRegion: 'Paldea',
 		stats: [71, 60, 106, 121, 80, 70],
 		types: ['Grass', 'Ghost'],
@@ -7214,3 +10042,6 @@ export const pkStats = {
 } as const
 
 export type PkStatsType = keyof typeof pkStats
+
+// log length of pkStats
+console.log('pkStats length:', Object.keys(pkStats).length)

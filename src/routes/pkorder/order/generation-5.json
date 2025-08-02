@@ -242,7 +242,7 @@
 			{ "pokemonid": "murkrow", "formid": null, "id_national": 198 },
 			{ "pokemonid": "slowking", "formid": null, "id_national": 199 },
 			{ "pokemonid": "misdreavus", "formid": null, "id_national": 200 },
-			{ "pokemonid": "unown", "formid": null, "id_national": 201 },
+			{ "pokemonid": "unown", "formid": "a", "id_national": 201 },
 			{ "pokemonid": "wobbuffet", "formid": null, "id_national": 202 },
 			{ "pokemonid": "girafarig", "formid": null, "id_national": 203 },
 			{ "pokemonid": "pineco", "formid": null, "id_national": 204 },

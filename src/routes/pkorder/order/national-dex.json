@@ -242,7 +242,7 @@
 			{ "pokemonid": "murkrow", "formid": null, "id_national": 198 },
 			{ "pokemonid": "slowking", "formid": null, "id_national": 199 },
 			{ "pokemonid": "misdreavus", "formid": null, "id_national": 200 },
-			{ "pokemonid": "unown", "formid": null, "id_national": 201 },
+			{ "pokemonid": "unown", "formid": "a", "id_national": 201 },
 			{ "pokemonid": "wobbuffet", "formid": null, "id_national": 202 },
 			{ "pokemonid": "girafarig", "formid": null, "id_national": 203 },
 			{ "pokemonid": "pineco", "formid": null, "id_national": 204 },
@@ -815,7 +815,7 @@
 			{ "pokemonid": "talonflame", "formid": null, "id_national": 663 },
 			{ "pokemonid": "scatterbug", "formid": null, "id_national": 664 },
 			{ "pokemonid": "spewpa", "formid": null, "id_national": 665 },
-			{ "pokemonid": "vivillon", "formid": null, "id_national": 666 },
+			{ "pokemonid": "vivillon", "formid": "meadow", "id_national": 666 },
 			{ "pokemonid": "litleo", "formid": null, "id_national": 667 },
 			{ "pokemonid": "pyroar", "formid": null, "id_national": 668 },
 			{ "pokemonid": "flabebe", "formid": null, "id_national": 669 },
@@ -879,7 +879,7 @@
 			{ "pokemonid": "noivern", "formid": null, "id_national": 715 },
 			{ "pokemonid": "xerneas", "formid": null, "id_national": 716 },
 			{ "pokemonid": "yveltal", "formid": null, "id_national": 717 },
-			{ "pokemonid": "zygarde", "formid": "50", "id_national": 718 },
+			{ "pokemonid": "zygarde", "formid": "50%", "id_national": 718 },
 			{ "pokemonid": "diancie", "formid": null, "id_national": 719 },
 			{ "pokemonid": "hoopa", "formid": "confined", "id_national": 720 },
 			{ "pokemonid": "volcanion", "formid": null, "id_national": 721 }
@@ -1066,7 +1066,7 @@
 			{ "pokemonid": "mr-rime", "formid": null, "id_national": 866 },
 			{ "pokemonid": "runerigus", "formid": null, "id_national": 867 },
 			{ "pokemonid": "milcery", "formid": null, "id_national": 868 },
-			{ "pokemonid": "alcremie", "formid": null, "id_national": 869 }
+			{ "pokemonid": "alcremie", "formid": "vanilla-cream-strawberry", "id_national": 869 }
 		],
 		"wallpaper": "forest"
 	},
@@ -1114,7 +1114,8 @@
 			{ "pokemonid": "basculegion", "formid": "male", "id_national": 902 },
 			{ "pokemonid": "sneasler", "formid": null, "id_national": 903 },
 			{ "pokemonid": "overqwil", "formid": null, "id_national": 904 },
-			{ "pokemonid": "enamorus", "formid": "incarnate", "id_national": 905 }
+			{ "pokemonid": "enamorus", "formid": "incarnate", "id_national": 905 },
+			{ "pokemonid": "enamorus", "formid": "therian", "id_national": 905 }
 		],
 		"wallpaper": "forest"
 	},
@@ -1209,7 +1210,11 @@
 			{ "pokemonid": "annihilape", "formid": null, "id_national": 979 },
 			{ "pokemonid": "clodsire", "formid": null, "id_national": 980 },
 			{ "pokemonid": "farigiraf", "formid": null, "id_national": 981 },
-			{ "pokemonid": "dudunsparce", "formid": "two-segment", "id_national": 982 },
+			{
+				"pokemonid": "dudunsparce",
+				"formid": "two-segment",
+				"id_national": 982
+			},
 			{ "pokemonid": "kingambit", "formid": null, "id_national": 983 },
 			{ "pokemonid": "great-tusk", "formid": null, "id_national": 984 },
 			{ "pokemonid": "scream-tail", "formid": null, "id_national": 985 },
