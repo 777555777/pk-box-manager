@@ -75,7 +75,7 @@
 	main {
 		display: flex;
 		height: 100dvh;
-		max-width: 94%;
+		max-width: 96%;
 		margin: 0 auto;
 	}
 
@@ -90,5 +90,11 @@
 		overflow-y: auto;
 		overflow-x: visible;
 		scrollbar-width: none;
+	}
+
+	@media (max-width: 1350px) {
+		main {
+			max-width: 100%;
+		}
 	}
 </style>
