@@ -59,7 +59,11 @@
 	}
 
 	function handleClickOutside(event: MouseEvent) {
-		if (trayRef && !trayRef.contains(event.target as Node)) {
+		if (
+			trayRef &&
+			!trayRef.contains(event.target as Node) &&
+			!buttonRef?.contains(event.target as Node)
+		) {
 			appState.closeDropdown()
 		}
 	}
@@ -95,6 +99,14 @@
 	</button>
 	{#if showTray}
 		<section class="pk-selector-tray" bind:this={trayRef}>
+			<div class="pk-selector-header">
+				{#if label}
+					<h3 class="text-large">{label}</h3>
+				{/if}
+				<button class="pk-button pk-close-btn" onclick={() => appState.closeDropdown()}>
+					<span>✕</span>
+				</button>
+			</div>
 			<PkIconGrid
 				{data}
 				{getPosition}
@@ -158,6 +170,87 @@
 		}
 		:global(img) {
 			image-rendering: pixelated;
+		}
+	}
+
+	.pk-selector-header {
+		display: none;
+	}
+
+	.pk-close-btn {
+		min-width: 44px;
+		padding: 0 !important;
+	}
+
+	/* Mobile Fullscreen Layout */
+	@media (max-width: 768px) {
+		.pk-selector-tray {
+			/* Fullscreen overlay */
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			max-width: none;
+			max-height: none;
+
+			/* Background */
+			background-color: var(--ui-section-background-color);
+			border: none;
+			border-radius: 0;
+
+			/* Layout */
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+
+			/* Scrolling */
+			overflow-y: auto;
+
+			/* Remove border styling */
+			border-image: none;
+		}
+
+		.pk-selector-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+			flex-shrink: 0;
+		}
+
+		.pk-selector-tray :global(.container-grid) {
+			flex: 1;
+			height: 100%;
+			padding: 0;
+		}
+
+		.pk-selector-tray :global(.pk-icon-grid) {
+			/* Mobile: More columns for better space usage */
+			grid-template-columns: repeat(6, 1fr) !important;
+			gap: 0.75rem;
+			padding: 0;
+			border: none;
+			height: auto;
+			min-height: 0;
+		}
+
+		.pk-selector-tray :global(.pk-pagination) {
+			margin-top: auto;
+			padding: 1rem 0 0 0;
+			flex-shrink: 0;
+		}
+	}
+
+	/* Sehr kleine Bildschirme */
+	@media (max-width: 480px) {
+		.pk-selector-tray :global(.pk-icon-grid) {
+			grid-template-columns: repeat(5, 1fr) !important;
+			gap: 0.5rem;
+		}
+
+		.pk-selector-header h3 {
+			font-size: var(--base-font-size);
 		}
 	}
 </style>

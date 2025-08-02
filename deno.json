@@ -4,6 +4,9 @@
 		"allowJs": true,
 		"strict": true
 	},
+	"tasks": {
+		"test": "deno test tests/ --allow-read"
+	},
 	"lint": {
 		"rules": {
 			"tags": ["recommended"]
