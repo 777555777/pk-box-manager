@@ -98,8 +98,8 @@
 {#snippet pokedexDialogContent()}
 	<!-- Mobile: Details/Summary Layout -->
 	<div class="mobile-filter-accordion">
-		<details class="pk-filter-details">
-			<summary>Pokedex Filters</summary>
+		<details class="pk-details">
+			<summary class="pk-summary">Pokedex Filters</summary>
 			<div class="pk-filter-container">
 				<div class="pk-btn-group pk-filter-toggles">
 					<PkToggle
@@ -177,25 +177,9 @@
 		display: none; /* Hidden by default, shown on mobile */
 	}
 
-	.pk-filter-details {
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		border-radius: 5px;
-
-		summary {
-			padding: 0.75rem 1rem;
-			cursor: pointer;
-			background-color: rgba(0, 0, 0, 0.05);
-			font-weight: 500;
-			user-select: none;
-
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.1);
-			}
-		}
-
+	.pk-details {
 		.pk-filter-container {
 			padding: 1rem;
-			border-top: 1px solid rgba(0, 0, 0, 0.1);
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -241,7 +225,7 @@
 		}
 
 		/* Mobile-specific styling for accordion content */
-		.pk-filter-details .pk-filter-container {
+		.pk-details .pk-filter-container {
 			flex-direction: column;
 			justify-content: center;
 			gap: 1rem;
@@ -249,17 +233,17 @@
 	}
 
 	@media (max-width: 520px) {
-		.pk-filter-details .pk-filter-toggles {
+		.pk-details .pk-filter-toggles {
 			flex-direction: column;
 			gap: 0.75rem;
 			width: 100%;
 		}
 
-		.pk-filter-details .pk-filter-container {
+		.pk-details .pk-filter-container {
 			padding: 0.75rem;
 		}
 
-		.pk-filter-details summary {
+		.pk-details summary {
 			padding: 0.5rem 0.75rem;
 		}
 	}
@@ -273,7 +257,7 @@
 		height: 680px;
 		overflow-y: scroll;
 
-		scrollbar-color: #444450 #717186;
+		scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-color-secondary);
 
 		mask: var(--scroll-indicator-gradient);
 	}
