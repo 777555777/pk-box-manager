@@ -143,6 +143,7 @@
 		position: sticky;
 		z-index: 2;
 		margin: auto 0;
+		margin-right: 2rem;
 		color: var(--ui-text-color);
 
 		.pk-sidebar-content {
