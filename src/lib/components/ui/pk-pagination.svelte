@@ -74,6 +74,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 2rem;
+		padding: 0.5rem;
 
 		button {
 			max-width: 3rem;

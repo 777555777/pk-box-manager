@@ -13,6 +13,8 @@
 		showBackground = true,
 		alwaysActive = false,
 		fixedHeight = false,
+		iconsPerRow = 6,
+		hasBorder = false,
 		id = crypto.randomUUID()
 	}: {
 		data: Record<string, any>
@@ -25,6 +27,8 @@
 		showBackground?: boolean
 		alwaysActive?: boolean
 		fixedHeight?: boolean
+		iconsPerRow?: number
+		hasBorder?: boolean
 		id?: string
 	} = $props()
 
@@ -35,6 +39,19 @@
 
 	// Display data - either paginated or all data if no pagination needed
 	const displayData = $derived(needsPagination ? paginatedData : Object.entries(data))
+
+	// Calculate the height of the selector tray content based on itemsPerPage and iconsPerRow
+	let calculatedHeight = $derived.by(() => {
+		const buttonSize = 44
+		const paginationHeight = 60
+		const gap = 8
+		const borders = hasBorder ? 12 : 0
+		const maxRows = Math.ceil(itemsPerPage / iconsPerRow)
+
+		const needsPagination = Object.entries(data).length > itemsPerPage
+		const gridHeight = maxRows * buttonSize
+		return gridHeight + (needsPagination ? paginationHeight + gap + borders : 0)
+	})
 
 	function handlePageChange(data: [string, any][], page: number) {
 		paginatedData = data
@@ -48,6 +65,9 @@
 <section
 	class="container-grid {showBackground ? '' : 'no-container-padding'} 
 		{fixedHeight ? 'fixed-height' : ''}"
+	style={fixedHeight
+		? `--calculated-height: ${calculatedHeight}px; --icons-per-row: ${iconsPerRow}`
+		: `--icons-per-row: ${iconsPerRow}`}
 >
 	<div
 		class="pk-icon-grid {showBackground ? '' : 'no-background'} 
@@ -73,12 +93,8 @@
 </section>
 
 <style>
-	:root {
-		--icon-target-size: 44;
-		--icon-original-size: 40;
-		--icon-scale-factor: calc(var(--icon-target-size) / var(--icon-original-size));
-		--icons-per-row: 7;
-	}
+	/* To use this component the following CSS variables need to be set */
+	/* --icon-target-size, --icon-original-size, --icon-scale-factor  */
 
 	/* Container Grid Styles */
 	.container-grid {
@@ -88,15 +104,14 @@
 		align-items: center;
 		flex: 1;
 		min-height: 0;
-		padding-top: 1rem;
+		gap: 0.5rem;
 
 		&.no-container-padding {
 			padding: 0;
 		}
 
 		&.fixed-height {
-			min-height: calc(var(--calculated-height) * 1px);
-			gap: 0.5rem;
+			min-height: calc(var(--calculated-height));
 		}
 	}
 

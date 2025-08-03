@@ -37,17 +37,6 @@
 	let buttonRef = $state<HTMLElement | null>(null)
 	let showTray = $derived(appState.isDropdownOpen(id))
 
-	// Calculate the height of the selector tray content based on itemsPerPage and iconsPerRow
-	let calculatedHeight = $derived.by(() => {
-		const buttonSize = 44
-		const paginationHeight = 60
-		const gap = 8
-		const maxRows = Math.ceil(itemsPerPage / iconsPerRow)
-		const needsPagination = Object.entries(data).length > itemsPerPage
-		const gridHeight = maxRows * buttonSize
-		return gridHeight + (needsPagination ? paginationHeight + gap : 0)
-	})
-
 	function toggleSelectorTray(event: MouseEvent) {
 		event.stopPropagation()
 
@@ -88,7 +77,6 @@
 	class="pk-picker-selector"
 	style="--icon-target-size: {iconTargetSize};
            --icon-original-size: {iconOriginalSize};
-           --icons-per-row: {iconsPerRow};
            --icon-scale-factor: {iconTargetSize / iconOriginalSize};"
 >
 	{#if label}
@@ -112,17 +100,16 @@
 				{getPosition}
 				{spriteUrl}
 				{itemsPerPage}
+				{iconsPerRow}
 				{disabled}
 				onUpdate={handleItemUpdate}
 				{activeItems}
 				showBackground={false}
 				alwaysActive={true}
 				fixedHeight={true}
-				--icons-per-row={iconsPerRow}
 				--icon-original-size={iconOriginalSize}
 				--icon-target-size={iconTargetSize}
 				--icon-scale-factor={iconTargetSize / iconOriginalSize}
-				--calculated-height={calculatedHeight}
 			/>
 		</section>
 	{/if}
@@ -165,9 +152,6 @@
 		border-image-outset: 0;
 		border-image-width: 9px;
 
-		:global(.pk-pagination) {
-			padding: 0.5rem;
-		}
 		:global(img) {
 			image-rendering: pixelated;
 		}
@@ -236,6 +220,7 @@
 		}
 
 		.pk-selector-tray :global(.pk-pagination) {
+			background-color: yellow;
 			margin-top: auto;
 			padding: 1rem 0 0 0;
 			flex-shrink: 0;

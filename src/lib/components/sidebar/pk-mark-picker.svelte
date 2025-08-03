@@ -19,11 +19,13 @@
 	data={Marks}
 	getPosition={getMarkPosition}
 	spriteUrl="/spritesheets/util/sm1.webp"
-	itemsPerPage={42}
+	itemsPerPage={30}
+	iconsPerRow={6}
 	{disabled}
 	onUpdate={handleMarkUpdate}
 	activeItems={activeRibbons}
-	--icons-per-row="7"
+	fixedHeight={true}
+	hasBorder={true}
 	--icon-original-size="128"
 	--icon-target-size="44"
 	--icon-scale-factor={44 / 128}
