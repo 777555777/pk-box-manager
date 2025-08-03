@@ -552,3 +552,8 @@ body {
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 	}
 }
+
+/* Specifically targeted CSS */
+.ball-selector-grid .pk-icon-grid img {
+	image-rendering: pixelated;
+}

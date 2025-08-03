@@ -21,16 +21,18 @@
 	}
 </script>
 
-<PkItemSelector
-	{label}
-	data={Balls}
-	getPosition={getBallPosition}
-	spriteUrl="/spritesheets/util/sb1.webp"
-	selectedItem={selectedBall}
-	{onUpdate}
-	{disabled}
-	{itemsPerPage}
-	iconsPerRow={5}
-	iconOriginalSize={30}
-	iconTargetSize={48}
-/>
+<div class="ball-selector-grid">
+	<PkItemSelector
+		{label}
+		data={Balls}
+		getPosition={getBallPosition}
+		spriteUrl="/spritesheets/util/sb1.webp"
+		selectedItem={selectedBall}
+		{onUpdate}
+		{disabled}
+		{itemsPerPage}
+		iconsPerRow={5}
+		iconOriginalSize={30}
+		iconTargetSize={48}
+	/>
+</div>

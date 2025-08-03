@@ -146,15 +146,10 @@
 		position: fixed;
 		z-index: 20;
 
-		image-rendering: pixelated;
 		border-width: 9px solid;
 		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
 		border-image-outset: 0;
 		border-image-width: 9px;
-
-		:global(img) {
-			image-rendering: pixelated;
-		}
 	}
 
 	.pk-selector-header {
@@ -217,13 +212,6 @@
 			border: none;
 			height: auto;
 			min-height: 0;
-		}
-
-		.pk-selector-tray :global(.pk-pagination) {
-			background-color: yellow;
-			margin-top: auto;
-			padding: 1rem 0 0 0;
-			flex-shrink: 0;
 		}
 	}
 
