@@ -14,7 +14,7 @@
 	import type { GameType } from '$lib/models/data-models'
 	import PkRibbonPicker from './pk-ribbon-picker.svelte'
 	import PkMarkPicker from './pk-mark-picker.svelte'
-	import PkRadioGroup from '../ui/pk-radio-group.svelte'
+	import PkOriginMark from './pk-origin-mark.svelte'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
@@ -22,13 +22,6 @@
 	let isSelectionValid = $derived(identifier === '0000-null')
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
-
-	let currentOption = $state('stats')
-	const optionConfig = [
-		{ tabId: 'stats', label: 'Stats' },
-		{ tabId: 'ribbons', label: 'Ribbons' },
-		{ tabId: 'marks', label: 'Marks' }
-	]
 
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
@@ -83,8 +76,15 @@
 				{disabled}
 			/>
 		</div>
+		{#if selectedPokemon.caughtIn}
+			<div class="pk-catch-location">
+				<PkOriginMark caughtIn={selectedPokemon.caughtIn} {isSelectionValid} />
+			</div>
+		{/if}
 	</section>
+
 	<div class="pk-viewer-seperator"></div>
+
 	<section class="pk-ui-section-inner pk-sidebar-content">
 		<section class="pk-title-section">
 			<h3 class="sr-only">Name & Ball</h3>
@@ -96,23 +96,22 @@
 				/>
 				<PkTitle idEntry={selectedPokemon.idEntry} {isSelectionValid} />
 			</div>
+			<div class="separator"></div>
 		</section>
-		<div class="separator"></div>
-		<section class="pk-form-section">
-			<h3 class="sr-only">Catch data</h3>
-			<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
-		</section>
-		<div class="separator"></div>
-		<div class="pk-tab-group">
-			<PkRadioGroup bind:currentOption {optionConfig} />
-		</div>
-		{#if currentOption === 'stats'}
-			<section class="pk-stats-section">
-				<h3 class="sr-only">Status values</h3>
-				<PkStats {identifier} />
+
+		<details class="pk-details" open>
+			<summary class="pk-summary"> Catch data </summary>
+			<section class="pk-form-section">
+				<h3 class="sr-only">Catch data</h3>
+				<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
 			</section>
-		{:else if currentOption === 'ribbons'}
-			<section class="pk-stats-section">
+		</details>
+
+		<div class="separator"></div>
+
+		<details class="pk-details">
+			<summary class="pk-summary"> Ribbons </summary>
+			<section class="pk-ribbon-section">
 				<h3 class="sr-only">Ribbons</h3>
 				<PkRibbonPicker
 					{disabled}
@@ -120,14 +119,30 @@
 					selectedRibbons={selectedPokemon.ribbons}
 				/>
 			</section>
-		{:else if currentOption === 'marks'}
-			<section class="pk-stats-section">
+		</details>
+
+		<div class="separator"></div>
+
+		<details class="pk-details">
+			<summary class="pk-summary"> Marks </summary>
+			<section class="pk-marks-section">
 				<h3 class="sr-only">Marks</h3>
 				<PkMarkPicker {disabled} onUpdate={updateMarks} selectedMarks={selectedPokemon.marks} />
 			</section>
-		{/if}
+		</details>
+
 		<div class="separator"></div>
+
+		<details class="pk-details">
+			<summary class="pk-summary"> Status values </summary>
+			<section class="pk-stats-section">
+				<h3 class="sr-only">Status values</h3>
+				<PkStats {identifier} />
+			</section>
+		</details>
+
 		<section class="pk-links-section">
+			<div class="separator"></div>
 			<h3 class="visible-h3 text-base">Catch location</h3>
 			<PkLinks idEntry={selectedPokemon.idEntry} />
 		</section>
@@ -139,22 +154,56 @@
 	.pk-sidebar {
 		min-width: var(--box-width);
 		max-width: 415px;
-		max-height: fit-content;
+		height: 92dvh;
 		position: sticky;
 		z-index: 2;
 		margin: auto 0;
 		margin-right: 2rem;
 		color: var(--ui-text-color);
+		display: flex;
+		flex-direction: column;
 
 		.pk-sidebar-content {
 			display: flex;
 			flex-direction: column;
-			height: 100%;
-			overflow-y: auto;
+			padding-inline: 0.5rem;
+			flex: 1 1 0; /* Ensure inner pixelart Border is stuck at bottom of the sidebar */
+			min-height: 0;
+			overflow: auto;
+			scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-color-secondary);
+		}
+	}
 
-			.pk-tab-group {
-				margin: 0 auto;
-			}
+	.pk-viewer-section {
+		position: relative;
+
+		.pk-viewer-controls {
+			display: flex;
+			justify-content: space-between;
+			position: absolute;
+			z-index: 2;
+			width: 100%;
+			top: 0;
+			padding: 0.5rem;
+		}
+
+		.pk-catch-location {
+			position: absolute;
+			bottom: 3px;
+			right: 0;
+			background-color: hsla(201, 64%, 50%, 0.75);
+			border-radius: 5px 0 0 0;
+
+			border-style: solid;
+			border-color: transparent;
+			border-width: 6px;
+
+			border-image-source: url('/ui/inner-border-viewer.webp');
+			border-image-slice: 6;
+			border-image-repeat: stretch;
+			border-image-outset: 3px;
+
+			z-index: 2;
 		}
 	}
 
@@ -191,22 +240,23 @@
 		}
 	}
 
-	.pk-title-section,
-	.pk-form-section,
-	.pk-stats-section,
-	.pk-links-section {
-		padding-inline: 1rem;
-	}
-
-	.pk-stats-section {
-		min-height: 350px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-
 	.pk-title-section {
 		padding-top: 0.5rem;
+
+		.pk-title-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			text-align: center;
+			min-height: 54px;
+		}
+	}
+
+	.pk-form-section,
+	.pk-stats-section,
+	.pk-ribbon-section,
+	.pk-marks-section {
+		padding: 1rem;
 	}
 
 	.pk-links-section {
@@ -214,40 +264,11 @@
 		flex-direction: column;
 		gap: 0.5rem;
 		padding-bottom: 0.5rem;
-	}
-
-	.pk-viewer-section {
-		position: relative;
-
-		.pk-viewer-controls {
-			display: flex;
-			justify-content: space-between;
-			position: absolute;
-			z-index: 2;
-			width: 100%;
-			top: 0;
-			padding: 0.5rem;
-		}
-	}
-
-	.pk-title-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		text-align: center;
-		min-height: 54px;
+		margin-top: auto; /* Align to the bottom of the container */
+		align-self: flex-end;
 	}
 
 	.visible-h3 {
 		text-align: center;
-	}
-
-	@media (max-height: 1200px) {
-		.pk-links-section {
-			padding-bottom: 0.25rem;
-		}
-		.pk-title-section {
-			padding-top: 0.25rem;
-		}
 	}
 </style>
