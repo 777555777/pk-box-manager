@@ -137,6 +137,7 @@
 			display: block;
 			flex-grow: 1;
 			padding: 0.175rem 0.25rem;
+			max-width: 13ch;
 		}
 
 		.hidden-ability {

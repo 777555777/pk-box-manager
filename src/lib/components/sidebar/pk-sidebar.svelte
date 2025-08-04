@@ -143,7 +143,7 @@
 
 		<section class="pk-links-section">
 			<div class="separator"></div>
-			<h3 class="visible-h3 text-base">Catch location</h3>
+			<h3 class="text-base">Catch location</h3>
 			<PkLinks idEntry={selectedPokemon.idEntry} />
 		</section>
 		<!-- <pre>{JSON.stringify(selectedPokemon, null, 2)}</pre> -->
@@ -266,9 +266,6 @@
 		padding-bottom: 0.5rem;
 		margin-top: auto; /* Align to the bottom of the container */
 		align-self: flex-end;
-	}
-
-	.visible-h3 {
 		text-align: center;
 	}
 </style>

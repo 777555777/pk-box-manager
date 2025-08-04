@@ -36,6 +36,7 @@
 		text-overflow: ellipsis;
 		padding-inline: 1.25rem;
 		width: 100%;
+		max-width: 25ch;
 	}
 
 	.pk-number {
