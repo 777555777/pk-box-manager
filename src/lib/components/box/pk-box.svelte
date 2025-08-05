@@ -30,8 +30,8 @@
 	// Sprite sheet data
 	const boxRows = 8 // 40 wallpapers with 5 columns = 8 rows
 	const boxColumns = 5 // column-amount from package.json
-	const boxSpriteWidth = 1134
-	const boxSpriteHeight = 854
+	const boxSpriteWidth = 567
+	const boxSpriteHeight = 427
 	const boxSpriteData = $derived(getWallpaperSpriteData(box.settings.wallpaper as WallpapersType))
 </script>
 

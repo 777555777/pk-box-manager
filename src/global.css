@@ -565,3 +565,10 @@ body {
 .ball-selector-grid .pk-icon-grid img {
 	image-rendering: pixelated;
 }
+
+/* Remove padding for pagination in wallpaper selector */
+section.pk-selector-tray {
+	.pagination-controls {
+		padding: 0;
+	}
+}

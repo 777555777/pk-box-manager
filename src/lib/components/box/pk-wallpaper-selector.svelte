@@ -82,8 +82,8 @@
 	// Sprite sheet data
 	const titleRows = 10 // 40 titles with 4 columns = 10 rows
 	const titleColumns = 4 // column-amount from package.json
-	const titleSpriteWidth = 812
-	const titleSpriteHeight = 161
+	const titleSpriteWidth = 406
+	const titleSpriteHeight = 81
 	const titleSpriteData = $derived(getTitleSpriteData(wallpaper))
 
 	// Pagination setup
@@ -181,10 +181,10 @@
 	}
 
 	.pk-selector-tray {
-		--original-width: 812;
-		--original-height: 161;
-		--target-width: calc(var(--original-width) / 4);
-		--target-height: calc(var(--original-height) / 4);
+		--original-width: 406;
+		--original-height: 81;
+		--target-width: calc(var(--original-width) / 2);
+		--target-height: calc(var(--original-height) / 2);
 		--scale-factor-x: calc(var(--target-width) / var(--original-width));
 		--scale-factor-y: calc(var(--target-height) / var(--original-height));
 
@@ -208,6 +208,7 @@
 		/* Layout */
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		gap: 0.5rem;
 	}
 
