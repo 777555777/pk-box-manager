@@ -26,7 +26,7 @@
 	activeItems={activeRibbons}
 	fixedHeight={true}
 	hasBorder={true}
-	--icon-original-size="128"
+	--icon-original-size="48"
 	--icon-target-size="44"
-	--icon-scale-factor={44 / 128}
+	--icon-scale-factor={44 / 48}
 />

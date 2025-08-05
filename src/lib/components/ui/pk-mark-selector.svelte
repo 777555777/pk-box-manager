@@ -31,7 +31,7 @@
 	{disabled}
 	{itemsPerPage}
 	iconsPerRow={5}
-	iconOriginalSize={128}
+	iconOriginalSize={48}
 	iconTargetSize={34}
 />
 

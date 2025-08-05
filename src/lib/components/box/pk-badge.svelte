@@ -86,7 +86,7 @@
 	<img
 		class="pk-badge"
 		src={`/spritesheets/util/sm1.webp`}
-		style="--original-size: 128; {setCssPosition(getMarkPosition(displayMark as MarksType))}"
+		style="--original-size: 48; {setCssPosition(getMarkPosition(displayMark as MarksType))}"
 		alt={displayMark}
 	/>
 {/if}
