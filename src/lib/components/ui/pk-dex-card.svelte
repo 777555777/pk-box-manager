@@ -92,7 +92,7 @@
 				onclick={toggleDelete}
 				disabled={!isAvailableInClient}
 			>
-				<PkIcon color="#fff" name={'x-icon'} size={16} />
+				<PkIcon color="#fff" name={'close'} size={16} />
 			</button>
 		{/if}
 		{#if isDeleting}

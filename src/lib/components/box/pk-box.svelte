@@ -3,7 +3,6 @@
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
 	import { getBackgroundStyle } from '$lib/spriteheet-helper'
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
-	import { Titles, type TitlesType } from '$lib/models/titles-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 

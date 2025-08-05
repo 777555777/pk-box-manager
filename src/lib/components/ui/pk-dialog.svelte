@@ -62,7 +62,7 @@
 		<section class="pk-dialog-header">
 			<h2>{headline}</h2>
 			<button class="pk-button" onclick={handleDismiss}>
-				<PkIcon color="#fff" name={'x-icon'} size={24} />
+				<PkIcon color="#fff" name={'close'} size={24} />
 			</button>
 		</section>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PkStatMeter from '$lib/components/ui/pk-stat-meter.svelte'
 	import PkTypeBadge from '$lib/components/ui/pk-type-badge.svelte'
-	import { fade } from 'svelte/transition'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	interface StaticPokemonData {
 		originRegion: string
@@ -68,11 +68,11 @@
 			{:else}
 				<div class="gender-ratio">
 					<div class="gender-item">
-						<img width="16px" src="ui/male.png" alt="♂️" />
+						<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
 						<span>{pokemon.genderRatio.male}%</span>
 					</div>
 					<div class="gender-item">
-						<img width="16px" src="ui/female.png" alt="♀️" />
+						<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
 						<span>{pokemon.genderRatio.female}%</span>
 					</div>
 				</div>
