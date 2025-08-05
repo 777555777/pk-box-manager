@@ -1,19 +1,18 @@
 <script lang="ts">
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let {
 		dexName,
 		disabled = false,
-		hideLabel = false,
-		icon = ''
+		hideLabel = false
 	}: {
 		dexName: string
 		disabled?: boolean
 		hideLabel?: boolean
 		icon?: string
 		label?: string
-		id?: string
 	} = $props()
 
 	function exportCurrentDex() {
@@ -62,9 +61,8 @@
 	onclick={exportCurrentDex}
 	{disabled}
 >
-	{#if icon}
-		<img src={icon} alt={hideLabel ? 'Export' : ''} />
-	{/if}
+	<PkIcon color="#fff" name="download" size={24} />
+
 	{#if !hideLabel}
 		<span>Export</span>
 	{/if}

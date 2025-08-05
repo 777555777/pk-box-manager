@@ -10,49 +10,49 @@ export const Marks = {
   "angry-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
+      x: -48,
       y: 0
     }
   },
   "blizzard-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
+      x: -96,
       y: 0
     }
   },
   "calmness-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
+      x: -144,
       y: 0
     }
   },
   "charismatic-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
+      x: -192,
       y: 0
     }
   },
   "cloudy-mark": {
     sheet: "sm1",
     pos: {
-      x: -640,
+      x: -240,
       y: 0
     }
   },
   "crafty-mark": {
     sheet: "sm1",
     pos: {
-      x: -768,
+      x: -288,
       y: 0
     }
   },
   "curry-mark": {
     sheet: "sm1",
     pos: {
-      x: -896,
+      x: -336,
       y: 0
     }
   },
@@ -60,259 +60,259 @@ export const Marks = {
     sheet: "sm1",
     pos: {
       x: 0,
-      y: -128
+      y: -48
     }
   },
   "destiny-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
-      y: -128
+      x: -48,
+      y: -48
     }
   },
   "dry-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
-      y: -128
+      x: -96,
+      y: -48
     }
   },
   "dusk-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
-      y: -128
+      x: -144,
+      y: -48
     }
   },
   "excited-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
-      y: -128
+      x: -192,
+      y: -48
     }
   },
   "ferocious-mark": {
     sheet: "sm1",
     pos: {
-      x: -640,
-      y: -128
+      x: -240,
+      y: -48
     }
   },
   "fishing-mark": {
     sheet: "sm1",
     pos: {
-      x: -768,
-      y: -128
+      x: -288,
+      y: -48
     }
   },
   "flustered-mark": {
     sheet: "sm1",
     pos: {
-      x: -896,
-      y: -128
+      x: -336,
+      y: -48
     }
   },
   "humble-mark": {
     sheet: "sm1",
     pos: {
       x: 0,
-      y: -256
+      y: -96
     }
   },
   "intellectual-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
-      y: -256
+      x: -48,
+      y: -96
     }
   },
   "intense-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
-      y: -256
+      x: -96,
+      y: -96
     }
   },
   "jittery-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
-      y: -256
+      x: -144,
+      y: -96
     }
   },
   "joyful-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
-      y: -256
+      x: -192,
+      y: -96
     }
   },
   "kindly-mark": {
     sheet: "sm1",
     pos: {
-      x: -640,
-      y: -256
+      x: -240,
+      y: -96
     }
   },
   "lunchtime-mark": {
     sheet: "sm1",
     pos: {
-      x: -768,
-      y: -256
+      x: -288,
+      y: -96
     }
   },
   "misty-mark": {
     sheet: "sm1",
     pos: {
-      x: -896,
-      y: -256
+      x: -336,
+      y: -96
     }
   },
   "peeved-mark": {
     sheet: "sm1",
     pos: {
       x: 0,
-      y: -384
+      y: -144
     }
   },
   "prideful-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
-      y: -384
+      x: -48,
+      y: -144
     }
   },
   "pumped-up-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
-      y: -384
+      x: -96,
+      y: -144
     }
   },
   "rainy-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
-      y: -384
+      x: -144,
+      y: -144
     }
   },
   "rare-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
-      y: -384
+      x: -192,
+      y: -144
     }
   },
   "rowdy-mark": {
     sheet: "sm1",
     pos: {
-      x: -640,
-      y: -384
+      x: -240,
+      y: -144
     }
   },
   "sandstorm-mark": {
     sheet: "sm1",
     pos: {
-      x: -768,
-      y: -384
+      x: -288,
+      y: -144
     }
   },
   "scowling-mark": {
     sheet: "sm1",
     pos: {
-      x: -896,
-      y: -384
+      x: -336,
+      y: -144
     }
   },
   "sleepy-time-mark": {
     sheet: "sm1",
     pos: {
       x: 0,
-      y: -512
+      y: -192
     }
   },
   "slump-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
-      y: -512
+      x: -48,
+      y: -192
     }
   },
   "smiley-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
-      y: -512
+      x: -96,
+      y: -192
     }
   },
   "snowy-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
-      y: -512
+      x: -144,
+      y: -192
     }
   },
   "stormy-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
-      y: -512
+      x: -192,
+      y: -192
     }
   },
   "teary-mark": {
     sheet: "sm1",
     pos: {
-      x: -640,
-      y: -512
+      x: -240,
+      y: -192
     }
   },
   "thorny-mark": {
     sheet: "sm1",
     pos: {
-      x: -768,
-      y: -512
+      x: -288,
+      y: -192
     }
   },
   "uncommon-mark": {
     sheet: "sm1",
     pos: {
-      x: -896,
-      y: -512
+      x: -336,
+      y: -192
     }
   },
   "unsure-mark": {
     sheet: "sm1",
     pos: {
       x: 0,
-      y: -640
+      y: -240
     }
   },
   "upbeat-mark": {
     sheet: "sm1",
     pos: {
-      x: -128,
-      y: -640
+      x: -48,
+      y: -240
     }
   },
   "vigor-mark": {
     sheet: "sm1",
     pos: {
-      x: -256,
-      y: -640
+      x: -96,
+      y: -240
     }
   },
   "zero-energy-mark": {
     sheet: "sm1",
     pos: {
-      x: -384,
-      y: -640
+      x: -144,
+      y: -240
     }
   },
   "zoned-out-mark": {
     sheet: "sm1",
     pos: {
-      x: -512,
-      y: -640
+      x: -192,
+      y: -240
     }
   }
 } as const;

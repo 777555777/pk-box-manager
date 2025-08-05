@@ -4,6 +4,7 @@
 	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let fileInput: HTMLInputElement
 	let pendingImport: DexStorage | null = null
@@ -96,7 +97,7 @@
 	onclick={() => fileInput.click()}
 	data-tooltip="Import a Pokedex from a JSON file"
 >
-	<img src="/ui/file-import.svg" alt="" />
+	<PkIcon color="#fff" name={'file-import'} size={24} />
 	<span>Import Dex</span>
 </button>
 

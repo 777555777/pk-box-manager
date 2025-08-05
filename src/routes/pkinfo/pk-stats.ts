@@ -10042,6 +10042,3 @@ export const pkStats = {
 } as const
 
 export type PkStatsType = keyof typeof pkStats
-
-// log length of pkStats
-console.log('pkStats length:', Object.keys(pkStats).length)

@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { createHotkeyHandler } from '$lib/hotkey-utils'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let { identifier, disabled } = $props()
-
-	const icon = '/ui/trash-alt-solid.svg'
 
 	function resetPokemon() {
 		pkState.resetPokemon(identifier)
@@ -28,7 +27,7 @@
 	{disabled}
 	data-tooltip="Reset Pokemon (Q)"
 >
-	<img src={icon} alt="" />
+	<PkIcon color="#fff" name={'trash-alt-solid'} size={24} />
 </button>
 
 <style>
@@ -38,8 +37,5 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-	.pk-button img {
-		margin-bottom: 3px;
 	}
 </style>

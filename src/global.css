@@ -308,6 +308,14 @@ body {
 		max-width: 44px;
 	}
 
+	svg ~ span {
+		margin-left: 0.5rem;
+	}
+
+	&:has(svg):not(:has(span)) {
+		max-width: 44px;
+	}
+
 	&::before {
 		content: '';
 		position: absolute;

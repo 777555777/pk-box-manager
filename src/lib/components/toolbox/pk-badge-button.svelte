@@ -4,6 +4,7 @@
 	import { Marks, type MarksType } from '$lib/models/marks-models'
 	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 
@@ -33,12 +34,7 @@
 		<!-- Off state -->
 		{#if badgeDisplay === false}
 			<div class="badge-icon-container">
-				<img
-					class="pk-badge-icon"
-					src="/ui/refresh.svg"
-					style="width: 24px; height: 24px;"
-					alt="Badge Off"
-				/>
+				<PkIcon color="#fff" name={'refresh'} size={24} />
 			</div>
 		{/if}
 
@@ -84,7 +80,7 @@
 				<img
 					class="pk-badge-icon"
 					src="/spritesheets/util/sm1.webp"
-					style="--original-size: 128; {setCssPosition(getMarkPosition())}"
+					style="--original-size: 48; {setCssPosition(getMarkPosition())}"
 					alt="Mark Badge"
 				/>
 			</div>

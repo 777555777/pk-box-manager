@@ -67,7 +67,8 @@
 		<div class="pk-viewer-controls">
 			<PkResetBtn {identifier} {disabled} />
 			<PkToggle
-				icon="/ui/sparkles-solid.svg"
+				icon="sparkles-solid"
+				iconColor="#fff"
 				activeColor="hsla(125, 100%, 30%, 0.55)"
 				label="Shiny"
 				hideLabel={true}
@@ -249,6 +250,7 @@
 			align-items: center;
 			text-align: center;
 			min-height: 54px;
+			padding-inline: 0.5rem;
 		}
 	}
 
@@ -267,5 +269,38 @@
 		margin-top: auto; /* Align to the bottom of the container */
 		align-self: flex-end;
 		text-align: center;
+		width: 100%;
+	}
+
+	/* Responsive Styles */
+	/* Extra small mobile adjustments */
+	@media (max-width: 680px) {
+		.pk-sidebar {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100vw;
+			max-width: 100vw;
+			min-width: 0;
+			height: 70vh;
+			border-radius: 20px 20px 0 0;
+			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+			transform: translateY(21px); /* 100% */
+			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			z-index: 80;
+
+			.separator {
+				margin-block: 0.375rem;
+			}
+
+			summary {
+				padding: 0.5rem 1rem;
+			}
+		}
+
+		/* .pk-sidebar.show {
+			transform: translateY(0);
+		} */
 	}
 </style>

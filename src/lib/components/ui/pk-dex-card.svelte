@@ -1,6 +1,7 @@
 <script lang="ts">
-	import PkExport from '../toolbox/pk-export.svelte'
-	import PkProgressBar from './pk-progress-bar.svelte'
+	import PkExport from '$lib/components/toolbox/pk-export.svelte'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
 
 	let { dexTitle, dexName, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
 
@@ -91,7 +92,7 @@
 				onclick={toggleDelete}
 				disabled={!isAvailableInClient}
 			>
-				<img src="/ui/x-icon.svg" alt="Delete" />
+				<PkIcon color="#fff" name={'x-icon'} size={16} />
 			</button>
 		{/if}
 		{#if isDeleting}
@@ -107,12 +108,7 @@
 			>{!isAvailableInClient ? 'Load Dex' : 'Select Dex'}</button
 		>
 		<!-- Export Button -->
-		<PkExport
-			{dexName}
-			icon={'/ui/download.svg'}
-			hideLabel={true}
-			disabled={!isAvailableInClient}
-		/>
+		<PkExport {dexName} hideLabel={true} disabled={!isAvailableInClient} />
 	</section>
 </article>
 
@@ -130,11 +126,11 @@
 		<div class="pk-dex-card-overlay">
 			<div class="pk-dex-card-stats text-small">
 				<div class="stat-item">
-					<img src="/ui/tag.svg" alt="Caught" />
+					<PkIcon color="#fff" name={'tag'} size={16} />
 					<span>{counter.count}/{counter.limit}</span>
 				</div>
 				<div class="stat-item">
-					<img src="/ui/sparkle.svg" alt="Seen" />
+					<PkIcon color="#fff" name={'sparkles-solid'} size={16} />
 					<span>{counter.shinyCount}/{counter.limit}</span>
 				</div>
 			</div>
@@ -199,12 +195,6 @@
 			background-color: rgba(128, 128, 128, 0.5);
 			opacity: 0.5;
 			cursor: not-allowed;
-		}
-
-		img {
-			width: 1rem;
-			height: 1rem;
-			filter: brightness(0) invert(1);
 		}
 	}
 
@@ -294,12 +284,6 @@
 				align-items: center;
 				gap: 0.25rem;
 				color: white;
-
-				img {
-					width: 1rem;
-					height: 1rem;
-					filter: brightness(0) invert(1);
-				}
 			}
 		}
 	}

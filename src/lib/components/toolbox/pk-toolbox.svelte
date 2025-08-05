@@ -7,6 +7,7 @@
 	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
 	import PkAppSettings from './pk-app-settings.svelte'
 	import PkBadgeButton from './pk-badge-button.svelte'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
@@ -70,9 +71,9 @@
 					onclick={openPokedexDialog}
 					data-tooltip="Open Pokedex configurations"
 				>
-					<img src="/ui/folder-open.svg" alt="" />
-					<span>Pokedex</span></button
-				>
+					<PkIcon color="#fff" name={'folder-open'} size={24} />
+					<span>Pokedex</span>
+				</button>
 			</div>
 		</div>
 
@@ -80,7 +81,8 @@
 
 		<div class="pk-modes">
 			<PkToggle
-				icon="/ui/pen.svg"
+				icon="pen"
+				iconColor="#fff"
 				activeColor="hsla(0, 100%, 30%, 0.6)"
 				label="Viewer Mode"
 				hideLabel={true}
@@ -96,7 +98,11 @@
 				onclick={openDefaultDialog}
 				data-tooltip="Open edit defaults"
 			>
-				<img class={appState.hasModifiedDefaults() ? 'modified' : ''} src="/ui/tag.svg" alt="" />
+				<PkIcon
+					color={appState.hasModifiedDefaults() ? 'var(--ui-text-active)' : '#fff'}
+					name={'tag'}
+					size={24}
+				/>
 				<span class={appState.hasModifiedDefaults() ? 'modified' : ''}>Defaults</span>
 			</button>
 		</div>
@@ -108,7 +114,7 @@
 			onclick={openAppSettingsDialog}
 			data-tooltip="Open App Settings"
 		>
-			<img src="/ui/cog.svg" alt="" />
+			<PkIcon color="#fff" name={'cog'} size={24} />
 			<span>Settings</span>
 		</button>
 	</section>

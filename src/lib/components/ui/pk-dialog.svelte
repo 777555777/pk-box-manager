@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hotkeyManager } from '$lib/state/hotkey-state.svelte'
 	import type { Snippet } from 'svelte'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	type ConfirmCallback = () => void
 	type DismissCallback = () => void
@@ -60,7 +61,9 @@
 	<section class="pk-ui-section-inner">
 		<section class="pk-dialog-header">
 			<h2>{headline}</h2>
-			<button class="pk-button" onclick={handleDismiss}><img src="ui/x-icon.svg" alt="" /></button>
+			<button class="pk-button" onclick={handleDismiss}>
+				<PkIcon color="#fff" name={'x-icon'} size={24} />
+			</button>
 		</section>
 
 		<div class="separator"></div>

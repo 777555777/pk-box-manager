@@ -7,6 +7,7 @@
 	import type { GameType } from '$lib/models/data-models'
 	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let defaultsDialog: PkDialogElement
 
@@ -69,7 +70,8 @@
 
 				<!-- Shiny -->
 				<PkToggle
-					icon="/ui/sparkles-solid.svg"
+					icon="sparkles-solid"
+					iconColor="#fff"
 					activeColor="hsla(125, 100%, 30%, 0.55)"
 					hideLabel={true}
 					onUpdate={toggleShiny}
@@ -77,7 +79,7 @@
 				/>
 
 				<button class="pk-button" onclick={resetDefaults} {disabled}>
-					<img src="/ui/reset.svg" alt="" /><span>Reset defaults</span>
+					<PkIcon color="#fff" name={'reset'} size={24} /><span>Reset defaults</span>
 				</button>
 			</div>
 

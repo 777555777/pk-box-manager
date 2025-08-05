@@ -1,6 +1,9 @@
 <script lang="ts">
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+
 	let {
 		icon = '',
+		iconColor = '#fff',
 		activeColor = 'hsla(0, 0, 40%, 0.6)',
 		label = '',
 		hideLabel = false,
@@ -21,7 +24,7 @@
 	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
 	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
 		{#if icon}
-			<img src={icon} alt="" />
+			<PkIcon color={iconColor} name={icon} size={24} />
 		{/if}
 		{#if label}
 			<span class={hideLabel ? 'sr-only' : ''}>{label}</span>
@@ -65,10 +68,6 @@
 		pointer-events: none;
 	}
 
-	.pk-button img {
-		margin-bottom: 3px;
-	}
-
 	.pk-button {
 		padding: 0;
 	}
@@ -88,8 +87,5 @@
 		white-space: nowrap;
 		padding-inline: 1rem;
 		padding-bottom: 3px;
-		img {
-			margin-bottom: 0;
-		}
 	}
 </style>

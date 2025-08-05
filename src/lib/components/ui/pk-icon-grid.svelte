@@ -80,6 +80,7 @@
 					style={setCssPosition(getPosition(key))}
 					class={alwaysActive || activeItems.has(key) ? '' : 'inactive'}
 					alt={key}
+					loading="lazy"
 				/>
 			</button>
 		{/each}
