@@ -72,7 +72,7 @@
             fill="currentColor" />
     </symbol>
 
-    <symbol id="x-icon" viewBox="0 0 24 24">
+    <symbol id="close" viewBox="0 0 24 24">
         <polygon
             points="14 13 15 13 15 14 16 14 16 15 17 15 17 16 18 16 18 17 19 17 19 18 20 18 20 19 21 19 21 20 22 20 22 21 21 21 21 22 20 22 20 21 19 21 19 20 18 20 18 19 17 19 17 18 16 18 16 17 15 17 15 16 14 16 14 15 13 15 13 14 11 14 11 15 10 15 10 16 9 16 9 17 8 17 8 18 7 18 7 19 6 19 6 20 5 20 5 21 4 21 4 22 3 22 3 21 2 21 2 20 3 20 3 19 4 19 4 18 5 18 5 17 6 17 6 16 7 16 7 15 8 15 8 14 9 14 9 13 10 13 10 11 9 11 9 10 8 10 8 9 7 9 7 8 6 8 6 7 5 7 5 6 4 6 4 5 3 5 3 4 2 4 2 3 3 3 3 2 4 2 4 3 5 3 5 4 6 4 6 5 7 5 7 6 8 6 8 7 9 7 9 8 10 8 10 9 11 9 11 10 13 10 13 9 14 9 14 8 15 8 15 7 16 7 16 6 17 6 17 5 18 5 18 4 19 4 19 3 20 3 20 2 21 2 21 3 22 3 22 4 21 4 21 5 20 5 20 6 19 6 19 7 18 7 18 8 17 8 17 9 16 9 16 10 15 10 15 11 14 11 14 13"
             fill="currentColor" />
@@ -103,4 +103,51 @@
             fill="currentColor" />
     </symbol>
 
+    <symbol id="female" viewBox="0 0 30 45">
+        <rect x="5" width="15" height="5" fill="#F78686" />
+        <rect x="20" y="5" width="5" height="10" fill="#F78686" />
+        <rect y="5" width="5" height="10" fill="#F78686" />
+        <rect x="5" y="15" width="15" height="5" fill="#F78686" />
+        <rect x="10" y="20" width="5" height="20" fill="#F78686" />
+        <rect y="25" width="25" height="5" fill="#F78686" />
+        <rect x="20" width="5" height="5" fill="#C72828" />
+        <rect x="5" y="5" width="15" height="5" fill="#C72828" />
+        <rect x="5" y="10" width="5" height="5" fill="#C72828" />
+        <rect y="15" width="5" height="5" fill="#C72828" />
+        <rect x="5" y="20" width="5" height="5" fill="#C72828" />
+        <rect x="15" y="20" width="10" height="5" fill="#C72828" />
+        <rect x="20" y="15" width="10" height="5" fill="#C72828" />
+        <rect x="25" y="5" width="5" height="10" fill="#C72828" />
+        <rect x="25" y="25" width="5" height="5" fill="#C72828" />
+        <rect x="15" y="30" width="15" height="5" fill="#C72828" />
+        <rect y="30" width="10" height="5" fill="#C72828" />
+        <rect x="15" y="35" width="5" height="10" fill="#C72828" />
+        <rect x="10" y="40" width="5" height="5" fill="#C72828" />
+    </symbol>
+
+    <symbol id="male" viewBox="0 0 30 45">
+        <rect y="10" width="5" height="5" fill="#96E7EF" />
+        <rect x="5" y="5" width="5" height="5" fill="#96E7EF" />
+        <rect x="10" width="5" height="20" fill="#96E7EF" />
+        <rect x="15" y="5" width="5" height="5" fill="#96E7EF" />
+        <rect x="20" y="10" width="5" height="5" fill="#96E7EF" />
+        <rect x="5" y="20" width="15" height="5" fill="#96E7EF" />
+        <rect y="25" width="5" height="10" fill="#96E7EF" />
+        <rect x="20" y="25" width="5" height="10" fill="#96E7EF" />
+        <rect x="5" y="35" width="15" height="5" fill="#96E7EF" />
+        <rect x="15" width="5" height="5" fill="#2879A6" />
+        <rect x="20" y="5" width="5" height="5" fill="#2879A6" />
+        <rect x="15" y="10" width="5" height="10" fill="#2879A6" />
+        <rect x="20" y="15" width="10" height="5" fill="#2879A6" />
+        <rect x="25" y="10" width="5" height="5" fill="#2879A6" />
+        <rect x="20" y="20" width="5" height="5" fill="#2879A6" />
+        <rect x="5" y="10" width="5" height="5" fill="#2879A6" />
+        <rect y="15" width="5" height="5" fill="#2879A6" />
+        <rect y="35" width="5" height="5" fill="#2879A6" />
+        <rect x="5" y="25" width="5" height="10" fill="#2879A6" />
+        <rect x="10" y="25" width="10" height="5" fill="#2879A6" />
+        <rect x="25" y="25" width="5" height="15" fill="#2879A6" />
+        <rect x="20" y="35" width="5" height="5" fill="#2879A6" />
+        <rect x="5" y="40" width="20" height="5" fill="#2879A6" />
+    </symbol>
 </svg>
