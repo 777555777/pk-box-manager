@@ -244,6 +244,18 @@ body {
 	}
 }
 
+@media (max-width: 680px) {
+	:root {
+		--box-width: 410px;
+	}
+}
+
+@media (max-width: 440px) {
+	:root {
+		--box-width: 374px;
+	}
+}
+
 .pk-ui-section {
 	/* Border settings */
 	border-style: solid;

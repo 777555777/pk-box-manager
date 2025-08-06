@@ -160,4 +160,22 @@
 			left: 16px; /* Zentriert auf 58px breitem Button: (58-38)/2 + 30% */
 		}
 	}
+
+	@media (max-width: 680px) {
+		.pk-slot {
+			--target-size: 64;
+		}
+		.pk-slot-cursor {
+			left: 16px; /* Zentriert auf 64px breitem Button: (64-38)/2 + 30% */
+		}
+	}
+
+	@media (max-width: 440px) {
+		.pk-slot {
+			--target-size: 58;
+		}
+		.pk-slot-cursor {
+			left: 16px; /* Zentriert auf 58px breitem Button: (58-38)/2 + 30% */
+		}
+	}
 </style>

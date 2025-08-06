@@ -23,6 +23,8 @@
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
 
+	let isMobileSidebarOpen = $state(false)
+
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
 		pkState.updatePokemon(identifier, { ball: newValue })
@@ -56,10 +58,22 @@
 		pkState.toggleMark(identifier, markId)
 	}
 
+	// === Mobile Sidebar Toggle ===
+	function toggleMobileSidebar(event: Event) {
+		// prevents deselection of the currently selected Pokémon
+		event.preventDefault()
+		event.stopPropagation()
+		isMobileSidebarOpen = !isMobileSidebarOpen
+	}
+
 	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
-<aside class="pk-sidebar pk-ui-section">
+<button class="pk-mobile-sidebar-toggle" onclick={toggleMobileSidebar}>
+	{isMobileSidebarOpen ? '✕' : '☰'}
+</button>
+
+<aside class="pk-sidebar pk-ui-section {isMobileSidebarOpen ? 'show' : ''}">
 	<h2 class="sr-only">Pokemon details sidebar</h2>
 	<section class="pk-viewer-section">
 		<h3 class="sr-only">Pokémon Viewer</h3>
@@ -286,7 +300,7 @@
 			height: 70vh;
 			border-radius: 20px 20px 0 0;
 			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-			transform: translateY(21px); /* 100% */
+			transform: translateY(100%);
 			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 			z-index: 80;
 
@@ -299,8 +313,44 @@
 			}
 		}
 
-		/* .pk-sidebar.show {
-			transform: translateY(0);
-		} */
+		.pk-sidebar.show {
+			transform: translateY(21px);
+		}
+	}
+
+	.pk-mobile-sidebar-toggle {
+		display: none;
+	}
+
+	@media (max-width: 680px) {
+		.pk-mobile-sidebar-toggle {
+			position: fixed;
+			bottom: 2rem;
+			right: 2rem;
+			z-index: 100;
+			background-color: #2e99d1;
+			border: none;
+			padding: 1rem;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 56px;
+			height: 56px;
+			color: white;
+			font-size: 1.2rem;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			transition: all 0.2s ease;
+		}
+
+		.pk-mobile-sidebar-toggle:hover {
+			background-color: #257ba3;
+			transform: scale(1.05);
+		}
+
+		.pk-mobile-sidebar-toggle:active {
+			transform: scale(0.95);
+		}
 	}
 </style>

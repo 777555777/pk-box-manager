@@ -24,4 +24,10 @@
 		overflow-y: auto;
 		scrollbar-width: none;
 	}
+
+	@media (max-width: 680px) {
+		.pk-box-container {
+			padding-inline: 0.5rem;
+		}
+	}
 </style>

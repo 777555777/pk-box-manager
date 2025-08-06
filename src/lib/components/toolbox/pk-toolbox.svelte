@@ -172,4 +172,16 @@
 			}
 		}
 	}
+
+	@media (max-width: 480px) {
+		.pk-toolbox {
+			position: fixed;
+			left: 0;
+			right: 0;
+			width: 100vw;
+			max-width: 100vw;
+			border-radius: 20px 20px 0 0;
+			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+		}
+	}
 </style>
