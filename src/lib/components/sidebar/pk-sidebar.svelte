@@ -23,7 +23,7 @@
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
 
-	let isMobileSidebarOpen = $state(false)
+	let isMobileSidebarOpen = $derived(appState.isMobileSidebarOpen())
 
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
@@ -63,7 +63,7 @@
 		// prevents deselection of the currently selected Pokémon
 		event.preventDefault()
 		event.stopPropagation()
-		isMobileSidebarOpen = !isMobileSidebarOpen
+		appState.toggleMobileSidebar()
 	}
 
 	$inspect('Update from Sidebar:', selectedPokemon)

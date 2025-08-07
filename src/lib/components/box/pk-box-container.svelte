@@ -28,6 +28,7 @@
 	@media (max-width: 680px) {
 		.pk-box-container {
 			padding-inline: 0.5rem;
+			padding-top: 6rem;
 		}
 	}
 

@@ -26,6 +26,7 @@
 	let appSettingsDialog: PkAppSettingsDialogElement
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
+	let isMobileSidebarOpen = $derived(appState.isMobileSidebarOpen())
 
 	function toggleViewerMode() {
 		appState.toggleViewerMode()
@@ -62,7 +63,7 @@
 	})
 </script>
 
-<aside class="pk-toolbox pk-ui-section">
+<aside class="pk-toolbox pk-ui-section {isMobileSidebarOpen ? 'hide' : ''}">
 	<section class="pk-ui-section-inner">
 		<div class="pk-pokedex-data">
 			<div class="pk-toolbox-btn-group">
@@ -130,6 +131,7 @@
 		position: fixed;
 		top: 0;
 		z-index: 30;
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 		/* Adjust top offset correctly */
 		transform: translateY(calc(-1 * 18px));
@@ -185,6 +187,10 @@
 			max-width: 100vw;
 			border-radius: 20px 20px 0 0;
 			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.hide {
+			transform: translateY(calc(-1 * 90px)); /* Position hidden */
 		}
 	}
 </style>

@@ -10,6 +10,7 @@ import {
 export class AppState {
 	// UI state
 	private viewerMode = $state(false)
+	private mobileSidebarOpen = $state(false)
 
 	// Application settings
 	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
@@ -28,6 +29,14 @@ export class AppState {
 
 	public toggleViewerMode(): void {
 		this.viewerMode = !this.viewerMode
+	}
+
+	public isMobileSidebarOpen(): boolean {
+		return this.mobileSidebarOpen
+	}
+
+	public toggleMobileSidebar(): void {
+		this.mobileSidebarOpen = !this.mobileSidebarOpen
 	}
 
 	public getCurrentPokedexName(): string {
