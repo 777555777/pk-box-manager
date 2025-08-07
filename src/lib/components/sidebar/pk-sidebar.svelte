@@ -15,6 +15,7 @@
 	import PkRibbonPicker from './pk-ribbon-picker.svelte'
 	import PkMarkPicker from './pk-mark-picker.svelte'
 	import PkOriginMark from './pk-origin-mark.svelte'
+	import PkIcon from '../ui/pk-icon.svelte'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
@@ -70,7 +71,11 @@
 </script>
 
 <button class="pk-mobile-sidebar-toggle" onclick={toggleMobileSidebar}>
-	{isMobileSidebarOpen ? '✕' : '☰'}
+	{#if isMobileSidebarOpen}
+		<PkIcon name="close" />
+	{:else}
+		<PkIcon name="hamburger" />
+	{/if}
 </button>
 
 <aside class="pk-sidebar pk-ui-section {isMobileSidebarOpen ? 'show' : ''}">
@@ -325,10 +330,10 @@
 	@media (max-width: 680px) {
 		.pk-mobile-sidebar-toggle {
 			position: fixed;
-			bottom: 2rem;
-			right: 2rem;
+			bottom: 1rem;
+			right: 1rem;
 			z-index: 100;
-			background-color: #2e99d1;
+			background-color: hsla(201, 64%, 50%, 0.9);
 			border: none;
 			padding: 1rem;
 			border-radius: 50%;
@@ -336,8 +341,8 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			width: 56px;
-			height: 56px;
+			width: 52px;
+			height: 52px;
 			color: white;
 			font-size: 1.2rem;
 			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -345,7 +350,7 @@
 		}
 
 		.pk-mobile-sidebar-toggle:hover {
-			background-color: #257ba3;
+			background-color: hsla(199, 63%, 39%, 0.9);
 			transform: scale(1.05);
 		}
 
