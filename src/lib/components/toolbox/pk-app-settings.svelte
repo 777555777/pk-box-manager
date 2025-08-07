@@ -352,7 +352,7 @@
 		.pk-preferences-section {
 			max-height: 98vh;
 			height: 98vh;
-			padding-inline: 1rem;
+			padding-inline: 0.5rem;
 		}
 
 		fieldset.pk-fieldset .pk-settings-content .example {

@@ -25,7 +25,6 @@
 		{#if deriveOriginMark()}
 			<div class="pk-tooltip" data-tooltip="Pokemon Home Origin Mark">
 				<img
-					width="34px"
 					src={`/origin-marks/${deriveOriginMark()}.webp`}
 					alt={`${deriveOriginMark()} origin mark`}
 				/>
@@ -47,6 +46,24 @@
 
 		img {
 			image-rendering: auto;
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	@media (max-width: 460px) {
+		.pk-gen {
+			min-width: 22px;
+			gap: 0;
+
+			img {
+				width: 23px;
+				height: 22px;
+			}
+
+			span {
+				font-size: 11px;
+			}
 		}
 	}
 </style>

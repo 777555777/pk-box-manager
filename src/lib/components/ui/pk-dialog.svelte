@@ -214,9 +214,9 @@
 		.dialog-size-S,
 		.dialog-size-M,
 		.dialog-size-L {
-			width: 95vw;
-			min-width: 95vw;
-			max-width: 95vw;
+			width: 95dvw;
+			min-width: 95dvw;
+			max-width: 95dvw;
 		}
 
 		.pk-dialog-content {
@@ -230,10 +230,10 @@
 		.dialog-size-S,
 		.dialog-size-M,
 		.dialog-size-L {
-			width: 100vw;
-			min-width: 100vw;
-			max-width: 100vw;
-			max-height: 100vh;
+			width: 100dvw;
+			min-width: 100dvw;
+			max-width: 100dvw;
+			max-height: 100dvh;
 			top: 0;
 			left: 0;
 			transform: none; /* Entfernt die Zentrierung */

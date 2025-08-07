@@ -30,4 +30,10 @@
 			padding-inline: 0.5rem;
 		}
 	}
+
+	@media (max-width: 400px) {
+		.pk-box-container {
+			padding-inline: 0;
+		}
+	}
 </style>

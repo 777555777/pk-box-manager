@@ -122,4 +122,11 @@
 			left: 36px;
 		}
 	}
+
+	@media (max-width: 400px) {
+		.pk-badge {
+			top: 32px;
+			left: 32px;
+		}
+	}
 </style>

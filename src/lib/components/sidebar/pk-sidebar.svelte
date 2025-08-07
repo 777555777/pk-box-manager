@@ -297,7 +297,7 @@
 			width: 100vw;
 			max-width: 100vw;
 			min-width: 0;
-			height: 70vh;
+			height: 65vh;
 			border-radius: 20px 20px 0 0;
 			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 			transform: translateY(100%);
@@ -351,6 +351,14 @@
 
 		.pk-mobile-sidebar-toggle:active {
 			transform: scale(0.95);
+		}
+	}
+
+	@media (max-width: 400px) {
+		.pk-sidebar {
+			.pk-sidebar-content {
+				padding-inline: 0;
+			}
 		}
 	}
 </style>

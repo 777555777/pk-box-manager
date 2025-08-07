@@ -272,6 +272,11 @@
 	@media (max-width: 460px) {
 		.pk-fieldset {
 			margin-bottom: 0;
+			padding-inline: 0.25rem;
+		}
+
+		.pk-pokedex-section {
+			padding-inline: 1rem;
 		}
 	}
 </style>

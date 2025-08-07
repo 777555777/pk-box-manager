@@ -178,4 +178,13 @@
 			left: 16px; /* Zentriert auf 58px breitem Button: (58-38)/2 + 30% */
 		}
 	}
+
+	@media (max-width: 400px) {
+		.pk-slot {
+			--target-size: 54;
+		}
+		.pk-slot-cursor {
+			left: 14px; /* Zentriert auf 54px breitem Button: (54-38)/2 + 30% */
+		}
+	}
 </style>

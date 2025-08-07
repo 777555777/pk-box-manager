@@ -54,4 +54,13 @@
 	.hidden {
 		visibility: hidden;
 	}
+
+	@media (max-width: 400px) {
+		.pk-external-urls {
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+		}
+	}
 </style>

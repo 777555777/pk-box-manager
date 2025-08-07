@@ -41,7 +41,7 @@
 		display: block;
 
 		background: var(--meter-bar-background-color);
-		width: 12rem;
+		width: 10rem;
 		height: 0.75rem;
 	}
 
@@ -73,5 +73,11 @@
 			var(--meter-border-pixel-size) var(--meter-border-pixel-size),
 			0px var(--meter-border-pixel-size)
 		);
+	}
+
+	@media (max-width: 400px) {
+		.pixel-meter {
+			width: 8rem;
+		}
 	}
 </style>

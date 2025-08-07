@@ -256,6 +256,12 @@ body {
 	}
 }
 
+@media (max-width: 400px) {
+	:root {
+		--box-width: 355px;
+	}
+}
+
 .pk-ui-section {
 	/* Border settings */
 	border-style: solid;
@@ -541,10 +547,14 @@ body {
 }
 
 @media (max-width: 960px) {
-	.pk-tooltip {
-		&::after {
-			max-width: 20ch;
-		}
+	.pk-tooltip::after {
+		max-width: 20ch;
+	}
+}
+
+@media (max-width: 460px) {
+	.pk-tooltip::after {
+		display: none;
 	}
 }
 

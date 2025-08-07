@@ -174,6 +174,9 @@
 	}
 
 	@media (max-width: 480px) {
+		.separator-vertical {
+			margin-inline: 0.5rem;
+		}
 		.pk-toolbox {
 			position: fixed;
 			left: 0;

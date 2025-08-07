@@ -54,6 +54,18 @@
 		}
 	}
 
+	@media (max-width: 680px) {
+		.pk-viewer {
+			--target-size: 156;
+		}
+	}
+
+	@media (max-width: 460px) {
+		.pk-viewer {
+			--target-size: 128;
+		}
+	}
+
 	.pk-checkerboard {
 		background: conic-gradient(
 			var(--checkerboard-color-1) 90deg,
