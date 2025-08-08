@@ -162,7 +162,7 @@
 			</fieldset>
 
 			<fieldset class="pk-fieldset pk-badge-cycle-options">
-				<legend>Badge Cycle options:</legend>
+				<legend>Badge Cycle options</legend>
 				<div class="pk-settings-content pk-badge-content">
 					<div class="pk-badge-element">
 						<PkRadioGroup

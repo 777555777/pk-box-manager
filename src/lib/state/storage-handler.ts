@@ -56,6 +56,8 @@ export interface BoxData {
 	pokemon: string[]
 }
 
+type SidebarSection = 'catch' | 'ribbon' | 'mark' | 'stats'
+
 export interface AppSettings {
 	language: 'en' | 'de'
 	boxSprites: 'default' | 'scaled'
@@ -66,6 +68,7 @@ export interface AppSettings {
 		ribbon: RibbonsType
 		mark: MarksType
 	}
+	sidebarExpanded: SidebarSection[]
 }
 
 class StorageHandler {
@@ -273,7 +276,18 @@ class StorageHandler {
 			this.initAppDefaults()
 			return initialAppDefaults
 		}
-		return JSON.parse(appDefaults)
+
+		const parsedDefaults = JSON.parse(appDefaults)
+
+		// Generic migration: Merge with defaults to ensure all properties exist
+		const migratedDefaults = { ...initialAppDefaults, ...parsedDefaults }
+
+		// Save back if any properties were missing (migration occurred)
+		if (JSON.stringify(parsedDefaults) !== JSON.stringify(migratedDefaults)) {
+			this.saveAppDefaults(migratedDefaults)
+		}
+
+		return migratedDefaults
 	}
 
 	// ================
@@ -304,7 +318,26 @@ class StorageHandler {
 			this.initAppSettings()
 			return defaultAppSettings
 		}
-		return JSON.parse(appSettings)
+
+		const parsedSettings = JSON.parse(appSettings)
+
+		// Generic migration: Merge with defaults to ensure all properties exist
+		const migratedSettings: AppSettings = {
+			...defaultAppSettings,
+			...parsedSettings,
+			// Deep merge for nested objects
+			conditionalBadgeDisplay: {
+				...defaultAppSettings.conditionalBadgeDisplay,
+				...(parsedSettings.conditionalBadgeDisplay || {})
+			}
+		}
+
+		// Save back if any properties were missing (migration occurred)
+		if (JSON.stringify(parsedSettings) !== JSON.stringify(migratedSettings)) {
+			this.saveAppSettings(migratedSettings)
+		}
+
+		return migratedSettings
 	}
 
 	// ================

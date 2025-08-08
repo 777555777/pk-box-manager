@@ -50,5 +50,6 @@ export const defaultAppSettings: AppSettings = {
 	conditionalBadgeDisplay: {
 		ribbon: '001-national-ribbon',
 		mark: 'absent-minded-mark'
-	}
+	},
+	sidebarExpanded: ['catch']
 }

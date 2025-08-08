@@ -26,6 +26,26 @@
 
 	let isMobileSidebarOpen = $derived(appState.isMobileSidebarOpen())
 
+	// === Details Elements State ===
+	let currentExpanded = $derived(appState.getAppSettings().sidebarExpanded)
+
+	function toggleDetailsSection(sectionId: 'catch' | 'ribbon' | 'mark' | 'stats') {
+		const expandedSet = new Set(currentExpanded)
+
+		if (expandedSet.has(sectionId)) {
+			expandedSet.delete(sectionId)
+		} else {
+			expandedSet.add(sectionId)
+		}
+
+		appState.updateAppSettings({ sidebarExpanded: Array.from(expandedSet) })
+	}
+
+	function handleSummaryClick(event: Event, sectionId: 'catch' | 'ribbon' | 'mark' | 'stats') {
+		event.preventDefault() // Verhindert das native toggle-Verhalten
+		toggleDetailsSection(sectionId)
+	}
+
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
 		pkState.updatePokemon(identifier, { ball: newValue })
@@ -119,8 +139,10 @@
 			<div class="separator"></div>
 		</section>
 
-		<details class="pk-details" open>
-			<summary class="pk-summary"> Catch data </summary>
+		<details class="pk-details" open={currentExpanded.includes('catch')}>
+			<summary class="pk-summary" onclick={(event) => handleSummaryClick(event, 'catch')}>
+				Catch data
+			</summary>
 			<section class="pk-form-section">
 				<h3 class="sr-only">Catch data</h3>
 				<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
@@ -129,8 +151,10 @@
 
 		<div class="separator"></div>
 
-		<details class="pk-details">
-			<summary class="pk-summary"> Ribbons </summary>
+		<details class="pk-details" open={currentExpanded.includes('ribbon')}>
+			<summary class="pk-summary" onclick={(event) => handleSummaryClick(event, 'ribbon')}>
+				Ribbons
+			</summary>
 			<section class="pk-ribbon-section">
 				<h3 class="sr-only">Ribbons</h3>
 				<PkRibbonPicker
@@ -143,8 +167,10 @@
 
 		<div class="separator"></div>
 
-		<details class="pk-details">
-			<summary class="pk-summary"> Marks </summary>
+		<details class="pk-details" open={currentExpanded.includes('mark')}>
+			<summary class="pk-summary" onclick={(event) => handleSummaryClick(event, 'mark')}>
+				Marks
+			</summary>
 			<section class="pk-marks-section">
 				<h3 class="sr-only">Marks</h3>
 				<PkMarkPicker {disabled} onUpdate={updateMarks} selectedMarks={selectedPokemon.marks} />
@@ -152,9 +178,10 @@
 		</details>
 
 		<div class="separator"></div>
-
-		<details class="pk-details">
-			<summary class="pk-summary"> Status values </summary>
+		<details class="pk-details" open={currentExpanded.includes('stats')}>
+			<summary class="pk-summary" onclick={(event) => handleSummaryClick(event, 'stats')}>
+				Status values
+			</summary>
 			<section class="pk-stats-section">
 				<h3 class="sr-only">Status values</h3>
 				<PkStats {identifier} />
