@@ -206,7 +206,7 @@ body {
 	height: 2px;
 	width: auto;
 	background-color: rgba(0, 0, 0, 0.3);
-	margin: 1rem 0;
+	margin: 0.5rem 0;
 	/* Prevent margin collapsing */
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
@@ -217,12 +217,6 @@ body {
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.3);
 	margin: 0 1rem;
-}
-
-@media (max-height: 1200px) {
-	.separator {
-		margin: 0.65rem 0;
-	}
 }
 
 /* ======== Global UI Element Classes ========= */
