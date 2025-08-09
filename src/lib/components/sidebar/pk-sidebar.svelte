@@ -217,7 +217,6 @@
 			flex: 1 1 0; /* Ensure inner pixelart Border is stuck at bottom of the sidebar */
 			min-height: 0;
 			overflow: auto;
-			scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-color-secondary);
 		}
 	}
 

@@ -95,16 +95,19 @@
 	<section class="pk-dialog-section">
 		<section class="pk-preferences-section">
 			<h3>Preferences</h3>
-			<fieldset class="pk-fieldset pk-language-options" disabled>
-				<legend>Language</legend>
-				<div class="pk-settings-content pk-radio-group">
-					<PkRadioGroup
-						bind:currentOption={settings.language}
-						optionConfig={appLanguageConfig}
-						onUpdate={updateLanguage}
-					/>
-				</div>
-			</fieldset>
+			<!-- Needs to be implemented first -->
+			{#if false}
+				<fieldset class="pk-fieldset pk-language-options" disabled>
+					<legend>Language</legend>
+					<div class="pk-settings-content pk-radio-group">
+						<PkRadioGroup
+							bind:currentOption={settings.language}
+							optionConfig={appLanguageConfig}
+							onUpdate={updateLanguage}
+						/>
+					</div>
+				</fieldset>
+			{/if}
 
 			<fieldset class="pk-fieldset pk-box-sprite-options" disabled>
 				<legend>Box Sprites</legend>
@@ -171,8 +174,8 @@
 							onUpdate={updateBadgeCycleOption}
 						/>
 						<p class="pk-paragraph text-small">
-							Only displays the Badge icon for Ribbons and Marks when the here configured Ribbon or
-							Mark is marked as completed
+							Filter mode: Only displays the badge icon for Ribbons and Marks when the configured
+							Ribbon or Mark is marked as completed.
 						</p>
 					</div>
 
@@ -325,8 +328,6 @@
 			max-height: 60vh;
 			padding-inline: 2rem;
 			padding-bottom: 1.5rem;
-
-			scrollbar-color: #444450 #717186;
 		}
 
 		.pk-preferences-section .pk-settings-content {

@@ -255,9 +255,7 @@
 		place-items: center;
 		gap: 2rem;
 		height: 680px;
-		overflow-y: scroll;
-
-		scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-color-secondary);
+		overflow-y: auto;
 
 		mask: var(--scroll-indicator-gradient);
 	}

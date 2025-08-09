@@ -161,8 +161,7 @@
 		flex: 1;
 		padding-inline: 1rem;
 		min-height: 0; /* Wichtig für Flexbox-Scrolling */
-		overflow-y: scroll;
-		scrollbar-color: #444450 #717186;
+		overflow-y: auto;
 
 		.pk-dialog-description p {
 			background-color: red;

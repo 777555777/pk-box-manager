@@ -79,6 +79,9 @@ body {
 		0px 1px var(--text-shadow-color),
 		1px 0 var(--text-shadow-color),
 		1px 1px var(--text-shadow-color);
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-color-primary) var(--scrollbar-color-secondary);
 }
 
 /* ==================== Custom Fonts ==================== */

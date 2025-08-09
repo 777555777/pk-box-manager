@@ -2,12 +2,14 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { createHotkeyHandler } from '$lib/hotkey-utils'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import { appState } from '$lib/state/app-state.svelte'
 
 	let { identifier, disabled } = $props()
 
 	function resetPokemon() {
 		pkState.resetPokemon(identifier)
 		pkState.deselectPokemon()
+		appState.closeMobileSidebar()
 	}
 
 	const hotkeyHandler = createHotkeyHandler('KeyQ', resetPokemon, () => disabled)

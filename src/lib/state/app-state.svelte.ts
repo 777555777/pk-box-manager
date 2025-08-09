@@ -39,6 +39,10 @@ export class AppState {
 		this.mobileSidebarOpen = !this.mobileSidebarOpen
 	}
 
+	public closeMobileSidebar(): void {
+		this.mobileSidebarOpen = false
+	}
+
 	public getCurrentPokedexName(): string {
 		return this.selectedDexName
 	}
