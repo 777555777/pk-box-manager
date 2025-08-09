@@ -13,42 +13,63 @@
 		disabled = false,
 		id = crypto.randomUUID()
 	} = $props()
+
+	function handleToggle(event: MouseEvent) {
+		// No "preventDefault" because toggling the checkbox checked state
+		event.stopPropagation()
+
+		if (!disabled) {
+			checked = !checked
+			onUpdate(checked)
+		}
+	}
 </script>
 
-<button
-	style="--active-background: {activeColor}"
-	class="pk-button {tooltip ? 'pk-tooltip' : ''}"
-	{disabled}
+<input type="checkbox" class="sr-only" {id} {disabled} bind:checked onclick={handleToggle} />
+<label
+	for={id}
+	class="pk-button {tooltip ? 'pk-tooltip' : ''} "
 	data-tooltip={tooltip}
+	style="--active-background: {activeColor}"
 >
-	<input type="checkbox" {id} {disabled} bind:checked onchange={() => onUpdate(checked)} />
-	<label class={hideLabel ? '' : 'pk-icon-and-text'} for={id}>
+	<div class="pk-toggle-state {hideLabel ? '' : 'pk-icon-and-text'}">
 		{#if icon}
 			<PkIcon color={iconColor} name={icon} size={24} />
 		{/if}
 		{#if label}
 			<span class={hideLabel ? 'sr-only' : ''}>{label}</span>
 		{/if}
-	</label>
-</button>
+	</div>
+</label>
 
 <style>
-	input[type='checkbox'] {
-		display: none;
+	label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		cursor: pointer;
 	}
 
-	input[type='checkbox']:checked + label {
-		width: 100%;
+	label div.pk-toggle-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		position: relative;
+		padding: 0;
+		height: 44px;
+		min-width: 44px;
+		max-width: fit-content;
 	}
 
-	input[type='checkbox']:checked + label::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+	label div.pk-icon-and-text {
+		white-space: nowrap;
+		padding-inline: 1rem;
+		padding-bottom: 3px;
+	}
+
+	/* Only apply Background in checked state */
+	input[type='checkbox']:checked + label .pk-toggle-state {
 		background-color: var(--active-background);
 		clip-path: polygon(
 			3px calc(100% - 6px),
@@ -68,24 +89,19 @@
 		pointer-events: none;
 	}
 
-	.pk-button {
-		padding: 0;
+	input:disabled ~ label {
+		filter: brightness(0.75);
+		pointer-events: none;
+		cursor: not-allowed;
+		color: var(--ui-text-disabled);
 	}
 
-	.pk-button label {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		height: 44px;
-		min-width: 44px;
-		width: 100%;
-		cursor: pointer;
+	input:focus-visible ~ label::before {
+		outline: none;
+		border-image-source: url('/ui/textarea-select-focus.webp');
 	}
 
-	.pk-icon-and-text {
-		white-space: nowrap;
-		padding-inline: 1rem;
-		padding-bottom: 3px;
+	label span {
+		user-select: none;
 	}
 </style>
