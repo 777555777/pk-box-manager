@@ -109,39 +109,42 @@
 				</fieldset>
 			{/if}
 
-			<fieldset class="pk-fieldset pk-box-sprite-options" disabled>
-				<legend>Box Sprites</legend>
-				<div class="pk-settings-content pk-box-sprite-content">
-					<PkRadioGroup
-						bind:currentOption={settings.boxSprites}
-						optionConfig={boxSpriteConfig}
-						onUpdate={updateBoxSprites}
-					/>
-					<div class="example">
-						<div class="example-element">
-							<div class="pk-demo-slot">
-								<img
-									src={`/spritesheets/pokemon/sp1.webp`}
-									alt="original sized sprite example"
-									style={setCssPosition({ x: -96, y: 0 })}
-								/>
+			<!-- Needs to be implemented first -->
+			{#if false}
+				<fieldset class="pk-fieldset pk-box-sprite-options" disabled>
+					<legend>Box Sprites</legend>
+					<div class="pk-settings-content pk-box-sprite-content">
+						<PkRadioGroup
+							bind:currentOption={settings.boxSprites}
+							optionConfig={boxSpriteConfig}
+							onUpdate={updateBoxSprites}
+						/>
+						<div class="example">
+							<div class="example-element">
+								<div class="pk-demo-slot">
+									<img
+										src={`/spritesheets/pokemon/sp1.webp`}
+										alt="original sized sprite example"
+										style={setCssPosition({ x: -96, y: 0 })}
+									/>
+								</div>
+								<small>Original</small>
 							</div>
-							<small>Original</small>
-						</div>
 
-						<div class="example-element">
-							<div class="pk-demo-slot">
-								<img
-									src={`/spritesheets/pokemon/sp1.webp`}
-									alt="scaled sprite example"
-									style={setCssPosition({ x: -96, y: 0 })}
-								/>
+							<div class="example-element">
+								<div class="pk-demo-slot">
+									<img
+										src={`/spritesheets/pokemon/sp1.webp`}
+										alt="scaled sprite example"
+										style={setCssPosition({ x: -96, y: 0 })}
+									/>
+								</div>
+								<small>Scaled</small>
 							</div>
-							<small>Scaled</small>
 						</div>
 					</div>
-				</div>
-			</fieldset>
+				</fieldset>
+			{/if}
 
 			<fieldset class="pk-fieldset pk-font-options">
 				<legend>Font</legend>
