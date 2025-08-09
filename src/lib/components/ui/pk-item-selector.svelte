@@ -38,6 +38,7 @@
 	let showTray = $derived(appState.isDropdownOpen(id))
 
 	function toggleSelectorTray(event: MouseEvent) {
+		event.preventDefault()
 		event.stopPropagation()
 
 		if (showTray) {

@@ -28,25 +28,30 @@
 		}
 
 		function handleClickOutside(event: MouseEvent) {
-			const target = event.target as HTMLElement
+			// Add small delay to allow other click handlers to complete first
+			setTimeout(() => {
+				const target = event.target as HTMLElement
 
-			// Don't deselect if clicking on a pk-slot, sidebar, or one of their children
-			const isClickInsidePkSlot = !!target.closest('.pk-slot')
-			const isClickInsideSidebar = !!target.closest('.pk-sidebar')
-			const isClickInsideTray = !!target.closest('.selector-tray')
-			const isClickInsideToolbox = !!target.closest('.pk-toolbox')
-			const isClickInsidePkBallSelector = !!target.closest('.pk-selector-tray')
+				// Don't deselect if clicking on a pk-slot, sidebar, or one of their children
+				const isClickInsidePkSlot = !!target.closest('.pk-slot')
+				const isClickInsideSidebar = !!target.closest('.pk-sidebar')
+				const isClickInsideTray = !!target.closest('.selector-tray')
+				const isClickInsideToolbox = !!target.closest('.pk-toolbox')
+				const isClickInsidePkBallSelector = !!target.closest('.pk-selector-tray')
+				const isClickInsideButton = !!target.closest('button')
 
-			// If the click is outside both the pk-slot and sidebar, deselect the Pokémon
-			if (
-				!isClickInsidePkSlot &&
-				!isClickInsideSidebar &&
-				!isClickInsideToolbox &&
-				!isClickInsideTray &&
-				!isClickInsidePkBallSelector
-			) {
-				pkState.deselectPokemon()
-			}
+				// If the click is outside interactive elements, deselect the Pokémon
+				if (
+					!isClickInsidePkSlot &&
+					!isClickInsideSidebar &&
+					!isClickInsideToolbox &&
+					!isClickInsideTray &&
+					!isClickInsidePkBallSelector &&
+					!isClickInsideButton
+				) {
+					pkState.deselectPokemon()
+				}
+			}, 0)
 		}
 
 		// Add event listener

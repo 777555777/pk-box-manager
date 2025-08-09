@@ -8,7 +8,9 @@
 
 	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 
-	function cycleBadgeDisplay() {
+	function cycleBadgeDisplay(event: MouseEvent) {
+		event.preventDefault()
+		event.stopPropagation()
 		appState.cycleBadgeDisplayMode()
 	}
 
@@ -27,7 +29,7 @@
 
 <button
 	class="pk-button pk-tooltip pk-badge-cycle-button"
-	onclick={cycleBadgeDisplay}
+	onclick={(event) => cycleBadgeDisplay(event)}
 	data-tooltip="Cycle through Box Badges (B)"
 >
 	<div class="pk-badge-options">

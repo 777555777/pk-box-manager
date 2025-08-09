@@ -57,7 +57,9 @@
 		paginatedData = data
 	}
 
-	function handleItemClick(key: string, value: any) {
+	function handleItemClick(key: string, value: any, event: MouseEvent) {
+		event.preventDefault()
+		event.stopPropagation()
 		onUpdate(key)
 	}
 </script>
@@ -74,7 +76,11 @@
 		{fixedHeight ? 'fixed-grid-height' : ''}"
 	>
 		{#each displayData as [key, value]: [string, any]}
-			<button class="" {disabled} onclick={() => !disabled && handleItemClick(key, value)}>
+			<button
+				class=""
+				{disabled}
+				onclick={(event) => !disabled && handleItemClick(key, value, event)}
+			>
 				<img
 					src={spriteUrl}
 					style={setCssPosition(getPosition(key))}
