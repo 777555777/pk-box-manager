@@ -98,7 +98,7 @@
 
 	input:focus-visible ~ label::before {
 		outline: none;
-		border-image-source: url('/ui/textarea-select-focus.webp');
+		border-image-source: url('/ui/button-focus.webp');
 	}
 
 	label span {
