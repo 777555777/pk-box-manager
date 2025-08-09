@@ -14,12 +14,12 @@
 	let { identifier } = $props()
 	let requestPokemon = $derived(requestPokemonStats())
 
-	async function requestPokemonStats(): Promise<StaticPokemonData> {
-		const response = await fetch(`/pkinfo?identifier=${encodeURIComponent(identifier)}`)
-		if (!response.ok) throw new Error('Pokemon nicht gefunden')
+	async function requestPokemonStats(): Promise<Record<string, StaticPokemonData>> {
+		const response = await fetch(`/pkinfo?all=true`)
+		if (!response.ok) throw new Error('Error while fetching Pokemon data')
 
 		const data = await response.json()
-		if (!data) throw new Error('Keine Daten erhalten')
+		if (!data) throw new Error('Error while parsing Pokemon data from server')
 
 		return data
 	}
@@ -28,59 +28,65 @@
 </script>
 
 <div class="pk-stats-container">
-	{#await requestPokemon}
-		<!-- <p>...loading</p> -->
-	{:then pokemon}
-		<div class="pk-row-1">
-			<div class="pk-origin">
-				<h4 class="sr-only">Origin Region</h4>
-				<span>Origin: {pokemon.originRegion}</span>
+	{#if identifier === '0000-null'}
+		<p class="unselected-hint">Select a Pokemon <br />to view its stats</p>
+	{/if}
+
+	{#if identifier !== '0000-null'}
+		{#await requestPokemon}
+			<!-- <p>...loading</p> -->
+		{:then pokemon}
+			<div class="pk-row-1">
+				<div class="pk-origin">
+					<h4 class="sr-only">Origin Region</h4>
+					<span>Origin: {pokemon[identifier].originRegion}</span>
+				</div>
+
+				<div class="pk-types">
+					<h4 class="sr-only">Types</h4>
+					{#each pokemon[identifier].types as type}
+						<PkTypeBadge {type} />
+					{/each}
+				</div>
 			</div>
 
-			<div class="pk-types">
-				<h4 class="sr-only">Types</h4>
-				{#each pokemon.types as type}
-					<PkTypeBadge {type} />
+			<div class="pk-stats">
+				<h4 class="sr-only">Base stats</h4>
+				{#each pokemon[identifier].stats as stat, index}
+					<div class="stat-row">
+						<PkStatMeter label={statLabels[index]} value={stat} {index} />
+					</div>
 				{/each}
 			</div>
-		</div>
 
-		<div class="pk-stats">
-			<h4 class="sr-only">Base stats</h4>
-			{#each pokemon.stats as stat, index}
-				<div class="stat-row">
-					<PkStatMeter label={statLabels[index]} value={stat} {index} />
-				</div>
-			{/each}
-		</div>
+			<div class="pk-Abilities">
+				<h4 class="sr-only">Abilities</h4>
+				{#each pokemon[identifier].abilities as ability}
+					<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
+				{/each}
+			</div>
 
-		<div class="pk-Abilities">
-			<h4 class="sr-only">Abilities</h4>
-			{#each pokemon.abilities as ability}
-				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
-			{/each}
-		</div>
-
-		<div class="pk-gender">
-			<h4 class="sr-only">Gender ratio</h4>
-			{#if !pokemon.genderRatio.male && !pokemon.genderRatio.female}
-				<span>Unknown</span>
-			{:else}
-				<div class="gender-ratio">
-					<div class="gender-item">
-						<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
-						<span>{pokemon.genderRatio.male}%</span>
+			<div class="pk-gender">
+				<h4 class="sr-only">Gender ratio</h4>
+				{#if !pokemon[identifier].genderRatio.male && !pokemon[identifier].genderRatio.female}
+					<span>Unknown</span>
+				{:else}
+					<div class="gender-ratio">
+						<div class="gender-item">
+							<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
+							<span>{pokemon[identifier].genderRatio.male}%</span>
+						</div>
+						<div class="gender-item">
+							<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
+							<span>{pokemon[identifier].genderRatio.female}%</span>
+						</div>
 					</div>
-					<div class="gender-item">
-						<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
-						<span>{pokemon.genderRatio.female}%</span>
-					</div>
-				</div>
-			{/if}
-		</div>
-	{:catch error}
-		<p>{error.message}</p>
-	{/await}
+				{/if}
+			</div>
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	{/if}
 </div>
 
 <style>
@@ -90,6 +96,10 @@
 		justify-content: center;
 		gap: 1rem;
 		min-height: 320px;
+	}
+
+	.unselected-hint {
+		text-align: center;
 	}
 
 	.pk-row-1 {
@@ -131,7 +141,7 @@
 		gap: 0.5rem;
 
 		text-align: center;
-		min-height: 32px;
+		min-height: 48px;
 
 		span {
 			display: block;
