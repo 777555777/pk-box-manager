@@ -161,7 +161,8 @@
 		flex: 1;
 		padding-inline: 1rem;
 		min-height: 0; /* Wichtig für Flexbox-Scrolling */
-		overflow-y: auto;
+		/* overflow-y: auto; */
+		/* auskommentiert damit das neue dropdown content menü nicht abgeschnitten wird (HACK)*/
 
 		.pk-dialog-description p {
 			background-color: red;

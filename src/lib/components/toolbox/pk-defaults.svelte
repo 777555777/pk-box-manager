@@ -5,9 +5,11 @@
 	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import type { GameType } from '$lib/models/data-models'
+	import { Game, Generations } from '$lib/models/data-models'
 	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import PkDropdown from '../ui/pk-dropdown.svelte'
 
 	let defaultsDialog: PkDialogElement
 
@@ -23,8 +25,20 @@
 	}
 
 	// === Game Dropdown ===
-	function updateCaughtIn(newValue: GameType) {
-		appState.updateAppDefaults({ caughtIn: newValue })
+	function updateCaughtIn(selectedOption: any) {
+		if (selectedOption) {
+			const [key, value] = selectedOption
+			console.log('12312313!!: ', selectedOption)
+			console.log('12312313!!: ', key)
+			console.log('12312313!!: ', value)
+
+			console.log([key, Game[key as GameType]])
+
+			appState.updateAppDefaults({ caughtIn: key })
+		} else {
+			// Deselect case - set to default or null
+			appState.updateAppDefaults({ caughtIn: undefined })
+		}
 	}
 
 	// === Comment Textarea ===
@@ -55,8 +69,8 @@
 {#snippet defaultsDialogContent()}
 	<section class="pk-dialog-section">
 		<p class="pk-paragraph">
-			This menu allows you to set default values for new Pokémon. These defaults will be applied
-			when you mark a Pokémon as captured for the first time.
+			Set default values for new Pokémon that will be applied when a Pokémon is marked as captured
+			for the first time.
 		</p>
 
 		<fieldset class="pk-fieldset pk-defaults">
@@ -84,10 +98,20 @@
 			</div>
 
 			<!-- Game -->
-			<PkGameSelector
+			<!-- <PkGameSelector
 				label="Caught in"
 				onUpdate={updateCaughtIn}
 				value={appState.getAppDefaults().caughtIn}
+			/> -->
+
+			<PkDropdown
+				onUpdate={updateCaughtIn}
+				options={Object.entries(Game)}
+				groups={Generations.slice()}
+				selectedOption={(() => {
+					const caughtIn = appState.getAppDefaults().caughtIn as GameType
+					return caughtIn && Game[caughtIn] ? [caughtIn, Game[caughtIn]] : null
+				})()}
 			/>
 
 			<!-- Comment -->

@@ -16,6 +16,7 @@
 	import PkMarkPicker from './pk-mark-picker.svelte'
 	import PkOriginMark from './pk-origin-mark.svelte'
 	import PkIcon from '../ui/pk-icon.svelte'
+	import type { DropdownOption } from '../ui/pk-dropdown.svelte'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
@@ -57,9 +58,11 @@
 	}
 
 	// === Game Dropdown ===
-	function updateCaughtIn(newValue: GameType) {
+	function updateCaughtIn(selectedOption: DropdownOption) {
+		const [caughtIn, value] = selectedOption
+		console.log('Caught in updated:', selectedOption)
 		pkState.updatePokemon(identifier, {
-			caughtIn: newValue
+			caughtIn: caughtIn
 		})
 	}
 

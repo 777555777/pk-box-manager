@@ -1,14 +1,20 @@
 <script lang="ts">
-	type Option = [string, { title: string; gen: number; region: string; originMark: string | null }]
+	import { appState } from '$lib/state/app-state.svelte'
+
+	export type DropdownOption = [
+		string,
+		{ title: string; gen: number; region: string; originMark: string | null }
+	]
 
 	interface DropdownProps {
 		onUpdate: Function
-		options: Option[]
+		options: DropdownOption[]
 		groups?: (string | number)[]
 		disabled?: boolean
 		hasSearch?: boolean
 		iconSize?: number
-		selectedOption?: Option | null
+		selectedOption?: DropdownOption | null
+		id?: string
 	}
 
 	let {
@@ -17,17 +23,59 @@
 		groups,
 		disabled = false,
 		hasSearch = true,
-		iconSize = 24,
-		selectedOption = null
+		iconSize = 28,
+		selectedOption = null,
+		id = crypto.randomUUID()
 	}: DropdownProps = $props()
 
-	let isOpen = $state(false)
 	let currentSelection = $derived(selectedOption)
-
 	let searchTerm = $state('')
 
+	// =======================================================================
+	// Dropdown State Management
+	let trayRef = $state<HTMLElement | null>(null)
+	let buttonRef = $state<HTMLElement | null>(null)
+	let showTray = $derived(appState.isDropdownOpen(id))
+
+	function toggleSelectorTray(event: MouseEvent) {
+		event.preventDefault()
+		event.stopPropagation()
+
+		if (showTray) {
+			appState.closeDropdown()
+		} else {
+			appState.openDropdown(id)
+		}
+	}
+
+	function handleClickOutside(event: MouseEvent) {
+		if (
+			trayRef &&
+			!trayRef.contains(event.target as Node) &&
+			!buttonRef?.contains(event.target as Node)
+		) {
+			appState.closeDropdown()
+		}
+	}
+
+	function selectOption(option: DropdownOption | '') {
+		onUpdate(option)
+		appState.closeDropdown()
+	}
+
+	$effect(() => {
+		if (trayRef && showTray) {
+			document.addEventListener('click', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	})
+	// =======================================================================
+
 	// Deselect-Option erstellen
-	const deselectOption: Option = [
+	const deselectOption: DropdownOption = [
 		'deselect',
 		{ title: 'Select Option', gen: 0, region: '', originMark: null }
 	]
@@ -41,22 +89,22 @@
 		return matchesSearchTerm(deselectOption)
 	})
 
-	function matchesSearchTerm([key, value]: Option): boolean {
+	function matchesSearchTerm([key, value]: DropdownOption): boolean {
 		if (value.title.toLowerCase().includes(searchTerm.toLowerCase())) return true
 		if (key.toLowerCase().includes(searchTerm.toLowerCase())) return true
 		if (value.region.toLowerCase().includes(searchTerm.toLowerCase())) return true
 		return false
 	}
-
-	function selectOption(option: Option | null) {
-		currentSelection = option
-		isOpen = false
-		onUpdate(option)
-	}
 </script>
 
 <div class="pk-dropdown">
-	<button {disabled} class="dropdown-toggle" type="button" onclick={() => (isOpen = !isOpen)}>
+	<button
+		bind:this={buttonRef}
+		{disabled}
+		class="dropdown-toggle"
+		type="button"
+		onclick={toggleSelectorTray}
+	>
 		<span>
 			{Array.isArray(currentSelection) ? currentSelection[1].title : 'Select Option'}
 		</span>
@@ -77,9 +125,9 @@
 		</div>
 	</button>
 
-	{#if isOpen}
+	{#if showTray}
 		<!-- Dropdown content -->
-		<div class="dropdown-content">
+		<div bind:this={trayRef} class="dropdown-content">
 			<!-- filter dropdown options by search -->
 			{#if hasSearch}
 				<label for="games">Filter</label>
@@ -125,7 +173,7 @@
 	{/if}
 </div>
 
-{#snippet iterateOptions(testOptions: Option[])}
+{#snippet iterateOptions(testOptions: DropdownOption[])}
 	{#each testOptions as [key, value]}
 		<li>
 			<button onclick={() => selectOption([key, value])}>
@@ -150,7 +198,7 @@
 
 {#snippet renderDeselectOption()}
 	<li>
-		<button onclick={() => selectOption(null)}>
+		<button onclick={() => selectOption('')}>
 			<span>Deselect</span>
 		</button>
 	</li>
@@ -160,19 +208,22 @@
 	.pk-dropdown {
 		position: relative; /* wichtig, damit absolute Positionierung vom Content relativ zur Dropdown-Hülle gilt */
 		display: inline-block; /* oder block, je nach Layout */
-		/* width: max-content; oder eine feste Breite, falls nötig */
 		background-color: blueviolet;
+		width: 100%;
 	}
 
 	.dropdown-content {
 		background-color: bisque;
-		max-height: 180px;
+		max-height: 200px;
 		overflow-y: scroll;
 		position: absolute;
 		top: 100%; /* direkt unter dem Button */
 		left: 0;
-		width: 100%; /* macht den Content so breit wie der .pk-dropdown Container */
+		width: 100%; /* gleiche Breite wie der Container */
 		z-index: 20;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	}
 
 	li {
@@ -189,9 +240,10 @@
 		background-color: rgb(128, 128, 128);
 		gap: 3rem;
 		cursor: pointer;
+		color: var(--ui-text-color);
 
 		border: none;
-		margin-block: 0.25rem;
+		/* margin-block: 0.25rem; */
 
 		.extra-info {
 			display: flex;
