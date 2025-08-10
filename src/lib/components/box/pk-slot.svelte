@@ -84,6 +84,7 @@
 		outline: 2px solid hsl(0, 0%, 40%, 0.2);
 		outline-offset: -2px;
 		border-radius: 5px;
+		user-select: none;
 
 		&:hover {
 			z-index: 2;
