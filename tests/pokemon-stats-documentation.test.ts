@@ -1,7 +1,7 @@
 /// <reference lib="deno.ns" />
 import { assertEquals, assertExists } from 'https://deno.land/std@0.207.0/assert/mod.ts'
 import { walk } from 'https://deno.land/std@0.207.0/fs/walk.ts'
-import { pkStats } from '../src/routes/pkinfo/pk-stats.ts'
+import pkStats from '../src/routes/pkinfo/pk-stats.json' with { type: 'json' }
 
 interface PokemonEntry {
 	pokemonid: string
