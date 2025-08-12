@@ -5,7 +5,6 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
-	import { RenderScan } from 'svelte-render-scan'
 
 	// Use DexStorage from pkState to get the current state of the Pokedex
 	let dexStorage = $derived(pkState.getCurrentPokedexState())
@@ -75,7 +74,6 @@
 		</section>
 		<PkSidebar />
 	</main>
-	<RenderScan />
 {/await}
 
 <style>
