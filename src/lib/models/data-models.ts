@@ -134,16 +134,16 @@ export const Game = {
 	LetsGoPikachu: { title: 'Lets Go Pikachu', gen: 7, region: 'Kanto', originMark: 'lets-go' },
 	LetsGoEevee: { title: 'Lets Go Eevee', gen: 7, region: 'Kanto', originMark: 'lets-go' },
 
-	// Generation 7 Virtual console
-	RedVC: { title: 'Red virtual console', gen: 7, region: 'Kanto', originMark: 'game-boy' },
-	BlueVC: { title: 'Blue virtual console', gen: 7, region: 'Kanto', originMark: 'game-boy' },
-	YellowVC: { title: 'Yellow virtual console', gen: 7, region: 'Kanto', originMark: 'game-boy' },
-	GreenVC: { title: 'Green virtual console', gen: 7, region: 'Kanto', originMark: 'game-boy' },
+	// Generation 7 VC
+	RedVC: { title: 'Red VC', gen: 7, region: 'Kanto', originMark: 'game-boy' },
+	BlueVC: { title: 'Blue VC', gen: 7, region: 'Kanto', originMark: 'game-boy' },
+	YellowVC: { title: 'Yellow VC', gen: 7, region: 'Kanto', originMark: 'game-boy' },
+	GreenVC: { title: 'Green VC', gen: 7, region: 'Kanto', originMark: 'game-boy' },
 
-	// Generation 7 Virtual console
-	GoldVC: { title: 'Gold virtual console', gen: 7, region: 'Johto', originMark: 'game-boy' },
-	SilverVC: { title: 'Silver virtual console', gen: 7, region: 'Johto', originMark: 'game-boy' },
-	CrystalVC: { title: 'Crystal virtual console', gen: 7, region: 'Johto', originMark: 'game-boy' },
+	// Generation 7 VC
+	GoldVC: { title: 'Gold VC', gen: 7, region: 'Johto', originMark: 'game-boy' },
+	SilverVC: { title: 'Silver VC', gen: 7, region: 'Johto', originMark: 'game-boy' },
+	CrystalVC: { title: 'Crystal VC', gen: 7, region: 'Johto', originMark: 'game-boy' },
 
 	// Generation 8
 	Sword: { title: 'Sword', gen: 8, region: 'Galar', originMark: 'galar' },

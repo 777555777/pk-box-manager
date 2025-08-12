@@ -1,11 +1,8 @@
 <script lang="ts">
-	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
 	import PkDropdown from '$lib/components/ui/pk-dropdown.svelte'
 	import { type PokemonState } from '$lib/state/storage-handler'
 	import { Game, Generations, type GameType } from '$lib/models/data-models'
-	import { appState } from '$lib/state/app-state.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
 
 	let {
 		selectedPokemon,
@@ -23,13 +20,6 @@
 
 <div class="pk-inputs">
 	<div class="pk-region">
-		<!-- <PkGameSelector
-			label="Caught in"
-			onUpdate={updateCaughtIn}
-			value={selectedPokemon.caughtIn}
-			{disabled}
-		/> -->
-
 		<PkDropdown
 			onUpdate={updateCaughtIn}
 			options={Object.entries(Game)}
@@ -39,6 +29,7 @@
 				const caughtIn = selectedPokemon.caughtIn as GameType
 				return caughtIn && Game[caughtIn] ? [caughtIn, Game[caughtIn]] : null
 			})()}
+			labelText="Caught in"
 		/>
 	</div>
 	<div class="pk-comment-container">

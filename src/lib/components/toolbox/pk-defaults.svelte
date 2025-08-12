@@ -1,5 +1,4 @@
 <script lang="ts">
-	import PkGameSelector from '$lib/components/ui/pk-game-selector.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
 	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
@@ -98,12 +97,6 @@
 			</div>
 
 			<!-- Game -->
-			<!-- <PkGameSelector
-				label="Caught in"
-				onUpdate={updateCaughtIn}
-				value={appState.getAppDefaults().caughtIn}
-			/> -->
-
 			<PkDropdown
 				onUpdate={updateCaughtIn}
 				options={Object.entries(Game)}
@@ -112,6 +105,8 @@
 					const caughtIn = appState.getAppDefaults().caughtIn as GameType
 					return caughtIn && Game[caughtIn] ? [caughtIn, Game[caughtIn]] : null
 				})()}
+				--dropdown-max-height={280}
+				labelText="Caught in"
 			/>
 
 			<!-- Comment -->

@@ -11,10 +11,8 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
-	import type { GameType } from '$lib/models/data-models'
 	import PkRibbonPicker from './pk-ribbon-picker.svelte'
 	import PkMarkPicker from './pk-mark-picker.svelte'
-	import PkOriginMark from './pk-origin-mark.svelte'
 	import PkIcon from '../ui/pk-icon.svelte'
 	import type { DropdownOption } from '../ui/pk-dropdown.svelte'
 
@@ -119,11 +117,6 @@
 				{disabled}
 			/>
 		</div>
-		{#if selectedPokemon.caughtIn}
-			<div class="pk-catch-location">
-				<PkOriginMark caughtIn={selectedPokemon.caughtIn} {isSelectionValid} />
-			</div>
-		{/if}
 	</section>
 
 	<div class="pk-viewer-seperator"></div>
@@ -234,25 +227,6 @@
 			width: 100%;
 			top: 0;
 			padding: 0.5rem;
-		}
-
-		.pk-catch-location {
-			position: absolute;
-			bottom: 3px;
-			right: 0;
-			background-color: hsla(201, 64%, 50%, 0.75);
-			border-radius: 5px 0 0 0;
-
-			border-style: solid;
-			border-color: transparent;
-			border-width: 6px;
-
-			border-image-source: url('/ui/inner-border-viewer.webp');
-			border-image-slice: 6;
-			border-image-repeat: stretch;
-			border-image-outset: 3px;
-
-			z-index: 2;
 		}
 	}
 
