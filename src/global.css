@@ -565,6 +565,7 @@ body {
 
 	.pk-summary {
 		padding: 0.375rem 1rem;
+		border-radius: 5px;
 		cursor: pointer;
 		background-color: rgba(0, 0, 0, 0.05);
 		user-select: none;
@@ -574,9 +575,20 @@ body {
 		}
 	}
 
+	&[open] {
+		border-radius: 5px 5px 0 0;
+	}
+
+	&[open] .pk-summary {
+		border-radius: 5px 5px 0 0;
+	}
 	/* Content container when details is open */
 	& > *:not(summary) {
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	section {
+		background-color: hsl(196, 24%, 53%);
 	}
 }
 
