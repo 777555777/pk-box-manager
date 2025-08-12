@@ -112,11 +112,14 @@
 						activeColor="hsla(125, 100%, 30%, 0.55)"
 						bind:checked={showFormsDex}
 					/>
-					<PkToggle
-						label="Custom Dex"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={showCustomDex}
-					/>
+					<!-- not implemented -->
+					{#if false}
+						<PkToggle
+							label="Custom Dex"
+							activeColor="hsla(125, 100%, 30%, 0.55)"
+							bind:checked={showCustomDex}
+						/>
+					{/if}
 				</div>
 				<div class="pk-btn-group pk-filter-actions">
 					<PkImport />
