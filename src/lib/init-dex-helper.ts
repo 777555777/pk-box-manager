@@ -12,72 +12,72 @@ export const initialAppDefaults = {
 }
 
 export const supportedPokedexList = {
-	'national-dex.json': {
+	'national-dex': {
 		displayName: 'National Dex',
 		coverImage: 'national-dex-cover',
 		sortOrder: { type: 'server', value: 1 }
 	},
-	'national-dex-forms.json': {
+	'national-dex-forms': {
 		displayName: 'National Dex with forms',
 		coverImage: 'national-dex-forms-cover',
 		sortOrder: { type: 'server', value: 2 }
 	},
-	'generation-1.json': {
+	'generation-1': {
 		displayName: 'Generation 1',
 		coverImage: 'gen1-cover',
 		sortOrder: { type: 'server', value: 10 }
 	},
-	'generation-1-forms.json': {
+	'generation-1-forms': {
 		displayName: 'Generation 1 with forms',
 		coverImage: 'gen1-forms-cover',
 		sortOrder: { type: 'server', value: 11 }
 	},
-	'generation-2.json': {
+	'generation-2': {
 		displayName: 'Generation 2',
 		coverImage: 'gen2-cover',
 		sortOrder: { type: 'server', value: 20 }
 	},
-	'generation-2-forms.json': {
+	'generation-2-forms': {
 		displayName: 'Generation 2 with forms',
 		coverImage: 'gen2-forms-cover',
 		sortOrder: { type: 'server', value: 21 }
 	},
-	'generation-3.json': {
+	'generation-3': {
 		displayName: 'Generation 3',
 		coverImage: 'gen3-cover',
 		sortOrder: { type: 'server', value: 30 }
 	},
-	'generation-3-forms.json': {
+	'generation-3-forms': {
 		displayName: 'Generation 3 with forms',
 		coverImage: 'gen3-forms-cover',
 		sortOrder: { type: 'server', value: 31 }
 	},
-	'generation-4.json': {
+	'generation-4son': {
 		displayName: 'Generation 4',
 		coverImage: 'gen4-cover',
 		sortOrder: { type: 'server', value: 40 }
 	},
-	'generation-4-forms.json': {
+	'generation-4-forms': {
 		displayName: 'Generation 4 with forms',
 		coverImage: 'gen4-forms-cover',
 		sortOrder: { type: 'server', value: 41 }
 	},
-	'generation-5.json': {
+	'generation-5': {
 		displayName: 'Generation 5',
 		coverImage: 'gen5-cover',
 		sortOrder: { type: 'server', value: 50 }
 	},
-	'generation-5-forms.json': {
+	'generation-5-forms': {
 		displayName: 'Generation 5 with forms',
 		coverImage: 'gen5-forms-cover',
 		sortOrder: { type: 'server', value: 51 }
 	},
-	'generation-6.json': {
+	'generation-6': {
 		displayName: 'Generation 6',
 		coverImage: 'gen6-cover',
 		sortOrder: { type: 'server', value: 60 }
 	},
-	'generation-6-forms.json': {
+	'generation-6-forms': {
 		displayName: 'Generation 6 with forms',
 		coverImage: 'gen6-forms-cover',
 		sortOrder: { type: 'server', value: 61 }

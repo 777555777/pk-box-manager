@@ -25,20 +25,20 @@ export interface PokemonEntry {
 }
 
 const dexNames: Record<string, ServerBoxOrder[]> = {
-	'national-dex.json': boxOrderNational,
-	'national-dex-forms.json': boxOrderNationalForms,
-	'generation-1.json': boxOrderGeneration1,
-	'generation-1-forms.json': boxOrderGeneration1Forms,
-	'generation-2.json': boxOrderGeneration2,
-	'generation-2-forms.json': boxOrderGeneration2Forms,
-	'generation-3.json': boxOrderGeneration3,
-	'generation-3-forms.json': boxOrderGeneration3Forms,
-	'generation-4.json': boxOrderGeneration4,
-	'generation-4-forms.json': boxOrderGeneration4Forms,
-	'generation-5.json': boxOrderGeneration5,
-	'generation-5-forms.json': boxOrderGeneration5Forms,
-	'generation-6.json': boxOrderGeneration6,
-	'generation-6-forms.json': boxOrderGeneration6Forms
+	'national-dex': boxOrderNational,
+	'national-dex-forms': boxOrderNationalForms,
+	'generation-1': boxOrderGeneration1,
+	'generation-1-forms': boxOrderGeneration1Forms,
+	'generation-2': boxOrderGeneration2,
+	'generation-2-forms': boxOrderGeneration2Forms,
+	'generation-3': boxOrderGeneration3,
+	'generation-3-forms': boxOrderGeneration3Forms,
+	'generation-4': boxOrderGeneration4,
+	'generation-4-forms': boxOrderGeneration4Forms,
+	'generation-5': boxOrderGeneration5,
+	'generation-5-forms': boxOrderGeneration5Forms,
+	'generation-6': boxOrderGeneration6,
+	'generation-6-forms': boxOrderGeneration6Forms
 }
 
 export function GET(request: Request) {

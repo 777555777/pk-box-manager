@@ -73,7 +73,7 @@ export interface AppSettings {
 
 class StorageHandler {
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
-	private readonly DEFAULT_SELECTED_DEX = 'national-dex-forms.json'
+	private readonly DEFAULT_SELECTED_DEX = 'national-dex-forms'
 
 	// ================
 	// Pokedex
