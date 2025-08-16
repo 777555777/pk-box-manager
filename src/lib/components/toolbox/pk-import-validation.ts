@@ -1,5 +1,5 @@
 import { type DexStorage } from '../../state/storage-handler.ts'
-import { supportedPokedexList } from '../../init-dex-helper.ts'
+import { dexPresets } from '../../data/pokedex.ts'
 
 export function validateImportedDexState(importedFile: unknown): DexStorage {
 	let dexData: DexStorage
@@ -34,7 +34,7 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 	// 2.1 Validate or set default coverImage
 	if (!dexData.coverImage || typeof dexData.coverImage !== 'string') {
 		// Set default based on supported pokedex list or fallback
-		const dexConfig = supportedPokedexList[dexData.name as keyof typeof supportedPokedexList]
+		const dexConfig = dexPresets[dexData.name as keyof typeof dexPresets]
 		if (dexConfig) {
 			dexData.coverImage = dexConfig.coverImage
 			console.warn(`Missing coverImage for ${dexData.name}, using default: ${dexConfig.coverImage}`)
@@ -47,7 +47,7 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 	// 2.2 Validate or set default sortOrder
 	if (!dexData.sortOrder || typeof dexData.sortOrder !== 'object' || dexData.sortOrder === null) {
 		// Set default based on supported pokedex list or fallback
-		const dexConfig = supportedPokedexList[dexData.name as keyof typeof supportedPokedexList]
+		const dexConfig = dexPresets[dexData.name as keyof typeof dexPresets]
 		if (dexConfig) {
 			dexData.sortOrder = dexConfig.sortOrder
 			console.warn(

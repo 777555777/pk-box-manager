@@ -1,8 +1,8 @@
-import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
 import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 import { defaultAppSettings } from '../null-state-helper.ts'
 import { type RibbonsType } from '../models/ribbons-models.ts'
 import { type MarksType } from '../models/marks-models.ts'
+import { nationalDex, type PokedexConfig } from '../data/pokedex.ts'
 
 export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
 
@@ -39,10 +39,7 @@ export interface DexStorage {
 	name: string
 	displayName: string
 	coverImage: string
-	sortOrder: {
-		type: 'server' | 'client'
-		value: number
-	}
+	sortOrder: number
 	pokemon: Record<string, PokemonState>
 	boxes: BoxData[]
 }
@@ -73,7 +70,7 @@ export interface AppSettings {
 
 class StorageHandler {
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
-	private readonly DEFAULT_SELECTED_DEX = 'national-dex-forms'
+	private readonly DEFAULT_SELECTED_DEX = nationalDex.name
 
 	// ================
 	// Pokedex
@@ -84,9 +81,9 @@ class StorageHandler {
 	 * @param selectedDex The name of the Pokedex.
 	 * @param pokedexOrder The box order of the Pokedex.
 	 */
-	public initPokedex(pokedexOrder: ServerBoxOrder[], selectedDex: string): void {
-		const initialDex = initPokedex(pokedexOrder, selectedDex)
-		this.savePokedex(selectedDex, initialDex)
+	public initPokedex(dexConfig: PokedexConfig): void {
+		const initialDex = initPokedex(dexConfig)
+		this.savePokedex(dexConfig.name, initialDex)
 	}
 
 	/**

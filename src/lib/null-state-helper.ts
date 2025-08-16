@@ -24,10 +24,7 @@ export const pokedexNullState = {
 	name: 'null',
 	displayName: 'Null Dex',
 	coverImage: 'null-cover',
-	sortOrder: {
-		type: 'server' as const,
-		value: 0
-	},
+	sortOrder: 0,
 	pokemon: { '0000-null': pokemonNullState },
 	boxes: [
 		{

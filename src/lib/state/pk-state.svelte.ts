@@ -1,6 +1,5 @@
 import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../null-state-helper.ts'
 import { getIdentifier } from '../spriteheet-helper.ts'
-import { supportedPokedexList } from '../init-dex-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import {
 	storageHandler,
@@ -10,6 +9,8 @@ import {
 	type BoxData
 } from './storage-handler.ts'
 import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
+import { dexPresets, type PokedexConfig } from '../data/pokedex.ts'
+import { getDexConfig } from '../data/pokedex-config-utils.ts'
 
 export async function fetchBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
 	console.log('Fetching Box order from the server', dexName)
@@ -22,9 +23,28 @@ export async function fetchBoxOrder(dexName: string): Promise<ServerBoxOrder[]> 
 
 export class PkState {
 	private boxOrderCache: Record<string, ServerBoxOrder[]> = $state({})
-	private pokedexState: DexStorage = $state(pokedexNullState)
+	private pokedexState: DexStorage = $state(this.onPageLoadInitDex())
 	private selectedPokemon: PokemonState = $state(pokemonNullState)
 	private pokedexList = $state<DexStorage[]>([])
+
+	onPageLoadInitDex() {
+		const initialSelected = storageHandler.loadSelectedPokedexName()
+		const initialDexConfig = getDexConfig(initialSelected)
+
+		let stateData = storageHandler.loadPokedex(initialDexConfig.name)
+
+		// Initialize if it doesn't exist
+		if (!stateData) {
+			storageHandler.initPokedex(initialDexConfig)
+			stateData = storageHandler.loadPokedex(initialDexConfig.name)
+		}
+
+		return stateData!
+	}
+
+	getDexStorageFromConfig() {
+		return this.pokedexState
+	}
 
 	async loadBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
 		// Check if the BoxOrder is cached
@@ -43,14 +63,14 @@ export class PkState {
 		}
 	}
 
-	initBoxOrderState(boxOrder: ServerBoxOrder[], dexName: string): void {
+	initBoxOrderState(dexConfig: PokedexConfig): void {
 		// Read Pokedex data from localStorage
-		let stateData = storageHandler.loadPokedex(dexName)
+		let stateData = storageHandler.loadPokedex(dexConfig.name)
 
 		// Initialize if it doesn't exist
 		if (!stateData) {
-			storageHandler.initPokedex(boxOrder, dexName)
-			stateData = storageHandler.loadPokedex(dexName)
+			storageHandler.initPokedex(dexConfig)
+			stateData = storageHandler.loadPokedex(dexConfig.name)
 		}
 
 		// Set as reactive state
@@ -96,6 +116,30 @@ export class PkState {
 				const boxOrder = await this.loadBoxOrder(dexName)
 				this.initBoxOrderState(boxOrder, dexName)
 			}
+		} catch (error) {
+			console.error('Error switching Pokedex:', error)
+			throw error
+		}
+	}
+
+	switchPokedexNew(dexConfig: PokedexConfig): void {
+		try {
+			// Save selected Pokedex name
+			storageHandler.saveSelectedPokedexName(dexConfig.name)
+
+			// Check if we already have complete data in localStorage (e.g., from import)
+			const existingData = storageHandler.loadPokedex(dexConfig.name)
+			console.log('????????existingData', existingData)
+
+			if (existingData) {
+				console.log('!!!!!!!existingData', existingData)
+				// We have complete data, just load it directly
+				this.pokedexState = existingData
+				this.selectedPokemon = pokemonNullState
+			}
+
+			// If we don't have existing data, we need to fetch it
+			this.initBoxOrderState(dexConfig)
 		} catch (error) {
 			console.error('Error switching Pokedex:', error)
 			throw error
@@ -155,7 +199,7 @@ export class PkState {
 		// Add server-supported dexes that aren't in localStorage yet
 		const allDexes: DexStorage[] = [...localDexes]
 
-		for (const [dexName, dexConfig] of Object.entries(supportedPokedexList)) {
+		for (const [dexName, dexConfig] of Object.entries(dexPresets)) {
 			// Only add if not already in localStorage
 			if (!existingDexNames.has(dexName)) {
 				// Create a placeholder DexStorage for unloaded dexes
@@ -173,15 +217,7 @@ export class PkState {
 		}
 
 		// Sort by sortOrder for deterministic display
-		// First by type (server before client), then by value within type
-		allDexes.sort((a, b) => {
-			// Server dexes come first
-			if (a.sortOrder.type !== b.sortOrder.type) {
-				return a.sortOrder.type === 'server' ? -1 : 1
-			}
-			// Within same type, sort by value
-			return a.sortOrder.value - b.sortOrder.value
-		})
+		allDexes.sort((a, b) => a.sortOrder - b.sortOrder)
 
 		// Pokedex list now includes local dexes that have real editing state and
 		// server-supported dexes that are not yet loaded and dont have any real editing state
