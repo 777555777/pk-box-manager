@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type DexStorage } from '$lib/state/storage-handler'
+	import { type DexState } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
@@ -69,7 +69,7 @@
 		pkState.loadAllPokedexes()
 	}
 
-	function getPokedexCounts(pokedex: DexStorage) {
+	function getPokedexCounts(pokedex: DexState) {
 		let count = 0
 		let shinyCount = 0
 		let limit = Object.values(pokedex.pokemon).length

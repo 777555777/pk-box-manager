@@ -1,12 +1,12 @@
 import pokedexBoxes from './pokedex-boxes.json' with { type: 'json' }
 import pkStats from './pk-stats.json' with { type: 'json' }
+import { dexPresets } from './pokedex.ts'
 import {
-	dexPresets,
-	type Tags,
-	type PokedexConfig,
-	type BoxOrder,
-	type PokemonEntry
-} from './pokedex.ts'
+	type PokemonEntry,
+	type BoxTags,
+	type DexConfig,
+	type BoxOrderConfig
+} from '../models/data-models.ts'
 
 interface PokedexBox {
 	id: string
@@ -65,8 +65,8 @@ function matchesTags(boxTags: string[], selectedTags: string[]) {
  * Constructs the box order from the provided boxOrder array.
  * Filters boxes by tags using matchesTags.
  */
-function getPokemonBoxOrderForConfig(dexConfig: PokedexConfig): BoxOrder[] {
-	const pokemonOrder: BoxOrder[] = []
+function getPokemonBoxOrderForConfig(dexConfig: DexConfig): BoxOrderConfig[] {
+	const pokemonOrder: BoxOrderConfig[] = []
 	for (const boxId of dexConfig.boxList) {
 		const foundBox = pokedexBoxes.find((b: PokedexBox) => b.id === boxId)
 
@@ -74,7 +74,7 @@ function getPokemonBoxOrderForConfig(dexConfig: PokedexConfig): BoxOrder[] {
 
 		// only include box when it matches the requested tags
 		if (!matchesTags(foundBox.tags, dexConfig.tags)) continue
-		const box: BoxOrder = {
+		const box: BoxOrderConfig = {
 			title: foundBox.title,
 			pokemon: foundBox.pokemon
 				.map((pokemonId) => findPokemon(pokemonId))
@@ -88,9 +88,9 @@ function getPokemonBoxOrderForConfig(dexConfig: PokedexConfig): BoxOrder[] {
 /**
  * Get the dex config for a given dex name
  */
-export function getDexConfig(selectedDexName: string, tags: Tags[]): PokedexConfig {
+export function getDexConfig(selectedDexName: string, tags: BoxTags[]): DexConfig {
 	console.log('tags', tags)
-	let selectedConfig: PokedexConfig = dexPresets.nationalDex
+	let selectedConfig: DexConfig = dexPresets.nationalDex
 	switch (selectedDexName) {
 		case 'national':
 		case 'national-dex':

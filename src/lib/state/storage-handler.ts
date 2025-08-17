@@ -2,56 +2,15 @@ import { initPokedex, initialAppDefaults } from '../init-dex-helper.ts'
 import { defaultAppSettings } from '../null-state-helper.ts'
 import { type RibbonsType } from '../models/ribbons-models.ts'
 import { type MarksType } from '../models/marks-models.ts'
-import { nationalDex, type PokedexConfig } from '../data/pokedex.ts'
+import { nationalDex } from '../data/pokedex.ts'
+import {
+	type DexState,
+	type PokemonEditState,
+	type BoxState,
+	type DexConfig
+} from '../models/data-models.ts'
 
 export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
-
-export interface BoxOrder {
-	title: string
-	pokemon: PokemonEntry[]
-	wallpaper: string
-}
-
-export interface PokemonEntry {
-	pokemonid: string
-	formid: string | null
-	id_national: number
-}
-
-export interface PokemonData {
-	captured: boolean
-	ball: string
-	shiny: boolean
-	caughtIn: string
-	ability: string
-	comment: string
-	ribbons: string[]
-	marks: string[]
-	isCustomized: boolean
-}
-
-export interface PokemonState extends PokemonData {
-	idEntry: PokemonEntry
-}
-
-export interface DexStorage {
-	version: string
-	name: string
-	displayName: string
-	coverImage: string
-	sortOrder: number
-	pokemon: Record<string, PokemonState>
-	boxes: BoxData[]
-}
-
-export interface BoxData {
-	id: string
-	title: string
-	settings: {
-		wallpaper: string
-	}
-	pokemon: string[]
-}
 
 type SidebarSection = 'catch' | 'ribbon' | 'mark' | 'stats'
 
@@ -81,7 +40,7 @@ class StorageHandler {
 	 * @param selectedDex The name of the Pokedex.
 	 * @param pokedexOrder The box order of the Pokedex.
 	 */
-	public initPokedex(dexConfig: PokedexConfig): void {
+	public initPokedex(dexConfig: DexConfig): void {
 		const initialDex = initPokedex(dexConfig)
 		this.savePokedex(dexConfig.name, initialDex)
 	}
@@ -91,7 +50,7 @@ class StorageHandler {
 	 * @param selectedDex The name of the Pokedex.
 	 * @param pokemonData The editing status to be saved.
 	 */
-	public savePokedex(selectedDex: string, pokemonData: DexStorage): void {
+	public savePokedex(selectedDex: string, pokemonData: DexState): void {
 		localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(pokemonData))
 	}
 
@@ -100,7 +59,7 @@ class StorageHandler {
 	 * @param selectedDex The name of the Pokedex.
 	 * @returns The Pokedex for the given name.
 	 */
-	public loadPokedex(selectedDex: string): DexStorage | undefined {
+	public loadPokedex(selectedDex: string): DexState | undefined {
 		const selectedPokedex = localStorage.getItem(`dex:${selectedDex}`)
 		if (selectedPokedex) {
 			try {
@@ -153,8 +112,8 @@ class StorageHandler {
 	 * Loads all Pokedexes stored in localStorage.
 	 * @returns An array of all stored DexStorage objects.
 	 */
-	public loadEveryPokedex(): DexStorage[] {
-		const allDexes: DexStorage[] = []
+	public loadEveryPokedex(): DexState[] {
+		const allDexes: DexState[] = []
 		for (const key in localStorage) {
 			if (key.startsWith('dex:')) {
 				const dexName = key.replace('dex:', '')
@@ -198,8 +157,8 @@ class StorageHandler {
 	 */
 	public editPokemonStateEntry(
 		identifier: string,
-		editedPokemon: PokemonState
-	): PokemonState | undefined {
+		editedPokemon: PokemonEditState
+	): PokemonEditState | undefined {
 		const selectedDexName = this.loadSelectedPokedexName()
 		const parsedDex = this.loadPokedex(selectedDexName)
 
@@ -213,7 +172,7 @@ class StorageHandler {
 			return undefined
 		}
 
-		const allowedProperties: (keyof PokemonData)[] = [
+		const allowedProperties: (keyof PokemonEditState)[] = [
 			'captured',
 			'ball',
 			'shiny',
@@ -227,9 +186,9 @@ class StorageHandler {
 
 		// Update only keys that are present in targetPokemon
 		const editedPokemonValidKeys = Object.entries(editedPokemon).filter(([key]) =>
-			allowedProperties.includes(key as keyof PokemonData)
+			allowedProperties.includes(key as keyof PokemonEditState)
 		)
-		const updatedPokemon: PokemonState = {
+		const updatedPokemon: PokemonEditState = {
 			...targetPokemon,
 			...Object.fromEntries(editedPokemonValidKeys)
 		}
@@ -259,7 +218,7 @@ class StorageHandler {
 	 * Saves custom application default settings to localStorage.
 	 * @param appDefaults The default Pokemon data settings to save.
 	 */
-	public saveAppDefaults(appDefaults: Partial<PokemonData>) {
+	public saveAppDefaults(appDefaults: Partial<PokemonEditState>) {
 		localStorage.setItem(`appDefaults`, JSON.stringify(appDefaults))
 	}
 
@@ -346,7 +305,7 @@ class StorageHandler {
 	 * @param boxId The unique identifier of the box to update.
 	 * @param newSettings The new settings to apply to the box.
 	 */
-	public updateBoxSettings(boxId: string, newSettings: BoxData['settings']): void {
+	public updateBoxSettings(boxId: string, newSettings: BoxState['settings']): void {
 		const selectedDexName = this.loadSelectedPokedexName()
 		const parsedDex = this.loadPokedex(selectedDexName)
 

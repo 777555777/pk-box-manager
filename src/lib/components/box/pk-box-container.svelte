@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { type DexStorage } from '$lib/state/storage-handler'
 	import PkBox from '$lib/components/box/pk-box.svelte'
+	import { type DexState } from '$lib/models/data-models'
 
-	let { dexStorage }: { dexStorage: DexStorage } = $props()
+	let { dexState }: { dexState: DexState } = $props()
+	$inspect('====', dexState)
 </script>
 
 <section class="pk-box-container">
-	{#each dexStorage.boxes as box (box.id)}
+	{#each dexState.boxes as box (box.id)}
 		<PkBox {box} />
 	{/each}
 </section>

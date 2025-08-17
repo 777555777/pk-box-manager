@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PokemonEntry } from '$lib/state/storage-handler'
+	import type { PokemonEntry } from '$lib/models/data-models'
 
 	let { idEntry, isSelectionValid }: { idEntry: PokemonEntry; isSelectionValid: boolean } = $props()
 

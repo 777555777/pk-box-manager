@@ -1,7 +1,12 @@
-import { type ServerBoxOrder } from '../routes/pkorder/+server.ts'
-import { type PokedexConfig } from './data/pokedex.ts'
+import {
+	type PokemonEditState,
+	type BoxState,
+	type DexState,
+	type PokemonEntry,
+	type BoxOrderConfig,
+	type DexConfig
+} from './models/data-models.ts'
 import { defaultWallpaper } from './null-state-helper.ts'
-import type { DexStorage, PokemonEntry, BoxData, PokemonState } from './state/storage-handler.ts'
 
 export const initialAppDefaults = {
 	ball: '01-poke-ball',
@@ -12,7 +17,7 @@ export const initialAppDefaults = {
 	marks: []
 }
 
-export function initPokedex(dexConfig: PokedexConfig): DexStorage {
+export function initPokedex(dexConfig: DexConfig): DexState {
 	const initialBoxes = setupInitialBoxes(dexConfig.pokemonOrder)
 	const initialPokemonList = setupInitialPokemonList(dexConfig.pokemonOrder)
 	const initialDex = addDexMetaData(initialBoxes, initialPokemonList, dexConfig)
@@ -21,14 +26,14 @@ export function initPokedex(dexConfig: PokedexConfig): DexStorage {
 	return initialDex
 }
 
-function setupInitialBoxes(pokedexOrder: ServerBoxOrder[]): BoxData[] {
-	const initialBoxes: BoxData[] = []
+function setupInitialBoxes(pokedexOrder: BoxOrderConfig[]): BoxState[] {
+	const initialBoxes: BoxState[] = []
 
 	// initialize boxes with default settings
 	let counter = 0
 	for (const box of pokedexOrder) {
 		counter++
-		const boxData: BoxData = {
+		const boxData: BoxState = {
 			id: `box-${counter.toString().padStart(3, '0')}`,
 			title: box.title,
 			settings: {
@@ -48,8 +53,8 @@ function setupInitialBoxes(pokedexOrder: ServerBoxOrder[]): BoxData[] {
 	return initialBoxes
 }
 
-function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string, PokemonState> {
-	const pokemonList: Record<string, PokemonState> = {}
+function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string, PokemonEditState> {
+	const pokemonList: Record<string, PokemonEditState> = {}
 
 	for (const box of pokedexOrder) {
 		for (const pokemon of box.pokemon) {
@@ -73,7 +78,7 @@ function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string,
 }
 
 // prettier-ignore
-function addDexMetaData(initialBoxes: BoxData[], pokemonList: Record<string, PokemonState>, dexConfig: PokedexConfig): DexStorage {
+function addDexMetaData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>, dexConfig: DexConfig): DexState {
 	return {
 		version: '1.0.0',
 		name: dexConfig.name,

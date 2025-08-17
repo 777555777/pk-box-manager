@@ -1,11 +1,4 @@
-/**
- * Describes order-XXX.json
- */
-export interface BoxOrder {
-	title: string
-	pokemon: PokemonEntry[]
-	wallpaper: string
-}
+// #region Core data model
 
 export interface PokemonEntry {
 	pokemonid: string
@@ -13,42 +6,74 @@ export interface PokemonEntry {
 	id_national: number
 }
 
-/**
- * Describes static-pokemon-data.json
- */
-// export interface StaticPokemonData {
-// 	pokemonid: string
-// 	formid: string | null
-// 	formname: string | null
-// 	gen: number
-// 	stats: PokemonStats
-// 	gender: string
-// 	id_national: number
-// 	types: [PokemonType] | [PokemonType, PokemonType]
-// 	originRegion: Region
-// }
-
-/**
- * Describes user-edited-data.json
- */
-export interface PokemonData {
-	pokemonid: string
-	formid: string | null
-	id_national: number
-	pokemonInfo: PokemonUserInfo
+// =================================
+// This is the state for each box/Pokemon
+export interface BoxState {
+	id: string
+	title: string
+	settings: {
+		wallpaper: string
+	}
+	pokemon: string[]
 }
 
-export interface PokemonUserInfo {
+export interface PokemonEditState {
+	idEntry: PokemonEntry
 	captured: boolean
 	ball: string
 	shiny: boolean
 	caughtIn: string
 	ability: string
 	comment: string
+	ribbons: string[]
+	marks: string[]
 	isCustomized: boolean
 }
 
+export interface DexState {
+	version: string
+	name: string
+	displayName: string
+	coverImage: string
+	sortOrder: number
+	pokemon: Record<string, PokemonEditState>
+	boxes: BoxState[]
+}
+
+// =================================
+// This is the order configuration for each box and metadata for the Dex
+export interface BoxOrderConfig {
+	title: string
+	pokemon: PokemonEntry[]
+}
+
+export interface DexConfig {
+	id: string
+	configVersion: string
+	type: 'preset' | 'custom'
+	name: string
+	displayName: string
+	coverImage: string
+	sortOrder: number
+	tags: BoxTags[]
+	boxList: string[]
+	pokemonOrder: BoxOrderConfig[]
+	createdAt: number
+	updatedAt: number
+}
+
+// =================================
+// This is the save format for the Dex, which includes both configuration and state
+export interface DexSave {
+	id: string
+	config: DexConfig
+	state: DexState
+}
+
+// #endregion
 // ===========================================================
+
+export type BoxTags = 'normal' | 'forms' | 'gigantamax'
 
 // type PokemonStats = [number, number, number, number, number, number]
 

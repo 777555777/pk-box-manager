@@ -1,25 +1,4 @@
-interface PokemonEntry {
-	pokemonid: string
-	formid: string | null
-	id_national: number
-}
-
-interface BoxOrder {
-	title: string
-	pokemon: PokemonEntry[]
-}
-
-export type Tags = 'normal' | 'forms' | 'gigantamax'
-
-export interface PokedexConfig {
-	name: string
-	displayName: string
-	tags: Tags[]
-	coverImage: string
-	sortOrder: number
-	boxList: string[]
-	pokemonOrder: BoxOrder[]
-}
+import { type DexConfig } from '../models/data-models.ts'
 
 const boxOrderNational = [
 	'kanto-1',
@@ -90,74 +69,102 @@ const boxOrderNational = [
 ]
 
 // Exported because it is the default Pokedex
-export const nationalDex: PokedexConfig = {
+export const nationalDex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'national',
 	displayName: 'National Dex',
-	tags: [],
 	coverImage: 'national-cover.png',
 	sortOrder: 0,
+	tags: [],
 	boxList: boxOrderNational,
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen1Dex: PokedexConfig = {
+const gen1Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-1',
 	displayName: 'Generation 1',
-	tags: [],
 	coverImage: 'gen1-cover.png',
 	sortOrder: 1,
+	tags: [],
 	boxList: boxOrderNational.slice(0, 8), // Kanto-1 to Cap-Pikachu
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen2Dex: PokedexConfig = {
+const gen2Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-2',
 	displayName: 'Generation 2',
-	tags: [],
 	coverImage: 'gen2-cover.png',
 	sortOrder: 2,
-	boxList: boxOrderNational.slice(9, 14), // 9, 14 is Johto-1 to Unown-Dex
-	pokemonOrder: []
+	tags: [],
+	boxList: boxOrderNational.slice(0, 14), // 9, 14 is Johto-1 to Unown-Dex
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen3Dex: PokedexConfig = {
+const gen3Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-3',
 	displayName: 'Generation 3',
-	tags: [],
 	coverImage: 'gen3-cover.png',
 	sortOrder: 3,
+	tags: [],
 	boxList: boxOrderNational.slice(0, 21), // 15, 21 is Hoenn-1 to Hoenn-Alternate
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen4Dex: PokedexConfig = {
+const gen4Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-4',
 	displayName: 'Generation 4',
-	tags: [],
 	coverImage: 'gen4-cover.png',
 	sortOrder: 4,
+	tags: [],
 	boxList: boxOrderNational.slice(0, 28), // 21, 28 is Sinnoh-1 to Sinnoh-Alternate
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen5Dex: PokedexConfig = {
+const gen5Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-5',
 	displayName: 'Generation 5',
-	tags: [],
 	coverImage: 'gen5-cover.png',
 	sortOrder: 5,
+	tags: [],
 	boxList: boxOrderNational.slice(0, 35), // 28, 35 is Unova-1 to Unova-Alternate
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
-const gen6Dex: PokedexConfig = {
+const gen6Dex: DexConfig = {
+	id: '',
+	type: 'preset',
 	name: 'generation-6',
 	displayName: 'Generation 6',
-	tags: [],
 	coverImage: 'gen6-cover.png',
 	sortOrder: 6,
+	tags: [],
 	boxList: boxOrderNational.slice(0, 41), // 36, 41 is Kalos-1 to Vivillon-Pattern
-	pokemonOrder: []
+	pokemonOrder: [],
+	createdAt: 0,
+	updatedAt: 0
 }
 
 export const dexPresets = {

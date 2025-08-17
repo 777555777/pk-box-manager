@@ -7,9 +7,9 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
 
-	let dexStorage = $derived(pkState.getCurrentPokedexState())
+	let dexState = $derived(pkState.getCurrentPokedexState())
 
-	const testconfig = getDexConfig('generation-2', ['normal', 'forms'])
+	const testconfig = getDexConfig('national', ['normal', 'forms', 'gigantamax'])
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
@@ -70,7 +70,7 @@
 	<button onclick={() => pkState.switchPokedexNew(testconfig)}>Test other dex</button>
 	<section class="pk-content">
 		<PkToolBox />
-		<PkBoxContainer {dexStorage} />
+		<PkBoxContainer {dexState} />
 	</section>
 	<PkSidebar />
 </main>

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
 	import PkDropdown from '$lib/components/ui/pk-dropdown.svelte'
-	import { type PokemonState } from '$lib/state/storage-handler'
-	import { Game, Generations, type GameType } from '$lib/models/data-models'
+	import { Game, Generations, type GameType, type PokemonEditState } from '$lib/models/data-models'
 
 	let {
 		selectedPokemon,
@@ -10,7 +9,7 @@
 		updateCaughtIn,
 		updateComment
 	}: {
-		selectedPokemon: PokemonState
+		selectedPokemon: PokemonEditState
 		disabled: boolean
 		isSelectionValid: boolean
 		updateCaughtIn: Function

@@ -1,8 +1,8 @@
-import { type DexStorage } from '../../state/storage-handler.ts'
+import { type DexState } from '../../state/storage-handler.ts'
 import { dexPresets } from '../../data/pokedex.ts'
 
-export function validateImportedDexState(importedFile: unknown): DexStorage {
-	let dexData: DexStorage
+export function validateImportedDexState(importedFile: unknown): DexState {
+	let dexData: DexState
 
 	// 1. Check if the input is a valid JSON object
 	if (typeof importedFile === 'string') {
@@ -13,7 +13,7 @@ export function validateImportedDexState(importedFile: unknown): DexStorage {
 			throw new Error('The imported file does not contain valid JSON.')
 		}
 	} else if (typeof importedFile === 'object' && importedFile !== null) {
-		dexData = importedFile as DexStorage // Assume the structure is correct from this point on
+		dexData = importedFile as DexState // Assume the structure is correct from this point on
 	} else {
 		throw new Error('The imported file has an invalid format.')
 	}

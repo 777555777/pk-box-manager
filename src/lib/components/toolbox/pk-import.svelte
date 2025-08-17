@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
 	import { validateImportedDexState } from '$lib/components/toolbox/pk-import-validation'
-	import { storageHandler, type DexStorage } from '$lib/state/storage-handler'
+	import { storageHandler, type DexState } from '$lib/state/storage-handler'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let fileInput: HTMLInputElement
-	let pendingImport: DexStorage | null = null
+	let pendingImport: DexState | null = null
 
 	let infoDialog: PkDialogElement
 	let errorDialog: PkDialogElement
