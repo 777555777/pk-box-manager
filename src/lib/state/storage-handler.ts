@@ -4,15 +4,28 @@ import { type RibbonsType } from '../models/ribbons-models.ts'
 import { type MarksType } from '../models/marks-models.ts'
 import { nationalDex } from '../data/pokedex.ts'
 import {
-	type DexState,
 	type PokemonEditState,
 	type BoxState,
-	type DexConfig
+	type DexConfig,
+	type DexSave
 } from '../models/data-models.ts'
+import { getAllPossibleTags } from '../data/pokedex-config-utils.ts'
 
 export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
 
 type SidebarSection = 'catch' | 'ribbon' | 'mark' | 'stats'
+
+export interface DexIndexEntry {
+	id: string
+	name: string
+	displayName: string
+	coverImage: string
+	updatedAt: number
+	createdAt: number
+	totalPokemon: number
+	totalCaughtPokemon: number
+	totalShinyPokemon: number
+}
 
 export interface AppSettings {
 	language: 'en' | 'de'
@@ -27,43 +40,117 @@ export interface AppSettings {
 	sidebarExpanded: SidebarSection[]
 }
 
-class StorageHandler {
+export interface DexStorageHandler {
+	// Basis
+	initPokedex(dexConfig: DexConfig): string
+	savePokedex(dexSave: DexSave): void
+	loadPokedex(dexId: string): DexSave | undefined
+	removePokedex(dexId: string): boolean
+
+	// Index-Verwaltung
+	loadPokedexIndex(): DexIndexEntry[]
+	// updateDexIndex(dexSave: DexSave): void
+	// removeFromDexIndex(dexId: string): void
+
+	// Auswahl / User-Session
+	saveSelectedPokedexId(dexId: string): void
+	loadSelectedPokedexId(): string | undefined
+	loadActivePokedex(): DexSave | undefined
+
+	// Import / Export
+	exportPokedex(dexId: string): string
+	importPokedex(raw: string): DexSave
+
+	// Utility / Checks
+	hasModifiedPokedex(dexId: string): boolean
+	// listAllDexIds(): string[]
+	// findDexByConfigId(configId: string, tags?: string[]): DexSave | undefined
+
+	// Optional (Quality-of-Life)
+	// cloneDex(dexId: string): DexSave
+	// resetDex(dexId: string): void
+	// migrateDexSaves(oldVersion: string, newVersion: string): void
+}
+
+// Compute default tags part once to avoid trailing '-' when there are no tags
+const DEFAULT_TAGS_PART = (() => {
+	const tags = getAllPossibleTags()
+	return tags && tags.length > 0 ? `-${tags.join('-')}` : ''
+})()
+
+class StorageHandler implements DexStorageHandler {
+	private readonly DEX_PREFIX = 'dex:'
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
-	private readonly DEFAULT_SELECTED_DEX = nationalDex.name
+	private readonly DEFAULT_SELECTED_DEX = `${nationalDex.type}-${nationalDex.id}${DEFAULT_TAGS_PART}`
 
 	// ================
 	// Pokedex
 	// ================
 
+	// >>> Basis Funktionen
+
 	/**
-	 * Initializes the editing status of a given Pokedex in localStorage.
-	 * @param selectedDex The name of the Pokedex.
-	 * @param pokedexOrder The box order of the Pokedex.
+	 * Initializes the editing status and config (DexSave) for a given Pokedex.
+	 * Returns the ID of the newly created Pokedex, so the dex can be retreived
+	 * from localstorage so that localstorage acts as a single source of truth
+	 * @param dexConfig The configuration for the Pokedex.
 	 */
-	public initPokedex(dexConfig: DexConfig): void {
-		const initialDex = initPokedex(dexConfig)
-		this.savePokedex(dexConfig.name, initialDex)
+	public initPokedex(dexConfig: DexConfig): string {
+		const initialDex: DexSave = initPokedex(dexConfig)
+		this.savePokedex(initialDex)
+		const dexSaveId = initialDex.id
+		return dexSaveId
+	}
+
+	// TODO CHECK WHY DEXES ARE NOT SAVED / LOADED PROPERLY
+	// EDIT STATE DOES NOT SEEM TO BE PERSISTED, COUNTERS ALSO DONT UPDATE
+
+	/**
+	 * Persists the given Pokedex to localStorage and updates/adds its metadata.
+	 * Timestamps are set for createdAt and updatedAt.
+	 * @param DexSave The Pokedex to save.
+	 */
+	public savePokedex(dexSave: DexSave): void {
+		// Timestamps ins Meta
+		const now = Date.now()
+
+		if (dexSave.meta.createdAt === 0) {
+			dexSave.meta.createdAt = now
+		}
+
+		dexSave.meta.updatedAt = now
+
+		// Counter berechnen (effizienter: nur ein Loop)
+		let total = 0
+		let caught = 0
+		let shiny = 0
+
+		for (const pokemon of Object.values(dexSave.state.pokemon)) {
+			total++
+			if (pokemon.captured) {
+				caught++
+				if (pokemon.shiny) shiny++
+			}
+		}
+
+		dexSave.meta.totalPokemon = total
+		dexSave.meta.totalCaught = caught
+		dexSave.meta.totalShiny = shiny
+
+		// Final speichern
+		localStorage.setItem(`${this.DEX_PREFIX}${dexSave.id}`, JSON.stringify(dexSave))
 	}
 
 	/**
-	 * Saves the given Pokedex to localStorage.
-	 * @param selectedDex The name of the Pokedex.
-	 * @param pokemonData The editing status to be saved.
+	 * Retrieves the Pokedex Object of the given Pokedex from localStorage.
+	 * @param targetDexId The ID of the Pokedex to retrieve.
+	 * @returns The Pokedex Object or undefined if not found.
 	 */
-	public savePokedex(selectedDex: string, pokemonData: DexState): void {
-		localStorage.setItem(`dex:${selectedDex}`, JSON.stringify(pokemonData))
-	}
-
-	/**
-	 * Retrieves the current state of the Pokedex from localStorage.
-	 * @param selectedDex The name of the Pokedex.
-	 * @returns The Pokedex for the given name.
-	 */
-	public loadPokedex(selectedDex: string): DexState | undefined {
-		const selectedPokedex = localStorage.getItem(`dex:${selectedDex}`)
-		if (selectedPokedex) {
+	public loadPokedex(targetDexId: string): DexSave | undefined {
+		const targetPokedex = localStorage.getItem(`${this.DEX_PREFIX}${targetDexId}`)
+		if (targetPokedex) {
 			try {
-				const parsedPokedex = JSON.parse(selectedPokedex)
+				const parsedPokedex = JSON.parse(targetPokedex)
 				return parsedPokedex
 			} catch (error) {
 				console.error('Error parsing the Pokedex:', error)
@@ -73,50 +160,95 @@ class StorageHandler {
 	}
 
 	/**
-	 * Removes a Pokedex from localStorage.
-	 * @param dexName The name of the Pokedex to remove.
+	 * Removes a Pokedex Object entry for a given Pokedex ID from localStorage.
+	 * @param targetDexId The ID of the Pokedex to remove.
 	 * @returns true if the Pokedex was removed, false if it didn't exist.
 	 */
-	public removePokedex(dexName: string): boolean {
-		const key = `dex:${dexName}`
+	public removePokedex(targetDexId: string): boolean {
+		const key = `${this.DEX_PREFIX}${targetDexId}`
 		if (localStorage.getItem(key) !== null) {
 			localStorage.removeItem(key)
-			console.log(`Pokedex ${dexName} removed from storage`)
+			console.log(`Pokedex ${targetDexId} removed from storage`)
 			return true
 		}
 		return false
 	}
 
+	// >>> Index-Verwaltung
+
+	public loadPokedexIndex(): DexIndexEntry[] {
+		const items = { ...localStorage }
+		const entries = Object.entries(items)
+		const dexIndexList: DexIndexEntry[] = []
+
+		for (const entry of entries) {
+			const [key, value] = entry
+			if (key.startsWith(`${this.DEX_PREFIX}`)) {
+				try {
+					const parsedValue: DexSave = JSON.parse(value)
+					const validEntry: DexIndexEntry = {
+						id: parsedValue.id,
+						name: parsedValue.config.name,
+						displayName: parsedValue.config.displayName,
+						coverImage: parsedValue.config.coverImage,
+						updatedAt: parsedValue.config.updatedAt,
+						createdAt: parsedValue.config.createdAt,
+						totalPokemon: parsedValue.meta.totalPokemon,
+						totalCaughtPokemon: parsedValue.meta.totalCaught,
+						totalShinyPokemon: parsedValue.meta.totalShiny
+					}
+					dexIndexList.push(validEntry)
+				} catch (error) {
+					console.error('Failed to parse dex entry for key', key, error)
+				}
+			}
+		}
+		console.log('dexIndexList', dexIndexList)
+		return dexIndexList
+	}
+
+	// TODO: Diese beiden Methoden müssen implementiert werden wenn loadDexIndex eine zu schlechte Performance zeigt!
+	// Braucht man eventuell nicht ?!
+	// updateDexIndex(dexSave: DexSave): void
+
+	// Braucht man eventuell nicht ?!
+	// removeFromDexIndex(dexId: string): void
+
+	// >>> Auswahl / User-Session
+
 	/**
-	 * Saves the currently selected Pokedex name to localStorage.
-	 * @param selectedDexName The name of the newly selected Pokedex.
+	 * Saves the currently selected Pokedex ID to localStorage.
+	 * @param selectedDexId The ID of the newly selected Pokedex.
 	 */
-	public saveSelectedPokedexName(selectedDexName: string): void {
-		localStorage.setItem(this.SELECTED_DEX_KEY, selectedDexName)
+	public saveSelectedPokedexId(selectedDexId: string): void {
+		console.log('dexId', selectedDexId)
+		localStorage.setItem(this.SELECTED_DEX_KEY, selectedDexId)
 	}
 
 	/**
-	 * Retrieves the user-selected Pokedex name from localStorage or returns the default if none is stored.
-	 * @returns The name of the stored or default Pokedex.
+	 * Retrieves the currently selected Pokedex ID from localStorage or returns the default if none is stored.
+	 * @returns The ID of the stored or default Pokedex.
 	 */
-	public loadSelectedPokedexName(): string {
-		const selectedPokedex = localStorage.getItem(this.SELECTED_DEX_KEY) || this.DEFAULT_SELECTED_DEX
+	public loadSelectedPokedexId(): string {
+		const selectedPokedexId =
+			localStorage.getItem(this.SELECTED_DEX_KEY) || this.DEFAULT_SELECTED_DEX
+
 		// If nothing was selected, return the default and persist it as selected in storage
-		if (selectedPokedex === this.DEFAULT_SELECTED_DEX) {
-			this.saveSelectedPokedexName(this.DEFAULT_SELECTED_DEX)
+		if (selectedPokedexId === this.DEFAULT_SELECTED_DEX) {
+			this.saveSelectedPokedexId(this.DEFAULT_SELECTED_DEX)
 		}
-		return selectedPokedex
+		return selectedPokedexId
 	}
 
 	/**
 	 * Loads all Pokedexes stored in localStorage.
 	 * @returns An array of all stored DexStorage objects.
 	 */
-	public loadEveryPokedex(): DexState[] {
-		const allDexes: DexState[] = []
+	public loadEveryPokedex(): DexSave[] {
+		const allDexes: DexSave[] = []
 		for (const key in localStorage) {
-			if (key.startsWith('dex:')) {
-				const dexName = key.replace('dex:', '')
+			if (key.startsWith(`${this.DEX_PREFIX}`)) {
+				const dexName = key.replace(`${this.DEX_PREFIX}`, '')
 				const dexData = this.loadPokedex(dexName)
 				if (dexData) {
 					allDexes.push(dexData)
@@ -124,6 +256,15 @@ class StorageHandler {
 			}
 		}
 		return allDexes
+	}
+
+	/**
+	 * Loads the currently selected Pokedex based on the selected Pokedex ID that is stored in localStorage.
+	 * @returns The currently selected DexSave object or undefined if not found.
+	 */
+	public loadActivePokedex(): DexSave | undefined {
+		const selectedDexId = this.loadSelectedPokedexId()
+		return this.loadPokedex(selectedDexId)
 	}
 
 	/**
@@ -138,12 +279,49 @@ class StorageHandler {
 		}
 
 		// Check if any Pokemon has been customized
-		const hasCustomizedPokemon = Object.values(currentDex.pokemon).some(
+		const hasCustomizedPokemon = Object.values(currentDex.state.pokemon).some(
 			(pokemon) => pokemon.isCustomized || pokemon.captured
 		)
 
 		return hasCustomizedPokemon
 	}
+
+	// >>> Import / Export
+
+	/**
+	 * Returns the Pokedex Object (DexSave) for the given ID as a JSON string.
+	 * @param dexId The ID of the Pokedex to export.
+	 * @returns The JSON string representation of the Pokedex data.
+	 */
+	public exportPokedex(dexId: string): string {
+		const dexData = this.loadPokedex(dexId)
+		if (!dexData) {
+			console.error('No Pokedex found for ID:', dexId)
+			return ''
+		}
+		return JSON.stringify(dexData)
+	}
+
+	/**
+	 * Persists a user imported Pokedex to localStorage.
+	 * @param raw The JSON string representation of the Pokedex data.
+	 * @returns The imported DexSave object.
+	 */
+	public importPokedex(raw: string): DexSave {
+		try {
+			// TODO: Wip, validate the imported Dex before accepting it
+			// maybe do this in the component and then pass a validated
+			// DexSave Object here instead of a string
+			const dexData: DexSave = JSON.parse(raw)
+			this.savePokedex(dexData)
+			return dexData
+		} catch (error) {
+			console.error('Failed to import Dex:', error)
+			return {} as DexSave
+		}
+	}
+
+	// >>> Utility / Checks
 
 	// ================
 	// Pokemon State
@@ -159,14 +337,14 @@ class StorageHandler {
 		identifier: string,
 		editedPokemon: PokemonEditState
 	): PokemonEditState | undefined {
-		const selectedDexName = this.loadSelectedPokedexName()
+		const selectedDexName = this.loadSelectedPokedexId()
 		const parsedDex = this.loadPokedex(selectedDexName)
 
-		if (!parsedDex || !parsedDex.pokemon) {
+		if (!parsedDex || !parsedDex.state.pokemon) {
 			return undefined
 		}
 
-		const targetPokemon = parsedDex.pokemon[identifier]
+		const targetPokemon = parsedDex.state.pokemon[identifier]
 		if (!targetPokemon) {
 			console.error('Could not update given Pokemon', identifier)
 			return undefined
@@ -194,10 +372,11 @@ class StorageHandler {
 		}
 
 		// Update pokemon in memory
-		parsedDex.pokemon[identifier] = updatedPokemon
+		parsedDex.state.pokemon[identifier] = updatedPokemon
 
 		// Persist edited Pokedex to localstorage
-		localStorage.setItem(`dex:${selectedDexName}`, JSON.stringify(parsedDex))
+		this.savePokedex(parsedDex)
+		// localStorage.setItem(`${this.DEX_PREFIX}${selectedDexName}`, JSON.stringify(parsedDex))
 
 		// Return updated Pokemon so it can be used in the application as state
 		return updatedPokemon
@@ -306,23 +485,26 @@ class StorageHandler {
 	 * @param newSettings The new settings to apply to the box.
 	 */
 	public updateBoxSettings(boxId: string, newSettings: BoxState['settings']): void {
-		const selectedDexName = this.loadSelectedPokedexName()
-		const parsedDex = this.loadPokedex(selectedDexName)
+		const selectedDexId = this.loadSelectedPokedexId()
+		const parsedDex = this.loadPokedex(selectedDexId)
 
-		if (!parsedDex || !parsedDex.boxes) {
+		if (!parsedDex || !parsedDex.state.boxes) {
 			throw new Error('Could not find Pokedex data to update box settings.')
 		}
 
-		const boxIndex = parsedDex.boxes.findIndex((box) => box.id === boxId)
+		const boxIndex = parsedDex.state.boxes.findIndex((box) => box.id === boxId)
 		if (boxIndex === -1) {
 			throw new Error(`Box with ID "${boxId}" not found.`)
 		}
 
 		// Update the box settings
-		parsedDex.boxes[boxIndex].settings = { ...parsedDex.boxes[boxIndex].settings, ...newSettings }
+		parsedDex.state.boxes[boxIndex].settings = {
+			...parsedDex.state.boxes[boxIndex].settings,
+			...newSettings
+		}
 
 		// Persist the updated Pokedex to localStorage
-		this.savePokedex(selectedDexName, parsedDex)
+		this.savePokedex(parsedDex)
 	}
 }
 

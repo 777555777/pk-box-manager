@@ -42,7 +42,7 @@
 
 	function openPokedexDialog() {
 		pkState.loadAllPokedexes()
-		pokedexDialog.showPokedexDialog()
+		// pokedexDialog.showPokedexDialog()
 	}
 
 	function openAppSettingsDialog() {
@@ -122,7 +122,7 @@
 
 	<PkAppSettings bind:this={appSettingsDialog} />
 	<PkDefaults bind:this={defaultsDialog} />
-	<PkPokedex bind:this={pokedexDialog} />
+	<!-- <PkPokedex bind:this={pokedexDialog} /> -->
 </aside>
 
 <style>

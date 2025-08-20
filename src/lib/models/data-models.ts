@@ -14,7 +14,7 @@ export interface BoxState {
 	settings: {
 		wallpaper: string
 	}
-	pokemon: string[]
+	pokemon: string[] // This lists the order of Pokemon in the box
 }
 
 export interface PokemonEditState {
@@ -56,10 +56,20 @@ export interface DexConfig {
 	coverImage: string
 	sortOrder: number
 	tags: BoxTags[]
-	boxList: string[]
-	pokemonOrder: BoxOrderConfig[]
+	boxList: string[] // This lists the order of the boxes
+	pokemonOrder: BoxOrderConfig[] // This lists the order of Pokemon in boxes
 	createdAt: number
 	updatedAt: number
+}
+
+// =================================
+
+export interface DexMeta {
+	createdAt: number
+	updatedAt: number
+	totalPokemon: number
+	totalCaught: number
+	totalShiny: number
 }
 
 // =================================
@@ -68,6 +78,7 @@ export interface DexSave {
 	id: string
 	config: DexConfig
 	state: DexState
+	meta: DexMeta
 }
 
 // #endregion

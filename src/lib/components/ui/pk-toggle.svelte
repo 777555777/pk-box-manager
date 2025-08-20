@@ -49,6 +49,7 @@
 		justify-content: center;
 		padding: 0;
 		cursor: pointer;
+		z-index: 1;
 	}
 
 	label div.pk-toggle-state {
@@ -59,7 +60,8 @@
 		padding: 0;
 		height: 44px;
 		min-width: 44px;
-		max-width: fit-content;
+		width: 100%;
+		/* max-width: fit-content; */
 	}
 
 	label div.pk-icon-and-text {

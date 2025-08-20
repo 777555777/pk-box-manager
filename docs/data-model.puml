@@ -1,18 +1,31 @@
 @startuml
-class StorageMeta {
-  +activeDexId: string
-  +dexIds: string[]
+class LocalStorage {
+  +selectedDex: string
+  // "dex:dexSave.id" Entry for each dex
 }
 
 class DexSave {
   +id: string
   +config: DexConfig        // linke Seite: Struktur/Preset
   +state: DexState          // rechte Seite: Fortschritt
+  +meta: DexMeta            // mitte: Metadaten 
 }
+
+' ---- Mitte: Metadaten ----
+
+class DexMeta {
+  +createdAt: number
+	+updatedAt: number
+	+totalPokemon: number
+	+totalCaught: number
+	+totalShiny: number
+}
+
 
 ' ---- Linke Seite: Struktur des Pokedex ----
 class DexConfig {
   +id: string
+  +configVersion: string
   +type: "preset" | "custom"
   +basePreset: string?
   +name: string
@@ -42,7 +55,7 @@ class DexState {
   +coverImage: string
   +sortOrder: number
   +pokemon: Map<string, PokemonEditState>
-  +boxes: Box[]
+  +boxes: BoxState[]
 }
 
 class PokemonEditState {
@@ -70,8 +83,9 @@ class BoxSettings {
 }
 
 ' ---- Beziehungen ----
-StorageMeta "1" o-- "*" DexSave : references
+LocalStorage "1" o-- "*" DexSave : references
 DexSave "1" o-- "1" DexConfig
+DexSave "1" o-- "1" DexMeta
 DexSave "1" o-- "1" DexState
 DexConfig "1" o-- "*" BoxOrderConfig
 BoxOrderConfig "1" o-- "*" PokemonEntry

@@ -2,15 +2,15 @@
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
-	import { getDexConfig } from '$lib/data/pokedex-config-utils'
+	import PkDexList from '$lib/components/ui/pk-dex-list.svelte'
+	import PkDexSelector from '$lib/components/ui/pk-dex-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
 
 	let dexState = $derived(pkState.getCurrentPokedexState())
 
-	const testconfig = getDexConfig('national', ['normal', 'forms', 'gigantamax'])
-
+	$inspect('=!=!=!=', pkState.getPokedexIndexList())
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
 		// TODO: find a better place to load the app defaults
@@ -67,11 +67,13 @@
 </script>
 
 <main>
-	<button onclick={() => pkState.switchPokedexNew(testconfig)}>Test other dex</button>
 	<section class="pk-content">
 		<PkToolBox />
+		<PkDexSelector />
 		<PkBoxContainer {dexState} />
+		<PkDexList />
 	</section>
+
 	<PkSidebar />
 </main>
 

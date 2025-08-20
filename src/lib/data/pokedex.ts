@@ -68,15 +68,32 @@ const boxOrderNational = [
 	'paldea-forms'
 ]
 
+//  Beispiel custom:
+// const customDex: DexConfig = {
+//   id: crypto.randomUUID(),   // stabil, unabhängig vom Namen
+//   configVersion: "1.0.0",
+//   type: "custom",
+//   name: "my-shiny-hoenn",
+//   displayName: "My Shiny Hoenn Dex",
+//   coverImage: "custom-cover.png",
+//   sortOrder: 99,
+//   tags: ["shiny"],
+//   boxList: [],
+//   pokemonOrder: [],
+//   createdAt: Date.now(),
+//   updatedAt: Date.now()
+// }
+
 // Exported because it is the default Pokedex
 export const nationalDex: DexConfig = {
-	id: '',
+	id: 'national',
+	configVersion: '',
 	type: 'preset',
 	name: 'national',
 	displayName: 'National Dex',
 	coverImage: 'national-cover.png',
 	sortOrder: 0,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational,
 	pokemonOrder: [],
 	createdAt: 0,
@@ -84,13 +101,14 @@ export const nationalDex: DexConfig = {
 }
 
 const gen1Dex: DexConfig = {
-	id: '',
+	id: 'generation-1',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-1',
 	displayName: 'Generation 1',
 	coverImage: 'gen1-cover.png',
 	sortOrder: 1,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 8), // Kanto-1 to Cap-Pikachu
 	pokemonOrder: [],
 	createdAt: 0,
@@ -98,13 +116,14 @@ const gen1Dex: DexConfig = {
 }
 
 const gen2Dex: DexConfig = {
-	id: '',
+	id: 'generation-2',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-2',
 	displayName: 'Generation 2',
 	coverImage: 'gen2-cover.png',
 	sortOrder: 2,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 14), // 9, 14 is Johto-1 to Unown-Dex
 	pokemonOrder: [],
 	createdAt: 0,
@@ -112,13 +131,14 @@ const gen2Dex: DexConfig = {
 }
 
 const gen3Dex: DexConfig = {
-	id: '',
+	id: 'generation-3',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-3',
 	displayName: 'Generation 3',
 	coverImage: 'gen3-cover.png',
 	sortOrder: 3,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 21), // 15, 21 is Hoenn-1 to Hoenn-Alternate
 	pokemonOrder: [],
 	createdAt: 0,
@@ -126,13 +146,14 @@ const gen3Dex: DexConfig = {
 }
 
 const gen4Dex: DexConfig = {
-	id: '',
+	id: 'generation-4',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-4',
 	displayName: 'Generation 4',
 	coverImage: 'gen4-cover.png',
 	sortOrder: 4,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 28), // 21, 28 is Sinnoh-1 to Sinnoh-Alternate
 	pokemonOrder: [],
 	createdAt: 0,
@@ -140,13 +161,14 @@ const gen4Dex: DexConfig = {
 }
 
 const gen5Dex: DexConfig = {
-	id: '',
+	id: 'generation-5',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-5',
 	displayName: 'Generation 5',
 	coverImage: 'gen5-cover.png',
 	sortOrder: 5,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 35), // 28, 35 is Unova-1 to Unova-Alternate
 	pokemonOrder: [],
 	createdAt: 0,
@@ -154,13 +176,14 @@ const gen5Dex: DexConfig = {
 }
 
 const gen6Dex: DexConfig = {
-	id: '',
+	id: 'generation-6',
+	configVersion: '',
 	type: 'preset',
 	name: 'generation-6',
 	displayName: 'Generation 6',
 	coverImage: 'gen6-cover.png',
 	sortOrder: 6,
-	tags: [],
+	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 41), // 36, 41 is Kalos-1 to Vivillon-Pattern
 	pokemonOrder: [],
 	createdAt: 0,

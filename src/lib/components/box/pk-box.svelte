@@ -10,7 +10,7 @@
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
 		console.log('Updating wallpaper to:', newWallpaper)
-		pkState.updateBoxWallpaper(box.id, newWallpaper)
+		pkState.updateBoxSettings(box.id, { wallpaper: newWallpaper })
 	}
 
 	function getWallpaperSpriteData(wallpaperName: WallpapersType) {

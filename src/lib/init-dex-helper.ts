@@ -4,7 +4,9 @@ import {
 	type DexState,
 	type PokemonEntry,
 	type BoxOrderConfig,
-	type DexConfig
+	type DexConfig,
+	type DexSave,
+	type DexMeta
 } from './models/data-models.ts'
 import { defaultWallpaper } from './null-state-helper.ts'
 
@@ -17,13 +19,30 @@ export const initialAppDefaults = {
 	marks: []
 }
 
-export function initPokedex(dexConfig: DexConfig): DexState {
+const initialMetaData: DexMeta = {
+	createdAt: 0,
+	updatedAt: 0,
+	totalPokemon: 0,
+	totalCaught: 0,
+	totalShiny: 0
+}
+
+export function initPokedex(dexConfig: DexConfig): DexSave {
+	// Build the state side of pokedex
 	const initialBoxes = setupInitialBoxes(dexConfig.pokemonOrder)
 	const initialPokemonList = setupInitialPokemonList(dexConfig.pokemonOrder)
-	const initialDex = addDexMetaData(initialBoxes, initialPokemonList, dexConfig)
+	const initialState = addConfigData(initialBoxes, initialPokemonList, dexConfig)
 
-	// Return Object with all properties
-	return initialDex
+	// Create the final DexSave object
+	const dexSaveId = `${dexConfig.type}-${dexConfig.id}-${dexConfig.tags.join('-')}`
+	const dexSave = {
+		id: dexSaveId,
+		config: dexConfig,
+		state: initialState,
+		meta: initialMetaData
+	}
+
+	return dexSave
 }
 
 function setupInitialBoxes(pokedexOrder: BoxOrderConfig[]): BoxState[] {
@@ -78,7 +97,7 @@ function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string,
 }
 
 // prettier-ignore
-function addDexMetaData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>, dexConfig: DexConfig): DexState {
+function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>, dexConfig: DexConfig): DexState {
 	return {
 		version: '1.0.0',
 		name: dexConfig.name,

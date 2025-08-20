@@ -88,7 +88,7 @@
 		appState.toggleMobileSidebar()
 	}
 
-	$inspect('Update from Sidebar:', selectedPokemon)
+	// $inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
 <button class="pk-mobile-sidebar-toggle" onclick={toggleMobileSidebar}>
