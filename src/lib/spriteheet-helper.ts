@@ -1,20 +1,23 @@
 import { type PokemonEntry } from './models/data-models.ts'
 import { Pokemon } from './models/pokemon-models.ts'
 import { Forms } from './models/forms-models.ts'
+import pkStats from './data/pk-stats.json' with { type: 'json' }
 
 interface SpriteData {
 	sheet: string
 	pos: Coordinates
 }
 
+type PkStatsIdentifier = keyof typeof pkStats
+
 type Coordinates = { x: number; y: number }
 
 export const combinedPokemon: Record<string, SpriteData> = { ...Pokemon, ...Forms }
 
 // TODO: This function is a duplicate. the same function is in storage-handler.ts
-export function getIdentifier(entry: PokemonEntry) {
+export function getIdentifier(entry: PokemonEntry): PkStatsIdentifier {
 	const paddedId = entry.id_national.toString().padStart(4, '0')
-	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
+	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}` as PkStatsIdentifier
 }
 
 export function getPokemonSpriteData(identifier: string): SpriteData {

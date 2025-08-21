@@ -4,7 +4,7 @@
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import pkStats from '$lib/data/pk-stats.json' with { type: 'json' }
 
-	let { identifier } = $props() as { identifier: keyof typeof pkStats }
+	let { identifier }: { identifier: keyof typeof pkStats } = $props()
 
 	const statLabels = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
 </script>
