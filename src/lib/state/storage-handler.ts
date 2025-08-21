@@ -136,6 +136,7 @@ class StorageHandler implements DexStorageHandler {
 
 		// Final speichern
 		localStorage.setItem(`${this.DEX_PREFIX}${dexSave.id}`, JSON.stringify(dexSave))
+		console.log(`Saved ${dexSave.id} to localStorage`)
 	}
 
 	/**
@@ -200,7 +201,6 @@ class StorageHandler implements DexStorageHandler {
 				}
 			}
 		}
-		console.log('dexIndexList', dexIndexList)
 		return dexIndexList
 	}
 
@@ -218,7 +218,6 @@ class StorageHandler implements DexStorageHandler {
 	 * @param selectedDexId The ID of the newly selected Pokedex.
 	 */
 	public saveSelectedPokedexId(selectedDexId: string): void {
-		console.log('dexId', selectedDexId)
 		localStorage.setItem(this.SELECTED_DEX_KEY, selectedDexId)
 	}
 

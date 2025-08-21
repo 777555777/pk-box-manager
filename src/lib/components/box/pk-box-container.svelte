@@ -3,7 +3,6 @@
 	import { type DexState } from '$lib/models/data-models'
 
 	let { dexState }: { dexState: DexState } = $props()
-	$inspect('pk-box-container:', dexState)
 </script>
 
 <section class="pk-box-container">

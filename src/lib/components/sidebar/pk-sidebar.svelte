@@ -58,7 +58,6 @@
 	// === Game Dropdown ===
 	function updateCaughtIn(selectedOption: DropdownOption) {
 		const [caughtIn, value] = selectedOption
-		console.log('Caught in updated:', selectedOption)
 		pkState.updatePokemon(identifier, {
 			caughtIn: caughtIn
 		})
@@ -88,7 +87,7 @@
 		appState.toggleMobileSidebar()
 	}
 
-	// $inspect('Update from Sidebar:', selectedPokemon)
+	$inspect('Update from Sidebar:', selectedPokemon)
 </script>
 
 <button class="pk-mobile-sidebar-toggle" onclick={toggleMobileSidebar}>

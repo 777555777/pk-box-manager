@@ -9,7 +9,6 @@
 	let { box }: { box: BoxState } = $props()
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
-		console.log('Updating wallpaper to:', newWallpaper)
 		pkState.updateBoxSettings(box.id, { wallpaper: newWallpaper })
 	}
 

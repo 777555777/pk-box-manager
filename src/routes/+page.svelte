@@ -10,7 +10,6 @@
 
 	let dexState = $derived(pkState.getCurrentPokedexState())
 
-	$inspect('=!=!=!=', pkState.getPokedexIndexList())
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
 		// TODO: find a better place to load the app defaults

@@ -11,7 +11,6 @@
 	let allTags = getAllPossibleTags()
 	let optionalTags = $state(allTags.filter((tag) => tag !== 'normal'))
 	let selectedPreset: DexConfig = $state(dexPresets.nationalDex)
-	$inspect(selectedPreset)
 
 	// Create reactive boolean state for optional tags only
 	let tagStates = $state<Record<string, boolean>>({})
@@ -23,8 +22,6 @@
 		return ['normal' as BoxTags, ...selectedOptionalTags]
 	})
 
-	$inspect(activeTags)
-
 	// Initialize optional tag states to false
 	for (const tag of optionalTags) {
 		tagStates[tag] = false
@@ -34,7 +31,6 @@
 		// Convert boolean states back to tags array
 		selectedPreset.tags = activeTags as BoxTags[]
 		const initPreset = getDexConfig(selectedPreset.id, selectedPreset.tags)
-		console.log('00000000000000000', initPreset)
 		// create and switch with selected tags:
 		pkState.switchPokedex(initPreset)
 	}

@@ -89,7 +89,6 @@ function getPokemonBoxOrderForConfig(dexConfig: DexConfig): BoxOrderConfig[] {
  * Get the dex config for a given dex name
  */
 export function getDexConfig(dexPresetId: string, tags: BoxTags[]): DexConfig {
-	console.log('tags', tags)
 	let selectedConfig: DexConfig = dexPresets.nationalDex
 	switch (dexPresetId) {
 		case 'national':
@@ -117,14 +116,12 @@ export function getDexConfig(dexPresetId: string, tags: BoxTags[]): DexConfig {
 			// Default fallback to national dex
 			selectedConfig = dexPresets.nationalDex
 	}
-	console.log('before-selectedConfig', selectedConfig)
 
 	// Set specified tags
 	selectedConfig.tags = tags
 
 	const dexPokemonBoxOrder = getPokemonBoxOrderForConfig(selectedConfig)
 	selectedConfig.pokemonOrder = dexPokemonBoxOrder
-	console.log('final-selectedConfig', selectedConfig) // geloggter wert ist korrekt
 
 	return selectedConfig
 }

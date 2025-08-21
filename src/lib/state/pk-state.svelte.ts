@@ -209,8 +209,6 @@ export class PkState implements PkStateHandler {
 	// }
 
 	getCurrentPokedexState(): DexState {
-		console.log('this.pokedexState', this.pokedexState)
-
 		return this.pokedexState || pokedexNullState
 	}
 

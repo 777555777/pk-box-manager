@@ -27,7 +27,6 @@
 	function updateCaughtIn(selectedOption: any) {
 		if (selectedOption) {
 			const [key, value] = selectedOption
-			console.log([key, Game[key as GameType]])
 			appState.updateAppDefaults({ caughtIn: key })
 		} else {
 			// Deselect case - set to default or null

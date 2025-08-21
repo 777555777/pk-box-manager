@@ -3,7 +3,7 @@
 	import type { DexIndexEntry } from '$lib/state/storage-handler'
 
 	let pokedexIndexList = $derived(pkState.getPokedexIndexList())
-	$inspect('>>>>>>>>', pokedexIndexList)
+
 	function loadSelectedDex(selectedDex: DexIndexEntry) {
 		const targetDexSave = pkState.loadPokedex(selectedDex.id)
 		pkState.switchPokedex(targetDexSave.config)
