@@ -3,17 +3,17 @@
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
 
-	let { dexTitle, dexName, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
+	let { dexTitle, dexId, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
 
 	// Deletion state
 	let isDeleting = $state(false)
-	let isAvailableInClient = $derived.by(() => counter.limit !== 0)
+	let isAvailableInClient = $derived.by(() => counter.totalPokemon !== 0)
 	let cardElement: HTMLElement | undefined
 
 	// Handle dex selection
 	function handleDexSelect() {
 		if (onSelect) {
-			onSelect(dexName)
+			onSelect(dexId)
 		}
 	}
 
@@ -25,7 +25,7 @@
 	// Handle dex reset
 	function confirmDelete() {
 		if (onDelete) {
-			onDelete(isSelected, dexName)
+			onDelete(isSelected, dexId)
 		}
 		isDeleting = false
 	}
@@ -74,8 +74,8 @@
 	</section>
 
 	<PkProgressBar
-		max={counter.limit}
-		value={counter.count}
+		max={counter.totalPokemon}
+		value={counter.totalCaughtPokemon}
 		--value-color={isSelected ? '#61ff61' : '#82829a'}
 		--value-secondary-color={isSelected ? '#18c720' : '#75758a'}
 	/>
@@ -108,7 +108,7 @@
 			>{!isAvailableInClient ? 'Load Dex' : 'Select Dex'}</button
 		>
 		<!-- Export Button -->
-		<PkExport {dexName} hideLabel={true} disabled={!isAvailableInClient} />
+		<PkExport {dexId} hideLabel={true} disabled={!isAvailableInClient} />
 	</section>
 </article>
 
@@ -122,16 +122,16 @@
 {/snippet}
 
 {#snippet cardImageStatOverlay()}
-	{#if counter.limit !== 0}
+	{#if counter.totalPokemon !== 0}
 		<div class="pk-dex-card-overlay">
 			<div class="pk-dex-card-stats text-small">
 				<div class="stat-item">
 					<PkIcon color="#fff" name={'tag'} size={16} />
-					<span>{counter.count}/{counter.limit}</span>
+					<span>{counter.totalCaughtPokemon}/{counter.totalPokemon}</span>
 				</div>
 				<div class="stat-item">
 					<PkIcon color="#fff" name={'sparkles-solid'} size={16} />
-					<span>{counter.shinyCount}/{counter.limit}</span>
+					<span>{counter.totalShinyPokemon}/{counter.totalPokemon}</span>
 				</div>
 			</div>
 		</div>

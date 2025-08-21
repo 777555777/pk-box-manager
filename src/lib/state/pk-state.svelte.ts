@@ -196,6 +196,18 @@ export class PkState implements PkStateHandler {
 	// 	}
 	// }
 
+	// deletePokedex(dexId: string): void {
+	// 	try {
+	// 		storageHandler.removePokedex(dexId)
+	// 		if (this.pokedex.id === dexId) {
+	// 			this.initPokedex()
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error deleting Pokedex:', error)
+	// 		throw new Error(`Error deleting Pokedex "${dexId}": ${error}`)
+	// 	}
+	// }
+
 	getCurrentPokedexState(): DexState {
 		console.log('this.pokedexState', this.pokedexState)
 

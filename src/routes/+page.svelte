@@ -71,7 +71,7 @@
 		<PkToolBox />
 		<PkDexSelector />
 		<PkBoxContainer {dexState} />
-		<PkDexList />
+		<!-- <PkDexList /> -->
 	</section>
 
 	<PkSidebar />

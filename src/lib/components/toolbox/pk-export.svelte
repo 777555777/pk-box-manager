@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { pkState } from '$lib/state/pk-state.svelte'
 	import { storageHandler } from '$lib/state/storage-handler'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let {
-		dexName,
+		dexId,
 		disabled = false,
 		hideLabel = false
 	}: {
-		dexName: string
+		dexId: string
 		disabled?: boolean
 		hideLabel?: boolean
 		icon?: string
@@ -17,13 +16,7 @@
 
 	function exportCurrentDex() {
 		try {
-			let selectedPokedex = storageHandler.loadPokedex(dexName)
-
-			// Wenn der Dex nicht exsistiert, initialisiere ihn und lade ihn erneut
-			if (!selectedPokedex) {
-				storageHandler.initPokedex(pkState.getCachedOrder(dexName), dexName)
-				selectedPokedex = storageHandler.loadPokedex(dexName)
-			}
+			let selectedPokedex = storageHandler.loadPokedex(dexId)
 
 			const dexState = JSON.stringify(selectedPokedex, null, 2)
 
@@ -40,7 +33,7 @@
 			// Erstelle ein temporäres a-Element zum Herunterladen
 			const a = document.createElement('a')
 			a.href = url
-			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexName}` // Dateiname für den Download
+			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexId}` // Dateiname für den Download
 
 			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
 			document.body.appendChild(a)
