@@ -33,10 +33,10 @@
 				} else {
 					// No local data found, write to localStorage!
 					storageHandler.savePokedex(validDex.name, validDex)
-					appState.setCurrentPokedexName(validDex.name)
+					appState.setSelectedPokedexId(validDex.name)
 
 					// Force a refresh if this is the current Dex
-					if (validDex.name === appState.getCurrentPokedexName()) {
+					if (validDex.name === appState.getSelectedPokedexId()) {
 						pkState.switchPokedex(validDex.name)
 					}
 
@@ -55,10 +55,10 @@
 	function onConfirmInfo() {
 		if (pendingImport) {
 			storageHandler.savePokedex(pendingImport.name, pendingImport)
-			appState.setCurrentPokedexName(pendingImport.name)
+			appState.setSelectedPokedexId(pendingImport.name)
 
 			// Force a refresh if this is the current Dex
-			if (pendingImport.name === appState.getCurrentPokedexName()) {
+			if (pendingImport.name === appState.getSelectedPokedexId()) {
 				pkState.switchPokedex(pendingImport.name)
 			}
 

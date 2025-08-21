@@ -102,9 +102,6 @@ class StorageHandler implements DexStorageHandler {
 		return dexSaveId
 	}
 
-	// TODO CHECK WHY DEXES ARE NOT SAVED / LOADED PROPERLY
-	// EDIT STATE DOES NOT SEEM TO BE PERSISTED, COUNTERS ALSO DONT UPDATE
-
 	/**
 	 * Persists the given Pokedex to localStorage and updates/adds its metadata.
 	 * Timestamps are set for createdAt and updatedAt.

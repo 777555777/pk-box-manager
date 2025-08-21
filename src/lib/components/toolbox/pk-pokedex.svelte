@@ -21,7 +21,7 @@
 	let showCustomDex = $state(false) // Selbst erstellte Pokédexes
 
 	// Get current selected dex name - use derived for reactive reading
-	let selectedDexName = $derived(appState.getCurrentPokedexName())
+	let selectedDexName = $derived(appState.getSelectedPokedexId())
 	let allPokedexes = $derived(pkState.getAllPokedexes())
 
 	// Filter pokedexes based on toggle states
@@ -61,9 +61,9 @@
 		// Load the new dex state
 		await pkState.switchPokedex(dexName)
 
-		// Set the new pokedex name after the switch so that +page.svelte renders again
+		// Set the new pokedex id after the switch so that +page.svelte renders again
 		// when the boxorder is in the cache, preventing duplicate requests.
-		appState.setCurrentPokedexName(dexName)
+		appState.setSelectedPokedexId(dexName)
 
 		// Reload the pokedex list to update the dialog with the newly loaded dex
 		pkState.loadAllPokedexes()

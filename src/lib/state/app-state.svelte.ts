@@ -9,7 +9,7 @@ export class AppState {
 	private mobileSidebarOpen = $state(false)
 
 	// Application settings
-	private selectedDexName = $state(storageHandler.loadSelectedPokedexId())
+	private selectedDexId = $state(storageHandler.loadSelectedPokedexId())
 	private appDefaults: Partial<PokemonEditState> = $state(initialAppDefaults)
 	private appSettings = $state(storageHandler.loadAppSettings())
 
@@ -39,12 +39,12 @@ export class AppState {
 		this.mobileSidebarOpen = false
 	}
 
-	public getCurrentPokedexName(): string {
-		return this.selectedDexName
+	public getSelectedPokedexId(): string {
+		return this.selectedDexId
 	}
 
-	public setCurrentPokedexName(name: string): void {
-		this.selectedDexName = name
+	public setSelectedPokedexId(name: string): void {
+		this.selectedDexId = name
 		storageHandler.saveSelectedPokedexId(name)
 	}
 
