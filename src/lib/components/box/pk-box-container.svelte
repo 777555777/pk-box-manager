@@ -21,8 +21,9 @@
 		justify-items: center;
 		padding: 8rem 2rem 2rem 2rem; /* Padding left and right to prevent Tooltips from beeing cut off */
 
-		overflow-y: auto;
-		scrollbar-width: none;
+		/* When this is not used scrolling is more reliable ?! */
+		/* overflow-y: auto; */
+		/* scrollbar-width: none; */
 	}
 
 	@media (max-width: 680px) {
