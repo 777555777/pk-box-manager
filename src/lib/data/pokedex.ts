@@ -75,7 +75,7 @@ const boxOrderNational = [
 //   type: "custom",
 //   name: "my-shiny-hoenn",
 //   displayName: "My Shiny Hoenn Dex",
-//   coverImage: "custom-cover.png",
+//   coverImage: "custom.png",
 //   sortOrder: 99,
 //   tags: ["shiny"],
 //   boxList: [],
@@ -91,7 +91,7 @@ export const nationalDex: DexConfig = {
 	type: 'preset',
 	name: 'national',
 	displayName: 'National Dex',
-	coverImage: 'national-cover.png',
+	coverImage: 'national.png',
 	sortOrder: 0,
 	tags: ['normal'],
 	boxList: boxOrderNational,
@@ -106,7 +106,7 @@ const gen1Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-1',
 	displayName: 'Generation 1',
-	coverImage: 'gen1-cover.png',
+	coverImage: 'gen-1.png',
 	sortOrder: 1,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 8), // Kanto-1 to Cap-Pikachu
@@ -121,7 +121,7 @@ const gen2Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-2',
 	displayName: 'Generation 2',
-	coverImage: 'gen2-cover.png',
+	coverImage: 'gen-2.png',
 	sortOrder: 2,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 14), // 9, 14 is Johto-1 to Unown-Dex
@@ -136,7 +136,7 @@ const gen3Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-3',
 	displayName: 'Generation 3',
-	coverImage: 'gen3-cover.png',
+	coverImage: 'gen-3.png',
 	sortOrder: 3,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 21), // 15, 21 is Hoenn-1 to Hoenn-Alternate
@@ -151,7 +151,7 @@ const gen4Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-4',
 	displayName: 'Generation 4',
-	coverImage: 'gen4-cover.png',
+	coverImage: 'gen-4.png',
 	sortOrder: 4,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 28), // 21, 28 is Sinnoh-1 to Sinnoh-Alternate
@@ -166,7 +166,7 @@ const gen5Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-5',
 	displayName: 'Generation 5',
-	coverImage: 'gen5-cover.png',
+	coverImage: 'gen-5.png',
 	sortOrder: 5,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 35), // 28, 35 is Unova-1 to Unova-Alternate
@@ -181,7 +181,7 @@ const gen6Dex: DexConfig = {
 	type: 'preset',
 	name: 'generation-6',
 	displayName: 'Generation 6',
-	coverImage: 'gen6-cover.png',
+	coverImage: 'gen-6.png',
 	sortOrder: 6,
 	tags: ['normal'],
 	boxList: boxOrderNational.slice(0, 41), // 36, 41 is Kalos-1 to Vivillon-Pattern

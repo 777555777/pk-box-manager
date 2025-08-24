@@ -5,14 +5,17 @@
 	import PkDexCard from '$lib/components/ui/pk-dex-card.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
 	import { type DexIndexEntry } from '$lib/state/storage-handler'
+	import PkRadioGroup from '../ui/pk-radio-group.svelte'
+	import { dexPresets } from '$lib/data/pokedex'
+	import type { BoxTags, DexConfig } from '$lib/models/data-models'
+	import { getDexConfig } from '$lib/data/pokedex-config-utils'
 
-	// TODO: Placeholder, replace with actual background images
-	const backgroundImages = [
-		'/ui/HGSS_Ilex_Forest-Day.png',
-		'/ui/HGSS_National_Park-Day.png',
-		'/ui/HGSS_Slowpoke_Well-Day.png',
-		'/ui/HGSS_Viridian_Forest-Day.png'
+	const optionConfig = [
+		{ tabId: 'active-pokedex', label: 'Active Pokedex' },
+		{ tabId: 'new-pokedex', label: 'New Pokedex' }
 	]
+
+	let currentPage = $state('active-pokedex')
 
 	// Get current selected dex id - use derived for reactive reading
 	let selectedDexId = $derived(appState.getSelectedPokedexId())
@@ -27,6 +30,25 @@
 		pokedexDialog.showDialog()
 	}
 
+	function createAndSelectDex(selectedPreset: DexConfig, activeTags: BoxTags[]) {
+		// Create new config with selected tags without mutating the original
+		const initPreset = getDexConfig(selectedPreset.id, activeTags)
+
+		// Generate the correct dex ID that will be created
+		const dexId = `${initPreset.type}-${initPreset.id}-${initPreset.tags.join('-')}`
+
+		// create and switch with selected tags:
+		pkState.switchPokedex(initPreset)
+
+		// Update app state with the correct dex ID - this ensures the UI reactive variables update
+		appState.setSelectedPokedexId(dexId)
+
+		// Switch to active pokedex tab to show the newly created dex
+		currentPage = 'active-pokedex'
+
+		// The dialog will be closed by the dialog's onConfirm handler
+	}
+
 	// function handlePokedexDelete(isSelected: boolean, dexName: string) {
 	// 	 pkState.deletePokedex(dexName)
 	// 	// Reload the pokedex list to reflect the reset
@@ -39,6 +61,7 @@
 	}
 
 	function loadSelectedDex(selectedDex: DexIndexEntry) {
+		console.log('Loading selected dex:', selectedDex)
 		const targetDexSave = pkState.loadPokedex(selectedDex.id)
 		appState.setSelectedPokedexId(selectedDex.id)
 		pkState.switchPokedex(targetDexSave.config)
@@ -62,7 +85,7 @@
 			<summary class="pk-summary">Pokedex Filters</summary>
 			<div class="pk-filter-container">
 				<div class="pk-btn-group pk-filter-toggles">
-					<p>test</p>
+					<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
 				</div>
 				<div class="pk-btn-group pk-filter-actions">
 					<PkImport />
@@ -75,17 +98,29 @@
 	<div class="desktop-filter-fieldset">
 		<fieldset class="pk-fieldset pk-dex-filter-options">
 			<legend>Pokedex Filters</legend>
+			<div class="pk-btn-group pk-filter-toggles">
+				<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
+			</div>
 			<div class="pk-btn-group pk-filter-actions">
 				<PkImport />
 			</div>
 		</fieldset>
 	</div>
 
+	{#if currentPage === 'active-pokedex'}
+		{@render pokedexActiveList()}
+	{:else if currentPage === 'new-pokedex'}
+		{@render pokedexPresetList()}
+	{/if}
+{/snippet}
+
+{#snippet pokedexActiveList()}
 	<section class="pk-pokedex-section">
 		{#each pokedexIndexList as pokedexIndex, index}
 			<PkDexCard
 				dexTitle={pokedexIndex.displayName}
 				dexId={pokedexIndex.id}
+				tags={pokedexIndex.tags}
 				isSelected={pokedexIndex.id === selectedDexRef?.id}
 				counter={{
 					totalPokemon: pokedexIndex.totalPokemon,
@@ -94,7 +129,32 @@
 				}}
 				onDelete={handlePokedexDelete}
 				onSelect={() => loadSelectedDex(pokedexIndex)}
-				imgUrl={backgroundImages[index]}
+				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
+				--value-color="red"
+				--value-secondary-color="blue"
+			/>
+		{/each}
+	</section>
+{/snippet}
+
+{#snippet pokedexPresetList()}
+	<section class="pk-pokedex-section">
+		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
+			<PkDexCard
+				dexTitle={dexPreset.displayName}
+				dexId={dexPreset.id}
+				tags={dexPreset.tags}
+				isSelected={false}
+				isPreset={true}
+				counter={{
+					totalPokemon: 0,
+					totalCaughtPokemon: 0,
+					totalShinyPokemon: 0
+				}}
+				onDelete={() => {}}
+				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
+					createAndSelectDex(selectedPreset, activeTags)}
+				imgUrl={`/ui/dex/${dexPreset.coverImage}`}
 				--value-color="red"
 				--value-secondary-color="blue"
 			/>
@@ -130,6 +190,8 @@
 
 	.pk-dex-filter-options {
 		margin-bottom: 1rem;
+		display: flex;
+		justify-content: space-between;
 
 		.pk-filter-container {
 			display: flex;
@@ -183,12 +245,17 @@
 		padding-inline: 2rem;
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		place-items: center;
 		gap: 2rem;
 		height: 680px;
 		overflow-y: auto;
 
 		mask: var(--scroll-indicator-gradient);
+	}
+
+	@media (max-width: 1024px) {
+		.pk-pokedex-section {
+			place-items: center;
+		}
 	}
 
 	@media (max-width: 768px) {

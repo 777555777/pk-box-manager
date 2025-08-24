@@ -19,6 +19,7 @@ export interface DexIndexEntry {
 	id: string
 	name: string
 	displayName: string
+	tags: string[]
 	coverImage: string
 	updatedAt: number
 	createdAt: number
@@ -188,6 +189,7 @@ class StorageHandler implements DexStorageHandler {
 						id: parsedValue.id,
 						name: parsedValue.config.name,
 						displayName: parsedValue.config.displayName,
+						tags: parsedValue.config.tags,
 						coverImage: parsedValue.config.coverImage,
 						updatedAt: parsedValue.config.updatedAt,
 						createdAt: parsedValue.config.createdAt,

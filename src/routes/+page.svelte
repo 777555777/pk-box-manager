@@ -68,7 +68,7 @@
 <main>
 	<section class="pk-content">
 		<PkToolBox />
-		<PkDexSelector />
+		<!-- <PkDexSelector /> -->
 		<PkBoxContainer {dexState} />
 		<!-- <PkDexList /> -->
 	</section>
