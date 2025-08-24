@@ -9,6 +9,7 @@
 	import { dexPresets } from '$lib/data/pokedex'
 	import type { BoxTags, DexConfig } from '$lib/models/data-models'
 	import { getDexConfig } from '$lib/data/pokedex-config-utils'
+	import PkDexPresetCard from '../ui/pk-dex-preset-card.svelte'
 
 	const optionConfig = [
 		{ tabId: 'active-pokedex', label: 'Active Pokedex' },
@@ -82,7 +83,7 @@
 	<!-- Mobile: Details/Summary Layout -->
 	<div class="mobile-filter-accordion">
 		<details class="pk-details">
-			<summary class="pk-summary">Pokedex Filters</summary>
+			<summary class="pk-summary">Options</summary>
 			<div class="pk-filter-container">
 				<div class="pk-btn-group pk-filter-toggles">
 					<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
@@ -97,7 +98,7 @@
 	<!-- Desktop: Fieldset Layout -->
 	<div class="desktop-filter-fieldset">
 		<fieldset class="pk-fieldset pk-dex-filter-options">
-			<legend>Pokedex Filters</legend>
+			<legend>Options</legend>
 			<div class="pk-btn-group pk-filter-toggles">
 				<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
 			</div>
@@ -140,18 +141,9 @@
 {#snippet pokedexPresetList()}
 	<section class="pk-pokedex-section">
 		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
-			<PkDexCard
+			<PkDexPresetCard
 				dexTitle={dexPreset.displayName}
 				dexId={dexPreset.id}
-				tags={dexPreset.tags}
-				isSelected={false}
-				isPreset={true}
-				counter={{
-					totalPokemon: 0,
-					totalCaughtPokemon: 0,
-					totalShinyPokemon: 0
-				}}
-				onDelete={() => {}}
 				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
 					createAndSelectDex(selectedPreset, activeTags)}
 				imgUrl={`/ui/dex/${dexPreset.coverImage}`}

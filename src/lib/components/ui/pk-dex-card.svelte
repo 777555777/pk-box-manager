@@ -2,63 +2,19 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
-	import PkDialog, { type PkDialogElement } from './pk-dialog.svelte'
-	import PkToggle from './pk-toggle.svelte'
-	import type { BoxTags, DexConfig } from '$lib/models/data-models'
-	import { getAllPossibleTags, getDexConfig } from '$lib/data/pokedex-config-utils'
-	import { dexPresets } from '$lib/data/pokedex'
 
-	let {
-		dexTitle,
-		dexId,
-		tags,
-		isSelected,
-		isPreset = false,
-		counter,
-		onDelete,
-		onSelect,
-		imgUrl
-	} = $props()
+	let { dexTitle, dexId, tags, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
 
 	// Deletion state
 	let isDeleting = $state(false)
 	let selectedTags = $state<string[]>([])
 	let cardElement: HTMLElement | undefined
-	let configurationDialog: PkDialogElement
-
-	// Tag toggle functionality for presets
-	let allTags = getAllPossibleTags()
-	let optionalTags = allTags.filter((tag) => tag !== 'normal')
-	let tagStates = $state<Record<string, boolean>>({})
-
-	// Initialize tag states - default to true (all selected)
-	for (const tag of optionalTags) {
-		tagStates[tag] = true
-	}
-
-	let activeTags = $derived.by<BoxTags[]>(() => {
-		// Always include 'normal', plus any selected optional tags
-		const selectedOptionalTags = Object.entries(tagStates)
-			.filter(([_, active]) => active)
-			.map(([tag, _]) => tag as BoxTags)
-		return ['normal' as BoxTags, ...selectedOptionalTags]
-	})
 
 	// Handle dex selection
 	function handleDexSelect() {
-		if (isPreset) {
-			// For preset cards, pass the selected preset and active tags
-			const selectedPreset = Object.values(dexPresets).find(
-				(preset) => preset.id === dexId
-			) as DexConfig
-			if (onSelect && selectedPreset) {
-				onSelect(selectedPreset, activeTags)
-			}
-		} else {
-			// For regular dex cards, just pass the dex ID
-			if (onSelect) {
-				onSelect(dexId)
-			}
+		// For regular dex cards, just pass the dex ID
+		if (onSelect) {
+			onSelect(dexId)
 		}
 	}
 
@@ -110,7 +66,6 @@
 	<section class="pk-dex-card-header">
 		<div class="pk-dex-card-title">
 			<h3 class="text-base">{dexTitle}</h3>
-			<!-- {#if !isPreset} -->
 			<ul class="dex-tags">
 				{#each tags as tag}
 					{#if tag !== 'normal'}
@@ -120,29 +75,24 @@
 					{/if}
 				{/each}
 			</ul>
-			<!-- {/if} -->
 		</div>
 	</section>
 
-	{#if !isPreset}
-		<PkProgressBar
-			max={counter.totalPokemon}
-			value={counter.totalCaughtPokemon}
-			--value-color={isSelected ? '#61ff61' : '#82829a'}
-			--value-secondary-color={isSelected ? '#18c720' : '#75758a'}
-		/>
-	{/if}
+	<PkProgressBar
+		max={counter.totalPokemon}
+		value={counter.totalCaughtPokemon}
+		--value-color={isSelected ? '#61ff61' : '#82829a'}
+		--value-secondary-color={isSelected ? '#18c720' : '#75758a'}
+	/>
 
 	<section
 		class="pk-dex-card-image {!isSelected ? 'unselected' : ''}"
 		style="background-image: url({imgUrl})"
 	>
-		{#if !isPreset}
-			<!-- Delete Button -->
-			<button class="delete-button pk-tooltip" data-tooltip="Reset Pokedex" onclick={toggleDelete}>
-				<PkIcon color="#fff" name={'close'} size={16} />
-			</button>
-		{/if}
+		<!-- Delete Button -->
+		<button class="delete-button pk-tooltip" data-tooltip="Reset Pokedex" onclick={toggleDelete}>
+			<PkIcon color="#fff" name={'close'} size={16} />
+		</button>
 
 		{#if isDeleting}
 			<!-- Delete Overlay -->
@@ -170,59 +120,12 @@
 	</section>
 
 	<section class="pk-dex-card-actions">
-		{#if isPreset}
-			<!-- Select Button -->
-			<button
-				class="pk-button pk-dex-create-btn"
-				onclick={() => {
-					configurationDialog.showDialog()
-				}}
-			>
-				Create new Pokedex
-			</button>
-		{:else}
-			<!-- Select Button -->
-			<button class="pk-button" onclick={handleDexSelect}> Select Dex </button>
-			<!-- Export Button -->
-			<PkExport {dexId} hideLabel={true} />
-		{/if}
+		<!-- Select Button -->
+		<button class="pk-button" onclick={handleDexSelect}> Select Dex </button>
+		<!-- Export Button -->
+		<PkExport {dexId} hideLabel={true} />
 	</section>
 </article>
-
-{#snippet dexConfigurationContent()}
-	<div class="dex-tag-selection">
-		<p class="text-small">Select which variants to include in your Pokédex:</p>
-		<div class="tag-grid">
-			{#each optionalTags as tag}
-				<div class="tag-toggle-item">
-					<PkToggle
-						label={tag}
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={tagStates[tag]}
-						tooltip="Include {tag} variants"
-					/>
-				</div>
-			{/each}
-		</div>
-		<div class="active-tags-preview">
-			<strong>Include variants:</strong>
-			<span class="tag-list"
-				>{activeTags.filter((tag) => tag !== 'normal').join(', ') || 'Base Pokemon only'}</span
-			>
-		</div>
-	</div>
-{/snippet}
-
-<PkDialog
-	bind:this={configurationDialog}
-	headline="Include variants"
-	dialogContent={dexConfigurationContent}
-	onConfirm={handleDexSelect}
-	onCancel={() => {}}
-	okBtnText="Create Pokedex"
-	cancelBtnText="Cancel"
-	size="S"
-/>
 
 <style>
 	.pk-dex-card {
@@ -245,7 +148,6 @@
 
 		.pk-dex-card-actions button {
 			position: relative;
-			z-index: 2; /* Über dem Overlay */
 		}
 
 		&.deleting {
@@ -303,7 +205,8 @@
 		display: flex;
 		align-items: flex-start;
 		padding-inline: 0.75rem;
-		padding-block: 0.5rem;
+		margin-top: 3px;
+		padding-block: 8px;
 
 		.pk-dex-card-title {
 			min-height: 3.5rem;
@@ -323,6 +226,7 @@
 		width: 100%;
 		height: 150px;
 		position: relative;
+		image-rendering: auto;
 
 		border-top: 3px solid #5d5d6f;
 		border-bottom: 3px solid #5d5d6f;
@@ -415,7 +319,7 @@
 	}
 
 	.pk-dex-card-actions {
-		padding: 0.75rem;
+		padding: 0.5rem;
 		display: flex;
 		justify-content: space-between;
 		position: relative;
@@ -449,44 +353,13 @@
 				10px 10px;
 			background-size: 20px 20px;
 			opacity: 0.6;
-			z-index: 1;
+			z-index: 2;
 		}
 
 		/* Buttons bleiben auf normalem z-index und sind nicht von opacity betroffen */
 		:global(button) {
 			position: relative;
-			z-index: 1;
+			z-index: 2;
 		}
-
-		.pk-dex-create-btn {
-			margin: 0 auto;
-		}
-	}
-
-	/* Dialog Tag Selection Styles */
-	.dex-tag-selection {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding: 1rem;
-	}
-
-	.tag-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 0.5rem;
-		margin: 1rem 0;
-	}
-
-	.active-tags-preview {
-		padding: 0.75rem;
-		background-color: hsla(0, 0%, 20%, 0.3);
-		border-radius: 4px;
-		border-left: 4px solid hsla(125, 100%, 30%, 0.55);
-	}
-
-	.tag-list {
-		color: hsla(125, 100%, 70%, 1);
-		font-weight: 500;
 	}
 </style>

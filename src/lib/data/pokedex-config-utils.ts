@@ -136,3 +136,33 @@ export function getAllPossibleTags() {
 	}
 	return Array.from(allTags)
 }
+
+/**
+ * Gets the available tags for a specific Pokedex preset by checking which boxes
+ * are included in that preset and what tags those boxes have.
+ */
+export function getAvailableTagsForPreset(presetId: string): BoxTags[] {
+	// Get the preset config
+	const preset = Object.values(dexPresets).find((p) => p.id === presetId)
+	if (!preset) {
+		console.warn(`Preset with id "${presetId}" not found`)
+		return []
+	}
+
+	// Get all tags from boxes that are included in this preset
+	const availableTags = new Set<BoxTags>()
+
+	for (const boxId of preset.boxList) {
+		const box = pokedexBoxes.find((b) => b.id === boxId)
+		if (box) {
+			for (const tag of box.tags) {
+				if (tag !== 'normal') {
+					// Exclude 'normal' as it's always included
+					availableTags.add(tag as BoxTags)
+				}
+			}
+		}
+	}
+
+	return Array.from(availableTags)
+}
