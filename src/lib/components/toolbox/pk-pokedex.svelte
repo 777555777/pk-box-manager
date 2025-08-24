@@ -12,11 +12,11 @@
 	import PkDexPresetCard from '../ui/pk-dex-preset-card.svelte'
 
 	const optionConfig = [
-		{ tabId: 'active-pokedex', label: 'Active Pokedex' },
-		{ tabId: 'new-pokedex', label: 'New Pokedex' }
+		{ tabId: 'active', label: 'Active' },
+		{ tabId: 'create', label: 'Create' }
 	]
 
-	let currentPage = $state('active-pokedex')
+	let currentPage = $state('active')
 
 	// Get current selected dex id - use derived for reactive reading
 	let selectedDexId = $derived(appState.getSelectedPokedexId())
@@ -45,7 +45,7 @@
 		appState.setSelectedPokedexId(dexId)
 
 		// Switch to active pokedex tab to show the newly created dex
-		currentPage = 'active-pokedex'
+		currentPage = 'active'
 
 		// The dialog will be closed by the dialog's onConfirm handler
 	}
@@ -57,12 +57,21 @@
 	// }
 
 	function handlePokedexDelete(isSelected: boolean, dexId: string) {
-		// try {
-		// 	pkState.deletePokedex(dexId)
-		// 	console.log(`Successfully deleted Pokedex: ${dexId}`)
-		// } catch (error) {
-		// 	console.error('Failed to delete Pokedex:', error)
-		// }
+		try {
+			pkState.deletePokedex(dexId)
+			console.log(`Successfully deleted Pokedex: ${dexId}`)
+		} catch (error) {
+			console.error('Failed to delete Pokedex:', error)
+		}
+	}
+
+	function handleConfirmReset(isSelected: boolean, dexId: string) {
+		try {
+			pkState.resetPokedex(dexId)
+			console.log(`Successfully reset Pokedex: ${dexId}`)
+		} catch (error) {
+			console.error('Failed to reset Pokedex:', error)
+		}
 	}
 
 	function loadSelectedDex(selectedDex: DexIndexEntry) {
@@ -79,7 +88,7 @@
 	dialogContent={pokedexDialogContent}
 	onConfirm={() => {}}
 	onCancel={() => {
-		currentPage = 'active-pokedex'
+		currentPage = 'active'
 	}}
 	cancelBtnText="Close"
 	size="L"
@@ -114,49 +123,54 @@
 		</fieldset>
 	</div>
 
-	{#if currentPage === 'active-pokedex'}
+	{#if currentPage === 'active'}
 		{@render pokedexActiveList()}
-	{:else if currentPage === 'new-pokedex'}
+	{:else if currentPage === 'create'}
 		{@render pokedexPresetList()}
 	{/if}
 {/snippet}
 
 {#snippet pokedexActiveList()}
 	<section class="pk-pokedex-section">
-		{#each pokedexIndexList as pokedexIndex, index}
-			<PkDexCard
-				dexTitle={pokedexIndex.displayName}
-				dexId={pokedexIndex.id}
-				tags={pokedexIndex.tags}
-				isSelected={pokedexIndex.id === selectedDexRef?.id}
-				counter={{
-					totalPokemon: pokedexIndex.totalPokemon,
-					totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
-					totalShinyPokemon: pokedexIndex.totalShinyPokemon
-				}}
-				onDelete={handlePokedexDelete}
-				onSelect={() => loadSelectedDex(pokedexIndex)}
-				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
-				--value-color="red"
-				--value-secondary-color="blue"
-			/>
-		{/each}
+		<div class="pk-pokedex-grid">
+			{#each pokedexIndexList as pokedexIndex, index}
+				<PkDexCard
+					dexTitle={pokedexIndex.displayName}
+					dexId={pokedexIndex.id}
+					tags={pokedexIndex.tags}
+					isSelected={pokedexIndex.id === selectedDexRef?.id}
+					counter={{
+						totalPokemon: pokedexIndex.totalPokemon,
+						totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
+						totalShinyPokemon: pokedexIndex.totalShinyPokemon
+					}}
+					onDelete={handlePokedexDelete}
+					onReset={handleConfirmReset}
+					onSelect={() => loadSelectedDex(pokedexIndex)}
+					imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
+					--value-color="red"
+					--value-secondary-color="blue"
+				/>
+			{/each}
+		</div>
 	</section>
 {/snippet}
 
 {#snippet pokedexPresetList()}
 	<section class="pk-pokedex-section">
-		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
-			<PkDexPresetCard
-				dexTitle={dexPreset.displayName}
-				dexId={dexPreset.id}
-				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
-					createAndSelectDex(selectedPreset, activeTags)}
-				imgUrl={`/ui/dex/${dexPreset.coverImage}`}
-				--value-color="red"
-				--value-secondary-color="blue"
-			/>
-		{/each}
+		<div class="pk-pokedex-grid">
+			{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
+				<PkDexPresetCard
+					dexTitle={dexPreset.displayName}
+					dexId={dexPreset.id}
+					onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
+						createAndSelectDex(selectedPreset, activeTags)}
+					imgUrl={`/ui/dex/${dexPreset.coverImage}`}
+					--value-color="red"
+					--value-secondary-color="blue"
+				/>
+			{/each}
+		</div>
 	</section>
 {/snippet}
 
@@ -239,21 +253,23 @@
 		}
 	}
 	.pk-pokedex-section {
-		padding-bottom: 2rem;
-		padding-inline: 2rem;
+		display: flex;
+		justify-content: center;
+		height: 680px;
+	}
+
+	.pk-pokedex-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 		gap: 2rem;
-		height: 680px;
+		width: 100%;
+		align-content: start; /* Items beginnen oben */
+		justify-items: center; /* Grid zentrieren */
+
+		padding-inline: 2rem;
+		padding-bottom: 2rem; /* Prevent contet cutoff by mask */
 		overflow-y: auto;
-
 		mask: var(--scroll-indicator-gradient);
-	}
-
-	@media (max-width: 1024px) {
-		.pk-pokedex-section {
-			place-items: center;
-		}
 	}
 
 	@media (max-width: 768px) {

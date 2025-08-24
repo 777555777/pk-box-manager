@@ -1,15 +1,20 @@
-import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../null-state-helper.ts'
+import {
+	defaultWallpaper,
+	pokedexNullState,
+	pokemonNullProperties,
+	pokemonNullState
+} from '../null-state-helper.ts'
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
-import { type DexIndexEntry, storageHandler } from './storage-handler.ts'
+import { DEFAULT_SELECTED_DEX, type DexIndexEntry, storageHandler } from './storage-handler.ts'
 import { getDexConfig } from '../data/pokedex-config-utils.ts'
 import {
 	type BoxState,
 	type DexState,
 	type PokemonEditState,
 	type DexConfig,
-	type DexSave
-	// type BoxTags
+	type DexSave,
+	type BoxTags
 } from '../models/data-models.ts'
 
 // Zentrale Schnittstelle für alles, was mit DexSave im Storage passiert
@@ -22,7 +27,7 @@ export interface PkStateHandler {
 	// getConfig(): DexConfig
 	// getState(): DexState
 	switchPokedex(dexConfig: DexConfig): void
-	// resetPokedex(): void
+	resetPokedex(dexId: string): void
 
 	// Pokedex Index
 	getCurrentPokedexState(): DexState
@@ -58,6 +63,40 @@ export class PkState implements PkStateHandler {
 	// Pokedex
 	// ================
 
+	/**
+	 * Parses a pokedex ID string and creates a DexConfig from it.
+	 * Format: "type-id-tag1-tag2-..." (e.g., "preset-nationalDex-normal-shiny")
+	 * @param dexId The dex ID string to parse
+	 * @returns A DexConfig object
+	 */
+	private parseAndCreateDexConfig(dexId: string): DexConfig {
+		const parts = dexId.split('-')
+
+		if (parts.length < 2) {
+			throw new Error(
+				`Invalid dex ID format: "${dexId}". Expected format: "type-id" or "type-id-tag1-tag2..."`
+			)
+		}
+
+		// Extract base preset ID (first two parts: "preset-nationalDex")
+		const presetId = `${parts[0]}-${parts[1]}`
+
+		// Extract tag parts (everything after the preset ID)
+		const tagParts = parts.slice(2)
+
+		// Build tags array - always include 'normal', then add any additional tags
+		const tags: BoxTags[] = ['normal']
+
+		if (tagParts.length > 0) {
+			// Filter out 'normal' to avoid duplicates, then add the remaining tags
+			const additionalTags = tagParts.filter((tag) => tag !== 'normal') as BoxTags[]
+			tags.push(...additionalTags)
+		}
+
+		// Create and return the dex configuration
+		return getDexConfig(presetId, tags)
+	}
+
 	initPokedex(dexConfig: DexConfig | null = null) {
 		if (dexConfig) {
 			const dexSaveId = storageHandler.initPokedex(dexConfig)
@@ -78,27 +117,8 @@ export class PkState implements PkStateHandler {
 		let dexSave = selectedDex
 		// Initialize if it doesn't exist
 		if (!selectedDex) {
-			// Parse initialSelected to extract preset ID and tags, similar to resetPokedex
-			const parts = initialSelected.split('-')
-			if (parts.length < 2) {
-				throw new Error(`Invalid selectedDexId format: ${initialSelected}`)
-			}
-
-			const presetId = `${parts[0]}-${parts[1]}` // e.g., "preset-nationalDex"
-			const tagParts = parts.slice(2) // remaining parts are tags
-
-			// Always include 'normal' tag, plus any additional tags from ID
-			const tags: import('../models/data-models.ts').BoxTags[] = ['normal']
-			if (tagParts.length > 0) {
-				// Filter out 'normal' to avoid duplicates, then add the rest
-				const additionalTags = tagParts.filter(
-					(tag) => tag !== 'normal'
-				) as import('../models/data-models.ts').BoxTags[]
-				tags.push(...additionalTags)
-			}
-
-			// Create default dex with parsed tags
-			const presetConfig = getDexConfig(presetId, tags)
+			// Parse the selected dex ID and create a configuration for it
+			const presetConfig = this.parseAndCreateDexConfig(initialSelected)
 			const dexSaveId = storageHandler.initPokedex(presetConfig)
 			dexSave = storageHandler.loadPokedex(dexSaveId)
 		}
@@ -149,64 +169,105 @@ export class PkState implements PkStateHandler {
 		}
 	}
 
-	// resetPokedex(dexId: string, isSelected: boolean): void {
-	// 	try {
-	// 		// Remove the current Pokedex data from localStorage
-	// 		storageHandler.removePokedex(dexId)
+	// ================
+	// Reset Hilfsfunktionen
+	// ================
 
-	// 		// =====================================================================================
-	// 		// Parse dexId to extract preset ID and tags
-	// 		// Format: ${type}-${id}-${tags.join('-')} or ${type}-${id} (if no additional tags)
-	// 		const parts = dexId.split('-')
-	// 		if (parts.length < 2) {
-	// 			throw new Error(`Invalid dexId format: ${dexId}`)
-	// 		}
+	/**
+	 * Setzt alle Pokemon in einem DexState auf ihre Standard-Werte zurück.
+	 * Behält die Pokemon-Einträge bei, aber entfernt alle Anpassungen.
+	 */
+	private resetPokemonInDexState(dexState: DexState): void {
+		for (const [identifier, pokemon] of Object.entries(dexState.pokemon)) {
+			// Behalte die idEntry bei, setze aber alle anderen Werte zurück
+			dexState.pokemon[identifier] = {
+				idEntry: pokemon.idEntry,
+				...pokemonNullProperties
+			}
+		}
+	}
 
-	// 		const presetId = `${parts[0]}-${parts[1]}` // e.g., "preset-nationalDex"
-	// 		const tagParts = parts.slice(2) // remaining parts are tags
+	/**
+	 * Setzt den State-Teil eines DexSave auf Standard-Werte zurück.
+	 * Behält die ursprüngliche Struktur bei, aber entfernt alle Benutzer-Anpassungen.
+	 */
+	private resetDexState(dexSave: DexSave): void {
+		// Reset aller Pokemon auf Standard-Werte
+		this.resetPokemonInDexState(dexSave.state)
 
-	// 		// Always include 'normal' tag, plus any additional tags from dexId
-	// 		const tags: BoxTags[] = ['normal']
-	// 		if (tagParts.length > 0) {
-	// 			// Filter out 'normal' to avoid duplicates, then add the rest
-	// 			const additionalTags = tagParts.filter((tag) => tag !== 'normal') as BoxTags[]
-	// 			tags.push(...additionalTags)
-	// 		}
+		// Box-Wallpapers auf Standard zurücksetzen (optional)
+		for (const element of dexSave.state.boxes) {
+			element.settings.wallpaper = defaultWallpaper // Standard-Wallpaper
+		}
+	}
 
-	// 		// Re-initialize the Pokedex with fresh data using new method
-	// 		const dexConfig = getDexConfig(presetId, tags)
-	// 		storageHandler.initPokedex(dexConfig)
-	// 		// =====================================================================================
+	resetPokedex(dexId: string): void {
+		try {
+			// Lade den aktuellen Pokedex aus dem Storage
+			const dexSave = storageHandler.loadPokedex(dexId)
+			if (!dexSave) {
+				throw new Error(`Pokedex with ID "${dexId}" not found in storage.`)
+			}
 
-	// 		if (isSelected) {
-	// 			// Update the state
-	// 			const dexSave = storageHandler.loadPokedex(dexId)
-	// 			this.pokedex = dexSave!
+			// Verwende die Hilfsfunktionen, um den State zurückzusetzen
+			this.resetDexState(dexSave)
 
-	// 			// Reset selected Pokemon
-	// 			this.selectedPokemon = pokemonNullState
+			// Speichere den zurückgesetzten Pokedex zurück in den Storage
+			storageHandler.savePokedex(dexSave)
 
-	// 			// Make sure app state is aware of the reset
-	// 			appState.setCurrentPokedexName(dexId)
-	// 		}
-	// 		console.log(`Pokedex ${dexId} has been reset`)
-	// 	} catch (error) {
-	// 		console.error('Error resetting Pokedex:', error)
-	// 		throw new Error(`Error resetting Pokedex "${dexId}": ${error}`)
-	// 	}
-	// }
+			// Wenn dieser Pokedex gerade ausgewählt ist, aktualisiere den aktuellen State
+			const isCurrentlySelected = this.pokedex.id === dexId
+			if (isCurrentlySelected) {
+				this.pokedex = dexSave
+				// Reset selected Pokemon da sich der State geändert hat
+				this.selectedPokemon = pokemonNullState
+			}
 
-	// deletePokedex(dexId: string): void {
-	// 	try {
-	// 		storageHandler.removePokedex(dexId)
-	// 		if (this.pokedex.id === dexId) {
-	// 			this.initPokedex()
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error deleting Pokedex:', error)
-	// 		throw new Error(`Error deleting Pokedex "${dexId}": ${error}`)
-	// 	}
-	// }
+			// Aktualisiere die Pokedex-Index-Liste (für Counter-Updates)
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+
+			console.log(`Pokedex ${dexId} has been reset to initial state`)
+		} catch (error) {
+			console.error('Error resetting Pokedex:', error)
+			throw new Error(`Error resetting Pokedex "${dexId}": ${error}`)
+		}
+	}
+
+	deletePokedex(dexId: string): void {
+		try {
+			// Check if we're deleting the currently selected pokedex
+			const isCurrentlySelected = this.pokedex.id === dexId
+
+			// Remove from storage
+			storageHandler.removePokedex(dexId)
+
+			if (isCurrentlySelected) {
+				// Select default dex so something is always selected
+				storageHandler.saveSelectedPokedexId(DEFAULT_SELECTED_DEX)
+
+				// Load the default pokedex and update current state
+				const defaultDexSave = storageHandler.loadPokedex(DEFAULT_SELECTED_DEX)
+				if (defaultDexSave) {
+					this.pokedex = defaultDexSave
+				} else {
+					// If default doesn't exist, initialize it by parsing the default dex ID
+					this.pokedex = this.initPokedex(this.parseAndCreateDexConfig(DEFAULT_SELECTED_DEX))
+				}
+
+				// Reset selected pokemon since we switched pokedex
+				this.selectedPokemon = pokemonNullState
+
+				// Update app state to reflect the change
+				appState.setSelectedPokedexId(DEFAULT_SELECTED_DEX)
+			}
+
+			// Ensure PokedexIndexList is up to date
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+		} catch (error) {
+			console.error('Error deleting Pokedex:', error)
+			throw new Error(`Error deleting Pokedex "${dexId}": ${error}`)
+		}
+	}
 
 	getCurrentPokedexState(): DexState {
 		return this.pokedexState || pokedexNullState

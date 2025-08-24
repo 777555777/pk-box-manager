@@ -2,8 +2,9 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
+	import { DEFAULT_SELECTED_DEX } from '$lib/state/storage-handler'
 
-	let { dexTitle, dexId, tags, isSelected, counter, onDelete, onSelect, imgUrl } = $props()
+	let { dexTitle, dexId, tags, isSelected, counter, onDelete, onReset, onSelect, imgUrl } = $props()
 
 	// Deletion state
 	let isDeleting = $state(false)
@@ -27,6 +28,14 @@
 	function confirmDelete() {
 		if (onDelete) {
 			onDelete(isSelected, dexId)
+		}
+		isDeleting = false
+	}
+
+	// Handle dex reset
+	function confirmReset() {
+		if (onReset) {
+			onReset(isSelected, dexId)
 		}
 		isDeleting = false
 	}
@@ -65,7 +74,18 @@
 >
 	<section class="pk-dex-card-header">
 		<div class="pk-dex-card-title">
-			<h3 class="text-base">{dexTitle}</h3>
+			<div class="pk-title-row">
+				<h3 class="text-base">{dexTitle}</h3>
+				<!-- Delete Button -->
+				<button
+					class="delete-button pk-tooltip"
+					data-tooltip="Delete or Reset Pokedex"
+					onclick={toggleDelete}
+				>
+					<PkIcon color="#fff" name={'close'} size={16} />
+				</button>
+			</div>
+
 			<ul class="dex-tags">
 				{#each tags as tag}
 					{#if tag !== 'normal'}
@@ -89,18 +109,21 @@
 		class="pk-dex-card-image {!isSelected ? 'unselected' : ''}"
 		style="background-image: url({imgUrl})"
 	>
-		<!-- Delete Button -->
-		<button class="delete-button pk-tooltip" data-tooltip="Reset Pokedex" onclick={toggleDelete}>
-			<PkIcon color="#fff" name={'close'} size={16} />
-		</button>
-
 		{#if isDeleting}
 			<!-- Delete Overlay -->
 			<div class="delete-confirmation">
-				<h4>Delete Progress?</h4>
-				<div class="delete-actions">
-					<a class="danger" href="#top" onclick={confirmDelete}>Delete</a>
-				</div>
+				{#if dexId !== DEFAULT_SELECTED_DEX}
+					<h4>Delete or Reset Pokedex?</h4>
+					<div class="delete-actions">
+						<a class="danger" href="#top" onclick={confirmDelete}>Delete</a>
+						<a class="danger" href="#top" onclick={confirmReset}>Reset</a>
+					</div>
+				{:else}
+					<h4>This Pokedex is the system default and can only be reset</h4>
+					<div class="delete-actions">
+						<a class="danger" href="#top" onclick={confirmReset}>Reset</a>
+					</div>
+				{/if}
 			</div>
 		{:else if counter.totalPokemon !== 0}
 			<!-- Counter Overlay -->
@@ -154,8 +177,8 @@
 
 	.dex-tags {
 		display: flex;
-		flex-wrap: wrap;
 		gap: 0.5rem;
+		overflow-x: scroll;
 
 		li {
 			list-style: none;
@@ -167,10 +190,13 @@
 		}
 	}
 
+	.pk-title-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.delete-button {
-		position: absolute;
-		top: 8px;
-		right: 8px;
 		background-color: rgba(128, 128, 128, 0.65);
 		border: none;
 		padding: 5px;
@@ -182,7 +208,7 @@
 		z-index: 10;
 
 		&:hover:not(:disabled) {
-			background-color: rgba(128, 128, 128, 0.5);
+			background-color: rgba(185, 185, 185, 0.75);
 		}
 
 		&:disabled {
@@ -234,9 +260,14 @@
 		z-index: 2;
 		cursor: text;
 
+		h4 {
+			text-align: center;
+			padding-inline: 0.5rem;
+		}
+
 		.delete-actions {
 			display: flex;
-			gap: 0.5rem;
+			gap: 1.5rem;
 
 			.danger {
 				color: var(--ui-text-color);

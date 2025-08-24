@@ -611,7 +611,7 @@ section.pk-selector-tray {
 .pk-dex-card {
 	display: flex;
 	flex-direction: column;
-	max-height: 290px;
+	max-height: 300px;
 	width: 220px;
 	position: relative;
 	padding: 0 6px 0;
@@ -636,10 +636,11 @@ section.pk-selector-tray {
 
 	.pk-dex-card-title {
 		min-height: 3.5rem;
+		width: 100%;
 
 		h3 {
 			line-height: 1.3;
-			padding-block: 0.25rem;
+			padding-block: 0.5rem;
 			word-wrap: break-word;
 			hyphens: auto;
 		}

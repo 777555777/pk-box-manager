@@ -79,10 +79,12 @@ const DEFAULT_TAGS_PART = (() => {
 	return tags && tags.length > 0 ? `-${tags.join('-')}` : ''
 })()
 
+export const DEFAULT_SELECTED_DEX = `${nationalDex.type}-${nationalDex.id}${DEFAULT_TAGS_PART}`
+
 class StorageHandler implements DexStorageHandler {
 	private readonly DEX_PREFIX = 'dex:'
 	private readonly SELECTED_DEX_KEY = 'selectedDex'
-	private readonly DEFAULT_SELECTED_DEX = `${nationalDex.type}-${nationalDex.id}${DEFAULT_TAGS_PART}`
+	private readonly DEFAULT_SELECTED_DEX = DEFAULT_SELECTED_DEX
 
 	// ================
 	// Pokedex
@@ -170,6 +172,7 @@ class StorageHandler implements DexStorageHandler {
 			console.log(`Pokedex ${targetDexId} removed from storage`)
 			return true
 		}
+		console.log(`No Pokedex found with ID ${key} to remove`)
 		return false
 	}
 

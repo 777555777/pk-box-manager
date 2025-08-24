@@ -121,7 +121,7 @@
 		<div class="active-tags-preview">
 			<strong>Include variants:</strong>
 			<span class="tag-list"
-				>{activeTags.filter((tag) => tag !== 'normal').join(', ') || 'Base Pokemon only'}</span
+				>{activeTags.filter((tag) => tag !== 'normal').join(', ') || 'base Pokemon only'}</span
 			>
 		</div>
 		<div class="pokemon-count-preview">
