@@ -23,30 +23,41 @@
 		tagStates[tag] = true
 	}
 
-	function determineTotalPokemonCount() {
+	function determineTotalPokemonCount(): number {
 		try {
-			const selectedPreset = Object.values(dexPresets).find(
-				(preset) => preset.id === dexId
-			) as DexConfig
-			if (!selectedPreset) return 0
+			// Passendes Preset finden
+			const selectedPreset = Object.values(dexPresets).find((preset) => preset.id === dexId)
 
+			if (!selectedPreset) {
+				return 0
+			}
+
+			// Konfiguration mit aktiven Tags holen
 			const configWithTags = getDexConfig(selectedPreset.id, activeTags)
-			return configWithTags.pokemonOrder.reduce((total, box) => {
-				return total + box.pokemon.length
-			}, 0)
+
+			// Anzahl Pokémon summieren
+			let totalCount = 0
+			for (const box of configWithTags.pokemonOrder) {
+				totalCount += box.pokemon.length
+			}
+
+			return totalCount
 		} catch (error) {
 			console.error('Error calculating pokemon count:', error)
 			return 0
 		}
 	}
 
-	function findActiveTags() {
-		return [
-			'normal' as BoxTags,
-			...Object.entries(tagStates)
-				.filter(([_, active]) => active)
-				.map(([tag, _]) => tag as BoxTags)
-		]
+	function findActiveTags(): BoxTags[] {
+		const tags: BoxTags[] = ['normal']
+
+		for (const [tag, active] of Object.entries(tagStates)) {
+			if (active) {
+				tags.push(tag as BoxTags)
+			}
+		}
+
+		return tags
 	}
 
 	function handleDexSelect() {
@@ -132,119 +143,13 @@
 />
 
 <style>
-	.pk-dex-card {
-		display: flex;
-		flex-direction: column;
-		max-height: 290px;
-		width: 220px;
-		position: relative;
-		padding: 0 6px 0;
-
-		border-width: 9px solid;
-		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
-		border-image-outset: 0;
-		border-image-width: 9px;
-
-		.pk-dex-card-actions button {
-			position: relative;
-			z-index: 2; /* Über dem Overlay */
-		}
-	}
-
 	.pk-dex-card-header {
-		display: flex;
-		align-items: flex-start;
-		padding-inline: 0.75rem;
-		margin-top: 3px;
-		padding-block: 8px;
-
 		.pk-dex-card-title {
-			/* min-height: 3.5rem; */
-
-			h3 {
-				line-height: 1.3;
-				padding-block: 0.25rem;
-				word-wrap: break-word;
-				hyphens: auto;
-			}
-		}
-	}
-
-	.pk-dex-card-image {
-		background-size: cover;
-		background-position: center;
-		width: 100%;
-		height: 150px;
-		position: relative;
-
-		border-top: 3px solid #5d5d6f;
-		border-bottom: 3px solid #5d5d6f;
-
-		/* Background image as pseudo-element */
-		&::after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background-image: inherit;
-			background-size: inherit;
-			background-position: inherit;
-			z-index: 0;
-		}
-
-		/* Gradient to darken the image */
-		&::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
-			z-index: 1;
+			min-height: unset;
 		}
 	}
 
 	.pk-dex-card-actions {
-		padding: 0.5rem;
-		display: flex;
-		justify-content: space-between;
-		position: relative;
-		margin-bottom: 6px;
-
-		/* Checkerboard background ::before pseudo-element */
-		&::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background-color: #383842;
-			background-image:
-				repeating-linear-gradient(
-					45deg,
-					#5d5d6f 25%,
-					transparent 25%,
-					transparent 75%,
-					#5d5d6f 75%,
-					#5d5d6f
-				),
-				repeating-linear-gradient(
-					45deg,
-					#5d5d6f 25%,
-					#383842 25%,
-					#383842 75%,
-					#5d5d6f 75%,
-					#5d5d6f
-				);
-			background-position:
-				0 0,
-				10px 10px;
-			background-size: 20px 20px;
-			opacity: 0.6;
-			z-index: 1;
-		}
-
-		/* Buttons bleiben auf normalem z-index und sind nicht von opacity betroffen */
-		:global(button) {
-			position: relative;
-			z-index: 1;
-		}
-
 		.pk-dex-create-btn {
 			margin: 0 auto;
 		}

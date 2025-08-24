@@ -56,9 +56,13 @@
 	// 	// pkState.loadAllPokedexes()
 	// }
 
-	function handlePokedexDelete() {
-		// pkState.deletePokedex(selectedDexId)
-		console.log('Delete function not implemented yet')
+	function handlePokedexDelete(isSelected: boolean, dexId: string) {
+		// try {
+		// 	pkState.deletePokedex(dexId)
+		// 	console.log(`Successfully deleted Pokedex: ${dexId}`)
+		// } catch (error) {
+		// 	console.error('Failed to delete Pokedex:', error)
+		// }
 	}
 
 	function loadSelectedDex(selectedDex: DexIndexEntry) {
@@ -74,7 +78,9 @@
 	headline="Pokedex settings"
 	dialogContent={pokedexDialogContent}
 	onConfirm={() => {}}
-	onCancel={() => {}}
+	onCancel={() => {
+		currentPage = 'active-pokedex'
+	}}
 	cancelBtnText="Close"
 	size="L"
 />
