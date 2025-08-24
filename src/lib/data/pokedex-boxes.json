@@ -1228,7 +1228,7 @@
 		"id": "vivillon-pattern",
 		"title": "Vivillon Pattern",
 		"wallpaper": "forest",
-		"tags": ["normal"],
+		"tags": ["forms"],
 		"pokemon": [
 			"0666-vivillon-polar",
 			"0666-vivillon-tundra",
@@ -1573,7 +1573,7 @@
 		"id": "alcremie-1",
 		"title": "Alcremie 1",
 		"wallpaper": "forest",
-		"tags": ["normal"],
+		"tags": ["forms"],
 		"pokemon": [
 			"0869-alcremie-vanilla-cream-berry",
 			"0869-alcremie-vanilla-cream-love",
@@ -1608,7 +1608,7 @@
 		"id": "alcremie-2",
 		"title": "Alcremie 2",
 		"wallpaper": "forest",
-		"tags": ["normal"],
+		"tags": ["forms"],
 		"pokemon": [
 			"0869-alcremie-lemon-cream-strawberry",
 			"0869-alcremie-lemon-cream-berry",
@@ -1644,7 +1644,7 @@
 		"id": "alcremie-3",
 		"title": "Alcremie 3",
 		"wallpaper": "forest",
-		"tags": ["normal"],
+		"tags": ["forms"],
 		"pokemon": [
 			"0869-alcremie-rainbow-swirl-strawberry",
 			"0869-alcremie-rainbow-swirl-berry",
@@ -1721,8 +1721,7 @@
 			"0902-basculegion-male",
 			"0903-sneasler",
 			"0904-overqwil",
-			"0905-enamorus-incarnate",
-			"0905-enamorus-therian"
+			"0905-enamorus-incarnate"
 		]
 	},
 	{
@@ -1749,7 +1748,8 @@
 			"0705-sliggoo-hisuian",
 			"0706-goodra-hisuian",
 			"0713-avalugg-hisuian",
-			"0724-decidueye-hisuian"
+			"0724-decidueye-hisuian",
+			"0905-enamorus-therian"
 		]
 	},
 	{
