@@ -7,7 +7,7 @@ import {
 import { getIdentifier } from '../spriteheet-helper.ts'
 import { appState } from './app-state.svelte.ts'
 import { DEFAULT_SELECTED_DEX, type DexIndexEntry, storageHandler } from './storage-handler.ts'
-import { getDexConfig } from '../data/pokedex-config-utils.ts'
+import { getAllPossibleTags, getDexConfig } from '../data/pokedex-config-utils.ts'
 import {
 	type BoxState,
 	type DexState,
@@ -26,7 +26,7 @@ export interface PkStateHandler {
 	getPokedex(): DexSave
 	// getConfig(): DexConfig
 	// getState(): DexState
-	switchPokedex(dexConfig: DexConfig): void
+	switchPokedex(dexId: DexSave): void
 	resetPokedex(dexId: string): void
 
 	// Pokedex Index
@@ -97,7 +97,7 @@ export class PkState implements PkStateHandler {
 		return getDexConfig(presetId, tags)
 	}
 
-	initPokedex(dexConfig: DexConfig | null = null) {
+	initPokedex(dexConfig: DexConfig | null = null): DexSave {
 		if (dexConfig) {
 			const dexSaveId = storageHandler.initPokedex(dexConfig)
 			const dexSave = storageHandler.loadPokedex(dexSaveId)
@@ -144,25 +144,18 @@ export class PkState implements PkStateHandler {
 		return this.pokedex
 	}
 
-	switchPokedex(dexConfig: DexConfig): void {
+	switchPokedex(dexSave: DexSave): void {
 		try {
-			const dexId = `${dexConfig.type}-${dexConfig.id}-${dexConfig.tags.join('-')}`
-
 			// Save selected Pokedex name
-			storageHandler.saveSelectedPokedexId(dexId)
+			storageHandler.saveSelectedPokedexId(dexSave.id)
 
-			// Check if we already have complete data in localStorage (e.g., from import)
-			let existingPokedexData = storageHandler.loadPokedex(dexId)
-
-			if (!existingPokedexData) {
-				// If we don't have existing data, we need to init it
-				this.initPokedex(dexConfig)
-				existingPokedexData = storageHandler.loadPokedex(dexId)
-			}
-
-			// We have complete data, just load it directly
-			this.pokedex = existingPokedexData!
+			// Update pokedex state and reset selected Pokemon
+			this.pokedex = dexSave
 			this.selectedPokemon = pokemonNullState
+
+			// Ensure PokedexIndexList is up to date for reactive UI updates
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+			appState.setSelectedPokedexId(dexSave.id)
 		} catch (error) {
 			console.error('Error switching Pokedex:', error)
 			throw error
@@ -233,25 +226,33 @@ export class PkState implements PkStateHandler {
 		}
 	}
 
-	deletePokedex(dexId: string): void {
+	deletePokedex(toBeDeletedDexSaveId: string): void {
 		try {
 			// Check if we're deleting the currently selected pokedex
-			const isCurrentlySelected = this.pokedex.id === dexId
+			const isCurrentlySelected = this.pokedex.id === toBeDeletedDexSaveId
 
 			// Remove from storage
-			storageHandler.removePokedex(dexId)
+			storageHandler.removePokedex(toBeDeletedDexSaveId)
 
 			if (isCurrentlySelected) {
 				// Select default dex so something is always selected
-				storageHandler.saveSelectedPokedexId(DEFAULT_SELECTED_DEX)
+
+				const dexIndexes = storageHandler.loadPokedexIndex()
+				const defaultDexId = dexIndexes.find((dex) => dex.isSystemDefault === true)
+				if (!defaultDexId) {
+					throw new Error('No default Pokedex found to switch to after deletion.')
+				}
+				storageHandler.saveSelectedPokedexId(defaultDexId.dexSaveId)
 
 				// Load the default pokedex and update current state
-				const defaultDexSave = storageHandler.loadPokedex(DEFAULT_SELECTED_DEX)
+				const defaultDexSave = storageHandler.loadPokedex(defaultDexId.dexSaveId)
 				if (defaultDexSave) {
 					this.pokedex = defaultDexSave
 				} else {
 					// If default doesn't exist, initialize it by parsing the default dex ID
-					this.pokedex = this.initPokedex(this.parseAndCreateDexConfig(DEFAULT_SELECTED_DEX))
+					this.pokedex = this.initPokedex(
+						getDexConfig(defaultDexId.dexSaveId, getAllPossibleTags())
+					)
 				}
 
 				// Reset selected pokemon since we switched pokedex
@@ -265,7 +266,7 @@ export class PkState implements PkStateHandler {
 			this.pokedexIndexList = storageHandler.loadPokedexIndex()
 		} catch (error) {
 			console.error('Error deleting Pokedex:', error)
-			throw new Error(`Error deleting Pokedex "${dexId}": ${error}`)
+			throw new Error(`Error deleting Pokedex "${toBeDeletedDexSaveId}": ${error}`)
 		}
 	}
 

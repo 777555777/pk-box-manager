@@ -19,19 +19,34 @@ class DexMeta {
 	+totalPokemon: number
 	+totalCaught: number
 	+totalShiny: number
+	+isSystemDefault?: boolean
 }
 
+' ---- Index Entry für UI Listen ----
+class DexIndexEntry {
+  +dexSaveId: string
+  +displayName: string
+  +tags: string[]
+  +coverImage: string
+  +updatedAt: number
+  +createdAt: number
+  +totalPokemon: number
+  +totalCaughtPokemon: number
+  +totalShinyPokemon: number
+  +isSystemDefault: boolean
+}
 
 ' ---- Linke Seite: Struktur des Pokedex ----
 class DexConfig {
-  +id: string
+  +presetId: string
   +configVersion: string
   +type: "preset" | "custom"
-  +basePreset: string?
-  +name: string
-  +tags: string[]
+  +displayName: string
+  +coverImage: string
+  +sortOrder: number
+  +tags: BoxTags[]
   +boxList: string[]
-  +pokemonOrder: BoxOrder[]
+  +pokemonOrder: BoxOrderConfig[]
   +createdAt: number
   +updatedAt: number
 }
@@ -43,7 +58,7 @@ class BoxOrderConfig {
 
 class PokemonEntry {
   +pokemonid: string
-  +formid: string?
+  +formid: string | null
   +id_national: number
 }
 
@@ -54,12 +69,12 @@ class DexState {
   +displayName: string
   +coverImage: string
   +sortOrder: number
-  +pokemon: Map<string, PokemonEditState>
+  +pokemon: Record<string, PokemonEditState>
   +boxes: BoxState[]
 }
 
 class PokemonEditState {
-  +pokemonEntry: PokemonEntry
+  +idEntry: PokemonEntry
   +captured: boolean
   +ball: string
   +shiny: boolean
@@ -87,6 +102,7 @@ LocalStorage "1" o-- "*" DexSave : references
 DexSave "1" o-- "1" DexConfig
 DexSave "1" o-- "1" DexMeta
 DexSave "1" o-- "1" DexState
+DexIndexEntry "1" -- "1" DexSave : derived from
 DexConfig "1" o-- "*" BoxOrderConfig
 BoxOrderConfig "1" o-- "*" PokemonEntry
 DexState "1" o-- "*" PokemonEditState

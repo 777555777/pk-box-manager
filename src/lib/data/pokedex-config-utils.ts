@@ -143,7 +143,7 @@ export function getAllPossibleTags() {
  */
 export function getAvailableTagsForPreset(presetId: string): BoxTags[] {
 	// Get the preset config
-	const preset = Object.values(dexPresets).find((p) => p.id === presetId)
+	const preset = Object.values(dexPresets).find((p) => p.presetId === presetId)
 	if (!preset) {
 		console.warn(`Preset with id "${presetId}" not found`)
 		return []

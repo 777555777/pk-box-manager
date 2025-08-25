@@ -3,11 +3,11 @@
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let {
-		dexId,
+		dexSaveId,
 		disabled = false,
 		hideLabel = false
 	}: {
-		dexId: string
+		dexSaveId: string
 		disabled?: boolean
 		hideLabel?: boolean
 		icon?: string
@@ -16,7 +16,7 @@
 
 	function exportCurrentDex() {
 		try {
-			let selectedPokedex = storageHandler.loadPokedex(dexId)
+			let selectedPokedex = storageHandler.loadPokedex(dexSaveId)
 
 			const dexState = JSON.stringify(selectedPokedex, null, 2)
 
@@ -33,7 +33,7 @@
 			// Erstelle ein temporäres a-Element zum Herunterladen
 			const a = document.createElement('a')
 			a.href = url
-			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexId}` // Dateiname für den Download
+			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexSaveId}` // Dateiname für den Download
 
 			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
 			document.body.appendChild(a)

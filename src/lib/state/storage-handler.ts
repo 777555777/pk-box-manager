@@ -16,7 +16,7 @@ export type BadgeDisplayMode = false | 'ball' | 'comment' | 'ribbon' | 'mark'
 type SidebarSection = 'catch' | 'ribbon' | 'mark' | 'stats'
 
 export interface DexIndexEntry {
-	id: string
+	dexSaveId: string
 	displayName: string
 	tags: string[]
 	coverImage: string
@@ -25,6 +25,7 @@ export interface DexIndexEntry {
 	totalPokemon: number
 	totalCaughtPokemon: number
 	totalShinyPokemon: number
+	isSystemDefault: boolean
 }
 
 export interface AppSettings {
@@ -78,7 +79,7 @@ const DEFAULT_TAGS_PART = (() => {
 	return tags && tags.length > 0 ? `-${tags.join('-')}` : ''
 })()
 
-export const DEFAULT_SELECTED_DEX = `${nationalDex.type}-${nationalDex.id}${DEFAULT_TAGS_PART}`
+export const DEFAULT_SELECTED_DEX = `${nationalDex.type}-${nationalDex.presetId}${DEFAULT_TAGS_PART}`
 
 class StorageHandler implements DexStorageHandler {
 	private readonly DEX_PREFIX = 'dex:'
@@ -98,7 +99,20 @@ class StorageHandler implements DexStorageHandler {
 	 * @param dexConfig The configuration for the Pokedex.
 	 */
 	public initPokedex(dexConfig: DexConfig): string {
-		const initialDex: DexSave = initPokedex(dexConfig)
+		// Check if this should be the system default
+		const existingDexIndexes = this.loadPokedexIndex()
+		const isSystemDefaultAlreadyDefined = existingDexIndexes.some(
+			(dex) => dex.isSystemDefault === true
+		)
+
+		// Determine if this instance should be the system default
+		// Only the first instance of the national dex becomes the system default
+		const shouldBeSystemDefault =
+			dexConfig.presetId === 'national' &&
+			dexConfig.type === 'preset' &&
+			!isSystemDefaultAlreadyDefined
+
+		const initialDex: DexSave = initPokedex(dexConfig, shouldBeSystemDefault)
 		this.savePokedex(initialDex)
 		const dexSaveId = initialDex.id
 		return dexSaveId
@@ -188,7 +202,7 @@ class StorageHandler implements DexStorageHandler {
 				try {
 					const parsedValue: DexSave = JSON.parse(value)
 					const validEntry: DexIndexEntry = {
-						id: parsedValue.id,
+						dexSaveId: parsedValue.id,
 						displayName: parsedValue.config.displayName,
 						tags: parsedValue.config.tags,
 						coverImage: parsedValue.config.coverImage,
@@ -196,7 +210,8 @@ class StorageHandler implements DexStorageHandler {
 						createdAt: parsedValue.config.createdAt,
 						totalPokemon: parsedValue.meta.totalPokemon,
 						totalCaughtPokemon: parsedValue.meta.totalCaught,
-						totalShinyPokemon: parsedValue.meta.totalShiny
+						totalShinyPokemon: parsedValue.meta.totalShiny,
+						isSystemDefault: parsedValue.meta.isSystemDefault || false
 					}
 					dexIndexList.push(validEntry)
 				} catch (error) {

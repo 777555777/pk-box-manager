@@ -2,8 +2,6 @@
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
-	import PkDexList from '$lib/components/ui/pk-dex-list.svelte'
-	import PkDexSelector from '$lib/components/ui/pk-dex-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
@@ -68,9 +66,7 @@
 <main>
 	<section class="pk-content">
 		<PkToolBox />
-		<!-- <PkDexSelector /> -->
 		<PkBoxContainer {dexState} />
-		<!-- <PkDexList /> -->
 	</section>
 
 	<PkSidebar />

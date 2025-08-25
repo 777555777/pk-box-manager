@@ -24,22 +24,35 @@ const initialMetaData: DexMeta = {
 	updatedAt: 0,
 	totalPokemon: 0,
 	totalCaught: 0,
-	totalShiny: 0
+	totalShiny: 0,
+	isSystemDefault: false
 }
 
-export function initPokedex(dexConfig: DexConfig): DexSave {
+export function initPokedex(dexConfig: DexConfig, isSystemDefault: boolean = false): DexSave {
 	// Build the state side of pokedex
 	const initialBoxes = setupInitialBoxes(dexConfig.pokemonOrder)
 	const initialPokemonList = setupInitialPokemonList(dexConfig.pokemonOrder)
 	const initialState = addConfigData(initialBoxes, initialPokemonList, dexConfig)
 
-	// Create the final DexSave object
-	const dexSaveId = `${dexConfig.type}-${dexConfig.id}-${dexConfig.tags.join('-')}`
+	// Create ID: if it's the system default, use deterministic ID; otherwise add timestamp
+	let dexSaveId = ''
+	if (isSystemDefault) {
+		dexSaveId = `${dexConfig.type}-${dexConfig.presetId}-${dexConfig.tags.join('-')}`
+	} else {
+		dexSaveId = `${dexConfig.type}-${dexConfig.presetId}-${dexConfig.tags.join('-')}-${Date.now()}`
+	}
+
+	// Create meta data with correct system default flag
+	const metaData: DexMeta = {
+		...initialMetaData,
+		isSystemDefault: isSystemDefault
+	}
+
 	const dexSave = {
 		id: dexSaveId,
 		config: dexConfig,
 		state: initialState,
-		meta: initialMetaData
+		meta: metaData
 	}
 
 	return dexSave
@@ -100,7 +113,7 @@ function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string,
 function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>, dexConfig: DexConfig): DexState {
 	return {
 		version: '1.0.0',
-		name: dexConfig.name,
+		name: dexConfig.presetId,
 		displayName: dexConfig.displayName,
 		coverImage: dexConfig.coverImage,
 		sortOrder: dexConfig.sortOrder,

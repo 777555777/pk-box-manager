@@ -48,7 +48,7 @@ export interface BoxOrderConfig {
 }
 
 export interface DexConfig {
-	id: string
+	presetId: string
 	configVersion: string
 	type: 'preset' | 'custom'
 	displayName: string
@@ -69,6 +69,7 @@ export interface DexMeta {
 	totalPokemon: number
 	totalCaught: number
 	totalShiny: number
+	isSystemDefault?: boolean
 }
 
 // =================================

@@ -86,7 +86,7 @@ const boxOrderNational = [
 
 // Exported because it is the default Pokedex
 export const nationalDex: DexConfig = {
-	id: 'national',
+	presetId: 'national',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'National Dex',
@@ -100,7 +100,7 @@ export const nationalDex: DexConfig = {
 }
 
 const gen1Dex: DexConfig = {
-	id: 'generation-1',
+	presetId: 'generation-1',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 1',
@@ -114,7 +114,7 @@ const gen1Dex: DexConfig = {
 }
 
 const gen2Dex: DexConfig = {
-	id: 'generation-2',
+	presetId: 'generation-2',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 2',
@@ -128,7 +128,7 @@ const gen2Dex: DexConfig = {
 }
 
 const gen3Dex: DexConfig = {
-	id: 'generation-3',
+	presetId: 'generation-3',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 3',
@@ -142,7 +142,7 @@ const gen3Dex: DexConfig = {
 }
 
 const gen4Dex: DexConfig = {
-	id: 'generation-4',
+	presetId: 'generation-4',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 4',
@@ -156,7 +156,7 @@ const gen4Dex: DexConfig = {
 }
 
 const gen5Dex: DexConfig = {
-	id: 'generation-5',
+	presetId: 'generation-5',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 5',
@@ -170,7 +170,7 @@ const gen5Dex: DexConfig = {
 }
 
 const gen6Dex: DexConfig = {
-	id: 'generation-6',
+	presetId: 'generation-6',
 	configVersion: '',
 	type: 'preset',
 	displayName: 'Generation 6',

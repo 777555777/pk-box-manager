@@ -2,9 +2,19 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
-	import { DEFAULT_SELECTED_DEX } from '$lib/state/storage-handler'
 
-	let { dexTitle, dexId, tags, isSelected, counter, onDelete, onReset, onSelect, imgUrl } = $props()
+	let {
+		dexTitle,
+		dexSaveId,
+		tags,
+		isSelected,
+		counter,
+		onDelete,
+		onReset,
+		onSelect,
+		imgUrl,
+		isSystemDefault = false
+	} = $props()
 
 	// Deletion state
 	let isDeleting = $state(false)
@@ -15,7 +25,7 @@
 	function handleDexSelect() {
 		// For regular dex cards, just pass the dex ID
 		if (onSelect) {
-			onSelect(dexId)
+			onSelect(dexSaveId)
 		}
 	}
 
@@ -27,7 +37,7 @@
 	// Handle dex reset
 	function confirmDelete() {
 		if (onDelete) {
-			onDelete(isSelected, dexId)
+			onDelete(dexSaveId)
 		}
 		isDeleting = false
 	}
@@ -35,7 +45,7 @@
 	// Handle dex reset
 	function confirmReset() {
 		if (onReset) {
-			onReset(isSelected, dexId)
+			onReset(dexSaveId)
 		}
 		isDeleting = false
 	}
@@ -86,6 +96,7 @@
 				</button>
 			</div>
 
+			<!-- Active Tags list -->
 			<ul class="dex-tags">
 				{#each tags as tag}
 					{#if tag !== 'normal'}
@@ -112,7 +123,7 @@
 		{#if isDeleting}
 			<!-- Delete Overlay -->
 			<div class="delete-confirmation">
-				{#if dexId !== DEFAULT_SELECTED_DEX}
+				{#if !isSystemDefault}
 					<h4>Delete or Reset Pokedex?</h4>
 					<div class="delete-actions">
 						<a class="danger" href="#top" onclick={confirmDelete}>Delete</a>
@@ -146,7 +157,7 @@
 		<!-- Select Button -->
 		<button class="pk-button" onclick={handleDexSelect}> Select Dex </button>
 		<!-- Export Button -->
-		<PkExport {dexId} hideLabel={true} />
+		<PkExport {dexSaveId} hideLabel={true} />
 	</section>
 </article>
 

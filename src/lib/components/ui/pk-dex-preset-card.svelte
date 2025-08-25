@@ -26,14 +26,14 @@
 	function determineTotalPokemonCount(): number {
 		try {
 			// Passendes Preset finden
-			const selectedPreset = Object.values(dexPresets).find((preset) => preset.id === dexId)
+			const selectedPreset = Object.values(dexPresets).find((preset) => preset.presetId === dexId)
 
 			if (!selectedPreset) {
 				return 0
 			}
 
 			// Konfiguration mit aktiven Tags holen
-			const configWithTags = getDexConfig(selectedPreset.id, activeTags)
+			const configWithTags = getDexConfig(selectedPreset.presetId, activeTags)
 
 			// Anzahl Pokémon summieren
 			let totalCount = 0
@@ -63,10 +63,10 @@
 	function handleDexSelect() {
 		// For preset cards, pass the selected preset and active tags
 		const selectedPreset = Object.values(dexPresets).find(
-			(preset) => preset.id === dexId
+			(preset) => preset.presetId === dexId
 		) as DexConfig
 		if (onSelect && selectedPreset) {
-			selectedPresetConfig = getDexConfig(selectedPreset.id, activeTags)
+			selectedPresetConfig = getDexConfig(selectedPreset.presetId, activeTags)
 			onSelect(selectedPreset, activeTags)
 		}
 	}

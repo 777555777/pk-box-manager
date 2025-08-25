@@ -22,7 +22,7 @@
 	let selectedDexId = $derived(appState.getSelectedPokedexId())
 	let pokedexIndexList = $derived(pkState.getPokedexIndexList())
 	let selectedDexRef = $derived.by(() => {
-		return pokedexIndexList.find((dex) => dex.id === selectedDexId)
+		return pokedexIndexList.find((dex) => dex.dexSaveId === selectedDexId)
 	})
 
 	let pokedexDialog: PkDialogElement
@@ -33,42 +33,40 @@
 
 	function createAndSelectDex(selectedPreset: DexConfig, activeTags: BoxTags[]) {
 		// Create new config with selected tags without mutating the original
-		const initPreset = getDexConfig(selectedPreset.id, activeTags)
+		const initPreset = getDexConfig(selectedPreset.presetId, activeTags)
 
-		// Generate the correct dex ID that will be created
-		const dexId = `${initPreset.type}-${initPreset.id}-${initPreset.tags.join('-')}`
+		if (!initPreset) {
+			console.error('Failed to create Pokedex: Invalid preset or tags')
+			return
+		}
+
+		const initialisedDexSave = pkState.initPokedex(initPreset)
+
+		if (!initialisedDexSave) {
+			console.error('Failed to create Pokedex: Invalid preset or tags')
+			return
+		}
 
 		// create and switch with selected tags:
-		pkState.switchPokedex(initPreset)
-
-		// Update app state with the correct dex ID - this ensures the UI reactive variables update
-		appState.setSelectedPokedexId(dexId)
+		pkState.switchPokedex(initialisedDexSave)
 
 		// Switch to active pokedex tab to show the newly created dex
 		currentPage = 'active'
-
-		// The dialog will be closed by the dialog's onConfirm handler
 	}
 
-	// function handlePokedexDelete(isSelected: boolean, dexName: string) {
-	// 	 pkState.deletePokedex(dexName)
-	// 	// Reload the pokedex list to reflect the reset
-	// 	// pkState.loadAllPokedexes()
-	// }
-
-	function handlePokedexDelete(isSelected: boolean, dexId: string) {
+	function handlePokedexDelete(toDeleteDexSaveId: string) {
 		try {
-			pkState.deletePokedex(dexId)
-			console.log(`Successfully deleted Pokedex: ${dexId}`)
+			pkState.deletePokedex(toDeleteDexSaveId)
+			console.log(`Successfully deleted Pokedex: ${toDeleteDexSaveId}`)
 		} catch (error) {
 			console.error('Failed to delete Pokedex:', error)
 		}
 	}
 
-	function handleConfirmReset(isSelected: boolean, dexId: string) {
+	function handleConfirmReset(toResetDexSaveId: string) {
 		try {
-			pkState.resetPokedex(dexId)
-			console.log(`Successfully reset Pokedex: ${dexId}`)
+			pkState.resetPokedex(toResetDexSaveId)
+			console.log(`Successfully reset Pokedex: ${toResetDexSaveId}`)
 		} catch (error) {
 			console.error('Failed to reset Pokedex:', error)
 		}
@@ -76,9 +74,11 @@
 
 	function loadSelectedDex(selectedDex: DexIndexEntry) {
 		console.log('Loading selected dex:', selectedDex)
-		const targetDexSave = pkState.loadPokedex(selectedDex.id)
-		appState.setSelectedPokedexId(selectedDex.id)
-		pkState.switchPokedex(targetDexSave.config)
+		const targetDexSave = pkState.loadPokedex(selectedDex.dexSaveId)
+
+		// Update app state first, then switch pokédex
+		appState.setSelectedPokedexId(selectedDex.dexSaveId)
+		pkState.switchPokedex(targetDexSave)
 	}
 </script>
 
@@ -136,9 +136,9 @@
 			{#each pokedexIndexList as pokedexIndex, index}
 				<PkDexCard
 					dexTitle={pokedexIndex.displayName}
-					dexId={pokedexIndex.id}
+					dexSaveId={pokedexIndex.dexSaveId}
 					tags={pokedexIndex.tags}
-					isSelected={pokedexIndex.id === selectedDexRef?.id}
+					isSelected={pokedexIndex.dexSaveId === selectedDexRef?.dexSaveId}
 					counter={{
 						totalPokemon: pokedexIndex.totalPokemon,
 						totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
@@ -148,6 +148,7 @@
 					onReset={handleConfirmReset}
 					onSelect={() => loadSelectedDex(pokedexIndex)}
 					imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
+					isSystemDefault={pokedexIndex.isSystemDefault}
 					--value-color="red"
 					--value-secondary-color="blue"
 				/>
@@ -162,7 +163,7 @@
 			{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
 				<PkDexPresetCard
 					dexTitle={dexPreset.displayName}
-					dexId={dexPreset.id}
+					dexId={dexPreset.presetId}
 					onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
 						createAndSelectDex(selectedPreset, activeTags)}
 					imgUrl={`/ui/dex/${dexPreset.coverImage}`}
