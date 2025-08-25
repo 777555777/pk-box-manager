@@ -17,7 +17,6 @@ type SidebarSection = 'catch' | 'ribbon' | 'mark' | 'stats'
 
 export interface DexIndexEntry {
 	id: string
-	name: string
 	displayName: string
 	tags: string[]
 	coverImage: string
@@ -190,7 +189,6 @@ class StorageHandler implements DexStorageHandler {
 					const parsedValue: DexSave = JSON.parse(value)
 					const validEntry: DexIndexEntry = {
 						id: parsedValue.id,
-						name: parsedValue.config.name,
 						displayName: parsedValue.config.displayName,
 						tags: parsedValue.config.tags,
 						coverImage: parsedValue.config.coverImage,

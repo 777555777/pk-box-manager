@@ -51,7 +51,6 @@ export interface DexConfig {
 	id: string
 	configVersion: string
 	type: 'preset' | 'custom'
-	name: string
 	displayName: string
 	coverImage: string
 	sortOrder: number

@@ -105,7 +105,7 @@ export class PkState implements PkStateHandler {
 			// Ensure PokedexIndexList is up to date
 			this.pokedexIndexList = storageHandler.loadPokedexIndex()
 			if (!dexSave) {
-				throw new Error(`Failed to initialize Pokedex for "${dexConfig.name}".`)
+				throw new Error(`Failed to initialize Pokedex for "${dexConfig.displayName}".`)
 			}
 			return dexSave
 		}
