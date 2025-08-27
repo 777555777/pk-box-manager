@@ -40,7 +40,13 @@
 			return
 		}
 
-		const initialisedDexSave = pkState.initPokedex(initPreset)
+		// Apply the custom display name to the final config (already a copy from getDexConfig)
+		const finalConfig = {
+			...initPreset,
+			displayName: selectedPreset.displayName // This comes from the preset card with custom name
+		}
+
+		const initialisedDexSave = pkState.initPokedex(finalConfig)
 
 		if (!initialisedDexSave) {
 			console.error('Failed to create Pokedex: Invalid preset or tags')
@@ -132,46 +138,42 @@
 
 {#snippet pokedexActiveList()}
 	<section class="pk-pokedex-section">
-		<div class="pk-pokedex-grid">
-			{#each pokedexIndexList as pokedexIndex, index}
-				<PkDexCard
-					dexTitle={pokedexIndex.displayName}
-					dexSaveId={pokedexIndex.dexSaveId}
-					tags={pokedexIndex.tags}
-					isSelected={pokedexIndex.dexSaveId === selectedDexRef?.dexSaveId}
-					counter={{
-						totalPokemon: pokedexIndex.totalPokemon,
-						totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
-						totalShinyPokemon: pokedexIndex.totalShinyPokemon
-					}}
-					onDelete={handlePokedexDelete}
-					onReset={handleConfirmReset}
-					onSelect={() => loadSelectedDex(pokedexIndex)}
-					imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
-					isSystemDefault={pokedexIndex.isSystemDefault}
-					--value-color="red"
-					--value-secondary-color="blue"
-				/>
-			{/each}
-		</div>
+		{#each pokedexIndexList as pokedexIndex, index}
+			<PkDexCard
+				dexTitle={pokedexIndex.displayName}
+				dexSaveId={pokedexIndex.dexSaveId}
+				tags={pokedexIndex.tags}
+				isSelected={pokedexIndex.dexSaveId === selectedDexRef?.dexSaveId}
+				counter={{
+					totalPokemon: pokedexIndex.totalPokemon,
+					totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
+					totalShinyPokemon: pokedexIndex.totalShinyPokemon
+				}}
+				onDelete={handlePokedexDelete}
+				onReset={handleConfirmReset}
+				onSelect={() => loadSelectedDex(pokedexIndex)}
+				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
+				isSystemDefault={pokedexIndex.isSystemDefault}
+				--value-color="red"
+				--value-secondary-color="blue"
+			/>
+		{/each}
 	</section>
 {/snippet}
 
 {#snippet pokedexPresetList()}
 	<section class="pk-pokedex-section">
-		<div class="pk-pokedex-grid">
-			{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
-				<PkDexPresetCard
-					dexTitle={dexPreset.displayName}
-					dexId={dexPreset.presetId}
-					onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
-						createAndSelectDex(selectedPreset, activeTags)}
-					imgUrl={`/ui/dex/${dexPreset.coverImage}`}
-					--value-color="red"
-					--value-secondary-color="blue"
-				/>
-			{/each}
-		</div>
+		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
+			<PkDexPresetCard
+				dexTitle={dexPreset.displayName}
+				dexId={dexPreset.presetId}
+				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
+					createAndSelectDex(selectedPreset, activeTags)}
+				imgUrl={`/ui/dex/${dexPreset.coverImage}`}
+				--value-color="red"
+				--value-secondary-color="blue"
+			/>
+		{/each}
 	</section>
 {/snippet}
 
@@ -242,7 +244,6 @@
 		.pk-details .pk-filter-toggles {
 			flex-direction: column;
 			gap: 0.75rem;
-			width: 100%;
 		}
 
 		.pk-details .pk-filter-container {
@@ -254,28 +255,25 @@
 		}
 	}
 	.pk-pokedex-section {
-		display: flex;
-		justify-content: center;
-		height: 680px;
-	}
-
-	.pk-pokedex-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 2rem;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.5rem;
 		width: 100%;
-		align-content: start; /* Items beginnen oben */
-		justify-items: center; /* Grid zentrieren */
+		align-content: start;
+		justify-items: center;
 
-		padding-inline: 2rem;
-		padding-bottom: 2rem; /* Prevent contet cutoff by mask */
+		padding: 2rem;
 		overflow-y: auto;
-		mask: var(--scroll-indicator-gradient);
+		overflow-x: hidden;
+		height: 680px;
+
+		border-radius: 5px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background-color: #6a95a4;
 	}
 
 	@media (max-width: 768px) {
 		.pk-pokedex-section {
-			gap: 1rem;
 			padding-bottom: 2rem;
 		}
 	}
@@ -287,7 +285,7 @@
 		}
 
 		.pk-pokedex-section {
-			padding-inline: 1rem;
+			padding-inline: 0rem;
 		}
 	}
 </style>

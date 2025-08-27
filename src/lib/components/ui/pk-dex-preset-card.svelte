@@ -10,6 +10,9 @@
 	let cardElement: HTMLElement | undefined
 	let configurationDialog: PkDialogElement
 
+	// Custom display name for the new Pokédex instance
+	let customDisplayName = $state(dexTitle)
+
 	// Tag toggle functionality for presets
 	let availableTagsForThisPreset = getAvailableTagsForPreset(dexId)
 
@@ -65,9 +68,19 @@
 		const selectedPreset = Object.values(dexPresets).find(
 			(preset) => preset.presetId === dexId
 		) as DexConfig
+
 		if (onSelect && selectedPreset) {
-			selectedPresetConfig = getDexConfig(selectedPreset.presetId, activeTags)
-			onSelect(selectedPreset, activeTags)
+			// Get base config with tags (creates a new object, doesn't mutate original)
+			const baseConfigWithTags = getDexConfig(selectedPreset.presetId, activeTags)
+
+			// Create final config with custom name (another new object)
+			const configWithCustomName = {
+				...baseConfigWithTags,
+				displayName: customDisplayName.trim() || selectedPreset.displayName
+			}
+
+			selectedPresetConfig = configWithCustomName
+			onSelect(configWithCustomName, activeTags)
 		}
 	}
 </script>
@@ -95,8 +108,21 @@
 </article>
 
 {#snippet dexConfigurationContent()}
+	<div class="dex-name-input">
+		<label for="dex-name">Pokedex Name</label>
+		<input
+			class="pk-textarea"
+			type="text"
+			id="dex-name"
+			bind:value={customDisplayName}
+			maxlength="18"
+		/>
+	</div>
+
+	<div class="separator"></div>
+
 	<div class="dex-tag-selection">
-		<p class="text-small">Select which variants to include in your Pokédex:</p>
+		<p>Select the variants to be included in the Pokédex</p>
 
 		{#if availableTagsForThisPreset.length > 0}
 			<div class="tag-grid">
@@ -112,9 +138,7 @@
 			</div>
 		{:else}
 			<div class="no-tags-info">
-				<p class="text-small">
-					This Pokédex only contains base Pokemon - no additional variants available.
-				</p>
+				<p>This Pokédex only contains base Pokemon - no additional variants available.</p>
 			</div>
 		{/if}
 
@@ -133,7 +157,7 @@
 
 <PkDialog
 	bind:this={configurationDialog}
-	headline="Include variants"
+	headline="Configuration"
 	dialogContent={dexConfigurationContent}
 	onConfirm={handleDexSelect}
 	onCancel={() => {}}
@@ -160,14 +184,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		padding: 1rem;
+		padding-inline: 1rem;
+		text-align: center;
 	}
 
 	.tag-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		gap: 0.5rem;
-		margin: 1rem 0;
+		margin-bottom: 1rem;
 	}
 
 	.no-tags-info {
@@ -205,5 +230,12 @@
 		color: hsla(200, 100%, 70%, 1);
 		font-weight: bold;
 		font-size: 1.25rem;
+	}
+
+	.dex-name-input {
+		display: flex;
+		flex-direction: column;
+		padding-inline: 1rem;
+		gap: 0.5rem;
 	}
 </style>

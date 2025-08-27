@@ -141,6 +141,10 @@
 		}
 	}
 
+	:global(.pk-dialog-content) {
+		overflow-y: visible !important; /* Überschreibt das Standardverhalten */
+	}
+
 	@media (max-width: 600px) {
 		.pk-button {
 			max-width: 44px;

@@ -216,7 +216,7 @@
 		place-items: center;
 		transition: background-color 0.2s ease;
 		cursor: pointer;
-		z-index: 10;
+		z-index: 1;
 
 		&:hover:not(:disabled) {
 			background-color: rgba(185, 185, 185, 0.75);
@@ -273,7 +273,7 @@
 
 		h4 {
 			text-align: center;
-			padding-inline: 0.5rem;
+			padding-inline: 1.5rem;
 		}
 
 		.delete-actions {
