@@ -18,14 +18,14 @@
 		try {
 			let selectedPokedex = storageHandler.loadPokedex(dexSaveId)
 
-			const dexState = JSON.stringify(selectedPokedex, null, 2)
+			const selectedDexSave = JSON.stringify(selectedPokedex, null, 2)
 
-			if (!dexState) {
+			if (!selectedDexSave) {
 				throw new Error('Pokedex data is empty!')
 			}
 
 			// Erstelle einen Blob mit dem JSON-Inhalt
-			const blob = new Blob([dexState], { type: 'application/json' })
+			const blob = new Blob([selectedDexSave], { type: 'application/json' })
 
 			// Erstelle eine URL für den Blob
 			const url = URL.createObjectURL(blob)

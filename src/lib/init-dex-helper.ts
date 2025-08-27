@@ -32,7 +32,7 @@ export function initPokedex(dexConfig: DexConfig, isSystemDefault: boolean = fal
 	// Build the state side of pokedex
 	const initialBoxes = setupInitialBoxes(dexConfig.pokemonOrder)
 	const initialPokemonList = setupInitialPokemonList(dexConfig.pokemonOrder)
-	const initialState = addConfigData(initialBoxes, initialPokemonList, dexConfig)
+	const initialState = addConfigData(initialBoxes, initialPokemonList)
 
 	// Create ID: if it's the system default, use deterministic ID; otherwise add timestamp
 	let dexSaveId = ''
@@ -110,13 +110,9 @@ function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string,
 }
 
 // prettier-ignore
-function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>, dexConfig: DexConfig): DexState {
+function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>): DexState {
 	return {
-		version: '1.0.0',
-		name: dexConfig.presetId,
-		displayName: dexConfig.displayName,
-		coverImage: dexConfig.coverImage,
-		sortOrder: dexConfig.sortOrder,
+		stateVersion: '1.0.0',
 		pokemon: pokemonList,
 		boxes: initialBoxes
 	}

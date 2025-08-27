@@ -1,3 +1,4 @@
+import { type DexState } from './models/data-models.ts'
 import { type AppSettings } from './state/storage-handler.ts'
 
 export const pokemonNullProperties = {
@@ -19,12 +20,8 @@ export const pokemonNullState = {
 
 export const defaultWallpaper = '01-forest'
 
-export const pokedexNullState = {
-	version: '0.0.0',
-	name: 'null',
-	displayName: 'Null Dex',
-	coverImage: 'null-cover',
-	sortOrder: 0,
+export const pokedexNullState: DexState = {
+	stateVersion: '0.0.0',
 	pokemon: { '0000-null': pokemonNullState },
 	boxes: [
 		{

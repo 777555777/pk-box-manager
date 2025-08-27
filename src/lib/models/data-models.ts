@@ -31,11 +31,7 @@ export interface PokemonEditState {
 }
 
 export interface DexState {
-	version: string
-	name: string
-	displayName: string
-	coverImage: string
-	sortOrder: number
+	stateVersion: string
 	pokemon: Record<string, PokemonEditState>
 	boxes: BoxState[]
 }
