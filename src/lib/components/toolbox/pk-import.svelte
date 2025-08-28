@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { appState } from '$lib/state/app-state.svelte'
-	import { validateImportedDexState } from '$lib/components/toolbox/pk-import-validation'
-	import { storageHandler, type DexState } from '$lib/state/storage-handler'
+	import { type DexSave, type DexState } from '$lib/models/data-models'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import { validateImportedDexSave } from '$lib/validation/dex-validation.ts'
+	import { pkState } from '$lib/state/pk-state.svelte'
+	import { storageHandler } from '$lib/state/storage-handler'
 
 	let fileInput: HTMLInputElement
-	let pendingImport: DexState | null = null
+	let pendingDexSaveimport: DexSave | null = null
 
 	let infoDialog: PkDialogElement
 	let errorDialog: PkDialogElement
@@ -21,27 +21,15 @@
 		const reader = new FileReader()
 		reader.onload = () => {
 			try {
-				const validDex = validateImportedDexState(reader.result)
+				pendingDexSaveimport = validateImportedDexSave(reader.result) as DexSave
 
-				if (
-					storageHandler.loadPokedex(validDex.name) &&
-					storageHandler.hasModifiedPokedex(validDex.name)
-				) {
-					// Local data found, override it?
-					pendingImport = validDex
+				// check if the dex already exists and warn about overwriting it
+				if (storageHandler.loadPokedex(pendingDexSaveimport.id)) {
 					infoDialog.showDialog()
 				} else {
-					// No local data found, write to localStorage!
-					storageHandler.savePokedex(validDex.name, validDex)
-					appState.setSelectedPokedexId(validDex.name)
-
-					// Force a refresh if this is the current Dex
-					if (validDex.name === appState.getSelectedPokedexId()) {
-						pkState.switchPokedex(validDex.name)
-					}
-
-					// Update the pokedex list in memory
-					pkState.loadAllPokedexes()
+					// does not exist yet so it can be saved and loaded
+					storageHandler.savePokedex(pendingDexSaveimport)
+					pkState.switchPokedex(pendingDexSaveimport)
 				}
 			} catch (error) {
 				console.error(error)
@@ -53,30 +41,22 @@
 	}
 
 	function onConfirmInfo() {
-		if (pendingImport) {
-			storageHandler.savePokedex(pendingImport.name, pendingImport)
-			appState.setSelectedPokedexId(pendingImport.name)
-
-			// Force a refresh if this is the current Dex
-			if (pendingImport.name === appState.getSelectedPokedexId()) {
-				pkState.switchPokedex(pendingImport.name)
-			}
-
-			// Update the pokedex list in memory
-			pkState.loadAllPokedexes()
-
-			pendingImport = null
+		if (pendingDexSaveimport) {
+			storageHandler.savePokedex(pendingDexSaveimport)
+			pkState.switchPokedex(pendingDexSaveimport)
 		}
 	}
 
 	function handleErrorMessage(error: unknown) {
+		console.log(error)
+
 		let errorMessage: string
 		if (error instanceof Error) {
 			errorMessage = error.message
 		} else if (typeof error === 'string') {
 			errorMessage = error
 		} else {
-			errorMessage = 'Ein unbekannter Fehler ist aufgetreten.'
+			errorMessage = 'An unknown error occurred.'
 		}
 		return errorMessage
 	}
@@ -120,7 +100,8 @@
 
 {#snippet errorDialogContent()}
 	<div class="pk-dialog-description">
-		<p>{errorDialogText}</p>
+		<pre><code>{errorDialogText}</code></pre>
+		<!-- {errorDialogText} -->
 	</div>
 {/snippet}
 
@@ -135,6 +116,17 @@
 />
 
 <style>
+	.pk-dialog-description {
+		pre {
+			background-color: black;
+			padding: 2rem 1rem;
+			overflow-x: auto;
+			border-radius: 5px;
+			code {
+				color: lime;
+			}
+		}
+	}
 	.pk-dialog-description p {
 		line-height: 1.6;
 		max-width: 55ch;

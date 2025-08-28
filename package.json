@@ -30,6 +30,9 @@
 		"pre-deploy": "deno task build && deno run sprites && deno run webp",
 		"deploy": "./deploy.sh"
 	},
+	"dependencies": {
+		"valibot": "^1.1.0"
+	},
 	"devDependencies": {
 		"@eslint/compat": "^1.3.1",
 		"@eslint/js": "^9.30.1",

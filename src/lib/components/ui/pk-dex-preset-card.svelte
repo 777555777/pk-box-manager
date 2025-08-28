@@ -143,14 +143,14 @@
 		{/if}
 
 		<div class="active-tags-preview">
-			<strong>Include variants:</strong>
+			<span>Include variants:</span>
 			<span class="tag-list"
 				>{activeTags.filter((tag) => tag !== 'normal').join(', ') || 'base Pokemon only'}</span
 			>
 		</div>
 		<div class="pokemon-count-preview">
-			<strong>Total Pokemon:</strong>
-			<span class="pokemon-count">{totalPokemonCount}</span>
+			<span>Total Pokemon:</span>
+			<span class="pokemon-count text-large">{totalPokemonCount}</span>
 		</div>
 	</div>
 {/snippet}
@@ -206,30 +206,25 @@
 
 	.active-tags-preview {
 		padding: 0.75rem;
-		background-color: hsla(0, 0%, 20%, 0.3);
+		background-color: var(--ui-text-info-darker);
 		border-radius: 4px;
-		border-left: 4px solid hsla(125, 100%, 30%, 0.55);
+		border-left: 4px solid var(--ui-text-info);
+		text-align: left;
 	}
 
 	.pokemon-count-preview {
 		padding: 0.75rem;
-		background-color: hsla(200, 100%, 20%, 0.3);
+		background-color: var(--ui-text-info-darker);
 		border-radius: 4px;
-		border-left: 4px solid hsla(200, 100%, 50%, 0.8);
+		border-left: 4px solid var(--ui-text-info);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 
 	.tag-list {
-		color: hsla(125, 100%, 70%, 1);
+		color: var(--ui-text-info);
 		font-weight: 500;
-	}
-
-	.pokemon-count {
-		color: hsla(200, 100%, 70%, 1);
-		font-weight: bold;
-		font-size: 1.25rem;
 	}
 
 	.dex-name-input {
