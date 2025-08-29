@@ -118,13 +118,16 @@
 <style>
 	.pk-dialog-description {
 		pre {
-			background-color: black;
-			padding: 2rem 1rem;
-			overflow-x: auto;
+			background-color: #f8f8f8;
+			border: 1px solid #ddd;
 			border-radius: 5px;
-			code {
-				color: lime;
-			}
+			padding: 1rem;
+			font-family: monospace;
+			line-height: 1.4;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			overflow-x: auto;
+			color: #333;
 		}
 	}
 	.pk-dialog-description p {
