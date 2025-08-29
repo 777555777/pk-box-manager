@@ -228,9 +228,12 @@ body {
 	--ui-text-color: #fff;
 	--ui-text-disabled: #c5c5c5;
 	--ui-text-active: #ffb267;
+	--ui-text-info: #a0e7ff;
+	--ui-text-info-darker: hsl(from var(--ui-text-info) h 40 33);
 
 	--ui-form-element-height: 44px;
 	--ui-section-background-color: #618e9e;
+	--ui-section-background-color-accent: #6a95a4;
 
 	--box-width: 410px;
 }
@@ -309,6 +312,7 @@ body {
 	/* Visually verticaly center Text and Icons */
 	/* Because of the 3px high shadow in the border image */
 	padding-bottom: 3px;
+	z-index: 1;
 
 	img {
 		width: 24px;
@@ -479,6 +483,7 @@ body {
 	border: 2px solid #57808e;
 	border-radius: 5px;
 	padding: 0.5rem 1rem 1rem 1rem;
+	background-color: var(--ui-section-background-color-accent);
 
 	legend {
 		padding-inline: 0.5rem;
@@ -588,7 +593,7 @@ body {
 	}
 
 	section {
-		background-color: hsl(196, 24%, 53%);
+		background-color: var(--ui-section-background-color-accent);
 	}
 }
 

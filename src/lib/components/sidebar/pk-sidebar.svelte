@@ -194,7 +194,7 @@
 
 <style>
 	.pk-sidebar {
-		min-width: var(--box-width);
+		min-width: calc(var(--box-width) + 5px); /* +5px to reach same size as box with borders*/
 		max-width: 415px;
 		height: 92dvh;
 		position: sticky;

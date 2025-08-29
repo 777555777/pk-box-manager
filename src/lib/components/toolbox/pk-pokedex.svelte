@@ -269,7 +269,7 @@
 
 		border-radius: 5px;
 		border: 1px solid rgba(0, 0, 0, 0.1);
-		background-color: #6a95a4;
+		background-color: var(--ui-section-background-color-accent);
 	}
 
 	@media (max-width: 768px) {
