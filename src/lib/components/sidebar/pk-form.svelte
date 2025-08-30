@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
-	import PkDropdown from '$lib/components/ui/pk-dropdown.svelte'
+	import PkDropdown from '$lib/components/ui/pk-game-dropdown.svelte'
 	import { Game, Generations, type GameType, type PokemonEditState } from '$lib/models/data-models'
 
 	let {

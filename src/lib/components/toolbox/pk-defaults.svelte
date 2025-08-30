@@ -8,7 +8,7 @@
 	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
 	import { type BallsType } from '$lib/models/balls-models'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import PkDropdown from '../ui/pk-dropdown.svelte'
+	import PkDropdown from '$lib/components/ui/pk-game-dropdown.svelte'
 
 	let defaultsDialog: PkDialogElement
 

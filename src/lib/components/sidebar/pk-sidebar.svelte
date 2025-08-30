@@ -11,10 +11,10 @@
 	import { appState } from '$lib/state/app-state.svelte'
 	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
-	import PkRibbonPicker from './pk-ribbon-picker.svelte'
-	import PkMarkPicker from './pk-mark-picker.svelte'
-	import PkIcon from '../ui/pk-icon.svelte'
-	import type { DropdownOption } from '../ui/pk-dropdown.svelte'
+	import PkRibbonPicker from '$lib/components/sidebar/pk-ribbon-picker.svelte'
+	import PkMarkPicker from '$lib/components/sidebar/pk-mark-picker.svelte'
+	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import type { DropdownOption } from '$lib/components/ui/pk-game-dropdown.svelte'
 
 	let selectedPokemon = $derived(pkState.getSelectedPokemon())
 	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
