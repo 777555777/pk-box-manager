@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
-	import PkIconGrid from './pk-icon-grid.svelte'
+	import PkIconGrid from '$lib/components/ui/base/pk-icon-grid.svelte'
 
 	let {
 		label = '',

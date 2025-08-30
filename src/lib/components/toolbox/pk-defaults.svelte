@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
-	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+	import PkBallSelector from '$lib/components/ui/wrapper/pk-ball-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import type { GameType } from '$lib/models/data-models'
 	import { Game, Generations } from '$lib/models/data-models'
@@ -27,12 +27,6 @@
 	function updateCaughtIn(selectedOption: any) {
 		if (selectedOption) {
 			const [key, value] = selectedOption
-			console.log('12312313!!: ', selectedOption)
-			console.log('12312313!!: ', key)
-			console.log('12312313!!: ', value)
-
-			console.log([key, Game[key as GameType]])
-
 			appState.updateAppDefaults({ caughtIn: key })
 		} else {
 			// Deselect case - set to default or null
@@ -145,6 +139,10 @@
 				margin-left: auto; /* Schiebt den Button nach rechts */
 			}
 		}
+	}
+
+	:global(.pk-dialog-content) {
+		overflow-y: visible !important; /* Überschreibt das Standardverhalten */
 	}
 
 	@media (max-width: 600px) {

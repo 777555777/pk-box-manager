@@ -6,8 +6,7 @@
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { onMount } from 'svelte'
 
-	// Use DexStorage from pkState to get the current state of the Pokedex
-	let dexStorage = $derived(pkState.getCurrentPokedexState())
+	let dexState = $derived(pkState.getCurrentPokedexState())
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
@@ -16,16 +15,16 @@
 		appState.loadAppSettings()
 
 		// Service Worker registrieren für Asset Caching
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker
-				.register('/service-worker.js')
-				.then((registration) => {
-					console.log('Service Worker registriert:', registration.scope)
-				})
-				.catch((error) => {
-					console.log('Service Worker Registrierung fehlgeschlagen:', error)
-				})
-		}
+		// if ('serviceWorker' in navigator) {
+		// 	navigator.serviceWorker
+		// 		.register('/service-worker.js')
+		// 		.then((registration) => {
+		// 			console.log('Service Worker registriert:', registration.scope)
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log('Service Worker Registrierung fehlgeschlagen:', error)
+		// 		})
+		// }
 
 		function handleClickOutside(event: MouseEvent) {
 			// Add small delay to allow other click handlers to complete first
@@ -64,17 +63,14 @@
 	})
 </script>
 
-{#await dexStorage}
-	<p>waiting...</p>
-{:then dexStorage}
-	<main>
-		<section class="pk-content">
-			<PkToolBox />
-			<PkBoxContainer {dexStorage} />
-		</section>
-		<PkSidebar />
-	</main>
-{/await}
+<main>
+	<section class="pk-content">
+		<PkToolBox />
+		<PkBoxContainer {dexState} />
+	</section>
+
+	<PkSidebar />
+</main>
 
 <style>
 	main {

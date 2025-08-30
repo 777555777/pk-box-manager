@@ -161,8 +161,7 @@
 		flex: 1;
 		padding-inline: 1rem;
 		min-height: 0; /* Wichtig für Flexbox-Scrolling */
-		/* overflow-y: auto; */
-		/* auskommentiert damit das neue dropdown content menü nicht abgeschnitten wird (HACK)*/
+		overflow-y: auto;
 
 		.pk-dialog-description p {
 			background-color: red;
@@ -177,6 +176,7 @@
 		display: flex;
 		flex-shrink: 0; /* Footer soll nicht schrumpfen */
 		justify-content: flex-end;
+		z-index: 2;
 
 		.pk-button:nth-child(2) {
 			margin-left: 1rem;

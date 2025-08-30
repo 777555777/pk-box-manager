@@ -2,27 +2,9 @@
 	import PkStatMeter from '$lib/components/ui/pk-stat-meter.svelte'
 	import PkTypeBadge from '$lib/components/ui/pk-type-badge.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import pkStats from '$lib/data/pk-stats.json' with { type: 'json' }
 
-	interface StaticPokemonData {
-		originRegion: string
-		stats: [number, number, number, number, number, number]
-		types: [string, string] | [string]
-		abilities: [string] | [string, string] | [string, string, string]
-		genderRatio: { male: number; female: number }
-	}
-
-	let { identifier } = $props()
-	let requestPokemon = $derived(requestPokemonStats())
-
-	async function requestPokemonStats(): Promise<Record<string, StaticPokemonData>> {
-		const response = await fetch(`/pkinfo?all=true`)
-		if (!response.ok) throw new Error('Error while fetching Pokemon data')
-
-		const data = await response.json()
-		if (!data) throw new Error('Error while parsing Pokemon data from server')
-
-		return data
-	}
+	let { identifier }: { identifier: keyof typeof pkStats } = $props()
 
 	const statLabels = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
 </script>
@@ -33,59 +15,53 @@
 	{/if}
 
 	{#if identifier !== '0000-null'}
-		{#await requestPokemon}
-			<!-- <p>...loading</p> -->
-		{:then pokemon}
-			<div class="pk-row-1">
-				<div class="pk-origin">
-					<h4 class="sr-only">Origin Region</h4>
-					<span>Origin: {pokemon[identifier].originRegion}</span>
-				</div>
-
-				<div class="pk-types">
-					<h4 class="sr-only">Types</h4>
-					{#each pokemon[identifier].types as type}
-						<PkTypeBadge {type} />
-					{/each}
-				</div>
+		<div class="pk-row-1">
+			<div class="pk-origin">
+				<h4 class="sr-only">Origin Region</h4>
+				<span>Origin: {pkStats[identifier].originRegion}</span>
 			</div>
 
-			<div class="pk-stats">
-				<h4 class="sr-only">Base stats</h4>
-				{#each pokemon[identifier].stats as stat, index}
-					<div class="stat-row">
-						<PkStatMeter label={statLabels[index]} value={stat} {index} />
-					</div>
+			<div class="pk-types">
+				<h4 class="sr-only">Types</h4>
+				{#each pkStats[identifier].types as type}
+					<PkTypeBadge {type} />
 				{/each}
 			</div>
+		</div>
 
-			<div class="pk-Abilities">
-				<h4 class="sr-only">Abilities</h4>
-				{#each pokemon[identifier].abilities as ability}
-					<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
-				{/each}
-			</div>
+		<div class="pk-stats">
+			<h4 class="sr-only">Base stats</h4>
+			{#each pkStats[identifier].stats as stat, index}
+				<div class="stat-row">
+					<PkStatMeter label={statLabels[index]} value={stat} {index} />
+				</div>
+			{/each}
+		</div>
 
-			<div class="pk-gender">
-				<h4 class="sr-only">Gender ratio</h4>
-				{#if !pokemon[identifier].genderRatio.male && !pokemon[identifier].genderRatio.female}
-					<span>Unknown</span>
-				{:else}
-					<div class="gender-ratio">
-						<div class="gender-item">
-							<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
-							<span>{pokemon[identifier].genderRatio.male}%</span>
-						</div>
-						<div class="gender-item">
-							<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
-							<span>{pokemon[identifier].genderRatio.female}%</span>
-						</div>
+		<div class="pk-Abilities">
+			<h4 class="sr-only">Abilities</h4>
+			{#each pkStats[identifier].abilities as ability}
+				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
+			{/each}
+		</div>
+
+		<div class="pk-gender">
+			<h4 class="sr-only">Gender ratio</h4>
+			{#if !pkStats[identifier].genderRatio.male && !pkStats[identifier].genderRatio.female}
+				<span>Unknown</span>
+			{:else}
+				<div class="gender-ratio">
+					<div class="gender-item">
+						<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
+						<span>{pkStats[identifier].genderRatio.male}%</span>
 					</div>
-				{/if}
-			</div>
-		{:catch error}
-			<p>{error.message}</p>
-		{/await}
+					<div class="gender-item">
+						<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
+						<span>{pkStats[identifier].genderRatio.female}%</span>
+					</div>
+				</div>
+			{/if}
+		</div>
 	{/if}
 </div>
 

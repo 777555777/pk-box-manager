@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
 	import { createHotkeyHandler } from '$lib/hotkey-utils'
 	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
@@ -41,7 +40,6 @@
 	}
 
 	function openPokedexDialog() {
-		pkState.loadAllPokedexes()
 		pokedexDialog.showPokedexDialog()
 	}
 

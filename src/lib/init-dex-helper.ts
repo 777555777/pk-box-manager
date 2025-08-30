@@ -1,6 +1,15 @@
-import { type ServerBoxOrder } from '../routes/pkorder/+server.ts'
+import {
+	type PokemonEditState,
+	type BoxState,
+	type DexState,
+	type BoxOrderConfig,
+	type DexConfig,
+	type DexSave,
+	type DexMeta,
+	type BoxTags
+} from './models/data-models.ts'
 import { defaultWallpaper } from './null-state-helper.ts'
-import type { DexStorage, PokemonEntry, BoxData, PokemonState } from './state/storage-handler.ts'
+import { getIdentifier } from './spriteheet-helper.ts'
 
 export const initialAppDefaults = {
 	ball: '01-poke-ball',
@@ -11,98 +20,53 @@ export const initialAppDefaults = {
 	marks: []
 }
 
-export const supportedPokedexList = {
-	'national-dex.json': {
-		displayName: 'National Dex',
-		coverImage: 'national-dex-cover',
-		sortOrder: { type: 'server', value: 1 }
-	},
-	'national-dex-forms.json': {
-		displayName: 'National Dex with forms',
-		coverImage: 'national-dex-forms-cover',
-		sortOrder: { type: 'server', value: 2 }
-	},
-	'generation-1.json': {
-		displayName: 'Generation 1',
-		coverImage: 'gen1-cover',
-		sortOrder: { type: 'server', value: 10 }
-	},
-	'generation-1-forms.json': {
-		displayName: 'Generation 1 with forms',
-		coverImage: 'gen1-forms-cover',
-		sortOrder: { type: 'server', value: 11 }
-	},
-	'generation-2.json': {
-		displayName: 'Generation 2',
-		coverImage: 'gen2-cover',
-		sortOrder: { type: 'server', value: 20 }
-	},
-	'generation-2-forms.json': {
-		displayName: 'Generation 2 with forms',
-		coverImage: 'gen2-forms-cover',
-		sortOrder: { type: 'server', value: 21 }
-	},
-	'generation-3.json': {
-		displayName: 'Generation 3',
-		coverImage: 'gen3-cover',
-		sortOrder: { type: 'server', value: 30 }
-	},
-	'generation-3-forms.json': {
-		displayName: 'Generation 3 with forms',
-		coverImage: 'gen3-forms-cover',
-		sortOrder: { type: 'server', value: 31 }
-	},
-	'generation-4.json': {
-		displayName: 'Generation 4',
-		coverImage: 'gen4-cover',
-		sortOrder: { type: 'server', value: 40 }
-	},
-	'generation-4-forms.json': {
-		displayName: 'Generation 4 with forms',
-		coverImage: 'gen4-forms-cover',
-		sortOrder: { type: 'server', value: 41 }
-	},
-	'generation-5.json': {
-		displayName: 'Generation 5',
-		coverImage: 'gen5-cover',
-		sortOrder: { type: 'server', value: 50 }
-	},
-	'generation-5-forms.json': {
-		displayName: 'Generation 5 with forms',
-		coverImage: 'gen5-forms-cover',
-		sortOrder: { type: 'server', value: 51 }
-	},
-	'generation-6.json': {
-		displayName: 'Generation 6',
-		coverImage: 'gen6-cover',
-		sortOrder: { type: 'server', value: 60 }
-	},
-	'generation-6-forms.json': {
-		displayName: 'Generation 6 with forms',
-		coverImage: 'gen6-forms-cover',
-		sortOrder: { type: 'server', value: 61 }
-	}
-} as const
-
-export type DexType = keyof typeof supportedPokedexList
-
-export function initPokedex(pokedexOrder: ServerBoxOrder[], dexName: string): DexStorage {
-	const initialBoxes = setupInitialBoxes(pokedexOrder)
-	const initialPokemonList = setupInitialPokemonList(pokedexOrder)
-	const initialDex = addDexMetaData(initialBoxes, initialPokemonList, dexName)
-
-	// Return Object with all properties
-	return initialDex
+const initialMetaData: DexMeta = {
+	createdAt: 0,
+	updatedAt: 0,
+	totalPokemon: 0,
+	totalCaught: 0,
+	totalShiny: 0,
+	isSystemDefault: false
 }
 
-function setupInitialBoxes(pokedexOrder: ServerBoxOrder[]): BoxData[] {
-	const initialBoxes: BoxData[] = []
+export function initPokedex(dexConfig: DexConfig, isSystemDefault: boolean = false): DexSave {
+	// Build the state side of pokedex
+	const initialBoxes = setupInitialBoxes(dexConfig.pokemonOrder)
+	const initialPokemonList = setupInitialPokemonList(dexConfig.pokemonOrder)
+	const initialState = addConfigData(initialBoxes, initialPokemonList)
+
+	// Create ID: if it's the system default, use deterministic ID; otherwise add timestamp
+	let dexSaveId = ''
+	if (isSystemDefault) {
+		dexSaveId = `${dexConfig.type}-${dexConfig.presetId}-${dexConfig.tags.join('-')}`
+	} else {
+		dexSaveId = `${dexConfig.type}-${dexConfig.presetId}-${dexConfig.tags.join('-')}-${Date.now()}`
+	}
+
+	// Create meta data with correct system default flag
+	const metaData: DexMeta = {
+		...initialMetaData,
+		isSystemDefault: isSystemDefault
+	}
+
+	const dexSave = {
+		id: dexSaveId,
+		config: dexConfig,
+		state: initialState,
+		meta: metaData
+	}
+
+	return dexSave
+}
+
+function setupInitialBoxes(pokedexOrder: BoxOrderConfig[]): BoxState[] {
+	const initialBoxes: BoxState[] = []
 
 	// initialize boxes with default settings
 	let counter = 0
 	for (const box of pokedexOrder) {
 		counter++
-		const boxData: BoxData = {
+		const boxData: BoxState = {
 			id: `box-${counter.toString().padStart(3, '0')}`,
 			title: box.title,
 			settings: {
@@ -112,7 +76,7 @@ function setupInitialBoxes(pokedexOrder: ServerBoxOrder[]): BoxData[] {
 		}
 
 		for (const pokemon of box.pokemon) {
-			const pokemonIdentifier = formatIdentifier(pokemon)
+			const pokemonIdentifier = getIdentifier(pokemon)
 			boxData.pokemon.push(pokemonIdentifier)
 		}
 
@@ -122,12 +86,12 @@ function setupInitialBoxes(pokedexOrder: ServerBoxOrder[]): BoxData[] {
 	return initialBoxes
 }
 
-function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string, PokemonState> {
-	const pokemonList: Record<string, PokemonState> = {}
+function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string, PokemonEditState> {
+	const pokemonList: Record<string, PokemonEditState> = {}
 
 	for (const box of pokedexOrder) {
 		for (const pokemon of box.pokemon) {
-			const pokemonIdentifier = formatIdentifier(pokemon)
+			const pokemonIdentifier = getIdentifier(pokemon)
 			pokemonList[pokemonIdentifier] = {
 				idEntry: pokemon,
 				captured: false,
@@ -147,20 +111,18 @@ function setupInitialPokemonList(pokedexOrder: ServerBoxOrder[]): Record<string,
 }
 
 // prettier-ignore
-function addDexMetaData(initialBoxes: BoxData[], pokemonList: Record<string, PokemonState>, dexName: string): DexStorage {
-	const dexConfig = supportedPokedexList[dexName as DexType]
+function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, PokemonEditState>): DexState {
 	return {
-		version: '1.0.0',
-		name: dexName,
-		displayName: dexConfig.displayName,
-		coverImage: dexConfig.coverImage,
-		sortOrder: dexConfig.sortOrder,
+		stateVersion: '1.0.0',
 		pokemon: pokemonList,
 		boxes: initialBoxes
 	}
 }
 
-function formatIdentifier(entry: PokemonEntry): string {
-	const paddedId = entry.id_national.toString().padStart(4, '0')
-	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
+// Format tag display name
+export function formatTagName(tag: BoxTags): string {
+	if (tag === 'gigantamax') {
+		return 'G-Max'
+	}
+	return tag.charAt(0).toUpperCase() + tag.slice(1)
 }

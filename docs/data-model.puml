@@ -1,0 +1,108 @@
+@startuml
+class LocalStorage {
+  +selectedDex: string
+  // "dex:dexSave.id" Entry for each dex
+}
+
+class DexSave {
+  +id: string
+  +config: DexConfig        // linke Seite: Struktur/Preset
+  +state: DexState          // rechte Seite: Fortschritt
+  +meta: DexMeta            // mitte: Metadaten 
+}
+
+' ---- Mitte: Metadaten ----
+
+class DexMeta {
+  +createdAt: number
+	+updatedAt: number
+	+totalPokemon: number
+	+totalCaught: number
+	+totalShiny: number
+	+isSystemDefault?: boolean
+}
+
+' ---- Index Entry für UI Listen ----
+class DexIndexEntry {
+  +dexSaveId: string
+  +displayName: string
+  +tags: string[]
+  +coverImage: string
+  +updatedAt: number
+  +createdAt: number
+  +totalPokemon: number
+  +totalCaughtPokemon: number
+  +totalShinyPokemon: number
+  +isSystemDefault: boolean
+}
+
+' ---- Linke Seite: Struktur des Pokedex ----
+class DexConfig {
+  +presetId: string
+  +configVersion: string
+  +type: "preset" | "custom"
+  +displayName: string
+  +coverImage: string
+  +sortOrder: number
+  +tags: BoxTags[]
+  +boxList: string[]
+  +pokemonOrder: BoxOrderConfig[]
+  +createdAt: number
+  +updatedAt: number
+}
+
+class BoxOrderConfig {
+  +title: string
+  +pokemon: PokemonEntry[]
+}
+
+class PokemonEntry {
+  +pokemonid: string
+  +formid: string | null
+  +id_national: number
+}
+
+' ---- Rechte Seite: User State ----
+class DexState {
+  +stateVersion: string
+  +pokemon: Record<string, PokemonEditState>
+  +boxes: BoxState[]
+}
+
+class PokemonEditState {
+  +idEntry: PokemonEntry
+  +captured: boolean
+  +ball: string
+  +shiny: boolean
+  +caughtIn: string
+  +ability: string
+  +comment: string
+  +ribbons: string[]
+  +marks: string[]
+  +isCustomized: boolean
+}
+
+class BoxState {
+  +id: string
+  +title: string
+  +settings: BoxSettings
+  +pokemon: string[]
+}
+
+class BoxSettings {
+  +wallpaper: string
+}
+
+' ---- Beziehungen ----
+LocalStorage "1" o-- "*" DexSave : references
+DexSave "1" o-- "1" DexConfig
+DexSave "1" o-- "1" DexMeta
+DexSave "1" o-- "1" DexState
+DexIndexEntry "1" -- "1" DexSave : derived from
+DexConfig "1" o-- "*" BoxOrderConfig
+BoxOrderConfig "1" o-- "*" PokemonEntry
+DexState "1" o-- "*" PokemonEditState
+DexState "1" o-- "*" BoxState
+BoxState "1" o-- "1" BoxSettings
+PokemonEditState "1" o-- "1" PokemonEntry
+@enduml

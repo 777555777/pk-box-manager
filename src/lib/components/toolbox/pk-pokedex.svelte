@@ -1,48 +1,28 @@
 <script lang="ts">
-	import { type DexStorage } from '$lib/state/storage-handler'
 	import { pkState } from '$lib/state/pk-state.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import PkDexCard from '$lib/components/ui/pk-dex-card.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
-	import PkToggle from '../ui/pk-toggle.svelte'
+	import { type DexIndexEntry } from '$lib/state/storage-handler'
+	import PkRadioGroup from '../ui/pk-radio-group.svelte'
+	import { dexPresets } from '$lib/data/pokedex'
+	import type { BoxTags, DexConfig } from '$lib/models/data-models'
+	import { getDexConfig } from '$lib/data/pokedex-config-utils'
+	import PkDexPresetCard from '../ui/pk-dex-preset-card.svelte'
 
-	// TODO: Placeholder, replace with actual background images
-	const backgroundImages = [
-		'/ui/HGSS_Ilex_Forest-Day.png',
-		'/ui/HGSS_National_Park-Day.png',
-		'/ui/HGSS_Slowpoke_Well-Day.png',
-		'/ui/HGSS_Viridian_Forest-Day.png'
+	const optionConfig = [
+		{ tabId: 'active', label: 'Active' },
+		{ tabId: 'create', label: 'Create' }
 	]
 
-	// Filter state - National and Forms active by default, Custom inactive
-	let showBaseDex = $state(true) // Basis-Pokédexes (ohne Forms)
-	let showFormsDex = $state(true) // Pokédexes mit alternativen Formen
-	let showCustomDex = $state(false) // Selbst erstellte Pokédexes
+	let currentPage = $state('active')
 
-	// Get current selected dex name - use derived for reactive reading
-	let selectedDexName = $derived(appState.getCurrentPokedexName())
-	let allPokedexes = $derived(pkState.getAllPokedexes())
-
-	// Filter pokedexes based on toggle states
-	let pokedexList = $derived.by(() => {
-		return allPokedexes.filter((pokedex) => {
-			const dexName = pokedex.name
-
-			// Check if it's a Forms dex (but not National)
-			const isForms = dexName.includes('-forms.json')
-			if (isForms && showFormsDex) return true
-
-			// Check if it's a Custom dex (user-created)
-			const isCustom = pokedex.sortOrder?.type === 'client'
-			if (isCustom && showCustomDex) return true
-
-			// Check if it's a regular generation dex (not forms, not national, not custom)
-			const isRegular = !dexName.includes('-forms.json') && pokedex.sortOrder?.type !== 'client'
-			if (isRegular && showBaseDex) return true // Regular generation dexes are grouped with National
-
-			return false
-		})
+	// Get current selected dex id - use derived for reactive reading
+	let selectedDexId = $derived(appState.getSelectedPokedexId())
+	let pokedexIndexList = $derived(pkState.getPokedexIndexList())
+	let selectedDexRef = $derived.by(() => {
+		return pokedexIndexList.find((dex) => dex.dexSaveId === selectedDexId)
 	})
 
 	let pokedexDialog: PkDialogElement
@@ -51,37 +31,60 @@
 		pokedexDialog.showDialog()
 	}
 
-	async function handlePokedexDelete(isSelected: boolean, dexName: string) {
-		await pkState.resetPokedex(dexName, isSelected)
-		// Reload the pokedex list to reflect the reset
-		pkState.loadAllPokedexes()
-	}
+	function createAndSelectDex(selectedPreset: DexConfig, activeTags: BoxTags[]) {
+		// Create new config with selected tags without mutating the original
+		const initPreset = getDexConfig(selectedPreset.presetId, activeTags)
 
-	async function handlePokedexSelect(dexName: string) {
-		// Load the new dex state
-		await pkState.switchPokedex(dexName)
-
-		// Set the new pokedex name after the switch so that +page.svelte renders again
-		// when the boxorder is in the cache, preventing duplicate requests.
-		appState.setCurrentPokedexName(dexName)
-
-		// Reload the pokedex list to update the dialog with the newly loaded dex
-		pkState.loadAllPokedexes()
-	}
-
-	function getPokedexCounts(pokedex: DexStorage) {
-		let count = 0
-		let shinyCount = 0
-		let limit = Object.values(pokedex.pokemon).length
-		for (const pokemon of Object.values(pokedex.pokemon)) {
-			if (pokemon.captured) {
-				count++
-			}
-			if (pokemon.captured && pokemon.shiny) {
-				shinyCount++
-			}
+		if (!initPreset) {
+			console.error('Failed to create Pokedex: Invalid preset or tags')
+			return
 		}
-		return { count, shinyCount, limit }
+
+		// Apply the custom display name to the final config (already a copy from getDexConfig)
+		const finalConfig = {
+			...initPreset,
+			displayName: selectedPreset.displayName // This comes from the preset card with custom name
+		}
+
+		const initialisedDexSave = pkState.initPokedex(finalConfig)
+
+		if (!initialisedDexSave) {
+			console.error('Failed to create Pokedex: Invalid preset or tags')
+			return
+		}
+
+		// create and switch with selected tags:
+		pkState.switchPokedex(initialisedDexSave)
+
+		// Switch to active pokedex tab to show the newly created dex
+		currentPage = 'active'
+	}
+
+	function handlePokedexDelete(toDeleteDexSaveId: string) {
+		try {
+			pkState.deletePokedex(toDeleteDexSaveId)
+			console.log(`Successfully deleted Pokedex: ${toDeleteDexSaveId}`)
+		} catch (error) {
+			console.error('Failed to delete Pokedex:', error)
+		}
+	}
+
+	function handleConfirmReset(toResetDexSaveId: string) {
+		try {
+			pkState.resetPokedex(toResetDexSaveId)
+			console.log(`Successfully reset Pokedex: ${toResetDexSaveId}`)
+		} catch (error) {
+			console.error('Failed to reset Pokedex:', error)
+		}
+	}
+
+	function loadSelectedDex(selectedDex: DexIndexEntry) {
+		console.log('Loading selected dex:', selectedDex)
+		const targetDexSave = pkState.loadPokedex(selectedDex.dexSaveId)
+
+		// Update app state first, then switch pokédex
+		appState.setSelectedPokedexId(selectedDex.dexSaveId)
+		pkState.switchPokedex(targetDexSave)
 	}
 </script>
 
@@ -90,7 +93,9 @@
 	headline="Pokedex settings"
 	dialogContent={pokedexDialogContent}
 	onConfirm={() => {}}
-	onCancel={() => {}}
+	onCancel={() => {
+		currentPage = 'active'
+	}}
 	cancelBtnText="Close"
 	size="L"
 />
@@ -99,27 +104,10 @@
 	<!-- Mobile: Details/Summary Layout -->
 	<div class="mobile-filter-accordion">
 		<details class="pk-details">
-			<summary class="pk-summary">Pokedex Filters</summary>
+			<summary class="pk-summary">Options</summary>
 			<div class="pk-filter-container">
 				<div class="pk-btn-group pk-filter-toggles">
-					<PkToggle
-						label="Base Dex"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={showBaseDex}
-					/>
-					<PkToggle
-						label="Forms Dex"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={showFormsDex}
-					/>
-					<!-- not implemented -->
-					{#if false}
-						<PkToggle
-							label="Custom Dex"
-							activeColor="hsla(125, 100%, 30%, 0.55)"
-							bind:checked={showCustomDex}
-						/>
-					{/if}
+					<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
 				</div>
 				<div class="pk-btn-group pk-filter-actions">
 					<PkImport />
@@ -131,45 +119,57 @@
 	<!-- Desktop: Fieldset Layout -->
 	<div class="desktop-filter-fieldset">
 		<fieldset class="pk-fieldset pk-dex-filter-options">
-			<legend>Pokedex Filters</legend>
-			<div class="pk-filter-container">
-				<div class="pk-btn-group pk-filter-toggles">
-					<PkToggle
-						label="Base Dex"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={showBaseDex}
-					/>
-					<PkToggle
-						label="Forms Dex"
-						activeColor="hsla(125, 100%, 30%, 0.55)"
-						bind:checked={showFormsDex}
-					/>
-					<!-- not implemented -->
-					{#if false}
-						<PkToggle
-							label="Custom Dex"
-							activeColor="hsla(125, 100%, 30%, 0.55)"
-							bind:checked={showCustomDex}
-						/>
-					{/if}
-				</div>
-				<div class="pk-btn-group pk-filter-actions">
-					<PkImport />
-				</div>
+			<legend>Options</legend>
+			<div class="pk-btn-group pk-filter-toggles">
+				<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
+			</div>
+			<div class="pk-btn-group pk-filter-actions">
+				<PkImport />
 			</div>
 		</fieldset>
 	</div>
 
+	{#if currentPage === 'active'}
+		{@render pokedexActiveList()}
+	{:else if currentPage === 'create'}
+		{@render pokedexPresetList()}
+	{/if}
+{/snippet}
+
+{#snippet pokedexActiveList()}
 	<section class="pk-pokedex-section">
-		{#each pokedexList as pokedex, index}
+		{#each pokedexIndexList as pokedexIndex, index}
 			<PkDexCard
-				dexTitle={pokedex.displayName}
-				dexName={pokedex.name}
-				isSelected={pokedex.name === selectedDexName}
-				counter={getPokedexCounts(pokedex)}
+				dexTitle={pokedexIndex.displayName}
+				dexSaveId={pokedexIndex.dexSaveId}
+				tags={pokedexIndex.tags}
+				isSelected={pokedexIndex.dexSaveId === selectedDexRef?.dexSaveId}
+				counter={{
+					totalPokemon: pokedexIndex.totalPokemon,
+					totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
+					totalShinyPokemon: pokedexIndex.totalShinyPokemon
+				}}
 				onDelete={handlePokedexDelete}
-				onSelect={handlePokedexSelect}
-				imgUrl={backgroundImages[index]}
+				onReset={handleConfirmReset}
+				onSelect={() => loadSelectedDex(pokedexIndex)}
+				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
+				isSystemDefault={pokedexIndex.isSystemDefault}
+				--value-color="red"
+				--value-secondary-color="blue"
+			/>
+		{/each}
+	</section>
+{/snippet}
+
+{#snippet pokedexPresetList()}
+	<section class="pk-pokedex-section">
+		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
+			<PkDexPresetCard
+				dexTitle={dexPreset.displayName}
+				dexId={dexPreset.presetId}
+				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
+					createAndSelectDex(selectedPreset, activeTags)}
+				imgUrl={`/ui/dex/${dexPreset.coverImage}`}
 				--value-color="red"
 				--value-secondary-color="blue"
 			/>
@@ -205,6 +205,8 @@
 
 	.pk-dex-filter-options {
 		margin-bottom: 1rem;
+		display: flex;
+		justify-content: space-between;
 
 		.pk-filter-container {
 			display: flex;
@@ -242,7 +244,6 @@
 		.pk-details .pk-filter-toggles {
 			flex-direction: column;
 			gap: 0.75rem;
-			width: 100%;
 		}
 
 		.pk-details .pk-filter-container {
@@ -254,21 +255,25 @@
 		}
 	}
 	.pk-pokedex-section {
-		padding-bottom: 2rem;
-		padding-inline: 2rem;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		place-items: center;
-		gap: 2rem;
-		height: 680px;
-		overflow-y: auto;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.5rem;
+		width: 100%;
+		align-content: start;
+		justify-items: center;
 
-		mask: var(--scroll-indicator-gradient);
+		padding: 2rem;
+		overflow-y: auto;
+		overflow-x: hidden;
+		height: 680px;
+
+		border-radius: 5px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background-color: var(--ui-section-background-color-accent);
 	}
 
 	@media (max-width: 768px) {
 		.pk-pokedex-section {
-			gap: 1rem;
 			padding-bottom: 2rem;
 		}
 	}
@@ -280,7 +285,7 @@
 		}
 
 		.pk-pokedex-section {
-			padding-inline: 1rem;
+			padding-inline: 0rem;
 		}
 	}
 </style>

@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { type BoxData } from '$lib/state/storage-handler'
 	import PkSlot from '$lib/components/box/pk-slot.svelte'
 	import { getBackgroundStyle } from '$lib/spriteheet-helper'
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
+	import type { BoxState } from '$lib/models/data-models'
 
-	let { box }: { box: BoxData } = $props()
+	let { box }: { box: BoxState } = $props()
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
-		console.log('Updating wallpaper to:', newWallpaper)
-		pkState.updateBoxWallpaper(box.id, newWallpaper)
+		pkState.updateBoxSettings(box.id, { wallpaper: newWallpaper })
 	}
 
 	function getWallpaperSpriteData(wallpaperName: WallpapersType) {

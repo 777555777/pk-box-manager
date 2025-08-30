@@ -1,217 +1,287 @@
-import { pokedexNullState, pokemonNullProperties, pokemonNullState } from '../null-state-helper.ts'
-import { getIdentifier } from '../spriteheet-helper.ts'
-import { supportedPokedexList } from '../init-dex-helper.ts'
-import { appState } from './app-state.svelte.ts'
 import {
-	storageHandler,
-	type DexStorage,
-	type PokemonData,
-	type PokemonState,
-	type BoxData
-} from './storage-handler.ts'
-import { type ServerBoxOrder } from '../../routes/pkorder/+server.ts'
+	defaultWallpaper,
+	pokedexNullState,
+	pokemonNullProperties,
+	pokemonNullState
+} from '../null-state-helper.ts'
+import { getIdentifier } from '../spriteheet-helper.ts'
+import { appState } from './app-state.svelte.ts'
+import { DEFAULT_SELECTED_DEX, type DexIndexEntry, storageHandler } from './storage-handler.ts'
+import { getAllPossibleTags, getDexConfig } from '../data/pokedex-config-utils.ts'
+import {
+	type BoxState,
+	type DexState,
+	type PokemonEditState,
+	type DexConfig,
+	type DexSave,
+	type BoxTags
+} from '../models/data-models.ts'
 
-export async function fetchBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
-	console.log('Fetching Box order from the server', dexName)
-	const response = await fetch(`/pkorder?dexname=${encodeURIComponent(dexName)}`)
-	if (!response.ok) {
-		throw new Error('Pokedex nicht gefunden')
-	}
-	return await response.json()
+// Zentrale Schnittstelle für alles, was mit DexSave im Storage passiert
+
+export interface PkStateHandler {
+	// Basis
+	initPokedex(dexConfig: DexConfig | null): void
+	loadPokedex(dexId: string): DexSave
+	getPokedex(): DexSave
+	// getConfig(): DexConfig
+	// getState(): DexState
+	switchPokedex(dexId: DexSave): void
+	resetPokedex(dexId: string): void
+
+	// Pokedex Index
+	getCurrentPokedexState(): DexState
+	getPokedexIndexList(): DexIndexEntry[]
+
+	// Pokemon-bezogene Aktionen
+	getPokemon(identifier: string): PokemonEditState
+	updatePokemon(identifier: string, updatedState: Partial<PokemonEditState>): void
+	toggleMark(identifier: string, markId: string): void
+	toggleRibbon(identifier: string, ribbonId: string): void
+	// resetPokemon(identifier: string): void
+
+	// Ausgewähltes Pokemon
+	getSelectedPokemon(): PokemonEditState | undefined
+	updateSelectedPokemon(identifier: string): void
+	deselectPokemon(): void
+
+	// Box-bezogene Aktionen
+	updateBoxSettings(boxId: string, settings: Partial<BoxState['settings']>): void
+
+	// Metadaten / State Management
+	// getProgress(): { captured: number; total: number; shiny: number }
+	// hasChanges(): boolean
 }
 
-export class PkState {
-	private boxOrderCache: Record<string, ServerBoxOrder[]> = $state({})
-	private pokedexState: DexStorage = $state(pokedexNullState)
-	private selectedPokemon: PokemonState = $state(pokemonNullState)
-	private pokedexList = $state<DexStorage[]>([])
-
-	async loadBoxOrder(dexName: string): Promise<ServerBoxOrder[]> {
-		// Check if the BoxOrder is cached
-		if (this.boxOrderCache[dexName]) {
-			return this.boxOrderCache[dexName]
-		}
-
-		// It is not in the cache, request it from the server
-		try {
-			const order = await fetchBoxOrder(dexName)
-			// Add it to the cache
-			this.boxOrderCache[dexName] = order
-			return order
-		} catch (error) {
-			throw new Error('Fehler beim Laden der BoxOrder:', error as ErrorOptions)
-		}
-	}
-
-	initBoxOrderState(boxOrder: ServerBoxOrder[], dexName: string): void {
-		// Read Pokedex data from localStorage
-		let stateData = storageHandler.loadPokedex(dexName)
-
-		// Initialize if it doesn't exist
-		if (!stateData) {
-			storageHandler.initPokedex(boxOrder, dexName)
-			stateData = storageHandler.loadPokedex(dexName)
-		}
-
-		// Set as reactive state
-		this.pokedexState = stateData!
-
-		// Reset selected Pokemon
-		this.selectedPokemon = pokemonNullState
-	}
-
-	addToBoxOrderCache(dexName: string, boxOrder: ServerBoxOrder[]) {
-		this.boxOrderCache[dexName] = boxOrder
-	}
-
-	getCachedOrder(dexName: string): ServerBoxOrder[] {
-		return this.boxOrderCache[dexName]
-	}
+export class PkState implements PkStateHandler {
+	private pokedex: DexSave = $state(this.initPokedex())
+	private pokedexState: DexState = $derived(this.pokedex.state)
+	public pokedexIndexList: DexIndexEntry[] = $state(storageHandler.loadPokedexIndex())
+	private selectedPokemon: PokemonEditState = $state(pokemonNullState)
 
 	// ================
 	// Pokedex
 	// ================
 
-	async switchPokedex(dexName: string, forceServerFetch = false): Promise<void> {
+	/**
+	 * Parses a pokedex ID string and creates a DexConfig from it.
+	 * Format: "type-id-tag1-tag2-..." (e.g., "preset-nationalDex-normal-shiny")
+	 * @param dexId The dex ID string to parse
+	 * @returns A DexConfig object
+	 */
+	private parseAndCreateDexConfig(dexId: string): DexConfig {
+		const parts = dexId.split('-')
+
+		if (parts.length < 2) {
+			throw new Error(
+				`Invalid dex ID format: "${dexId}". Expected format: "type-id" or "type-id-tag1-tag2..."`
+			)
+		}
+
+		// Extract base preset ID (first two parts: "preset-nationalDex")
+		const presetId = `${parts[0]}-${parts[1]}`
+
+		// Extract tag parts (everything after the preset ID)
+		const tagParts = parts.slice(2)
+
+		// Build tags array - always include 'normal', then add any additional tags
+		const tags: BoxTags[] = ['normal']
+
+		if (tagParts.length > 0) {
+			// Filter out 'normal' to avoid duplicates, then add the remaining tags
+			const additionalTags = tagParts.filter((tag) => tag !== 'normal') as BoxTags[]
+			tags.push(...additionalTags)
+		}
+
+		// Create and return the dex configuration
+		return getDexConfig(presetId, tags)
+	}
+
+	initPokedex(dexConfig: DexConfig | null = null): DexSave {
+		if (dexConfig) {
+			const dexSaveId = storageHandler.initPokedex(dexConfig)
+			const dexSave = storageHandler.loadPokedex(dexSaveId)
+
+			// Ensure PokedexIndexList is up to date
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+			if (!dexSave) {
+				throw new Error(`Failed to initialize Pokedex for "${dexConfig.displayName}".`)
+			}
+			return dexSave
+		}
+
+		// try to load the selected dex
+		const initialSelected = storageHandler.loadSelectedPokedexId()
+		const selectedDex = storageHandler.loadPokedex(initialSelected)
+
+		let dexSave = selectedDex
+		// Initialize if it doesn't exist
+		if (!selectedDex) {
+			// Parse the selected dex ID and create a configuration for it
+			const presetConfig = this.parseAndCreateDexConfig(initialSelected)
+			const dexSaveId = storageHandler.initPokedex(presetConfig)
+			dexSave = storageHandler.loadPokedex(dexSaveId)
+		}
+
+		if (!dexSave) {
+			throw new Error(
+				`Failed to load Pokedex for "${initialSelected}". Please check your configuration.`
+			)
+		}
+
+		return dexSave
+	}
+
+	loadPokedex(dexId: string): DexSave {
+		const dexSave = storageHandler.loadPokedex(dexId)
+		if (!dexSave) {
+			throw new Error(`Pokedex with ID "${dexId}" not found in storage.`)
+		}
+		return dexSave
+	}
+
+	getPokedex(): DexSave {
+		return this.pokedex
+	}
+
+	switchPokedex(dexSave: DexSave): void {
 		try {
 			// Save selected Pokedex name
-			storageHandler.saveSelectedPokedexName(dexName)
+			storageHandler.saveSelectedPokedexId(dexSave.id)
 
-			// Check if we already have complete data in localStorage (e.g., from import)
-			const existingData = storageHandler.loadPokedex(dexName)
+			// Update pokedex state and reset selected Pokemon
+			this.pokedex = dexSave
+			this.selectedPokemon = pokemonNullState
 
-			if (existingData && !forceServerFetch) {
-				// We have complete data, just load it directly
-				this.pokedexState = existingData
-				this.selectedPokemon = pokemonNullState
-
-				// Still cache the box order for potential future use
-				if (!this.boxOrderCache[dexName]) {
-					// Extract box order from existing data for cache
-					const boxOrder = this.extractBoxOrderFromDexData(existingData)
-					this.boxOrderCache[dexName] = boxOrder
-				}
-			} else {
-				// No complete data or forced refresh - fetch from server
-				const boxOrder = await this.loadBoxOrder(dexName)
-				this.initBoxOrderState(boxOrder, dexName)
-			}
+			// Ensure PokedexIndexList is up to date for reactive UI updates
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+			appState.setSelectedPokedexId(dexSave.id)
 		} catch (error) {
 			console.error('Error switching Pokedex:', error)
 			throw error
 		}
 	}
 
+	// ================
+	// Reset Hilfsfunktionen
+	// ================
+
 	/**
-	 * Reset the current Pokedex to its initial state
+	 * Setzt alle Pokemon in einem DexState auf ihre Standard-Werte zurück.
+	 * Behält die Pokemon-Einträge bei, aber entfernt alle Anpassungen.
 	 */
-	async resetPokedex(dexName: string, isSelected: boolean): Promise<void> {
-		try {
-			// Get the box order from cache or server
-			const boxOrder = await this.loadBoxOrder(dexName)
-			if (!boxOrder) {
-				throw new Error('Box order not found')
+	private resetPokemonInDexState(dexState: DexState): void {
+		for (const [identifier, pokemon] of Object.entries(dexState.pokemon)) {
+			// Behalte die idEntry bei, setze aber alle anderen Werte zurück
+			dexState.pokemon[identifier] = {
+				idEntry: pokemon.idEntry,
+				...pokemonNullProperties
 			}
-
-			// Remove the current Pokedex data from localStorage
-			storageHandler.removePokedex(dexName)
-
-			// Re-initialize the Pokedex with fresh data
-			storageHandler.initPokedex(boxOrder, dexName)
-
-			if (isSelected) {
-				// Update the state
-				const stateData = storageHandler.loadPokedex(dexName)
-				this.pokedexState = stateData!
-
-				// Reset selected Pokemon
-				this.selectedPokemon = pokemonNullState
-
-				// Make sure app state is aware of the reset
-				appState.setCurrentPokedexName(dexName)
-			}
-			console.log(`Pokedex ${dexName} has been reset`)
-		} catch (error) {
-			console.error('Error resetting Pokedex:', error)
-			throw new Error(`Error resetting Pokedex "${dexName}": ${error}`)
 		}
 	}
 
-	getCurrentPokedexState(): DexStorage {
+	/**
+	 * Setzt den State-Teil eines DexSave auf Standard-Werte zurück.
+	 * Behält die ursprüngliche Struktur bei, aber entfernt alle Benutzer-Anpassungen.
+	 */
+	private resetDexState(dexSave: DexSave): void {
+		// Reset aller Pokemon auf Standard-Werte
+		this.resetPokemonInDexState(dexSave.state)
+
+		// Box-Wallpapers auf Standard zurücksetzen (optional)
+		for (const element of dexSave.state.boxes) {
+			element.settings.wallpaper = defaultWallpaper // Standard-Wallpaper
+		}
+	}
+
+	resetPokedex(dexId: string): void {
+		try {
+			// Lade den aktuellen Pokedex aus dem Storage
+			const dexSave = storageHandler.loadPokedex(dexId)
+			if (!dexSave) {
+				throw new Error(`Pokedex with ID "${dexId}" not found in storage.`)
+			}
+
+			// Verwende die Hilfsfunktionen, um den State zurückzusetzen
+			this.resetDexState(dexSave)
+
+			// Speichere den zurückgesetzten Pokedex zurück in den Storage
+			storageHandler.savePokedex(dexSave)
+
+			// Wenn dieser Pokedex gerade ausgewählt ist, aktualisiere den aktuellen State
+			const isCurrentlySelected = this.pokedex.id === dexId
+			if (isCurrentlySelected) {
+				this.pokedex = dexSave
+				// Reset selected Pokemon da sich der State geändert hat
+				this.selectedPokemon = pokemonNullState
+			}
+
+			// Aktualisiere die Pokedex-Index-Liste (für Counter-Updates)
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+
+			console.log(`Pokedex ${dexId} has been reset to initial state`)
+		} catch (error) {
+			console.error('Error resetting Pokedex:', error)
+			throw new Error(`Error resetting Pokedex "${dexId}": ${error}`)
+		}
+	}
+
+	deletePokedex(toBeDeletedDexSaveId: string): void {
+		try {
+			// Check if we're deleting the currently selected pokedex
+			const isCurrentlySelected = this.pokedex.id === toBeDeletedDexSaveId
+
+			// Remove from storage
+			storageHandler.removePokedex(toBeDeletedDexSaveId)
+
+			if (isCurrentlySelected) {
+				// Select default dex so something is always selected
+
+				const dexIndexes = storageHandler.loadPokedexIndex()
+				const defaultDexId = dexIndexes.find((dex) => dex.isSystemDefault === true)
+				if (!defaultDexId) {
+					throw new Error('No default Pokedex found to switch to after deletion.')
+				}
+				storageHandler.saveSelectedPokedexId(defaultDexId.dexSaveId)
+
+				// Load the default pokedex and update current state
+				const defaultDexSave = storageHandler.loadPokedex(defaultDexId.dexSaveId)
+				if (defaultDexSave) {
+					this.pokedex = defaultDexSave
+				} else {
+					// If default doesn't exist, initialize it by parsing the default dex ID
+					this.pokedex = this.initPokedex(
+						getDexConfig(defaultDexId.dexSaveId, getAllPossibleTags())
+					)
+				}
+
+				// Reset selected pokemon since we switched pokedex
+				this.selectedPokemon = pokemonNullState
+
+				// Update app state to reflect the change
+				appState.setSelectedPokedexId(DEFAULT_SELECTED_DEX)
+			}
+
+			// Ensure PokedexIndexList is up to date
+			this.pokedexIndexList = storageHandler.loadPokedexIndex()
+		} catch (error) {
+			console.error('Error deleting Pokedex:', error)
+			throw new Error(`Error deleting Pokedex "${toBeDeletedDexSaveId}": ${error}`)
+		}
+	}
+
+	getCurrentPokedexState(): DexState {
 		return this.pokedexState || pokedexNullState
 	}
 
-	/**
-	 * Load all available Pokedexes from localStorage and server-supported dexes
-	 * This includes both local dexes with real editing state and server-supported dexes without real editing state
-	 */
-	public loadAllPokedexes(): DexStorage[] {
-		// Get all dexes from localStorage
-		const localDexes = storageHandler.loadEveryPokedex()
-
-		// Create a Set of existing dex names for quick lookup
-		const existingDexNames = new Set(localDexes.map((dex) => dex.name))
-
-		// Add server-supported dexes that aren't in localStorage yet
-		const allDexes: DexStorage[] = [...localDexes]
-
-		for (const [dexName, dexConfig] of Object.entries(supportedPokedexList)) {
-			// Only add if not already in localStorage
-			if (!existingDexNames.has(dexName)) {
-				// Create a placeholder DexStorage for unloaded dexes
-				const placeholderDex: DexStorage = {
-					version: '1.0.0', // Default version
-					name: dexName,
-					displayName: dexConfig.displayName,
-					coverImage: dexConfig.coverImage,
-					sortOrder: dexConfig.sortOrder,
-					boxes: [],
-					pokemon: {}
-				}
-				allDexes.push(placeholderDex)
-			}
-		}
-
-		// Sort by sortOrder for deterministic display
-		// First by type (server before client), then by value within type
-		allDexes.sort((a, b) => {
-			// Server dexes come first
-			if (a.sortOrder.type !== b.sortOrder.type) {
-				return a.sortOrder.type === 'server' ? -1 : 1
-			}
-			// Within same type, sort by value
-			return a.sortOrder.value - b.sortOrder.value
-		})
-
-		// Pokedex list now includes local dexes that have real editing state and
-		// server-supported dexes that are not yet loaded and dont have any real editing state
-		this.pokedexList = allDexes
-		console.log('allDexes', allDexes)
-		return this.pokedexList
+	getPokedexIndexList(): DexIndexEntry[] {
+		return this.pokedexIndexList
 	}
-
-	/**
-	 * Get all available Pokedexes from the current state
-	 */
-	public getAllPokedexes(): DexStorage[] {
-		return this.pokedexList
-	}
-
 	// ================
 	// Box Settings
 	// ================
 
-	/**
-	 * Get box data by box ID
-	 */
-	getBox(boxId: string): BoxData | undefined {
-		return this.pokedexState.boxes.find((box) => box.id === boxId)
-	}
-
-	/**
-	 * Update box settings (e.g., wallpaper)
-	 */
-	updateBoxSettings(boxId: string, settings: Partial<BoxData['settings']>): void {
+	updateBoxSettings(boxId: string, settings: Partial<BoxState['settings']>): void {
 		const boxIndex = this.pokedexState.boxes.findIndex((box) => box.id === boxId)
 
 		if (boxIndex === -1) {
@@ -228,52 +298,15 @@ export class PkState {
 		storageHandler.updateBoxSettings(boxId, this.pokedexState.boxes[boxIndex].settings)
 	}
 
-	/**
-	 * Update box wallpaper specifically
-	 */
-	updateBoxWallpaper(boxId: string, wallpaper: string): void {
-		this.updateBoxSettings(boxId, { wallpaper })
-	}
-
 	// ================
 	// Pokemon
 	// ================
 
-	getPokemon(identifier: string): PokemonState {
-		return this.pokedexState.pokemon[identifier] || pokemonNullState
+	getPokemon(identifier: string): PokemonEditState {
+		return this.pokedexState?.pokemon[identifier] || pokemonNullState
 	}
 
-	toggleRibbon(identifier: string, ribbonId: string): void {
-		const currentPokemon = this.getPokemon(identifier)
-		const ribbonSet = new Set(currentPokemon.ribbons)
-
-		if (ribbonSet.has(ribbonId)) {
-			ribbonSet.delete(ribbonId)
-		} else {
-			ribbonSet.add(ribbonId)
-		}
-
-		this.updatePokemon(identifier, {
-			ribbons: Array.from(ribbonSet)
-		})
-	}
-
-	toggleMark(identifier: string, markId: string): void {
-		const currentPokemon = this.getPokemon(identifier)
-		const markSet = new Set(currentPokemon.marks)
-
-		if (markSet.has(markId)) {
-			markSet.delete(markId)
-		} else {
-			markSet.add(markId)
-		}
-
-		this.updatePokemon(identifier, {
-			marks: Array.from(markSet)
-		})
-	}
-
-	updatePokemon(identifier: string, updatedState: Partial<PokemonData>): void {
+	updatePokemon(identifier: string, updatedState: Partial<PokemonEditState>): void {
 		if (!this.pokedexState.pokemon[identifier]) {
 			throw new Error(
 				`Cannot update Pokemon. The Pokemon with ID "${identifier}" does not exist in the current Pokedex.`
@@ -305,6 +338,39 @@ export class PkState {
 
 		// Persist in localstorage
 		storageHandler.editPokemonStateEntry(identifier, this.pokedexState.pokemon[identifier])
+
+		// Update the Pokedex index list state - reload from storage to get updated counters
+		this.pokedexIndexList = storageHandler.loadPokedexIndex()
+	}
+
+	toggleMark(identifier: string, markId: string): void {
+		const currentPokemon = this.getPokemon(identifier)
+		const markSet = new Set(currentPokemon.marks)
+
+		if (markSet.has(markId)) {
+			markSet.delete(markId)
+		} else {
+			markSet.add(markId)
+		}
+
+		this.updatePokemon(identifier, {
+			marks: Array.from(markSet)
+		})
+	}
+
+	toggleRibbon(identifier: string, ribbonId: string): void {
+		const currentPokemon = this.getPokemon(identifier)
+		const ribbonSet = new Set(currentPokemon.ribbons)
+
+		if (ribbonSet.has(ribbonId)) {
+			ribbonSet.delete(ribbonId)
+		} else {
+			ribbonSet.add(ribbonId)
+		}
+
+		this.updatePokemon(identifier, {
+			ribbons: Array.from(ribbonSet)
+		})
 	}
 
 	resetPokemon(identifier: string): void {
@@ -321,6 +387,9 @@ export class PkState {
 
 		// Persist in localstorage
 		storageHandler.editPokemonStateEntry(identifier, this.pokedexState.pokemon[identifier])
+
+		// Update the Pokedex index list state - reload from storage to get updated counters
+		this.pokedexIndexList = storageHandler.loadPokedexIndex()
 	}
 
 	// ================
@@ -336,47 +405,12 @@ export class PkState {
 		this.selectedPokemon = this.pokedexState.pokemon[identifier]
 	}
 
-	getSelectedPokemon(): PokemonState {
+	getSelectedPokemon(): PokemonEditState {
 		return this.selectedPokemon ? this.selectedPokemon : pokemonNullState
 	}
 
 	deselectPokemon(): void {
 		this.selectedPokemon = pokemonNullState
-	}
-
-	// ================
-	// Helper Methods
-	// ================
-
-	/**
-	 * Extract box order structure from existing DexStorage data
-	 * This is useful when we have complete data (e.g., from import) but need the box order format
-	 */
-	private extractBoxOrderFromDexData(dexData: DexStorage): ServerBoxOrder[] {
-		return dexData.boxes.map((box) => ({
-			title: box.title,
-			pokemon: box.pokemon.map((pokemonKey) => {
-				const pokemon = dexData.pokemon[pokemonKey]
-				return pokemon.idEntry
-			}),
-			wallpaper: box.settings.wallpaper
-		}))
-	}
-
-	/**
-	 * Force refresh from server - useful for future server-side updates
-	 * This method can be called when you want to ensure the latest server data is used
-	 */
-	async refreshFromServer(dexName?: string): Promise<void> {
-		const targetDex = dexName || storageHandler.loadSelectedPokedexName()
-
-		// Clear cache to force server fetch
-		if (this.boxOrderCache[targetDex]) {
-			delete this.boxOrderCache[targetDex]
-		}
-
-		// Force server fetch
-		await this.switchPokedex(targetDex, true)
 	}
 }
 

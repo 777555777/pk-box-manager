@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { type DexStorage } from '$lib/state/storage-handler'
 	import PkBox from '$lib/components/box/pk-box.svelte'
+	import { type DexState } from '$lib/models/data-models'
 
-	let { dexStorage }: { dexStorage: DexStorage } = $props()
+	let { dexState }: { dexState: DexState } = $props()
 </script>
 
 <section class="pk-box-container">
-	{#each dexStorage.boxes as box (box.id)}
+	{#each dexState.boxes as box (box.id)}
 		<PkBox {box} />
 	{/each}
 </section>
@@ -21,8 +21,9 @@
 		justify-items: center;
 		padding: 8rem 2rem 2rem 2rem; /* Padding left and right to prevent Tooltips from beeing cut off */
 
-		overflow-y: auto;
-		scrollbar-width: none;
+		/* When this is not used scrolling is more reliable ?! */
+		/* overflow-y: auto; */
+		/* scrollbar-width: none; */
 	}
 
 	@media (max-width: 680px) {

@@ -1,11 +1,7 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
+import { type PokemonEditState } from '../models/data-models.ts'
 import { defaultAppSettings } from '../null-state-helper.ts'
-import {
-	type AppSettings,
-	type BadgeDisplayMode,
-	type PokemonData,
-	storageHandler
-} from './storage-handler.ts'
+import { type AppSettings, type BadgeDisplayMode, storageHandler } from './storage-handler.ts'
 
 export class AppState {
 	// UI state
@@ -13,8 +9,8 @@ export class AppState {
 	private mobileSidebarOpen = $state(false)
 
 	// Application settings
-	private selectedDexName = $state(storageHandler.loadSelectedPokedexName())
-	private appDefaults: Partial<PokemonData> = $state(initialAppDefaults)
+	private selectedDexId = $state(storageHandler.loadSelectedPokedexId())
+	private appDefaults: Partial<PokemonEditState> = $state(initialAppDefaults)
 	private appSettings = $state(storageHandler.loadAppSettings())
 
 	private activeDropdownId: string | null = $state(null)
@@ -43,13 +39,13 @@ export class AppState {
 		this.mobileSidebarOpen = false
 	}
 
-	public getCurrentPokedexName(): string {
-		return this.selectedDexName
+	public getSelectedPokedexId(): string {
+		return this.selectedDexId
 	}
 
-	public setCurrentPokedexName(name: string): void {
-		this.selectedDexName = name
-		storageHandler.saveSelectedPokedexName(name)
+	public setSelectedPokedexId(name: string): void {
+		this.selectedDexId = name
+		storageHandler.saveSelectedPokedexId(name)
 	}
 
 	public openDropdown(dropdownId: string) {
@@ -68,11 +64,11 @@ export class AppState {
 	// App Defaults Methods
 	// ================
 
-	public getAppDefaults(): Partial<PokemonData> {
+	public getAppDefaults(): Partial<PokemonEditState> {
 		return this.appDefaults
 	}
 
-	public updateAppDefaults(updatedDefaults: Partial<PokemonData>): void {
+	public updateAppDefaults(updatedDefaults: Partial<PokemonEditState>): void {
 		// Update local state
 		const newDefaults = { ...this.appDefaults, ...updatedDefaults }
 		this.appDefaults = newDefaults
