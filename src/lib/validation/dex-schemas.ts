@@ -21,7 +21,12 @@ export const PokemonEntrySchema = object({
 	id_national: number()
 })
 
-export const BoxTagsSchema = union([literal('normal'), literal('forms'), literal('gigantamax')])
+export const BoxTagsSchema = union([
+	literal('normal'),
+	literal('forms'),
+	literal('gigantamax'),
+	literal('female')
+])
 
 export const PokemonEditStateSchema = object({
 	idEntry: PokemonEntrySchema,

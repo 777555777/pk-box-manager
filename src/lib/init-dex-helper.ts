@@ -2,13 +2,14 @@ import {
 	type PokemonEditState,
 	type BoxState,
 	type DexState,
-	type PokemonEntry,
 	type BoxOrderConfig,
 	type DexConfig,
 	type DexSave,
-	type DexMeta
+	type DexMeta,
+	BoxTags
 } from './models/data-models.ts'
 import { defaultWallpaper } from './null-state-helper.ts'
+import { getIdentifier } from './spriteheet-helper.ts'
 
 export const initialAppDefaults = {
 	ball: '01-poke-ball',
@@ -75,7 +76,7 @@ function setupInitialBoxes(pokedexOrder: BoxOrderConfig[]): BoxState[] {
 		}
 
 		for (const pokemon of box.pokemon) {
-			const pokemonIdentifier = formatIdentifier(pokemon)
+			const pokemonIdentifier = getIdentifier(pokemon)
 			boxData.pokemon.push(pokemonIdentifier)
 		}
 
@@ -90,7 +91,7 @@ function setupInitialPokemonList(pokedexOrder: BoxOrderConfig[]): Record<string,
 
 	for (const box of pokedexOrder) {
 		for (const pokemon of box.pokemon) {
-			const pokemonIdentifier = formatIdentifier(pokemon)
+			const pokemonIdentifier = getIdentifier(pokemon)
 			pokemonList[pokemonIdentifier] = {
 				idEntry: pokemon,
 				captured: false,
@@ -118,7 +119,10 @@ function addConfigData(initialBoxes: BoxState[], pokemonList: Record<string, Pok
 	}
 }
 
-function formatIdentifier(entry: PokemonEntry): string {
-	const paddedId = entry.id_national.toString().padStart(4, '0')
-	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}`
+// Format tag display name
+export function formatTagName(tag: BoxTags): string {
+	if (tag === 'gigantamax') {
+		return 'G-Max'
+	}
+	return tag.charAt(0).toUpperCase() + tag.slice(1)
 }

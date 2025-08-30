@@ -2,6 +2,7 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
+	import { formatTagName } from '$lib/init-dex-helper'
 
 	let {
 		dexTitle,
@@ -101,7 +102,7 @@
 				{#each tags as tag}
 					{#if tag !== 'normal'}
 						<li class={selectedTags.includes(tag) ? 'selected-tag' : ''}>
-							{tag}
+							{formatTagName(tag)}
 						</li>
 					{/if}
 				{/each}
@@ -241,7 +242,7 @@
 			transparent 100%
 		);
 		padding: 0.75rem;
-		opacity: 1; /* set to 0 to only show on hover */
+		opacity: 0;
 		z-index: 2;
 		transition: opacity 0.3s ease;
 

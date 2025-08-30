@@ -4,6 +4,7 @@
 	import type { BoxTags, DexConfig } from '$lib/models/data-models'
 	import { getDexConfig, getAvailableTagsForPreset } from '$lib/data/pokedex-config-utils'
 	import { dexPresets } from '$lib/data/pokedex'
+	import { formatTagName } from '$lib/init-dex-helper'
 
 	let { dexTitle, dexId, onSelect, imgUrl } = $props()
 
@@ -129,7 +130,7 @@
 				{#each availableTagsForThisPreset as tag}
 					<div class="tag-toggle-item">
 						<PkToggle
-							label={tag}
+							label={formatTagName(tag)}
 							activeColor="hsla(125, 100%, 30%, 0.55)"
 							bind:checked={tagStates[tag]}
 						/>
@@ -145,7 +146,10 @@
 		<div class="active-tags-preview">
 			<span>Include variants:</span>
 			<span class="tag-list"
-				>{activeTags.filter((tag) => tag !== 'normal').join(', ') || 'base Pokemon only'}</span
+				>{activeTags
+					.filter((tag) => tag !== 'normal')
+					.map(formatTagName)
+					.join(', ') || 'base Pokemon only'}</span
 			>
 		</div>
 		<div class="pokemon-count-preview">

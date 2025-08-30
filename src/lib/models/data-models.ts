@@ -80,7 +80,7 @@ export interface DexSave {
 // #endregion
 // ===========================================================
 
-export type BoxTags = 'normal' | 'forms' | 'gigantamax'
+export type BoxTags = 'normal' | 'forms' | 'gigantamax' | 'female'
 
 // type PokemonStats = [number, number, number, number, number, number]
 

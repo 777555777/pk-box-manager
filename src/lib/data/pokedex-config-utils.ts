@@ -12,7 +12,7 @@ interface PokedexBox {
 	id: string
 	title: string
 	wallpaper: string
-	tags: string[]
+	tags: BoxTags[]
 	pokemon: string[]
 }
 
@@ -46,13 +46,14 @@ function findPokemon(pokemonId: string) {
  * - If box contains 'forms' but selectedTags doesn't -> exclude
  * - Otherwise include when any box tag is present in selectedTags
  */
-function matchesTags(boxTags: string[], selectedTags: string[]) {
+function matchesTags(boxTags: BoxTags[], selectedTags: BoxTags[]) {
 	if (!selectedTags || selectedTags.length === 0) return true
 
 	const selectedTagSet = new Set(selectedTags)
 	// exclude special tags unless explicitly requested
 	if (boxTags.includes('gigantamax') && !selectedTagSet.has('gigantamax')) return false
 	if (boxTags.includes('forms') && !selectedTagSet.has('forms')) return false
+	if (boxTags.includes('female') && !selectedTagSet.has('female')) return false
 
 	// include when any tag matches
 	for (const tag of boxTags) {
@@ -68,7 +69,7 @@ function matchesTags(boxTags: string[], selectedTags: string[]) {
 function getPokemonBoxOrderForConfig(dexConfig: DexConfig): BoxOrderConfig[] {
 	const pokemonOrder: BoxOrderConfig[] = []
 	for (const boxId of dexConfig.boxList) {
-		const foundBox = pokedexBoxes.find((b: PokedexBox) => b.id === boxId)
+		const foundBox = pokedexBoxes.find((box) => box.id === boxId) as PokedexBox
 
 		if (!foundBox) continue
 

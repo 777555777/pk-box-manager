@@ -200,7 +200,7 @@
 		"id": "kanto-females",
 		"title": "Kanto Females",
 		"wallpaper": "forest",
-		"tags": ["forms"],
+		"tags": ["female"],
 		"pokemon": [
 			"0003-venusaur-female",
 			"0012-butterfree-female",
@@ -379,7 +379,7 @@
 		"id": "johto-females",
 		"title": "Johto Females",
 		"wallpaper": "forest",
-		"tags": ["forms"],
+		"tags": ["female"],
 		"pokemon": [
 			"0154-meganium-female",
 			"0165-ledyba-female",
@@ -619,7 +619,7 @@
 		"id": "hoenn-females",
 		"title": "Hoenn Females",
 		"wallpaper": "forest",
-		"tags": ["forms"],
+		"tags": ["female"],
 		"pokemon": [
 			"0255-torchic-female",
 			"0256-combusken-female",
@@ -791,7 +791,7 @@
 		"id": "sinnoh-female-1",
 		"title": "Sinnoh Female 1",
 		"wallpaper": "forest",
-		"tags": ["forms"],
+		"tags": ["female"],
 		"pokemon": [
 			"0396-starly-female",
 			"0397-staravia-female",
@@ -829,7 +829,7 @@
 		"id": "sinnoh-female-2",
 		"title": "Sinnoh Female 2",
 		"wallpaper": "forest",
-		"tags": ["forms"],
+		"tags": ["female"],
 		"pokemon": ["0473-mamoswine-female"]
 	},
 	{

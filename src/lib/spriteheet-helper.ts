@@ -14,7 +14,6 @@ type Coordinates = { x: number; y: number }
 
 export const combinedPokemon: Record<string, SpriteData> = { ...Pokemon, ...Forms }
 
-// TODO: This function is a duplicate. the same function is in storage-handler.ts
 export function getIdentifier(entry: PokemonEntry): PkStatsIdentifier {
 	const paddedId = entry.id_national.toString().padStart(4, '0')
 	return `${paddedId}-${entry.pokemonid}${entry.formid ? '-' + entry.formid : ''}` as PkStatsIdentifier
