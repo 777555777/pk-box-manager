@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Marks, type MarksType } from '$lib/models/marks-models'
-	import PkIconGrid from '../ui/pk-icon-grid.svelte'
+	import PkIconGrid from '$lib/components/ui/base/pk-icon-grid.svelte'
 
 	let { onUpdate = () => {}, disabled = false, selectedMarks = [] } = $props()
 

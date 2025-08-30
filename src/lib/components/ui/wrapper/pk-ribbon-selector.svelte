@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PkItemSelector from '$lib/components/ui/pk-item-selector.svelte'
+	import PkItemSelector from '$lib/components/ui/base/pk-item-selector.svelte'
 	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
 
 	let {

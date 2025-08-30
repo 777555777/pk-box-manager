@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setCssPosition } from '$lib/spriteheet-helper'
-	import PkPagination from './pk-pagination.svelte'
+	import PkPagination from '$lib/components/ui/pk-pagination.svelte'
 
 	let {
 		data,

@@ -6,7 +6,7 @@ import {
 	type DexConfig,
 	type DexSave,
 	type DexMeta,
-	BoxTags
+	type BoxTags
 } from './models/data-models.ts'
 import { defaultWallpaper } from './null-state-helper.ts'
 import { getIdentifier } from './spriteheet-helper.ts'

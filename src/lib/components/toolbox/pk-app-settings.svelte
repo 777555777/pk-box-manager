@@ -2,9 +2,9 @@
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import { setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
-	import PkMarkSelector from '../ui/pk-mark-selector.svelte'
-	import PkRadioGroup from '../ui/pk-radio-group.svelte'
-	import PkRibbonSelector from '../ui/pk-ribbon-selector.svelte'
+	import PkMarkSelector from '$lib/components/ui/wrapper/pk-mark-selector.svelte'
+	import PkRadioGroup from '$lib/components/ui/pk-radio-group.svelte'
+	import PkRibbonSelector from '$lib/components/ui/wrapper/pk-ribbon-selector.svelte'
 	import { type RibbonsType } from '$lib/models/ribbons-models'
 	import { type MarksType } from '$lib/models/marks-models'
 

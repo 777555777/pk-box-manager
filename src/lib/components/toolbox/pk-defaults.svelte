@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
-	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+	import PkBallSelector from '$lib/components/ui/wrapper/pk-ball-selector.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
 	import type { GameType } from '$lib/models/data-models'
 	import { Game, Generations } from '$lib/models/data-models'

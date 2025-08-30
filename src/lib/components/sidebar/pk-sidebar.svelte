@@ -2,7 +2,7 @@
 	import PkViewer from '$lib/components/sidebar/pk-viewer.svelte'
 	import PkForm from '$lib/components/sidebar/pk-form.svelte'
 	import PkTitle from '$lib/components/sidebar/pk-title.svelte'
-	import PkBallSelector from '$lib/components/ui/pk-ball-selector.svelte'
+	import PkBallSelector from '$lib/components/ui/wrapper/pk-ball-selector.svelte'
 	import PkStats from '$lib/components/sidebar/pk-stats.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkResetBtn from '$lib/components/ui/pk-reset-btn.svelte'
