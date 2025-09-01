@@ -9,7 +9,8 @@
 	import { dexPresets } from '$lib/data/pokedex'
 	import type { BoxTags, DexConfig } from '$lib/models/data-models'
 	import { getDexConfig } from '$lib/data/pokedex-config-utils'
-	import PkDexPresetCard from '../ui/pk-dex-preset-card.svelte'
+	import PkDexPresetSelection from '../ui/pk-dex-preset-selection.svelte'
+	import PkDexPresetList from '../ui/pk-dex-preset-list.svelte'
 
 	const optionConfig = [
 		{ tabId: 'active', label: 'Active' },
@@ -24,6 +25,13 @@
 	let selectedDexRef = $derived.by(() => {
 		return pokedexIndexList.find((dex) => dex.dexSaveId === selectedDexId)
 	})
+
+	type DexPresetKey = keyof typeof dexPresets
+
+	let selectedPreset = $state<DexPresetKey | null>(null)
+	let selectedPresetDexConfig: DexConfig | undefined = $derived.by(() =>
+		selectedPreset ? dexPresets[selectedPreset] : undefined
+	)
 
 	let pokedexDialog: PkDialogElement
 
@@ -101,21 +109,6 @@
 />
 
 {#snippet pokedexDialogContent()}
-	<!-- Mobile: Details/Summary Layout -->
-	<div class="mobile-filter-accordion">
-		<details class="pk-details">
-			<summary class="pk-summary">Options</summary>
-			<div class="pk-filter-container">
-				<div class="pk-btn-group pk-filter-toggles">
-					<PkRadioGroup bind:currentOption={currentPage} {optionConfig} />
-				</div>
-				<div class="pk-btn-group pk-filter-actions">
-					<PkImport />
-				</div>
-			</div>
-		</details>
-	</div>
-
 	<!-- Desktop: Fieldset Layout -->
 	<div class="desktop-filter-fieldset">
 		<fieldset class="pk-fieldset pk-dex-filter-options">
@@ -162,58 +155,34 @@
 {/snippet}
 
 {#snippet pokedexPresetList()}
-	<section class="pk-pokedex-section">
-		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
-			<PkDexPresetCard
-				dexTitle={dexPreset.displayName}
-				dexId={dexPreset.presetId}
-				onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
-					createAndSelectDex(selectedPreset, activeTags)}
-				imgUrl={`/ui/dex/${dexPreset.coverImage}`}
-				--value-color="red"
-				--value-secondary-color="blue"
-			/>
-		{/each}
+	<section class="pk-preset-section">
+		<PkDexPresetList bind:selectedPreset={selectedPreset as DexPresetKey} />
+
+		<div class="separator-responsive"></div>
+
+		<div class="pk-dex-configuration">
+			{#if selectedPresetDexConfig}
+				<PkDexPresetSelection
+					{selectedPresetDexConfig}
+					onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
+						createAndSelectDex(selectedPreset, activeTags)}
+				/>
+			{:else}
+				<div class="no-preset-selected">
+					<p>Please select a Pokédex preset from the list above to configure it.</p>
+				</div>
+			{/if}
+		</div>
 	</section>
 {/snippet}
 
 <style>
-	/* Mobile Accordion Styles */
-	.mobile-filter-accordion {
-		display: none; /* Hidden by default, shown on mobile */
-	}
-
-	.pk-details {
-		.pk-filter-container {
-			padding: 1rem;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			gap: 1rem;
-
-			.pk-btn-group {
-				display: flex;
-				gap: 0.5rem;
-			}
-		}
-	}
-
 	/* Desktop Fieldset Styles */
-	.desktop-filter-fieldset {
-		display: block;
-	}
 
 	.pk-dex-filter-options {
 		margin-bottom: 1rem;
 		display: flex;
 		justify-content: space-between;
-
-		.pk-filter-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			gap: 3rem;
-		}
 
 		.pk-btn-group {
 			display: flex;
@@ -221,37 +190,13 @@
 		}
 	}
 
-	/* Responsive Filter-Optionen */
-	@media (max-width: 768px) {
-		/* Mobile: Show accordion, hide fieldset */
-		.mobile-filter-accordion {
-			display: block;
-		}
-
-		.desktop-filter-fieldset {
-			display: none;
-		}
-
-		/* Mobile-specific styling for accordion content */
-		.pk-details .pk-filter-container {
+	@media (max-width: 520px) {
+		.pk-dex-filter-options {
+			display: flex;
 			flex-direction: column;
 			justify-content: center;
+			align-items: center;
 			gap: 1rem;
-		}
-	}
-
-	@media (max-width: 520px) {
-		.pk-details .pk-filter-toggles {
-			flex-direction: column;
-			gap: 0.75rem;
-		}
-
-		.pk-details .pk-filter-container {
-			padding: 0.75rem;
-		}
-
-		.pk-details summary {
-			padding: 0.5rem 0.75rem;
 		}
 	}
 	.pk-pokedex-section {
@@ -272,9 +217,67 @@
 		background-color: var(--ui-section-background-color-accent);
 	}
 
+	.pk-preset-section {
+		display: flex;
+
+		width: 100%;
+		align-content: start;
+		justify-items: center;
+
+		padding: 2rem;
+		overflow-y: auto;
+		height: 680px;
+
+		border-radius: 5px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background-color: var(--ui-section-background-color-accent);
+	}
+
+	.separator-responsive {
+		width: 2px;
+		height: auto;
+		background-color: rgba(0, 0, 0, 0.3);
+		margin: 0 1rem;
+		/* Prevent margin collapsing */
+		border-left: 1px solid transparent;
+		border-right: 1px solid transparent;
+	}
+
+	.pk-dex-configuration {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		gap: 1rem;
+
+		.no-preset-selected {
+			padding-inline: 1rem;
+			margin: auto;
+			text-align: center;
+		}
+	}
+
 	@media (max-width: 768px) {
+		.pk-preset-section {
+			flex-direction: column;
+		}
 		.pk-pokedex-section {
 			padding-bottom: 2rem;
+		}
+
+		.separator-responsive {
+			width: auto;
+			height: 2px;
+			margin: 2rem 0;
+			/* Prevent margin collapsing */
+			border-top: 1px solid transparent;
+			border-bottom: 1px solid transparent;
+		}
+	}
+	@media (max-width: 520px) {
+		.pk-preset-section {
+			padding: 1rem;
+			padding-block: 2rem;
 		}
 	}
 

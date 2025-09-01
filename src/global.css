@@ -220,6 +220,9 @@ body {
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.3);
 	margin: 0 1rem;
+	/* Prevent margin collapsing */
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
 }
 
 /* ======== Global UI Element Classes ========= */
@@ -456,6 +459,10 @@ body {
 	border-image-outset: 0;
 	border-image-width: 9px;
 	resize: none;
+
+	&:hover {
+		filter: brightness(1.15);
+	}
 
 	&:active {
 		filter: brightness(0.9);

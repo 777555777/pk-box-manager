@@ -157,10 +157,7 @@ export function getAvailableTagsForPreset(presetId: string): BoxTags[] {
 		const box = pokedexBoxes.find((b) => b.id === boxId)
 		if (box) {
 			for (const tag of box.tags) {
-				if (tag !== 'normal') {
-					// Exclude 'normal' as it's always included
-					availableTags.add(tag as BoxTags)
-				}
+				availableTags.add(tag as BoxTags)
 			}
 		}
 	}
