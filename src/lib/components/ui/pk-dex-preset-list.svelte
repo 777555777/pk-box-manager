@@ -15,7 +15,7 @@
 		<li class="pk-dex-preset-list-item">
 			<a
 				class="pk-textarea {selectedPreset === dexPresetId ? 'active' : ''}"
-				href="#"
+				href="/"
 				onclick={() => selectPreset(dexPresetId)}>{dexPreset.displayName}</a
 			>
 		</li>
