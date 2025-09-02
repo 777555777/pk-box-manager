@@ -24,6 +24,7 @@ export interface PkStateHandler {
 	initPokedex(dexConfig: DexConfig | null): void
 	loadPokedex(dexId: string): DexSave
 	getPokedex(): DexSave
+	savePokedex(dexSave: DexSave): void
 	// getConfig(): DexConfig
 	// getState(): DexState
 	switchPokedex(dexId: DexSave): void
@@ -142,6 +143,11 @@ export class PkState implements PkStateHandler {
 
 	getPokedex(): DexSave {
 		return this.pokedex
+	}
+
+	savePokedex(dexSave: DexSave): void {
+		storageHandler.savePokedex(dexSave)
+		this.pokedexIndexList = storageHandler.loadPokedexIndex()
 	}
 
 	switchPokedex(dexSave: DexSave): void {

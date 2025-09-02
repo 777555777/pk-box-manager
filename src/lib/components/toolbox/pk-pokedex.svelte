@@ -94,6 +94,19 @@
 		appState.setSelectedPokedexId(selectedDex.dexSaveId)
 		pkState.switchPokedex(targetDexSave)
 	}
+
+	function editDisplayName(dexId: string, newName: string) {
+		// load the dexSave via dexId
+		const targetDexSave = pkState.loadPokedex(dexId)
+
+		if (targetDexSave) {
+			// then apply the new name
+			targetDexSave.config.displayName = newName
+
+			// persist in localstorage
+			pkState.savePokedex(targetDexSave)
+		}
+	}
 </script>
 
 <PkDialog
@@ -145,6 +158,7 @@
 				onDelete={handlePokedexDelete}
 				onReset={handleConfirmReset}
 				onSelect={() => loadSelectedDex(pokedexIndex)}
+				onUpdateName={editDisplayName}
 				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
 				isSystemDefault={pokedexIndex.isSystemDefault}
 				--value-color="red"

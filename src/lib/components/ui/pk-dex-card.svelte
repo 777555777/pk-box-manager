@@ -3,6 +3,8 @@
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
 	import { formatTagName } from '$lib/init-dex-helper'
+	import { appState } from '$lib/state/app-state.svelte'
+	import PkDialog, { type PkDialogElement } from './pk-dialog.svelte'
 
 	let {
 		dexTitle,
@@ -13,14 +15,41 @@
 		onDelete,
 		onReset,
 		onSelect,
+		onUpdateName,
 		imgUrl,
 		isSystemDefault = false
 	} = $props()
 
+	let editNameDialog: PkDialogElement
+
 	// Deletion state
 	let isDeleting = $state(false)
 	let selectedTags = $state<string[]>([])
+
+	// Edit name state
+	let newName = $state(dexTitle)
+
+	// Context menu handling via appState
+	const contextMenuId = `context-${dexSaveId}`
+	let contextVisible = $derived(appState.isDropdownOpen(contextMenuId))
 	let cardElement: HTMLElement | undefined
+
+	function editDisplayName() {
+		// Reset input to current title and show dialog
+		newName = dexTitle
+		editNameDialog.showDialog()
+	}
+
+	function handleNameUpdate() {
+		// Validate the new name
+		const trimmedName = newName.trim()
+		if (trimmedName && trimmedName !== dexTitle) {
+			// Call the parent's update function
+			if (onUpdateName) {
+				onUpdateName(dexSaveId, trimmedName)
+			}
+		}
+	}
 
 	// Handle dex selection
 	function handleDexSelect() {
@@ -30,9 +59,16 @@
 		}
 	}
 
-	// Handle delete toggle
-	function toggleDelete() {
-		isDeleting = !isDeleting
+	// More direct function to show delete overlay
+	function showDeleteOverlay() {
+		isDeleting = true
+	}
+	function toggleContextMenu() {
+		if (contextVisible) {
+			appState.closeDropdown()
+		} else {
+			appState.openDropdown(contextMenuId)
+		}
 	}
 
 	// Handle dex reset
@@ -62,11 +98,16 @@
 		if (isDeleting && cardElement && !cardElement.contains(event.target as Node)) {
 			cancelDelete()
 		}
+
+		// Close context menu when clicking outside
+		if (contextVisible && cardElement && !cardElement.contains(event.target as Node)) {
+			appState.closeDropdown()
+		}
 	}
 
-	// Add/remove event listener when delete state changes
+	// Add/remove event listener when delete state or context menu changes
 	$effect(() => {
-		if (isDeleting) {
+		if (isDeleting || contextVisible) {
 			document.addEventListener('click', handleClickOutside)
 		} else {
 			document.removeEventListener('click', handleClickOutside)
@@ -88,14 +129,40 @@
 			<div class="pk-title-row">
 				<h3 class="text-base">{dexTitle}</h3>
 				<!-- Delete Button -->
-				<button
-					class="delete-button pk-tooltip"
-					data-tooltip="Delete or Reset Pokedex"
-					onclick={toggleDelete}
-				>
-					<PkIcon color="#fff" name={'close'} size={16} />
+				<button class="delete-button" onclick={toggleContextMenu}>
+					<PkIcon color="#fff" name={'options'} size={16} />
 				</button>
 			</div>
+			{#if contextVisible}
+				<div class="pk-context-menu">
+					<ul>
+						<li>
+							<button
+								onclick={(event) => {
+									event.stopPropagation()
+									appState.closeDropdown()
+									showDeleteOverlay()
+								}}
+							>
+								<PkIcon color="#fff" name={'close'} size={16} />
+								Delete or reset
+							</button>
+						</li>
+						<li>
+							<button
+								onclick={(event) => {
+									event.stopPropagation()
+									appState.closeDropdown()
+									editDisplayName()
+								}}
+							>
+								<PkIcon color="#fff" name={'pen'} size={16} />
+								Edit name</button
+							>
+						</li>
+					</ul>
+				</div>
+			{/if}
 
 			<!-- Active Tags list -->
 			<ul class="dex-tags">
@@ -162,7 +229,39 @@
 	</section>
 </article>
 
+{#snippet editNameDialogContent()}
+	<!-- Edit Name Dialog Content -->
+	<div class="dex-name-input">
+		<label for="edit-name-input" class="text-base">New Name</label>
+		<input
+			id="edit-name-input"
+			class="pk-textarea"
+			type="text"
+			bind:value={newName}
+			placeholder="Enter new Pokedex name"
+			maxlength="18"
+		/>
+	</div>
+{/snippet}
+
+<PkDialog
+	bind:this={editNameDialog}
+	headline="Edit Pokedex Name"
+	dialogContent={editNameDialogContent}
+	onConfirm={handleNameUpdate}
+	onCancel={() => {}}
+	okBtnText="Save"
+	cancelBtnText="Cancel"
+	size="S"
+/>
+
 <style>
+	.dex-name-input {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
 	.pk-dex-card {
 		&.selected {
 			border-image: url('/ui/textarea-select-focus.webp') 9 fill stretch;
@@ -199,6 +298,44 @@
 			padding: 0.25rem 0.5rem;
 			font-size: 0.875rem;
 			user-select: none;
+		}
+	}
+
+	.pk-context-menu {
+		position: absolute;
+		right: -154px;
+		top: 16px;
+
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		padding: 0.325rem;
+		z-index: 10;
+
+		background-color: rgb(21, 21, 21, 1);
+		border: 2px solid #272727;
+		border-radius: 5px;
+
+		li {
+			display: flex;
+			align-items: center;
+			gap: 0.25rem;
+			background-color: rgb(21, 21, 21, 1);
+			border-radius: 5px;
+
+			button {
+				display: block;
+				background: transparent;
+				border: none;
+				width: 100%;
+				padding: 0.325rem 0.5rem;
+				border-radius: 5px;
+				color: white;
+				text-align: left;
+				cursor: pointer;
+			}
+
+			&:hover {
+				background-color: hsla(0, 0%, 100%, 0.15);
+			}
 		}
 	}
 
@@ -293,6 +430,13 @@
 					background-color: rgba(255, 255, 255, 0.2);
 				}
 			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		.pk-context-menu {
+			right: 18px;
+			top: 44px;
 		}
 	}
 </style>
