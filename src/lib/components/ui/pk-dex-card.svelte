@@ -127,7 +127,9 @@
 	<section class="pk-dex-card-header">
 		<div class="pk-dex-card-title">
 			<div class="pk-title-row">
-				<h3 class="text-base">{dexTitle}</h3>
+				<h3 class="text-base" style={isSelected ? 'color: var(--ui-text-active);' : ''}>
+					{dexTitle}
+				</h3>
 				<!-- Delete Button -->
 				<button class="delete-button" onclick={toggleContextMenu}>
 					<PkIcon color="#fff" name={'options'} size={16} />
@@ -256,6 +258,115 @@
 />
 
 <style>
+	.pk-dex-card {
+		display: flex;
+		flex-direction: column;
+		height: 320px;
+		width: 240px;
+		position: relative;
+		padding: 0 6px 0;
+
+		border-width: 9px solid;
+		border-image: url('/ui/textarea-select-default.webp') 9 fill stretch;
+		border-image-outset: 0;
+		border-image-width: 9px;
+
+		.pk-dex-card-actions button {
+			position: relative;
+			z-index: 2; /* Über dem Overlay */
+		}
+	}
+
+	.pk-dex-card-header {
+		display: flex;
+		align-items: flex-start;
+		padding-inline: 0.75rem;
+		margin-top: 3px;
+		padding-block: 8px;
+		min-height: 80px;
+		.pk-dex-card-title {
+			min-height: 3.5rem;
+			width: 100%;
+
+			h3 {
+				line-height: 1.3;
+				padding-block: 0.5rem;
+				word-wrap: break-word;
+				hyphens: auto;
+			}
+		}
+	}
+
+	.pk-dex-card-image {
+		background-size: cover;
+		background-position: center;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		image-rendering: auto;
+
+		border-top: 3px solid #5d5d6f;
+		border-bottom: 3px solid #5d5d6f;
+
+		/* Background image as pseudo-element */
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: inherit;
+			background-size: inherit;
+			background-position: inherit;
+			z-index: 0;
+		}
+
+		/* Gradient to darken the image */
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+			z-index: 1;
+		}
+	}
+
+	.pk-dex-card-actions {
+		padding: 0.5rem;
+		display: flex;
+		justify-content: space-between;
+		position: relative;
+		margin-bottom: 6px;
+
+		/* Checkerboard background ::before pseudo-element */
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-color: #383842;
+			background-image:
+				repeating-linear-gradient(
+					45deg,
+					#5d5d6f 25%,
+					transparent 25%,
+					transparent 75%,
+					#5d5d6f 75%,
+					#5d5d6f
+				),
+				repeating-linear-gradient(
+					45deg,
+					#5d5d6f 25%,
+					#383842 25%,
+					#383842 75%,
+					#5d5d6f 75%,
+					#5d5d6f
+				);
+			background-position:
+				0 0,
+				10px 10px;
+			background-size: 20px 20px;
+			opacity: 0.6;
+		}
+	}
+
 	.dex-name-input {
 		display: flex;
 		flex-direction: column;
@@ -288,8 +399,11 @@
 
 	.dex-tags {
 		display: flex;
+		flex-wrap: nowrap;
 		gap: 0.5rem;
-		overflow-x: scroll;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
 
 		li {
 			list-style: none;
@@ -298,6 +412,8 @@
 			padding: 0.25rem 0.5rem;
 			font-size: 0.875rem;
 			user-select: none;
+			flex-shrink: 0; /* Verhindert Zusammendrücken der Tags */
+			white-space: nowrap; /* Verhindert Textumbruch innerhalb der Tags */
 		}
 	}
 

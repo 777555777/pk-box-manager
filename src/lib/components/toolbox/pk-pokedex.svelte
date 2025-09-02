@@ -122,7 +122,6 @@
 />
 
 {#snippet pokedexDialogContent()}
-	<!-- Desktop: Fieldset Layout -->
 	<div class="desktop-filter-fieldset">
 		<fieldset class="pk-fieldset pk-dex-filter-options">
 			<legend>Options</legend>
@@ -217,18 +216,19 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 		gap: 1.5rem;
+
 		width: 100%;
 		align-content: start;
 		justify-items: center;
 
 		padding: 2rem;
-		overflow-y: auto;
-		overflow-x: hidden;
 		height: 680px;
+		overflow: auto;
 
 		border-radius: 5px;
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		background-color: var(--ui-section-background-color-accent);
+		margin-bottom: 1rem;
 	}
 
 	.pk-preset-section {
@@ -239,12 +239,13 @@
 		justify-items: center;
 
 		padding: 2rem;
-		overflow-y: auto;
 		height: 680px;
+		overflow: auto;
 
 		border-radius: 5px;
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		background-color: var(--ui-section-background-color-accent);
+		margin-bottom: 1rem;
 	}
 
 	.separator-responsive {
@@ -289,7 +290,15 @@
 		}
 	}
 	@media (max-width: 520px) {
+		.pk-pokedex-section {
+			height: unset;
+			overflow: unset;
+		}
+
 		.pk-preset-section {
+			height: unset;
+			overflow: unset;
+
 			padding: 1rem;
 			padding-block: 2rem;
 		}
