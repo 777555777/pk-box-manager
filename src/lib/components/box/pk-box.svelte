@@ -4,9 +4,25 @@
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
 	import { pkState } from '$lib/state/pk-state.svelte'
+	import { appState } from '$lib/state/app-state.svelte'
 	import type { BoxState } from '$lib/models/data-models'
 
 	let { box }: { box: BoxState } = $props()
+
+	let hideCapturedPokemon = $derived(appState.isHideCapturedPokemonEnabled())
+
+	// Filter Pokemon based on hide captured setting
+	let visiblePokemon = $derived(
+		hideCapturedPokemon
+			? box.pokemon.filter((pokemonId) => {
+					const pokemon = pkState.getPokemon(pokemonId)
+					return !pokemon.captured
+				})
+			: box.pokemon
+	)
+
+	// Check if box should be hidden (no visible Pokemon)
+	let shouldHideBox = $derived(hideCapturedPokemon && visiblePokemon.length === 0)
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
 		pkState.updateBoxSettings(box.id, { wallpaper: newWallpaper })
@@ -33,7 +49,7 @@
 	const boxSpriteData = $derived(getWallpaperSpriteData(box.settings.wallpaper as WallpapersType))
 </script>
 
-<article class="pk-box">
+<article class="pk-box" style="display: {shouldHideBox ? 'none' : 'flex'}">
 	<PkWallpaperSelector
 		title={box.title}
 		wallpaper={box.settings.wallpaper as WallpapersType}
@@ -44,7 +60,7 @@
 		style={getBackgroundStyle(boxRows, boxColumns, boxSpriteWidth, boxSpriteHeight, boxSpriteData)}
 	>
 		<div class="box-grid">
-			{#each box.pokemon as pokemon}
+			{#each visiblePokemon as pokemon}
 				<PkSlot pokemonIdentifier={pokemon} />
 			{/each}
 		</div>

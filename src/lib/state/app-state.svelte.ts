@@ -7,6 +7,7 @@ export class AppState {
 	// UI state
 	private viewerMode = $state(false)
 	private mobileSidebarOpen = $state(false)
+	private hideCapturedPokemon = $state(false)
 
 	// Application settings
 	private selectedDexId = $state(storageHandler.loadSelectedPokedexId())
@@ -24,6 +25,11 @@ export class AppState {
 	}
 
 	public toggleViewerMode(): void {
+		// Wenn ViewerMode ausgeschaltet werden soll und hideCapturedPokemon aktiv ist,
+		// dann auch hideCapturedPokemon deaktivieren
+		if (this.viewerMode && this.hideCapturedPokemon) {
+			this.hideCapturedPokemon = false // Filter auch deaktivieren
+		}
 		this.viewerMode = !this.viewerMode
 	}
 
@@ -58,6 +64,25 @@ export class AppState {
 
 	public isDropdownOpen(dropdownId: string): boolean {
 		return this.activeDropdownId === dropdownId
+	}
+
+	public isHideCapturedPokemonEnabled(): boolean {
+		return this.hideCapturedPokemon
+	}
+
+	public toggleHideCapturedPokemon(): void {
+		const wasHidden = this.hideCapturedPokemon
+		this.hideCapturedPokemon = !this.hideCapturedPokemon
+
+		// Auto-ViewerMode Logic:
+		if (this.hideCapturedPokemon) {
+			// Filter aktiviert → ViewerMode automatisch einschalten
+			this.viewerMode = true
+		} else if (wasHidden) {
+			// Filter deaktiviert → ViewerMode auf vorherigen State zurücksetzen
+			// (könnte man auch auf false setzen, aber so bleibt User-Präferenz erhalten)
+			// this.viewerMode = false // Optional: ViewerMode auch ausschalten
+		}
 	}
 
 	// ================

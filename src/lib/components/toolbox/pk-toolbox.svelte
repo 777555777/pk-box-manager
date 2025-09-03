@@ -26,9 +26,14 @@
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let isMobileSidebarOpen = $derived(appState.isMobileSidebarOpen())
+	let hideCapturedPokemon = $derived(appState.isHideCapturedPokemonEnabled())
 
 	function toggleViewerMode() {
 		appState.toggleViewerMode()
+	}
+
+	function toggleHideCapturedPokemon() {
+		appState.toggleHideCapturedPokemon()
 	}
 
 	function cycleBadgeDisplay() {
@@ -49,14 +54,18 @@
 
 	const hotkeyHandlerBadge = createHotkeyHandler('KeyB', cycleBadgeDisplay)
 	const hotkeyHandlerViewerMode = createHotkeyHandler('KeyV', toggleViewerMode)
+	const hotkeyHandlerFilter = createHotkeyHandler('KeyH', toggleHideCapturedPokemon)
 
 	// Update it whenever the state manager's selection changes
 	$effect(() => {
 		document.addEventListener('keydown', hotkeyHandlerBadge)
 		document.addEventListener('keydown', hotkeyHandlerViewerMode)
+		document.addEventListener('keydown', hotkeyHandlerFilter)
+
 		return () => {
 			document.removeEventListener('keydown', hotkeyHandlerBadge)
 			document.removeEventListener('keydown', hotkeyHandlerViewerMode)
+			document.removeEventListener('keydown', hotkeyHandlerFilter)
 		}
 	})
 </script>
@@ -88,6 +97,17 @@
 				tooltip="Toggle Viewer Mode (V)"
 				checked={viewerMode}
 				onUpdate={toggleViewerMode}
+			/>
+
+			<PkToggle
+				icon="eye"
+				iconColor="#fff"
+				activeColor="hsla(0, 100%, 30%, 0.6)"
+				label="Hide Captured"
+				hideLabel={true}
+				tooltip="Hide captured Pokemon (read only)"
+				checked={hideCapturedPokemon}
+				onUpdate={toggleHideCapturedPokemon}
 			/>
 
 			<PkBadgeButton />
@@ -189,6 +209,11 @@
 
 		.hide {
 			transform: translateY(calc(-1 * 90px)); /* Position hidden */
+		}
+
+		/* Hide captured filter on small screens as it is not essential */
+		:global(label[data-tooltip='Hide captured Pokemon (read only)']) {
+			display: none;
 		}
 	}
 </style>
