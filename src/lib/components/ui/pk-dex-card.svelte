@@ -419,8 +419,12 @@
 
 	.pk-context-menu {
 		position: absolute;
-		right: -154px;
-		top: 16px;
+		right: 18px;
+		top: 44px;
+
+		/* bottom right placement */
+		/* right: -154px; */
+		/* top: 16px; */
 
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 		padding: 0.325rem;

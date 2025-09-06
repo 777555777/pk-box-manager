@@ -262,6 +262,7 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		align-items: start;
 		gap: 1rem;
 

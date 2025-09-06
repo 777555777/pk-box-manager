@@ -131,7 +131,7 @@
 		flex-direction: column;
 		gap: 2rem;
 		width: 100%;
-		height: 100%;
+		height: 85%;
 		padding: 1rem;
 
 		.dex-name-input {
@@ -175,6 +175,12 @@
 
 	button {
 		margin-top: auto;
+	}
+
+	@media (max-width: 950px) {
+		.dex-preset-details {
+			height: 100%;
+		}
 	}
 
 	@media (max-width: 768px) {
