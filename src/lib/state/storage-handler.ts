@@ -28,6 +28,8 @@ export interface DexIndexEntry {
 	isSystemDefault: boolean
 }
 
+export type WikiLink = 'bulbapedia' | 'pokewiki' | 'bisafans' | 'wikidex'
+
 export interface AppSettings {
 	language: 'en' | 'de'
 	boxSprites: 'default' | 'scaled'
@@ -39,6 +41,7 @@ export interface AppSettings {
 		mark: MarksType
 	}
 	sidebarExpanded: SidebarSection[]
+	wikiLinkConfig: WikiLink[]
 }
 
 export interface DexStorageHandler {

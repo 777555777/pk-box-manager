@@ -45,5 +45,6 @@ export const defaultAppSettings: AppSettings = {
 		ribbon: '001-national-ribbon',
 		mark: 'absent-minded-mark'
 	},
-	sidebarExpanded: ['catch']
+	sidebarExpanded: ['catch'],
+	wikiLinkConfig: ['bulbapedia', 'pokewiki', 'bisafans']
 }

@@ -105,7 +105,7 @@
 				activeColor="hsla(0, 100%, 30%, 0.6)"
 				label="Hide Captured"
 				hideLabel={true}
-				tooltip="Hide captured Pokemon (read only)"
+				tooltip="Hide captured Pokemon (H)"
 				checked={hideCapturedPokemon}
 				onUpdate={toggleHideCapturedPokemon}
 			/>
@@ -212,7 +212,7 @@
 		}
 
 		/* Hide captured filter on small screens as it is not essential */
-		:global(label[data-tooltip='Hide captured Pokemon (read only)']) {
+		:global(label[data-tooltip='Hide captured Pokemon (H)']) {
 			display: none;
 		}
 	}

@@ -1,7 +1,12 @@
 import { initialAppDefaults } from '../init-dex-helper.ts'
 import { type PokemonEditState } from '../models/data-models.ts'
 import { defaultAppSettings } from '../null-state-helper.ts'
-import { type AppSettings, type BadgeDisplayMode, storageHandler } from './storage-handler.ts'
+import {
+	type AppSettings,
+	type BadgeDisplayMode,
+	type WikiLink,
+	storageHandler
+} from './storage-handler.ts'
 
 export class AppState {
 	// UI state
@@ -149,6 +154,11 @@ export class AppState {
 		])
 
 		this.appSettings.badgeDisplay = nextModeMap.get(this.appSettings.badgeDisplay) ?? false
+		storageHandler.saveAppSettings(this.appSettings)
+	}
+
+	public updateWikiLinkConfig(wikiLinks: WikiLink[]): void {
+		this.appSettings.wikiLinkConfig = wikiLinks
 		storageHandler.saveAppSettings(this.appSettings)
 	}
 }

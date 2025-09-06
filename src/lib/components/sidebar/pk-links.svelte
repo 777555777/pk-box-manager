@@ -1,7 +1,10 @@
 <script lang="ts">
 	import type { PokemonEntry } from '$lib/models/data-models'
+	import { appState } from '$lib/state/app-state.svelte'
 
 	let { idEntry }: { idEntry: PokemonEntry } = $props()
+
+	let visibleWikiPages = $derived(appState.loadAppSettings().wikiLinkConfig)
 
 	function formatExternalUrl(site: string): string {
 		switch (site) {
@@ -11,6 +14,8 @@
 				return `https://www.pokewiki.de/${idEntry.pokemonid}#Fundorte`
 			case 'bisafans':
 				return `https://www.bisafans.de/pokedex/${idEntry.id_national.toString().padStart(4, '0')}.php#fundorte`
+			case 'wikidex':
+				return `https://www.wikidex.net/wiki/${idEntry.pokemonid}`
 			default:
 				return '#'
 		}
@@ -18,9 +23,18 @@
 </script>
 
 <div class="pk-external-urls {idEntry.pokemonid === 'null' ? 'hidden' : ''}">
-	<a href={formatExternalUrl('bulbapedia')} target="_blank">Bulbapedia(EN)</a>
-	<a href={formatExternalUrl('pokewiki')} target="_blank">Pokewiki(DE)</a>
-	<a href={formatExternalUrl('bisafans')} target="_blank">Bisafans(DE)</a>
+	{#if visibleWikiPages.includes('bulbapedia')}
+		<a href={formatExternalUrl('bulbapedia')} target="_blank">Bulbapedia(EN)</a>
+	{/if}
+	{#if visibleWikiPages.includes('pokewiki')}
+		<a href={formatExternalUrl('pokewiki')} target="_blank">Pokewiki(DE)</a>
+	{/if}
+	{#if visibleWikiPages.includes('bisafans')}
+		<a href={formatExternalUrl('bisafans')} target="_blank">Bisafans(DE)</a>
+	{/if}
+	{#if visibleWikiPages.includes('wikidex')}
+		<a href={formatExternalUrl('wikidex')} target="_blank">Wikidex(ES)</a>
+	{/if}
 </div>
 
 <style>
@@ -34,6 +48,7 @@
 		display: flex;
 		justify-content: center;
 		gap: 1.25rem;
+		overflow: auto;
 	}
 
 	.pk-external-urls a {

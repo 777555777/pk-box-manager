@@ -28,7 +28,7 @@
 <input type="checkbox" class="sr-only" {id} {disabled} bind:checked onclick={handleToggle} />
 <label
 	for={id}
-	class="pk-button {tooltip ? 'pk-tooltip' : ''} "
+	class="pk-button {tooltip ? 'pk-tooltip' : ''}"
 	data-tooltip={tooltip}
 	style="--active-background: {activeColor}"
 >
@@ -91,14 +91,20 @@
 		pointer-events: none;
 	}
 
-	input:disabled ~ label {
+	input:disabled + label {
 		filter: brightness(0.75);
 		pointer-events: none;
 		cursor: not-allowed;
 		color: var(--ui-text-disabled);
 	}
 
-	input:focus-visible ~ label::before {
+	/* Override active state for disabled inputs */
+	input:disabled:checked + label .pk-toggle-state {
+		background-color: transparent;
+		mix-blend-mode: normal;
+	}
+
+	input:focus-visible + label::before {
 		outline: none;
 		border-image-source: url('/ui/button-focus.webp');
 	}

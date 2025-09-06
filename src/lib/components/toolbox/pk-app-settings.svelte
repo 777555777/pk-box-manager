@@ -7,13 +7,39 @@
 	import PkRibbonSelector from '$lib/components/ui/wrapper/pk-ribbon-selector.svelte'
 	import { type RibbonsType } from '$lib/models/ribbons-models'
 	import { type MarksType } from '$lib/models/marks-models'
+	import PkToggle from '../ui/pk-toggle.svelte'
+	import type { WikiLink } from '$lib/state/storage-handler'
 
 	let appSettingsDialog: PkDialogElement
 
 	// Local state variables that will be bound to the UI
 	let settings = $derived(appState.getAppSettings())
+	let wikiLinkCount = $derived(settings.wikiLinkConfig.length)
+
+	function checkIfPageIsEnabled(site: WikiLink): boolean {
+		return settings.wikiLinkConfig.includes(site)
+	}
+
+	let wikiLinks = $derived({
+		bulbapedia: { label: 'Bulbapedia(EN)', enabled: checkIfPageIsEnabled('bulbapedia') },
+		pokewiki: { label: 'Pokewiki(DE)', enabled: checkIfPageIsEnabled('pokewiki') },
+		bisafans: { label: 'Bisafans(DE)', enabled: checkIfPageIsEnabled('bisafans') },
+		wikidex: { label: 'Wikidex(ES)', enabled: checkIfPageIsEnabled('wikidex') }
+	})
 
 	// Update functions to save changes to app state
+	function toggleWikiPages(site: WikiLink) {
+		if (settings.wikiLinkConfig.includes(site)) {
+			// Remove the site from the array
+			const updatedLinks = settings.wikiLinkConfig.filter((link) => link !== site)
+			appState.updateAppSettings({ wikiLinkConfig: updatedLinks })
+		} else {
+			// Add the site to the array
+			const updatedLinks = [...settings.wikiLinkConfig, site]
+			appState.updateAppSettings({ wikiLinkConfig: updatedLinks })
+		}
+	}
+
 	function updateLanguage(newLanguage: string) {
 		appState.updateAppSettings({ language: newLanguage as 'en' | 'de' })
 	}
@@ -170,29 +196,52 @@
 			<fieldset class="pk-fieldset pk-badge-cycle-options">
 				<legend>Badge Cycle options</legend>
 				<div class="pk-settings-content pk-badge-content">
+					<p class="pk-paragraph text-small">
+						Default: Shows the badge as soon as a Ribbon/Mark is obtained, displaying the first one
+						earned.
+					</p>
+					<p class="pk-paragraph text-small">
+						Filter: Shows the badge only when the selected Ribbon/Mark has been completed.
+					</p>
 					<div class="pk-badge-element">
 						<PkRadioGroup
 							bind:currentOption={settings.badgeCycleOption}
 							optionConfig={badgeCycleConfig}
 							onUpdate={updateBadgeCycleOption}
 						/>
-						<p class="pk-paragraph text-small">
-							Filter mode: Only displays the badge icon for Ribbons and Marks when the configured
-							Ribbon or Mark is marked as completed.
-						</p>
-					</div>
 
-					<div class="pk-badge-cycle-pickers">
-						<PkRibbonSelector
-							disabled={settings.badgeCycleOption !== 'filter'}
-							onUpdate={updateRibbonCondition}
-							selectedRibbon={settings.conditionalBadgeDisplay.ribbon}
-						/>
-						<PkMarkSelector
-							disabled={settings.badgeCycleOption !== 'filter'}
-							onUpdate={updateMarkCondition}
-							selectedMark={settings.conditionalBadgeDisplay.mark}
-						/>
+						<div class="pk-badge-cycle-pickers">
+							<PkRibbonSelector
+								disabled={settings.badgeCycleOption !== 'filter'}
+								onUpdate={updateRibbonCondition}
+								selectedRibbon={settings.conditionalBadgeDisplay.ribbon}
+							/>
+							<PkMarkSelector
+								disabled={settings.badgeCycleOption !== 'filter'}
+								onUpdate={updateMarkCondition}
+								selectedMark={settings.conditionalBadgeDisplay.mark}
+							/>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset class="pk-fieldset pk-wiki-cycle-options">
+				<legend>Wiki Link options</legend>
+				<div class="pk-settings-content pk-wiki-content">
+					<p class="pk-paragraph text-small">
+						Select up to three wiki pages that will be linked to in the Sidebar.
+					</p>
+					<div class="pk-wiki-element">
+						{#each Object.entries(wikiLinks) as [site, { label, enabled }]}
+							<PkToggle
+								{label}
+								activeColor="hsla(125, 100%, 30%, 0.55)"
+								checked={enabled}
+								onUpdate={() => toggleWikiPages(site as WikiLink)}
+								disabled={wikiLinkCount >= 3 && !enabled}
+							/>
+						{/each}
 					</div>
 				</div>
 			</fieldset>
@@ -218,6 +267,10 @@
 					<kbd>V</kbd>
 				</dt>
 				<dd>Toggle viewermode enabled / disabled</dd>
+				<dt>
+					<kbd>H</kbd>
+				</dt>
+				<dd>Toggle hide captured Pokemon/Boxes (read only)</dd>
 			</dl>
 		</section>
 	</section>
@@ -237,6 +290,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+
+		.pk-paragraph {
+			margin-top: 0.25rem;
+		}
 		.pk-settings-content {
 			display: flex;
 			flex-direction: row;
@@ -313,14 +370,35 @@
 
 		/* Badge Styles */
 		.pk-badge-content {
+			display: flex;
+			flex-direction: column;
+			gap: 0;
+
+			.pk-badge-element {
+				margin-top: 0.5rem;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+
 			.pk-badge-cycle-pickers {
 				display: flex;
 				gap: 1rem;
 			}
+		}
 
-			p {
-				margin-top: 1rem;
-				max-width: 30em;
+		/*  Wiki Link Styles */
+		.pk-wiki-content {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			.pk-wiki-element {
+				width: 100%;
+				display: grid;
+				gap: 0.5rem;
+				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+				justify-content: start;
 			}
 		}
 	}
@@ -339,9 +417,10 @@
 			gap: 0.75rem; /* Reduzierte Gaps */
 
 			.pk-badge-element {
-				text-align: center;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
+				gap: 0.5rem;
 			}
 		}
 
@@ -376,6 +455,7 @@
 			grid-template-columns: auto 1fr;
 			align-items: center;
 			gap: 1rem;
+			margin-bottom: 0.25rem;
 
 			kbd {
 				/* <kbd> style from: https://dylanatsmith.com/wrote/styling-the-kbd-element */
