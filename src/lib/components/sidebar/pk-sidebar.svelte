@@ -292,16 +292,25 @@
 		text-align: center;
 		width: 100%;
 	}
+	@media (max-width: 880px) {
+		.pk-sidebar {
+			margin: 0;
+			margin-right: -17px;
+			margin-top: auto;
+			height: calc(100dvh - 105px - 1.5rem);
+		}
+	}
 
 	/* Responsive Styles */
 	/* Extra small mobile adjustments */
-	@media (max-width: 680px) {
+	@media (max-width: 800px) {
 		.pk-sidebar {
 			position: fixed;
 			bottom: 0;
 			left: 0;
 			right: 0;
-			width: 100vw;
+			width: 80dvw;
+			margin: 0 auto;
 			max-width: 100vw;
 			min-width: 0;
 			height: 65vh;
@@ -329,7 +338,7 @@
 		display: none;
 	}
 
-	@media (max-width: 680px) {
+	@media (max-width: 800px) {
 		.pk-mobile-sidebar-toggle {
 			position: fixed;
 			bottom: 1rem;
@@ -358,6 +367,12 @@
 
 		.pk-mobile-sidebar-toggle:active {
 			transform: scale(0.95);
+		}
+	}
+
+	@media (max-width: 540px) {
+		.pk-sidebar {
+			width: 100dvw;
 		}
 	}
 
