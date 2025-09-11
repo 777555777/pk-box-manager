@@ -34,7 +34,7 @@
 		text-align: center;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		padding-inline: 1.25rem;
+		padding-inline: 1rem;
 		width: 100%;
 		max-width: 22ch;
 	}
