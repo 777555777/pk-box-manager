@@ -162,8 +162,45 @@
 		padding: 0 !important;
 	}
 
-	/* Mobile Fullscreen Layout */
-	@media (max-width: 768px) {
+	/* Tablet/Medium screens - bessere Positionierung und Größenanpassung */
+	@media (max-width: 560px) {
+		.pk-selector-tray {
+			/* Zentral positioniert und begrenzt auf viewport */
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+
+			max-width: 90dvw;
+			max-height: 80dvh;
+			width: auto;
+
+			/* Verbessertes Layout für Tablets */
+			padding: 1rem;
+			overflow-y: auto;
+
+			/* Enhanced border for better visibility */
+			border-width: 9px;
+			border-image-width: 9px;
+		}
+
+		.pk-selector-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1rem;
+			flex-shrink: 0;
+		}
+
+		.pk-selector-tray :global(.pk-icon-grid) {
+			/* Mehr Spalten für bessere Raumausnutzung */
+			grid-template-columns: repeat(6, 1fr) !important;
+			gap: 0.75rem;
+		}
+	}
+
+	/* Mobile Fullscreen Layout - synchronisiert mit pk-dialog.svelte */
+	@media (max-width: 460px) {
 		.pk-selector-tray {
 			/* Fullscreen overlay */
 			position: fixed;
@@ -173,6 +210,7 @@
 			height: 100vh;
 			max-width: none;
 			max-height: none;
+			transform: none;
 
 			/* Background */
 			background-color: var(--ui-section-background-color);
@@ -206,7 +244,6 @@
 		}
 
 		.pk-selector-tray :global(.pk-icon-grid) {
-			/* Mobile: More columns for better space usage */
 			grid-template-columns: repeat(6, 1fr) !important;
 			gap: 0.75rem;
 			padding: 0;
