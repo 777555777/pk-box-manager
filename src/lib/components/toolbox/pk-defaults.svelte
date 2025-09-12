@@ -141,8 +141,8 @@
 		}
 	}
 
-	:global(.pk-dialog-content) {
-		overflow-y: visible !important; /* Überschreibt das Standardverhalten */
+	:global(.pk-dialog-content:has(.pk-defaults)) {
+		overflow: unset !important;
 	}
 
 	@media (max-width: 600px) {

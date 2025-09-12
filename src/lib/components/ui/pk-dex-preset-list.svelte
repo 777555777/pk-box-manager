@@ -26,10 +26,6 @@
 </div>
 
 <style>
-	:global(.pk-dialog-content) {
-		overflow: unset;
-	}
-
 	.pk-dex-preset-list-container {
 		width: 80%;
 		display: flex;
