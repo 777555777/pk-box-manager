@@ -1,19 +1,20 @@
 # Dockerfile
-FROM denoland/deno:alpine
+FROM node:22-alpine
 
-# curl hinzufügen
+# curl for healthcheck
 RUN apk add --no-cache curl
 
 WORKDIR /app
 
-# Kopiere die Build-Dateien
+# Copy the build files
 COPY build/ ./build/
 
-# Explizit Deno-Module cachen
-RUN deno cache build/index.js
-
-# Ports freigeben
+# Ports
 EXPOSE 3000
 
-# Starte die App
-CMD ["deno", "run", "--allow-env", "--allow-read", "--allow-net", "build/index.js"]
+# Set environment variables
+ENV PORT=3000
+ENV HOST=0.0.0.0
+
+# Start the app
+CMD ["node", "build/index.js"]
