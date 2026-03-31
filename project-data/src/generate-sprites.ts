@@ -1,4 +1,9 @@
-import { parseArgs } from 'jsr:@std/cli/parse-args'
+import { readdir, writeFile, access } from 'node:fs/promises'
+import { execFile as execFileCb } from 'node:child_process'
+import { promisify } from 'node:util'
+import { parseArgs } from 'node:util'
+
+const execFile = promisify(execFileCb)
 
 interface Config {
 	inputDir: string
@@ -32,13 +37,10 @@ async function main() {
 
 // 1. Read PNG files
 async function readFiles(inputDir: string) {
-	const files: string[] = []
-
-	for await (const entry of Deno.readDir(inputDir)) {
-		if (entry.isFile && entry.name.endsWith('.png')) {
-			files.push(entry.name)
-		}
-	}
+	const entries = await readdir(inputDir, { withFileTypes: true })
+	const files = entries
+		.filter((entry) => entry.isFile() && entry.name.endsWith('.png'))
+		.map((entry) => entry.name)
 
 	if (files.length === 0) {
 		throw new Error('❌ No PNG files found!')
@@ -65,8 +67,8 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 
 		console.log(`Generating ${outputFile} with ${batch.length} Images...`)
 
-		const process = new Deno.Command('montage', {
-			args: [
+		try {
+			await execFile('montage', [
 				// Creates array of path names combined with sprite names: ['sprite1.png', 'sprite2.png', ...]
 				...batch.map((file) => `${inputDir}/${file}`),
 				'-geometry',
@@ -76,11 +78,20 @@ async function createSpriteSheets(files: string[]): Promise<string[]> {
 				'-background',
 				'none',
 				outputFile
-			]
-		})
-
-		const { success } = await process.output()
-		if (!success) throw new Error(`❌ Errors during the creation of ${outputFile}`)
+			])
+		} catch (err: unknown) {
+			// montage (ImageMagick) sometimes exits with code 1 even on success (e.g. warnings).
+			// Only throw if the output file was actually not created.
+			try {
+				await access(outputFile)
+			} catch {
+				const details =
+					err && typeof err === 'object' && 'stderr' in err
+						? String((err as { stderr: unknown }).stderr)
+						: String(err)
+				throw new Error(`❌ Errors during the creation of ${outputFile}:\n${details}`)
+			}
+		}
 
 		console.log(`Saved: ${outputFile}`)
 		sheetIndex++
@@ -119,34 +130,25 @@ export const ${firstToUpper(name)} = ${convertToProperties(JSON.stringify(tsFile
 export type ${firstToUpper(name)}Type = keyof typeof ${firstToUpper(name)};
 `
 
-	await Deno.writeTextFile(`${tsDir}/${name}-models.ts`, tsContent)
+	await writeFile(`${tsDir}/${name}-models.ts`, tsContent)
 	console.log(`Saved: ${tsDir}/${name}-models.ts`)
 }
 
 // CLI-Setup:
 function parseArguments(): Config {
-	const flags = parseArgs(Deno.args, {
-		string: [
-			'input-dir',
-			'output-dir',
-			'ts-dir',
-			'name',
-			'tile-width',
-			'tile-height',
-			'column-amount',
-			'max-images'
-		],
-		boolean: ['help', 'no-ts'],
-		default: {
-			'input-dir': '.',
-			'output-dir': '.',
-			'ts-dir': '.',
-			name: 'dynamic',
-			'tile-width': '30',
-			'tile-height': '', // leer = wird aus tile-width übernommen
-			'column-amount': '8',
-			'max-images': '64',
-			'no-ts': false
+	const { values: flags } = parseArgs({
+		args: process.argv.slice(2),
+		options: {
+			'input-dir': { type: 'string', default: '.' },
+			'output-dir': { type: 'string', default: '.' },
+			'ts-dir': { type: 'string', default: '.' },
+			name: { type: 'string', default: 'dynamic' },
+			'tile-width': { type: 'string', default: '30' },
+			'tile-height': { type: 'string', default: '' },
+			'column-amount': { type: 'string', default: '8' },
+			'max-images': { type: 'string', default: '64' },
+			'no-ts': { type: 'boolean', default: false },
+			help: { type: 'boolean', default: false }
 		}
 	})
 
@@ -154,19 +156,19 @@ function parseArguments(): Config {
 		showHelp()
 	}
 
-	const tileWidth = validateNumber(flags['tile-width'], 'tile-width')
+	const tileWidth = validateNumber(flags['tile-width']!, 'tile-width')
 	const tileHeight =
-		flags['tile-height'] !== '' ? validateNumber(flags['tile-height'], 'tile-height') : tileWidth
+		flags['tile-height'] !== '' ? validateNumber(flags['tile-height']!, 'tile-height') : tileWidth
 
 	return {
-		inputDir: flags['input-dir'],
-		outputSpritesheetDir: flags['output-dir'],
-		tsDir: flags['ts-dir'],
-		name: flags['name'],
+		inputDir: flags['input-dir']!,
+		outputSpritesheetDir: flags['output-dir']!,
+		tsDir: flags['ts-dir']!,
+		name: flags['name']!,
 		tileWidth,
 		tileHeight,
-		columnAmount: validateNumber(flags['column-amount'], 'column-amount'),
-		maxImagesPerSheet: validateNumber(flags['max-images'], 'max-images'),
+		columnAmount: validateNumber(flags['column-amount']!, 'column-amount'),
+		maxImagesPerSheet: validateNumber(flags['max-images']!, 'max-images'),
 		generateTs: !flags['no-ts']
 	}
 }
@@ -175,7 +177,7 @@ function validateNumber(value: string, name: string): number {
 	const num = Number(value)
 	if (isNaN(num)) {
 		console.error(`Fehler: ${name} muss eine gültige Zahl sein`)
-		Deno.exit(1)
+		process.exit(1)
 	}
 	return num
 }
@@ -185,7 +187,7 @@ function showHelp() {
 Liest einen Ordner mit .png-Bildern gleicher Größe und erzeugt ein oder mehrere Spritesheets.
 
 Verwendung:
-  deno run --allow-read --allow-write --allow-run generate-sprites.ts \\
+  npx tsx generate-sprites.ts \\
     --input-dir=./images \\
     --output-dir=. \\
     --name=pokemon \\
@@ -206,7 +208,7 @@ Optionen:
   --no-ts                 Deaktiviert die Erstellung der TypeScript-Datei
   --help                  Zeigt diese Hilfe an
 `)
-	Deno.exit(0)
+	process.exit(0)
 }
 
 function firstToUpper(word: string) {

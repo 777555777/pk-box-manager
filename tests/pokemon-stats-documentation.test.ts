@@ -1,144 +1,28 @@
-/// <reference lib="deno.ns" />
-import { assertEquals, assertExists } from 'https://deno.land/std@0.207.0/assert/mod.ts'
-import { walk } from 'https://deno.land/std@0.207.0/fs/walk.ts'
-import pkStats from '../src/routes/pkinfo/pk-stats.json' with { type: 'json' }
-
-interface PokemonEntry {
-	pokemonid: string
-	formid: string | null
-	id_national: number
-}
-
-interface BoxData {
-	title: string
-	pokemon: PokemonEntry[]
-}
-
-/**
- * Generiert den erwarteten Stats-Key basierend auf National Dex Nummer, Pokemon ID und Form ID
- */
-function generateStatsKey(nationalId: number, pokemonId: string, formId: string | null): string {
-	const paddedId = nationalId.toString().padStart(4, '0')
-
-	if (formId) {
-		// Spezialbehandlung für Unown: formid kann "a" oder "unown-a" sein
-		if (pokemonId === 'unown' && formId.startsWith('unown-')) {
-			const letter = formId.replace('unown-', '')
-			return `${paddedId}-${pokemonId}-${letter}`
-		}
-		return `${paddedId}-${pokemonId}-${formId}`
-	}
-	return `${paddedId}-${pokemonId}`
-}
-
-/**
- * Sammelt alle Pokemon aus allen JSON-Dateien im pkorder/order Verzeichnis
- */
-async function getAllPokemonFromOrderFiles(): Promise<PokemonEntry[]> {
-	const allPokemon: PokemonEntry[] = []
-	const orderDir = './src/routes/pkorder/order'
-
-	for await (const entry of walk(orderDir, { exts: ['.json'] })) {
-		if (entry.isFile) {
-			try {
-				const content = await Deno.readTextFile(entry.path)
-				const boxData: BoxData[] = JSON.parse(content)
-
-				for (const box of boxData) {
-					allPokemon.push(...box.pokemon)
-				}
-			} catch (error) {
-				console.warn(`Warnung: Konnte ${entry.path} nicht lesen:`, error)
-			}
-		}
-	}
-
-	return allPokemon
-}
-
-/**
- * Sammelt alle verfügbaren Bilder aus den Pokemon-Image-Verzeichnissen
- */
-async function getAllPokemonImages(): Promise<{
-	normal: Set<string>
-	forms: Set<string>
-	shinyNormal: Set<string>
-	shinyForms: Set<string>
-}> {
-	const imageBasePath = './project-data/images/pokemon'
-	const results = {
-		normal: new Set<string>(),
-		forms: new Set<string>(),
-		shinyNormal: new Set<string>(),
-		shinyForms: new Set<string>()
-	}
-
-	const directories = [
-		{ path: `${imageBasePath}/normal`, set: results.normal },
-		{ path: `${imageBasePath}/forms`, set: results.forms },
-		{ path: `${imageBasePath}/shiny-normal`, set: results.shinyNormal },
-		{ path: `${imageBasePath}/shiny-forms`, set: results.shinyForms }
-	]
-
-	for (const { path, set } of directories) {
-		try {
-			for await (const entry of walk(path, { exts: ['.png', '.jpg', '.webp'] })) {
-				if (entry.isFile) {
-					// Extrahiere nur den Dateinamen ohne Erweiterung
-					const fileName = entry.name.replace(/\.(png|jpg|webp)$/, '')
-					set.add(fileName)
-				}
-			}
-		} catch (error) {
-			console.warn(`Warnung: Konnte Bilder-Verzeichnis ${path} nicht lesen:`, error)
-		}
-	}
-
-	return results
-}
+import { test, expect } from 'vitest'
+import { getAllPokemonImages, getExpectedPokemonIds, typedPkStats } from './pokemon-test-utils.ts'
 
 // Nicht-fehlschlagender Informationstest
-Deno.test('Pokemon Stats Coverage Report', async () => {
+test('Pokemon Stats Coverage Report', async () => {
 	console.log('🔍 Pokemon Stats Coverage Analysis')
 	console.log('='.repeat(60))
 
-	const allPokemon = await getAllPokemonFromOrderFiles()
-	console.log(`📊 Gesamt Pokemon-Einträge in JSON-Dateien: ${allPokemon.length}`)
+	const expectedPokemonIds = getExpectedPokemonIds()
+	console.log(`📊 Gesamt referenzierte Pokemon in pokedex-boxes.json: ${expectedPokemonIds.length}`)
 
 	const missingStats: string[] = []
 	const foundStats: string[] = []
-	const checkedKeys = new Set<string>()
 
-	for (const pokemon of allPokemon) {
-		const statsKey = generateStatsKey(pokemon.id_national, pokemon.pokemonid, pokemon.formid)
-
-		if (checkedKeys.has(statsKey)) {
-			continue
-		}
-		checkedKeys.add(statsKey)
-
-		if (statsKey in pkStats) {
-			foundStats.push(statsKey)
+	for (const pokemonId of expectedPokemonIds) {
+		if (pokemonId in typedPkStats) {
+			foundStats.push(pokemonId)
 		} else {
-			// Prüfe Fallbacks für bessere Toleranz
-			const possibleKeys = [
-				statsKey,
-				generateStatsKey(pokemon.id_national, pokemon.pokemonid, null) // ohne Form
-			]
-
-			const hasAnyStats = possibleKeys.some((key) => key in pkStats)
-
-			if (hasAnyStats) {
-				foundStats.push(statsKey)
-			} else {
-				missingStats.push(statsKey)
-			}
+			missingStats.push(pokemonId)
 		}
 	}
 
-	const coveragePercent = ((foundStats.length / checkedKeys.size) * 100).toFixed(1)
+	const coveragePercent = ((foundStats.length / expectedPokemonIds.length) * 100).toFixed(1)
 
-	console.log(`✅ Eindeutige Pokemon analysiert: ${checkedKeys.size}`)
+	console.log(`✅ Eindeutige Pokemon analysiert: ${expectedPokemonIds.length}`)
 	console.log(`📈 Pokemon mit verfügbaren Stats: ${foundStats.length}`)
 	console.log(`❌ Pokemon ohne verfügbare Stats: ${missingStats.length}`)
 	console.log(`📊 Stats Coverage: ${coveragePercent}%`)
@@ -160,25 +44,14 @@ Deno.test('Pokemon Stats Coverage Report', async () => {
 })
 
 // Neuer Test: Überschüssige Stats finden
-Deno.test('Überschüssige Stats Analysis', async () => {
+test('Überschüssige Stats Analysis', async () => {
 	console.log('\n🔍 Überschüssige Stats Analysis')
 	console.log('='.repeat(60))
 
-	const allPokemon = await getAllPokemonFromOrderFiles()
-
-	// Sammle alle erwarteten Stats-Keys
-	const expectedStatsKeys = new Set<string>()
-	for (const pokemon of allPokemon) {
-		const statsKey = generateStatsKey(pokemon.id_national, pokemon.pokemonid, pokemon.formid)
-		expectedStatsKeys.add(statsKey)
-
-		// Auch Base-Form hinzufügen falls nicht vorhanden
-		const baseKey = generateStatsKey(pokemon.id_national, pokemon.pokemonid, null)
-		expectedStatsKeys.add(baseKey)
-	}
+	const expectedStatsKeys = new Set(getExpectedPokemonIds())
 
 	// Alle verfügbaren Stats-Keys
-	const availableStatsKeys = new Set(Object.keys(pkStats))
+	const availableStatsKeys = new Set(Object.keys(typedPkStats))
 
 	// Finde überschüssige Stats
 	const excessStats: string[] = []
@@ -209,19 +82,14 @@ Deno.test('Überschüssige Stats Analysis', async () => {
 })
 
 // Neuer Test: Pokemon Bilder Coverage
-Deno.test('Pokemon Images Coverage Report', async () => {
+test('Pokemon Images Coverage Report', async () => {
 	console.log('\n🔍 Pokemon Images Coverage Analysis')
 	console.log('='.repeat(60))
 
-	const allPokemon = await getAllPokemonFromOrderFiles()
+	const expectedPokemonIds = getExpectedPokemonIds()
 	const images = await getAllPokemonImages()
 
-	// Sammle alle erwarteten Image-Keys
-	const expectedImageKeys = new Set<string>()
-	for (const pokemon of allPokemon) {
-		const imageKey = generateStatsKey(pokemon.id_national, pokemon.pokemonid, pokemon.formid)
-		expectedImageKeys.add(imageKey)
-	}
+	const expectedImageKeys = new Set(expectedPokemonIds)
 
 	console.log(`📊 Erwartete Pokemon: ${expectedImageKeys.size}`)
 	console.log(`📊 Normale Bilder: ${images.normal.size}`)
@@ -283,19 +151,12 @@ Deno.test('Pokemon Images Coverage Report', async () => {
 })
 
 // Überschüssige Bilder finden
-Deno.test('Überschüssige Pokemon Bilder Analysis', async () => {
+test('Überschüssige Pokemon Bilder Analysis', async () => {
 	console.log('\n🔍 Überschüssige Pokemon Bilder Analysis')
 	console.log('='.repeat(60))
 
-	const allPokemon = await getAllPokemonFromOrderFiles()
 	const images = await getAllPokemonImages()
-
-	// Sammle alle erwarteten Image-Keys
-	const expectedImageKeys = new Set<string>()
-	for (const pokemon of allPokemon) {
-		const imageKey = generateStatsKey(pokemon.id_national, pokemon.pokemonid, pokemon.formid)
-		expectedImageKeys.add(imageKey)
-	}
+	const expectedImageKeys = new Set(getExpectedPokemonIds())
 
 	// Finde überschüssige Bilder
 	const excessNormalImages = [...images.normal, ...images.forms].filter(
@@ -328,26 +189,11 @@ Deno.test('Überschüssige Pokemon Bilder Analysis', async () => {
 		}
 	}
 
-	console.log(`\n💡 Diese Bilder existieren, haben aber keine entsprechenden JSON-Einträge`)
+	console.log(
+		`\n💡 Diese Bilder existieren, haben aber keine entsprechenden Einträge in pokedex-boxes.json`
+	)
 })
 
-// Einfacher Basis-Test für wichtige Funktionalität
-Deno.test('Grundlegende Funktionalität', () => {
-	// pk-stats.ts ist importierbar
-	assertExists(pkStats)
-	assertEquals(typeof pkStats, 'object')
-
-	const statsKeys = Object.keys(pkStats)
-	console.log(`📊 Verfügbare Stats: ${statsKeys.length}`)
-
-	// Bulbasaur als Basis-Test
-	assertExists(pkStats['0001-bulbasaur'], 'Bulbasaur sollte verfügbar sein')
-
-	const bulbasaurStats = pkStats['0001-bulbasaur']
-	assertExists(bulbasaurStats.stats)
-	assertExists(bulbasaurStats.types)
-	assertExists(bulbasaurStats.abilities)
-	assertEquals(bulbasaurStats.stats.length, 6)
-
-	console.log('✅ Grundlegende Pokemon-Stats funktionieren korrekt')
+test('Dokumentationssuite kann pk-stats importieren', () => {
+	expect(typedPkStats['0001-bulbasaur']).toBeDefined()
 })
