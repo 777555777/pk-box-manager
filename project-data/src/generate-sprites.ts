@@ -1,4 +1,5 @@
 import { readdir, writeFile, access } from 'node:fs/promises'
+import type { Dirent } from 'node:fs'
 import { execFile as execFileCb } from 'node:child_process'
 import { promisify } from 'node:util'
 import { parseArgs } from 'node:util'
@@ -39,8 +40,8 @@ async function main() {
 async function readFiles(inputDir: string) {
 	const entries = await readdir(inputDir, { withFileTypes: true })
 	const files = entries
-		.filter((entry) => entry.isFile() && entry.name.endsWith('.png'))
-		.map((entry) => entry.name)
+		.filter((entry: Dirent) => entry.isFile() && entry.name.endsWith('.png'))
+		.map((entry: Dirent) => entry.name)
 
 	if (files.length === 0) {
 		throw new Error('❌ No PNG files found!')
@@ -187,7 +188,7 @@ function showHelp() {
 Liest einen Ordner mit .png-Bildern gleicher Größe und erzeugt ein oder mehrere Spritesheets.
 
 Verwendung:
-  npx tsx generate-sprites.ts \\
+	 node project-data/src/generate-sprites.ts \\
     --input-dir=./images \\
     --output-dir=. \\
     --name=pokemon \\

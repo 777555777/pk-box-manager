@@ -7,7 +7,7 @@
 		id = crypto.randomUUID(),
 		debounceTime = 750
 	} = $props()
-	let timer: number | undefined = undefined
+	let timer: ReturnType<typeof setTimeout> | undefined = undefined
 
 	function debounce() {
 		clearTimeout(timer)
@@ -19,7 +19,7 @@
 
 	$effect(() => {
 		return () => {
-			clearInterval(timer)
+			clearTimeout(timer)
 		}
 	})
 </script>
