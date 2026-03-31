@@ -5,7 +5,8 @@
 		value = '',
 		disabled = false,
 		id = crypto.randomUUID(),
-		debounceTime = 750
+		debounceTime = 750,
+		maxlength = 196
 	} = $props()
 	let timer: ReturnType<typeof setTimeout> | undefined = undefined
 
@@ -26,13 +27,7 @@
 
 <div class="pk-comment">
 	<label for={id}>{label}</label>
-	<textarea
-		{id}
-		class="pk-textarea"
-		maxlength="196"
-		bind:value
-		oninput={() => debounce()}
-		{disabled}
+	<textarea {id} class="pk-textarea" {maxlength} bind:value oninput={() => debounce()} {disabled}
 	></textarea>
 </div>
 

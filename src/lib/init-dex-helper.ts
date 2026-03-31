@@ -16,6 +16,7 @@ export const initialAppDefaults = {
 	shiny: false,
 	caughtIn: '',
 	comment: '',
+	originalTrainer: '',
 	ribbons: [],
 	marks: []
 }

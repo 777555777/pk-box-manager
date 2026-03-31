@@ -7,13 +7,15 @@
 		selectedPokemon,
 		disabled,
 		updateCaughtIn,
-		updateComment
+		updateComment,
+		updateOriginalTrainer
 	}: {
 		selectedPokemon: PokemonEditState
 		disabled: boolean
 		isSelectionValid: boolean
 		updateCaughtIn: Function
 		updateComment: Function
+		updateOriginalTrainer: Function
 	} = $props()
 </script>
 
@@ -29,6 +31,16 @@
 				return caughtIn && Game[caughtIn] ? [caughtIn, Game[caughtIn]] : null
 			})()}
 			labelText="Caught in"
+		/>
+	</div>
+	<div class="pk-ot-container">
+		<PkTextarea
+			label="Original Trainer"
+			onUpdate={updateOriginalTrainer}
+			value={selectedPokemon.originalTrainer}
+			debounceTime={250}
+			maxlength={32}
+			{disabled}
 		/>
 	</div>
 	<div class="pk-comment-container">
@@ -47,6 +59,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	.pk-ot-container :global(.pk-textarea) {
+		min-height: var(--ui-form-element-height);
+		height: var(--ui-form-element-height);
+		resize: none;
 	}
 
 	@media (max-height: 1200px) {

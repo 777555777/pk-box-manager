@@ -25,6 +25,7 @@ export interface PokemonEditState {
 	caughtIn: string
 	ability: string
 	comment: string
+	originalTrainer: string
 	ribbons: string[]
 	marks: string[]
 	isCustomized: boolean

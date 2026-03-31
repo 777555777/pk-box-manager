@@ -70,6 +70,13 @@
 		})
 	}
 
+	// === Original Trainer ===
+	function updateOriginalTrainer(newValue: string) {
+		pkState.updatePokemon(identifier, {
+			originalTrainer: newValue
+		})
+	}
+
 	// === Ribbon/Mark Picker ===
 	function updateRibbons(ribbonId: string) {
 		pkState.toggleRibbon(identifier, ribbonId)
@@ -140,7 +147,14 @@
 			</summary>
 			<section class="pk-form-section">
 				<h3 class="sr-only">Catch data</h3>
-				<PkForm {selectedPokemon} {disabled} {isSelectionValid} {updateCaughtIn} {updateComment} />
+				<PkForm
+					{selectedPokemon}
+					{disabled}
+					{isSelectionValid}
+					{updateCaughtIn}
+					{updateComment}
+					{updateOriginalTrainer}
+				/>
 			</section>
 		</details>
 

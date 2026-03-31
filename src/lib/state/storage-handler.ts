@@ -374,6 +374,7 @@ class StorageHandler implements DexStorageHandler {
 			'caughtIn',
 			'ability',
 			'comment',
+			'originalTrainer',
 			'ribbons',
 			'marks',
 			'isCustomized'

@@ -46,8 +46,8 @@
 
 	.pk-external-urls {
 		display: flex;
-		justify-content: center;
-		gap: 1.25rem;
+		justify-content: space-evenly;
+		gap: 0.75rem;
 		overflow: auto;
 	}
 

@@ -39,6 +39,11 @@
 		appState.updateAppDefaults({ comment: newValue })
 	}
 
+	// === Original Trainer ===
+	function updateOriginalTrainer(newValue: string) {
+		appState.updateAppDefaults({ originalTrainer: newValue })
+	}
+
 	// === Ball Selector ===
 	function updatePokeball(newValue: string) {
 		appState.updateAppDefaults({ ball: newValue })
@@ -103,6 +108,17 @@
 				labelText="Caught in"
 			/>
 
+			<!-- Original Trainer -->
+			<div class="pk-ot-container">
+				<PkTextarea
+					label="Original Trainer"
+					onUpdate={updateOriginalTrainer}
+					value={appState.getAppDefaults().originalTrainer}
+					debounceTime={250}
+					maxlength={32}
+				/>
+			</div>
+
 			<!-- Comment -->
 			<PkTextarea
 				label="Comment"
@@ -132,6 +148,12 @@
 			.pk-btn-group {
 				display: flex;
 				gap: var(--dialog-spacing);
+			}
+
+			.pk-ot-container :global(.pk-textarea) {
+				min-height: var(--ui-form-element-height);
+				height: var(--ui-form-element-height);
+				resize: none;
 			}
 
 			/* Reset Button an das Ende */
