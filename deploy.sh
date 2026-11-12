@@ -17,8 +17,9 @@ echo "Erstelle Verzeichnisstruktur auf dem Server..."
 ssh $SERVER_PART "mkdir -p $PATH_PART/build"
 
 echo "Kopiere Build-Dateien auf den Server..."
-# -r für rekursives Kopieren
-scp -r ./build/* $DEPLOY_SERVER_PATH/build/
+# --delete entfernt Dateien vom Server, die es im aktuellen Build nicht mehr gibt
+# (sonst sammeln sich alte Chunks an)
+rsync -a --delete ./build/ "$DEPLOY_SERVER_PATH/build/"
 
 # Using global compose on the server
 # echo "Kopiere Docker-Konfigurationsdateien..."
