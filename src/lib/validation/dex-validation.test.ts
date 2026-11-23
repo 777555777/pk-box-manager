@@ -38,13 +38,20 @@ describe('validateImportedDexSave', () => {
 		})
 	})
 
-	// Known v1 bug: the schema does not know `originalTrainer`, valibot's object() strips it.
-	it.fails('keeps the original trainer', () => {
+	// Was a v1 bug: the schema did not know `originalTrainer`, so valibot's object() stripped it.
+	it('keeps the original trainer', () => {
 		const pikachu = validateImportedDexSave(readV1DexRaw('gen1-filled')).state.pokemon[
 			'0025-pikachu'
 		]
 
 		expect(pikachu).toHaveProperty('originalTrainer', 'Ash')
+	})
+
+	it('accepts saves created before the original trainer existed', () => {
+		const bulbasaur = validateImportedDexSave(readV1DexRaw('national-all-tags-legacy')).state
+			.pokemon['0001-bulbasaur']
+
+		expect(bulbasaur).not.toHaveProperty('originalTrainer')
 	})
 
 	it('rejects invalid JSON', () => {

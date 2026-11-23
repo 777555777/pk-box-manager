@@ -6,6 +6,7 @@ import {
 	array,
 	record,
 	nullable,
+	optional,
 	literal,
 	union,
 	type InferOutput
@@ -36,6 +37,8 @@ export const PokemonEditStateSchema = object({
 	caughtIn: string(),
 	ability: string(),
 	comment: string(),
+	// optional: saves created before the OT feature (and untouched entries) do not have it
+	originalTrainer: optional(string()),
 	ribbons: array(string()),
 	marks: array(string()),
 	isCustomized: boolean()

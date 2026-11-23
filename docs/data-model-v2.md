@@ -153,13 +153,15 @@ interface DexRepository {
 Läuft beim Start, bevor der State aufgebaut wird (`+page.ts` `load`, async).
 
 1. `meta.schemaVersion` ist bereits 2? Dann nichts tun.
-2. Alle `dex:*`-Keys aus localStorage lesen. Jeden Eintrag mit einem toleranten v1-Schema prüfen. Kaputte Einträge überspringen und loggen.
-3. `convertV1Save(save, catalog)` (reine Funktion):
+2. Alle `dex:*`-Keys aus localStorage lesen und mit `parseV1Save` (`src/lib/dex/v1/v1-save.ts`) tolerant prüfen: Fehlende Felder wie `originalTrainer` bekommen Defaults, nicht benötigte Felder (`idEntry`, `pokemonOrder`) werden ignoriert. Kaputte Einträge überspringen und loggen.
+3. `convertV1Save(save, catalog)` (`src/lib/dex/v1/convert-v1.ts`, reine Funktion) liefert `{ dex, entries, report }`:
    - `id` übernehmen, damit `selectedDex` weiter stimmt
-   - `config.type === 'preset'` wird zu `{ kind: 'preset', presetId, tags }`
-   - Box-Wallpaper: v1-Box über den **Titel** einer Template-Box zuordnen (Titel sind eindeutig). Keine Zuordnung möglich: Default-Wallpaper.
-   - Pokémon mit `captured || isCustomized` werden zu `DexEntry` (`updatedAt = meta.updatedAt`). IDs über `aliases` auflösen. Unbekannte IDs trotzdem behalten.
-   - `stats` neu berechnen
+   - `config.type === 'preset'` mit bekanntem Preset wird zu `{ kind: 'preset', presetId, tags }`
+   - Unbekanntes Preset oder v1-Custom-Dex: Die v1-Reihenfolge wird als Custom-Layout eingefroren (Box-IDs `box-001` …), `report.layoutFallback` sagt warum
+   - Box-Wallpaper: v1-Box über den **Titel** einer Template-Box zuordnen (Titel sind eindeutig). Keine Zuordnung möglich: `report.unmatchedBoxes`
+   - Pokémon mit `captured || isCustomized` werden zu `DexEntry` (`updatedAt = meta.updatedAt`). IDs über `aliases` auflösen (`report.renamedEntries`, bei Kollision gewinnt der erste: `report.duplicateEntries`). Einträge, deren Pokémon nicht im Layout ist, bleiben erhalten (`report.orphanedEntries`)
+   - `stats` neu berechnen (verwaiste Einträge zählen nicht)
+   - Geprüft gegen alle Fixtures und echte Exporte: gleiche Boxen, gleiche Reihenfolge, gleiche Wallpaper, identische Userdaten, gleiche Zähler
 4. Alles in **einer** IDB-Transaktion schreiben, danach `schemaVersion = 2` setzen.
 5. **v1-Daten in localStorage nicht löschen**, sondern nur als migriert markieren. Aufräumen erst in einem späteren Release.
 
@@ -197,7 +199,7 @@ Jeder Schritt ist für sich lauffähig und wird einzeln committet.
 
 1. ✅ Vitest-Setup, v1-Fixtures, Tests für das heutige Verhalten
 2. ✅ Katalog-Modul (`src/lib/catalog/`): `resolveLayout`, Presets ohne Mutation, Aliases. Die v1-Helfer (`getDexConfig` & Co.) laufen bereits über den Katalog
-3. v2-Typen, valibot-Schemas, `convertV1Save` + Tests
+3. ✅ v2-Typen und Schemas (`src/lib/dex/`), toleranter v1-Parser, `convertV1Save` + Tests. Nebenbei: Das v1-Import-Schema behält jetzt den OT
 4. Repository (IDB + Memory), Migrations-Runner, `storage.persist()`
 5. `pkState` auf Repository umbauen (In-Memory als Wahrheit, gebündeltes Schreiben), async Start
 6. Import/Export v2 (v1 weiterhin lesbar)
