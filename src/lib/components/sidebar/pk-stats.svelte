@@ -4,26 +4,29 @@
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import pkStats from '$lib/data/pk-stats.json' with { type: 'json' }
 
-	let { identifier }: { identifier: keyof typeof pkStats } = $props()
+	let { identifier }: { identifier: string } = $props()
+
+	// unknown ids (e.g. orphaned entries) show the placeholder like "nothing selected"
+	let statsId = $derived((identifier in pkStats ? identifier : '0000-null') as keyof typeof pkStats)
 
 	const statLabels = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
 </script>
 
 <div class="pk-stats-container">
-	{#if identifier === '0000-null'}
+	{#if statsId === '0000-null'}
 		<p class="unselected-hint">Select a Pokemon <br />to view its stats</p>
 	{/if}
 
-	{#if identifier !== '0000-null'}
+	{#if statsId !== '0000-null'}
 		<div class="pk-row-1">
 			<div class="pk-origin">
 				<h4 class="sr-only">Origin Region</h4>
-				<span>Origin: {pkStats[identifier].originRegion}</span>
+				<span>Origin: {pkStats[statsId].originRegion}</span>
 			</div>
 
 			<div class="pk-types">
 				<h4 class="sr-only">Types</h4>
-				{#each pkStats[identifier].types as type}
+				{#each pkStats[statsId].types as type}
 					<PkTypeBadge {type} />
 				{/each}
 			</div>
@@ -31,7 +34,7 @@
 
 		<div class="pk-stats">
 			<h4 class="sr-only">Base stats</h4>
-			{#each pkStats[identifier].stats as stat, index}
+			{#each pkStats[statsId].stats as stat, index}
 				<div class="stat-row">
 					<PkStatMeter label={statLabels[index]} value={stat} {index} />
 				</div>
@@ -40,24 +43,24 @@
 
 		<div class="pk-Abilities">
 			<h4 class="sr-only">Abilities</h4>
-			{#each pkStats[identifier].abilities as ability}
+			{#each pkStats[statsId].abilities as ability}
 				<span class={ability.includes('*') ? 'hidden-ability' : ''}>{ability}</span>
 			{/each}
 		</div>
 
 		<div class="pk-gender">
 			<h4 class="sr-only">Gender ratio</h4>
-			{#if !pkStats[identifier].genderRatio.male && !pkStats[identifier].genderRatio.female}
+			{#if !pkStats[statsId].genderRatio.male && !pkStats[statsId].genderRatio.female}
 				<span>Unknown</span>
 			{:else}
 				<div class="gender-ratio">
 					<div class="gender-item">
 						<PkIcon name="male" size={24} ariaLabelledby="male-icon" />
-						<span>{pkStats[identifier].genderRatio.male}%</span>
+						<span>{pkStats[statsId].genderRatio.male}%</span>
 					</div>
 					<div class="gender-item">
 						<PkIcon name="female" size={24} ariaLabelledby="female-icon" />
-						<span>{pkStats[identifier].genderRatio.female}%</span>
+						<span>{pkStats[statsId].genderRatio.female}%</span>
 					</div>
 				</div>
 			{/if}

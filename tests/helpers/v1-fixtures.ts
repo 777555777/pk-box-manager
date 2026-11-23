@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import type { DexSave } from '../../src/lib/models/data-models.ts'
+import type { V1Save } from '../../src/lib/dex/v1/v1-save.ts'
 
 const FIXTURE_DIR = fileURLToPath(new URL('../fixtures/v1/', import.meta.url))
 const TESTDATA_DIR = fileURLToPath(new URL('../../.testdata/', import.meta.url))
@@ -25,7 +25,7 @@ export function readV1DexRaw(name: V1DexFixture): string {
 }
 
 /** Fresh parsed copy of a v1 dex fixture (safe to mutate). */
-export function loadV1Dex(name: V1DexFixture): DexSave {
+export function loadV1Dex(name: V1DexFixture): V1Save {
 	return JSON.parse(readV1DexRaw(name))
 }
 

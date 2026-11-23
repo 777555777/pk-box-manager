@@ -1,12 +1,15 @@
-import { initialAppDefaults } from '../init-dex-helper.ts'
-import { type PokemonEditState } from '../models/data-models.ts'
-import { defaultAppSettings } from '../null-state-helper.ts'
 import {
+	type AppDefaults,
 	type AppSettings,
 	type BadgeDisplayMode,
 	type WikiLink,
-	storageHandler
-} from './storage-handler.ts'
+	defaultAppSettings,
+	initialAppDefaults,
+	loadAppDefaults,
+	loadAppSettings,
+	saveAppDefaults,
+	saveAppSettings
+} from './settings-storage.ts'
 
 export class AppState {
 	// UI state
@@ -15,9 +18,8 @@ export class AppState {
 	private hideCapturedPokemon = $state(false)
 
 	// Application settings
-	private selectedDexId = $state(storageHandler.loadSelectedPokedexId())
-	private appDefaults: Partial<PokemonEditState> = $state(initialAppDefaults)
-	private appSettings = $state(storageHandler.loadAppSettings())
+	private appDefaults: AppDefaults = $state(loadAppDefaults())
+	private appSettings: AppSettings = $state(loadAppSettings())
 
 	private activeDropdownId: string | null = $state(null)
 
@@ -48,15 +50,6 @@ export class AppState {
 
 	public closeMobileSidebar(): void {
 		this.mobileSidebarOpen = false
-	}
-
-	public getSelectedPokedexId(): string {
-		return this.selectedDexId
-	}
-
-	public setSelectedPokedexId(name: string): void {
-		this.selectedDexId = name
-		storageHandler.saveSelectedPokedexId(name)
 	}
 
 	public openDropdown(dropdownId: string) {
@@ -94,29 +87,29 @@ export class AppState {
 	// App Defaults Methods
 	// ================
 
-	public getAppDefaults(): Partial<PokemonEditState> {
+	public getAppDefaults(): AppDefaults {
 		return this.appDefaults
 	}
 
-	public updateAppDefaults(updatedDefaults: Partial<PokemonEditState>): void {
+	public updateAppDefaults(updatedDefaults: Partial<AppDefaults>): void {
 		// Update local state
 		const newDefaults = { ...this.appDefaults, ...updatedDefaults }
 		this.appDefaults = newDefaults
 
 		// Persist to localStorage
-		storageHandler.saveAppDefaults(this.appDefaults)
+		saveAppDefaults(this.appDefaults)
 	}
 
 	public loadAppDefaults(): void {
-		this.appDefaults = storageHandler.loadAppDefaults()
+		this.appDefaults = loadAppDefaults()
 	}
 
 	public resetAppDefaults(): void {
-		this.updateAppDefaults(initialAppDefaults)
+		this.updateAppDefaults(initialAppDefaults())
 	}
 
 	public hasModifiedDefaults(): boolean {
-		return JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults)
+		return JSON.stringify(this.appDefaults) !== JSON.stringify(initialAppDefaults())
 	}
 
 	// ================
@@ -133,7 +126,7 @@ export class AppState {
 		this.appSettings = newSettings
 
 		// Persist to localStorage
-		storageHandler.saveAppSettings(this.appSettings)
+		saveAppSettings(this.appSettings)
 	}
 
 	public loadAppSettings(): AppSettings {
@@ -141,7 +134,7 @@ export class AppState {
 	}
 
 	public resetAppSettings(): void {
-		this.updateAppSettings(defaultAppSettings)
+		this.updateAppSettings(defaultAppSettings())
 	}
 
 	public cycleBadgeDisplayMode(): void {
@@ -154,12 +147,12 @@ export class AppState {
 		])
 
 		this.appSettings.badgeDisplay = nextModeMap.get(this.appSettings.badgeDisplay) ?? false
-		storageHandler.saveAppSettings(this.appSettings)
+		saveAppSettings(this.appSettings)
 	}
 
 	public updateWikiLinkConfig(wikiLinks: WikiLink[]): void {
 		this.appSettings.wikiLinkConfig = wikiLinks
-		storageHandler.saveAppSettings(this.appSettings)
+		saveAppSettings(this.appSettings)
 	}
 }
 

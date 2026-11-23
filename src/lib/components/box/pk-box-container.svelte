@@ -1,12 +1,12 @@
 <script lang="ts">
 	import PkBox from '$lib/components/box/pk-box.svelte'
-	import { type DexState } from '$lib/models/data-models'
+	import type { ResolvedBox } from '$lib/catalog/types'
 
-	let { dexState }: { dexState: DexState } = $props()
+	let { boxes }: { boxes: ResolvedBox[] } = $props()
 </script>
 
 <section class="pk-box-container">
-	{#each dexState.boxes as box (box.id)}
+	{#each boxes as box (box.id)}
 		<PkBox {box} />
 	{/each}
 </section>

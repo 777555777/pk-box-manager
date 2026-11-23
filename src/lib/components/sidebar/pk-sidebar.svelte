@@ -7,19 +7,20 @@
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
 	import PkResetBtn from '$lib/components/ui/pk-reset-btn.svelte'
 	import PkLinks from '$lib/components/sidebar/pk-links.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
+	import { dexStore } from '$lib/state/app'
+	import { NULL_POKEMON_ID } from '$lib/state/dex-store.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
-	import { getIdentifier } from '$lib/spriteheet-helper'
 	import type { BallsType } from '$lib/models/balls-models'
 	import PkRibbonPicker from '$lib/components/sidebar/pk-ribbon-picker.svelte'
 	import PkMarkPicker from '$lib/components/sidebar/pk-mark-picker.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import type { DropdownOption } from '$lib/components/ui/pk-game-dropdown.svelte'
 
-	let selectedPokemon = $derived(pkState.getSelectedPokemon())
-	let identifier = $derived(getIdentifier(selectedPokemon.idEntry))
+	let selectedPokemon = $derived(dexStore.selected)
+	let identifier = $derived(selectedPokemon.pokemonId)
 
-	let isSelectionValid = $derived(identifier === '0000-null')
+	// true when NOTHING is selected (name kept from v1)
+	let isSelectionValid = $derived(identifier === NULL_POKEMON_ID)
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 	let disabled = $derived(isSelectionValid || viewerMode)
 
@@ -47,43 +48,43 @@
 
 	// === Ball Selector ===
 	function updatePokeball(newValue: BallsType) {
-		pkState.updatePokemon(identifier, { ball: newValue })
+		dexStore.updatePokemon(identifier, { ball: newValue })
 	}
 
 	// === Shiny Toggle ===
 	function toggleShiny() {
-		pkState.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })
+		dexStore.updatePokemon(identifier, { shiny: !selectedPokemon.shiny })
 	}
 
 	// === Game Dropdown ===
 	function updateCaughtIn(selectedOption: DropdownOption) {
 		const [caughtIn, value] = selectedOption
-		pkState.updatePokemon(identifier, {
+		dexStore.updatePokemon(identifier, {
 			caughtIn: caughtIn
 		})
 	}
 
 	// === Comment Textarea ===
 	function updateComment(newValue: string) {
-		pkState.updatePokemon(identifier, {
+		dexStore.updatePokemon(identifier, {
 			comment: newValue
 		})
 	}
 
 	// === Original Trainer ===
 	function updateOriginalTrainer(newValue: string) {
-		pkState.updatePokemon(identifier, {
+		dexStore.updatePokemon(identifier, {
 			originalTrainer: newValue
 		})
 	}
 
 	// === Ribbon/Mark Picker ===
 	function updateRibbons(ribbonId: string) {
-		pkState.toggleRibbon(identifier, ribbonId)
+		dexStore.toggleRibbon(identifier, ribbonId)
 	}
 
 	function updateMarks(markId: string) {
-		pkState.toggleMark(identifier, markId)
+		dexStore.toggleMark(identifier, markId)
 	}
 
 	// === Mobile Sidebar Toggle ===

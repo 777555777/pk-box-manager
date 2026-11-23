@@ -1,7 +1,7 @@
 # 📦 PK Box Manager
 
 A fast, lightweight, and mostly local Svelte app to manage your Living Pokédex.
-Userdata is managed entirely in the browsers localStorage.
+Userdata stays entirely in the browser (IndexedDB, small settings in localStorage).
 
 > https://box-manager.com/
 
@@ -19,7 +19,7 @@ Track detailed information for each Pokémon, including:
 Additional highlights:
 
 - ⚙️ **Default values**: Set default capture values (e.g. ball, game) to speed up marking caught Pokémon.
-- 📊 **Pokémon info display**: Shows base stats, typing, abilities, and gender ratio (fetched via API).
+- 📊 **Pokémon info display**: Shows base stats, typing, abilities, and gender ratio (shipped with the app, no external API).
 - 🔗 **Quick wiki access**: Direct links to popular wikis for encounter locations of the selected Pokémon.
 - 📁 **Import & export**: Backup or share your dex progress via JSON file.
 - 👀 **Visual ball indicator**: Shows the caught Pokéball directly in the box view
@@ -74,7 +74,10 @@ deno task webp
 ├── 📁 /lib
 │   ├── 📁 /components  # UI components used across the app
 │   ├── 📁 /models      # Type definitions & utilities for sprite data
-│   └── 📁 /state       # Global app state & localStorage persistence
+│   ├── 📁 /catalog     # Static presets, boxes and layout resolution
+│   ├── 📁 /dex         # Data model v2, import/export, v1 conversion
+│   ├── 📁 /storage     # IndexedDB repository and v1 migration
+│   └── 📁 /state       # Reactive app state (dex store, settings)
 └── 📁 /routes          # Main app page & server-side API endpoints
 
 📁 /static

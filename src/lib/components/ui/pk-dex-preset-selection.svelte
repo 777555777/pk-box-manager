@@ -1,82 +1,40 @@
 <script lang="ts">
-	import { getDexConfig, getAvailableTagsForPreset } from '$lib/data/pokedex-config-utils'
+	import { catalog } from '$lib/catalog/catalog'
+	import { formatTagName } from '$lib/catalog/tags'
+	import type { BoxTag } from '$lib/catalog/types'
+	import type { NewDexOptions } from '$lib/state/dex-store.svelte'
 	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import { formatTagName } from '$lib/init-dex-helper'
-	import type { BoxTags, DexConfig } from '$lib/models/data-models'
-	import { dexPresets } from '$lib/data/pokedex'
 
-	let { onSelect, selectedPresetDexConfig } = $props()
+	let { onSelect, presetId }: { onSelect: (options: NewDexOptions) => void; presetId: string } =
+		$props()
 
-	// Custom display name for the new Pokédex instance
-	let customDisplayName = $derived(selectedPresetDexConfig.displayName)
-	let allTags = $derived(getAvailableTagsForPreset(selectedPresetDexConfig.presetId))
+	let preset = $derived(catalog.getPreset(presetId))
 
+	// Custom display name for the new Pokédex instance (editable, resets with the preset)
+	let customDisplayName = $derived(preset?.name ?? '')
+	let allTags = $derived(catalog.getAvailableTags(presetId))
+
+	// Not a writable $derived: the toggles bind to single keys, which needs a deep $state proxy.
+	// eslint-disable-next-line svelte/prefer-writable-derived
 	let allTagsState = $state<Record<string, boolean>>({})
 
-	// Initialisierung, wenn allTags sich ändert
+	// all variants are selected by default whenever the preset changes
 	$effect(() => {
-		let newState: Record<string, boolean> = {}
-		for (const tag of allTags) {
-			newState[tag] = true
-		}
-		allTagsState = newState
+		allTagsState = Object.fromEntries(allTags.map((tag) => [tag, true]))
 	})
 
-	let totalPokemonCount = $derived(determineTotalPokemonCount())
+	let activeTags = $derived(
+		Object.entries(allTagsState)
+			.filter(([, isActive]) => isActive)
+			.map(([tag]) => tag as BoxTag)
+	)
 
-	// Functions
-	function determineTotalPokemonCount(): number {
-		try {
-			// Passendes Preset finden
-			const selectedPreset = Object.values(dexPresets).find(
-				(preset) => preset.presetId === selectedPresetDexConfig.presetId
-			)
-
-			if (!selectedPreset) {
-				return 0
-			}
-
-			const activeTags = Object.entries(allTagsState)
-				.filter(([_, isActive]) => isActive)
-				.map(([tag]) => tag as BoxTags)
-
-			// Konfiguration mit aktiven Tags holen
-			const configWithTags = getDexConfig(selectedPreset.presetId, activeTags)
-
-			// Anzahl Pokémon summieren
-			let totalCount = 0
-			for (const box of configWithTags.pokemonOrder) {
-				totalCount += box.pokemon.length
-			}
-
-			return totalCount
-		} catch (error) {
-			console.error('Error calculating pokemon count:', error)
-			return 0
-		}
-	}
+	let totalPokemonCount = $derived(
+		catalog.listPokemonIds({ kind: 'preset', presetId, tags: activeTags }).length
+	)
 
 	function handleDexSelect() {
-		const selectedPreset = Object.values(dexPresets).find(
-			(preset) => preset.presetId === selectedPresetDexConfig.presetId
-		) as DexConfig
-
-		if (onSelect && selectedPreset) {
-			// aktive Tags ermitteln
-			const activeTags = Object.entries(allTagsState)
-				.filter(([_, isActive]) => isActive)
-				.map(([tag]) => tag as BoxTags)
-
-			const baseConfigWithTags = getDexConfig(selectedPreset.presetId, activeTags)
-
-			const configWithCustomName = {
-				...baseConfigWithTags,
-				displayName: customDisplayName.trim() || selectedPreset.displayName
-			}
-
-			selectedPresetDexConfig = configWithCustomName
-			onSelect(configWithCustomName, activeTags)
-		}
+		onSelect({ presetId, tags: activeTags, name: customDisplayName.trim() || (preset?.name ?? '') })
 	}
 </script>
 
@@ -99,13 +57,13 @@
 
 		{#if allTagsState}
 			<div class="tag-grid">
-				{#each Object.entries(allTagsState) as [tag, isActive]}
+				{#each Object.keys(allTagsState) as tag (tag)}
 					{#if tag !== 'normal'}
 						<div class="tag-toggle-item">
 							<PkToggle
-								label={formatTagName(tag as BoxTags)}
+								label={formatTagName(tag as BoxTag)}
 								activeColor="hsla(125, 100%, 30%, 0.55)"
-								bind:checked={allTagsState[tag as BoxTags]}
+								bind:checked={allTagsState[tag]}
 							/>
 						</div>
 					{/if}

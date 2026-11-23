@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { pkState } from '$lib/state/pk-state.svelte'
-	import { appState } from '$lib/state/app-state.svelte'
+	import { dexStore } from '$lib/state/app'
+	import type { NewDexOptions } from '$lib/state/dex-store.svelte'
 	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
 	import PkDexCard from '$lib/components/ui/pk-dex-card.svelte'
 	import PkImport from '$lib/components/toolbox/pk-import.svelte'
-	import { type DexIndexEntry } from '$lib/state/storage-handler'
 	import PkRadioGroup from '../ui/pk-radio-group.svelte'
-	import { dexPresets } from '$lib/data/pokedex'
-	import type { BoxTags, DexConfig } from '$lib/models/data-models'
-	import { getDexConfig } from '$lib/data/pokedex-config-utils'
 	import PkDexPresetSelection from '../ui/pk-dex-preset-selection.svelte'
 	import PkDexPresetList from '../ui/pk-dex-preset-list.svelte'
 
@@ -19,19 +15,9 @@
 
 	let currentPage = $state('active')
 
-	// Get current selected dex id - use derived for reactive reading
-	let selectedDexId = $derived(appState.getSelectedPokedexId())
-	let pokedexIndexList = $derived(pkState.getPokedexIndexList())
-	let selectedDexRef = $derived.by(() => {
-		return pokedexIndexList.find((dex) => dex.dexSaveId === selectedDexId)
-	})
-
-	type DexPresetKey = keyof typeof dexPresets
-
-	let selectedPreset = $state<DexPresetKey | null>(null)
-	let selectedPresetDexConfig: DexConfig | undefined = $derived.by(() =>
-		selectedPreset ? dexPresets[selectedPreset] : undefined
-	)
+	let dexes = $derived(dexStore.dexes)
+	let activeId = $derived(dexStore.activeId)
+	let selectedPreset = $state<string | null>(null)
 
 	let pokedexDialog: PkDialogElement
 
@@ -39,73 +25,42 @@
 		pokedexDialog.showDialog()
 	}
 
-	function createAndSelectDex(selectedPreset: DexConfig, activeTags: BoxTags[]) {
-		// Create new config with selected tags without mutating the original
-		const initPreset = getDexConfig(selectedPreset.presetId, activeTags)
-
-		if (!initPreset) {
-			console.error('Failed to create Pokedex: Invalid preset or tags')
-			return
+	async function createAndSelectDex(options: NewDexOptions) {
+		try {
+			await dexStore.createDex(options)
+			// Switch to active pokedex tab to show the newly created dex
+			currentPage = 'active'
+		} catch (error) {
+			console.error('Failed to create Pokedex:', error)
 		}
-
-		// Apply the custom display name to the final config (already a copy from getDexConfig)
-		const finalConfig = {
-			...initPreset,
-			displayName: selectedPreset.displayName // This comes from the preset card with custom name
-		}
-
-		const initialisedDexSave = pkState.initPokedex(finalConfig)
-
-		if (!initialisedDexSave) {
-			console.error('Failed to create Pokedex: Invalid preset or tags')
-			return
-		}
-
-		// create and switch with selected tags:
-		pkState.switchPokedex(initialisedDexSave)
-
-		// Switch to active pokedex tab to show the newly created dex
-		currentPage = 'active'
 	}
 
-	function handlePokedexDelete(toDeleteDexSaveId: string) {
+	async function handlePokedexDelete(dexId: string) {
 		try {
-			pkState.deletePokedex(toDeleteDexSaveId)
-			console.log(`Successfully deleted Pokedex: ${toDeleteDexSaveId}`)
+			await dexStore.deleteDex(dexId)
 		} catch (error) {
 			console.error('Failed to delete Pokedex:', error)
 		}
 	}
 
-	function handleConfirmReset(toResetDexSaveId: string) {
+	async function handleConfirmReset(dexId: string) {
 		try {
-			pkState.resetPokedex(toResetDexSaveId)
-			console.log(`Successfully reset Pokedex: ${toResetDexSaveId}`)
+			await dexStore.resetDex(dexId)
 		} catch (error) {
 			console.error('Failed to reset Pokedex:', error)
 		}
 	}
 
-	function loadSelectedDex(selectedDex: DexIndexEntry) {
-		console.log('Loading selected dex:', selectedDex)
-		const targetDexSave = pkState.loadPokedex(selectedDex.dexSaveId)
-
-		// Update app state first, then switch pokédex
-		appState.setSelectedPokedexId(selectedDex.dexSaveId)
-		pkState.switchPokedex(targetDexSave)
+	async function loadSelectedDex(dexId: string) {
+		try {
+			await dexStore.switchDex(dexId)
+		} catch (error) {
+			console.error('Failed to load Pokedex:', error)
+		}
 	}
 
 	function editDisplayName(dexId: string, newName: string) {
-		// load the dexSave via dexId
-		const targetDexSave = pkState.loadPokedex(dexId)
-
-		if (targetDexSave) {
-			// then apply the new name
-			targetDexSave.config.displayName = newName
-
-			// persist in localstorage
-			pkState.savePokedex(targetDexSave)
-		}
+		dexStore.renameDex(dexId, newName)
 	}
 </script>
 
@@ -143,23 +98,23 @@
 
 {#snippet pokedexActiveList()}
 	<section class="pk-pokedex-section">
-		{#each pokedexIndexList as pokedexIndex, index}
+		{#each dexes as dex (dex.id)}
 			<PkDexCard
-				dexTitle={pokedexIndex.displayName}
-				dexSaveId={pokedexIndex.dexSaveId}
-				tags={pokedexIndex.tags}
-				isSelected={pokedexIndex.dexSaveId === selectedDexRef?.dexSaveId}
+				dexTitle={dex.name}
+				dexSaveId={dex.id}
+				tags={dex.layout.kind === 'preset' ? dex.layout.tags : []}
+				isSelected={dex.id === activeId}
 				counter={{
-					totalPokemon: pokedexIndex.totalPokemon,
-					totalCaughtPokemon: pokedexIndex.totalCaughtPokemon,
-					totalShinyPokemon: pokedexIndex.totalShinyPokemon
+					totalPokemon: dex.stats.total,
+					totalCaughtPokemon: dex.stats.caught,
+					totalShinyPokemon: dex.stats.shiny
 				}}
 				onDelete={handlePokedexDelete}
 				onReset={handleConfirmReset}
-				onSelect={() => loadSelectedDex(pokedexIndex)}
+				onSelect={() => loadSelectedDex(dex.id)}
 				onUpdateName={editDisplayName}
-				imgUrl={`/ui/dex/${pokedexIndex.coverImage}`}
-				isSystemDefault={pokedexIndex.isSystemDefault}
+				imgUrl={`/ui/dex/${dex.coverImage}`}
+				isSystemDefault={dex.isDefault}
 				--value-color="red"
 				--value-secondary-color="blue"
 			/>
@@ -169,17 +124,15 @@
 
 {#snippet pokedexPresetList()}
 	<section class="pk-preset-section">
-		<PkDexPresetList bind:selectedPreset={selectedPreset as DexPresetKey} />
+		<PkDexPresetList bind:selectedPreset />
 
 		<div class="separator-responsive"></div>
 
 		<div class="pk-dex-configuration">
-			{#if selectedPresetDexConfig}
-				<PkDexPresetSelection
-					{selectedPresetDexConfig}
-					onSelect={(selectedPreset: DexConfig, activeTags: BoxTags[]) =>
-						createAndSelectDex(selectedPreset, activeTags)}
-				/>
+			{#if selectedPreset}
+				{#key selectedPreset}
+					<PkDexPresetSelection presetId={selectedPreset} onSelect={createAndSelectDex} />
+				{/key}
 			{:else}
 				<div class="no-preset-selected">
 					<p>Please select a Pokédex preset from the list above to configure it.</p>

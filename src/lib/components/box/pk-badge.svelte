@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { Balls, type BallsType } from '$lib/models/balls-models'
-	import type { PokemonEditState } from '$lib/models/data-models'
+	import type { EntryData } from '$lib/dex/types'
 	import { Marks, type MarksType } from '$lib/models/marks-models'
 	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
 	import { setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
-	import type { BadgeDisplayMode } from '$lib/state/storage-handler'
+	import type { BadgeDisplayMode } from '$lib/state/settings-storage'
 
-	let {
-		pokemonState,
-		badgeDisplay
-	}: { pokemonState: PokemonEditState; badgeDisplay: BadgeDisplayMode } = $props()
+	let { pokemonState, badgeDisplay }: { pokemonState: EntryData; badgeDisplay: BadgeDisplayMode } =
+		$props()
 
 	// Derived state for selected Pokemon's sprite data
 	let appSettings = $derived(appState.getAppSettings())

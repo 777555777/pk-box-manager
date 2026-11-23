@@ -2,7 +2,7 @@
 	import PkExport from '$lib/components/toolbox/pk-export.svelte'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
-	import { formatTagName } from '$lib/init-dex-helper'
+	import { formatTagName } from '$lib/catalog/tags'
 	import { appState } from '$lib/state/app-state.svelte'
 	import PkDialog, { type PkDialogElement } from './pk-dialog.svelte'
 

@@ -3,17 +3,13 @@
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
+	import { dexStore } from '$lib/state/app'
 	import { onMount } from 'svelte'
 
-	let dexState = $derived(pkState.getCurrentPokedexState())
+	let boxes = $derived(dexStore.boxes)
 
 	// Handle click outside to deselect Pokémon
 	onMount(() => {
-		// TODO: find a better place to load the app defaults
-		appState.loadAppDefaults()
-		appState.loadAppSettings()
-
 		// Service Worker registrieren für Asset Caching
 		// if ('serviceWorker' in navigator) {
 		// 	navigator.serviceWorker
@@ -48,7 +44,7 @@
 					!isClickInsidePkBallSelector &&
 					!isClickInsideButton
 				) {
-					pkState.deselectPokemon()
+					dexStore.deselect()
 				}
 			}, 0)
 		}
@@ -66,7 +62,7 @@
 <main>
 	<section class="pk-content">
 		<PkToolBox />
-		<PkBoxContainer {dexState} />
+		<PkBoxContainer {boxes} />
 	</section>
 
 	<PkSidebar />

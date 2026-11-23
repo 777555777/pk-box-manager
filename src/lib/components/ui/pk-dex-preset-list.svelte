@@ -1,24 +1,25 @@
 <script lang="ts">
-	import { dexPresets } from '$lib/data/pokedex'
+	import { catalog } from '$lib/catalog/catalog'
 
-	type DexPresetKey = keyof typeof dexPresets
+	let { selectedPreset = $bindable() }: { selectedPreset: string | null } = $props()
 
-	let { selectedPreset = $bindable() }: { selectedPreset: DexPresetKey } = $props()
+	const presets = catalog.listPresets()
 
-	function selectPreset(dexPresetId: string) {
-		selectedPreset = dexPresetId as DexPresetKey
+	function selectPreset(event: Event, presetId: string) {
+		event.preventDefault()
+		selectedPreset = presetId
 	}
 </script>
 
 <div class="pk-dex-preset-list-container">
 	<h3>Preset List</h3>
 	<ul class="pk-dex-preset-list">
-		{#each Object.entries(dexPresets) as [dexPresetId, dexPreset], index}
+		{#each presets as preset (preset.id)}
 			<li class="pk-dex-preset-list-item">
 				<a
-					class="pk-textarea {selectedPreset === dexPresetId ? 'active' : ''}"
+					class="pk-textarea {selectedPreset === preset.id ? 'active' : ''}"
 					href="/"
-					onclick={() => selectPreset(dexPresetId)}>{dexPreset.displayName}</a
+					onclick={(event) => selectPreset(event, preset.id)}>{preset.name}</a
 				>
 			</li>
 		{/each}

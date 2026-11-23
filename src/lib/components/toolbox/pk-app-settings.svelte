@@ -8,7 +8,7 @@
 	import { type RibbonsType } from '$lib/models/ribbons-models'
 	import { type MarksType } from '$lib/models/marks-models'
 	import PkToggle from '../ui/pk-toggle.svelte'
-	import type { WikiLink } from '$lib/state/storage-handler'
+	import type { WikiLink } from '$lib/state/settings-storage'
 
 	let appSettingsDialog: PkDialogElement
 

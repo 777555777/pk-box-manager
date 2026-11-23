@@ -3,29 +3,29 @@
 	import { getBackgroundStyle } from '$lib/spriteheet-helper'
 	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
+	import { dexStore } from '$lib/state/app'
 	import { appState } from '$lib/state/app-state.svelte'
-	import type { BoxState } from '$lib/models/data-models'
+	import type { ResolvedBox } from '$lib/catalog/types'
 
-	let { box }: { box: BoxState } = $props()
+	let { box }: { box: ResolvedBox } = $props()
 
 	let hideCapturedPokemon = $derived(appState.isHideCapturedPokemonEnabled())
 
 	// Filter Pokemon based on hide captured setting
+	// Empty slots (custom layouts) are kept in place, but hidden by the filter
 	let visiblePokemon = $derived(
 		hideCapturedPokemon
-			? box.pokemon.filter((pokemonId) => {
-					const pokemon = pkState.getPokemon(pokemonId)
-					return !pokemon.captured
-				})
-			: box.pokemon
+			? box.slots.filter(
+					(pokemonId) => pokemonId !== null && !dexStore.getPokemon(pokemonId).captured
+				)
+			: box.slots
 	)
 
 	// Check if box should be hidden (no visible Pokemon)
 	let shouldHideBox = $derived(hideCapturedPokemon && visiblePokemon.length === 0)
 
 	function updateBoxWallpaper(newWallpaper: WallpapersType) {
-		pkState.updateBoxSettings(box.id, { wallpaper: newWallpaper })
+		dexStore.updateBoxWallpaper(box.id, newWallpaper)
 	}
 
 	function getWallpaperSpriteData(wallpaperName: WallpapersType) {
@@ -46,13 +46,13 @@
 	const boxColumns = 5 // column-amount from package.json
 	const boxSpriteWidth = 567
 	const boxSpriteHeight = 427
-	const boxSpriteData = $derived(getWallpaperSpriteData(box.settings.wallpaper as WallpapersType))
+	const boxSpriteData = $derived(getWallpaperSpriteData(box.wallpaper as WallpapersType))
 </script>
 
 <article class="pk-box" style="display: {shouldHideBox ? 'none' : 'flex'}">
 	<PkWallpaperSelector
 		title={box.title}
-		wallpaper={box.settings.wallpaper as WallpapersType}
+		wallpaper={box.wallpaper as WallpapersType}
 		onUpdate={updateBoxWallpaper}
 	/>
 	<div
@@ -60,8 +60,12 @@
 		style={getBackgroundStyle(boxRows, boxColumns, boxSpriteWidth, boxSpriteHeight, boxSpriteData)}
 	>
 		<div class="box-grid">
-			{#each visiblePokemon as pokemon}
-				<PkSlot pokemonIdentifier={pokemon} />
+			{#each visiblePokemon as pokemon, index (pokemon ?? `empty-${index}`)}
+				{#if pokemon}
+					<PkSlot pokemonIdentifier={pokemon} />
+				{:else}
+					<div class="pk-empty-slot" aria-hidden="true"></div>
+				{/if}
 			{/each}
 		</div>
 	</div>

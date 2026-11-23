@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { storageHandler } from '$lib/state/storage-handler'
+	import { dexStore } from '$lib/state/app'
+	import { createDexExport, exportFileName } from '$lib/dex/transfer'
 	import PkIcon from '$lib/components/ui/pk-icon.svelte'
 
 	let {
@@ -14,33 +15,19 @@
 		label?: string
 	} = $props()
 
-	function exportCurrentDex() {
+	async function exportCurrentDex() {
 		try {
-			let selectedPokedex = storageHandler.loadPokedex(dexSaveId)
+			const { dex, entries } = await dexStore.getDexData(dexSaveId)
+			const exportedAt = Date.now()
+			const json = JSON.stringify(createDexExport(dex, entries, exportedAt), null, 2)
 
-			const selectedDexSave = JSON.stringify(selectedPokedex, null, 2)
-
-			if (!selectedDexSave) {
-				throw new Error('Pokedex data is empty!')
-			}
-
-			// Erstelle einen Blob mit dem JSON-Inhalt
-			const blob = new Blob([selectedDexSave], { type: 'application/json' })
-
-			// Erstelle eine URL für den Blob
-			const url = URL.createObjectURL(blob)
-
-			// Erstelle ein temporäres a-Element zum Herunterladen
-			const a = document.createElement('a')
-			a.href = url
-			a.download = `export-${new Date().toISOString().slice(0, 10)}-${dexSaveId}` // Dateiname für den Download
-
-			// Füge das Element zum DOM hinzu, klicke es und entferne es wieder
-			document.body.appendChild(a)
-			a.click()
-			document.body.removeChild(a)
-
-			// Gib die URL frei
+			const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
+			const link = document.createElement('a')
+			link.href = url
+			link.download = exportFileName(dex, exportedAt)
+			document.body.appendChild(link)
+			link.click()
+			document.body.removeChild(link)
 			URL.revokeObjectURL(url)
 		} catch (error) {
 			console.error('Error during Pokedex export!', error)

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { getIdentifier, getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
+	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
 	import { appState } from '$lib/state/app-state.svelte'
-	import { pkState } from '$lib/state/pk-state.svelte'
+	import { dexStore } from '$lib/state/app'
 	import PkBadge from './pk-badge.svelte'
 
 	let { pokemonIdentifier }: { pokemonIdentifier: string } = $props()
@@ -10,20 +10,14 @@
 
 	let viewerMode = $derived(appState.isViewerModeEnabled())
 
-	let pokemonState = $derived(pkState.getPokemon(pokemonIdentifier))
+	let pokemonState = $derived(dexStore.getPokemon(pokemonIdentifier))
 	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 
-	let isSelected = $derived(
-		pokemonIdentifier === getIdentifier(pkState.getSelectedPokemon().idEntry)
-	)
+	let isSelected = $derived(pokemonIdentifier === dexStore.selectedId)
 
 	function onclick() {
-		if (viewerMode) {
-			pkState.updateSelectedPokemon(pokemonIdentifier)
-		} else {
-			pkState.updatePokemon(pokemonIdentifier, { captured: true })
-			pkState.updateSelectedPokemon(pokemonIdentifier)
-		}
+		if (!viewerMode) dexStore.updatePokemon(pokemonIdentifier, { captured: true })
+		dexStore.select(pokemonIdentifier)
 	}
 
 	function capitalizeFirstLetter(val: string) {

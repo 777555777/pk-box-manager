@@ -152,10 +152,19 @@ Reihenfolge innerhalb eines Batches: löschen vor schreiben. So lässt sich ein 
 
 **Laufzeit:**
 
+`DexStore` (`src/lib/state/dex-store.svelte.ts`), Singleton und Start in `src/lib/state/app.ts`, aufgerufen aus `+page.ts` `load`:
+
+1. IndexedDB öffnen (nicht verfügbar → In-Memory mit Fehlermeldung in der Konsole, Änderungen gehen dann beim Neuladen verloren)
+2. `migrateFromV1`
+3. `requestPersistentStorage()` (`src/lib/storage/persist.ts`) fragt `navigator.storage.persist()` an, wirft nie
+4. `dexStore.init()`: Dexe laden, beim ersten Start den Default-National-Dex anlegen, zuletzt aktiven Dex (`selectedDex`) aktivieren
+
 - Der aktive Dex liegt vollständig im Svelte-State. Das ist die einzige Quelle der Wahrheit.
-- Änderungen werden als „dirty“ markiert und gebündelt geschrieben (Microtask/Debounce, zusätzlich bei `visibilitychange`/`pagehide`).
-- Die Zähler werden schrittweise mitgeführt. Es werden nie mehr alle Dexe geparst.
-- Beim Start: `requestPersistentStorage()` (`src/lib/storage/persist.ts`) fragt `navigator.storage.persist()` an, wirft nie.
+- Jede Änderung wird sofort im State angewendet und in eine Warteschlange gelegt. Die Warteschlange wird einmal pro Tick (Microtask) als **ein** Batch geschrieben, zusätzlich bei `pagehide` und `visibilitychange`. Alle Schreibvorgänge laufen strikt nacheinander.
+- Vor dem Schreiben wird immer `$state.snapshot()` genommen.
+- Die Zähler werden schrittweise mitgeführt. Beim Aktivieren eines Dex werden sie gegen den aktuellen Katalog neu berechnet (neue Pokémon nach App-Updates).
+- Schlägt ein Schreibvorgang fehl, steht der Fehler in `dexStore.persistError` (noch ohne Anzeige in der UI).
+- Der Default-Dex kann nur zurückgesetzt, nicht gelöscht werden.
 
 **Bleibt in localStorage:** `appSettings`, `appDefaults`, `selectedDex`. Die sind klein und werden beim Start synchron gebraucht, damit nichts flackert.
 
@@ -186,11 +195,13 @@ Der Import nutzt denselben Konverter. v1-Exportdateien werden erkannt (`config` 
 	"version": 2,
 	"exportedAt": 0,
 	"dex": { "…": "DexRecord ohne stats" },
-	"entries": []
+	"entries": [{ "…": "DexEntry ohne dexId" }]
 }
 ```
 
-Das ist klein, enthält nur Userdaten und ist die Grundlage für ein späteres Teilen-/Sync-Feature.
+Das ist klein, enthält nur Userdaten und ist die Grundlage für ein späteres Teilen-/Sync-Feature (`src/lib/dex/transfer.ts`). Dateiname: `pk-box-manager-<name>-<datum>.json`.
+
+Import (`parseDexImport`): v2-Exporte und v1-Dateien (alte Exporte und rohe localStorage-Werte, über `convertV1Save`). Geprüft werden Schema, bekanntes Preset bzw. gültiges Custom-Layout, Aliase werden aufgelöst, `stats` neu berechnet. Gibt es den Dex schon, fragt die UI vor dem Überschreiben. Ein importierter Dex ersetzt den vorhandenen komplett.
 
 ## Tests (Vitest)
 
@@ -212,8 +223,8 @@ Jeder Schritt ist für sich lauffähig und wird einzeln committet.
 2. ✅ Katalog-Modul (`src/lib/catalog/`): `resolveLayout`, Presets ohne Mutation, Aliases. Die v1-Helfer (`getDexConfig` & Co.) laufen bereits über den Katalog
 3. ✅ v2-Typen und Schemas (`src/lib/dex/`), toleranter v1-Parser, `convertV1Save` + Tests. Nebenbei: Das v1-Import-Schema behält jetzt den OT
 4. ✅ Repository (IDB + Memory), Migrations-Lauf `migrateFromV1` (`src/lib/storage/migrate-v1.ts`), `storage.persist()`
-5. `pkState` auf Repository umbauen (In-Memory als Wahrheit, gebündeltes Schreiben), async Start
-6. Import/Export v2 (v1 weiterhin lesbar)
+5. ✅ `pkState` durch `DexStore` ersetzt (In-Memory als Wahrheit, gebündeltes Schreiben), async Start mit Migration. Der alte v1-Code (`pkState`, Storage-Handler, v1-Validierung, `DexConfig`-Presets) ist entfernt
+6. ✅ Import/Export v2 (v1 weiterhin lesbar), zusammen mit Schritt 5 umgesetzt, damit der Export nie veraltete Daten liefert
 7. _Später:_ Editor für Custom-Dexe, ausgeblendete Bänder, Sync, `adapter-static`
 
 ## Offene Entscheidungen
