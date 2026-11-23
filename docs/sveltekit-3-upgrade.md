@@ -222,7 +222,7 @@ Die `minimatch`-Kette betrifft nur Dev-Tools (ESLint), nicht den ausgelieferten 
 
 ### Offene Punkte
 
-- **Docker-Base-Image:** Kit 3 verlangt Node ≥ 22.17. Das `Dockerfile` nutzt `node:22-alpine` (aktuelle 22er-Images erfüllen das). `docker compose up --build` zieht das Base-Image aber nicht neu, wenn auf dem Server schon ein älteres `node:22-alpine` liegt. Vor dem ersten Deploy auf dem Server `docker pull node:22-alpine` ausführen oder im Dockerfile eine Mindestversion pinnen (z. B. `node:22.17-alpine` oder neuer). Nicht geändert, weil Deployment nicht Teil dieser Aufgabe war.
+- **Docker-Base-Image:** Erledigt. Das `Dockerfile` nutzt jetzt `node:26-alpine` (aktive LTS, Support bis 2029-04), und `deploy.sh` baut mit `docker compose build --pull`, damit der Server kein altes gecachtes Base-Image verwendet. Tests, Build und Server unter Node 26.13.1 geprüft.
 - **Version-Polling:** `version.pollInterval` ist jetzt standardmäßig 1 Stunde. Offene Tabs fragen damit `/_app/version.json` beim eigenen Server ab (kein externer Dienst). Die App nutzt `updated` nicht. Wer das nicht will: `version: { pollInterval: 0 }` in `sveltekit({...})`. Nicht im Browser nachgemessen.
 - **prettier-plugin-svelte 4:** Nicht von Kit 3 verlangt. 4.2.0 würde viele `.svelte`-Dateien umformatieren. Wenn gewünscht, als eigenen Commit mit `npm run format` machen.
 - **adapter-node 6 und Deployment:** `deploy.sh` kopiert `build/` komplett per `rsync --delete`. Das passt zur neuen Regel, dass nur beim Build bekannte Dateien ausgeliefert werden. Nichts nachträglich in `build/client` legen oder dort ersetzen.
