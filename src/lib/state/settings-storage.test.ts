@@ -76,3 +76,16 @@ describe('selected dex', () => {
 		expect(loadSelectedDexId()).toBe('abc')
 	})
 })
+
+describe('failing localStorage (review S4)', () => {
+	it('never throws when writing fails', () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
+			throw new DOMException('full', 'QuotaExceededError')
+		})
+
+		expect(() => saveSelectedDexId('abc')).not.toThrow()
+		expect(loadAppSettings()).toEqual(defaultAppSettings())
+		expect(loadAppDefaults()).toEqual(initialAppDefaults())
+	})
+})

@@ -12,8 +12,16 @@ export const V1_DEX_PREFIX = 'dex:'
 /** Informational marker in localStorage. The v1 data itself is kept as a safety net. */
 export const V1_MIGRATED_MARKER = 'v1MigratedAt'
 
+type Skipped = V1MigrationInfo['skipped']
+
 export type MigrationResult =
-	| { status: 'up-to-date' }
+	| {
+			status: 'up-to-date'
+			/** v1 saves that still cannot be read (kept in localStorage, retried on every start). */
+			skipped: Skipped
+			/** Previously skipped saves that could be migrated now (e.g. after an app update). */
+			recovered: string[]
+	  }
 	| { status: 'fresh' }
 	| {
 			status: 'migrated'
@@ -26,6 +34,11 @@ type V1Source = Pick<Storage, 'length' | 'key' | 'getItem' | 'setItem'>
 interface MigrationOptions {
 	catalog?: Catalog
 	now?: () => number
+	/**
+	 * False when the repository only lives in memory (IndexedDB unavailable):
+	 * then the informational marker is not set, nothing was stored for good.
+	 */
+	persistent?: boolean
 }
 
 /**
@@ -36,11 +49,11 @@ interface MigrationOptions {
 export async function migrateFromV1(
 	repository: DexRepository,
 	source: V1Source = localStorage,
-	{ catalog = defaultCatalog, now = Date.now }: MigrationOptions = {}
+	{ catalog = defaultCatalog, now = Date.now, persistent = true }: MigrationOptions = {}
 ): Promise<MigrationResult> {
 	const schemaVersion = await repository.getMeta('schemaVersion')
 	if (schemaVersion !== undefined && schemaVersion >= SCHEMA_VERSION) {
-		return { status: 'up-to-date' }
+		return retrySkipped(repository, source, catalog)
 	}
 
 	const v1Keys = listV1DexKeys(source)
@@ -52,7 +65,7 @@ export async function migrateFromV1(
 	const dexes: DexRecord[] = []
 	const entries: DexEntry[] = []
 	const reports: Record<string, V1ConversionReport> = {}
-	const skipped: V1MigrationInfo['skipped'] = []
+	const skipped: Skipped = []
 
 	for (const key of v1Keys) {
 		try {
@@ -61,7 +74,7 @@ export async function migrateFromV1(
 			entries.push(...converted.entries)
 			reports[converted.dex.id] = converted.report
 		} catch (error) {
-			skipped.push({ key, error: error instanceof Error ? error.message : String(error) })
+			skipped.push({ key, error: errorMessage(error) })
 		}
 	}
 
@@ -79,13 +92,74 @@ export async function migrateFromV1(
 		setMeta: { schemaVersion: SCHEMA_VERSION, v1Migration: info }
 	})
 
-	try {
-		source.setItem(V1_MIGRATED_MARKER, String(info.migratedAt))
-	} catch {
-		// the marker is informational only (e.g. quota exceeded)
+	if (persistent) {
+		try {
+			source.setItem(V1_MIGRATED_MARKER, String(info.migratedAt))
+		} catch {
+			// the marker is informational only (e.g. quota exceeded)
+		}
 	}
 
 	return { status: 'migrated', info, reports }
+}
+
+/**
+ * Saves skipped by an earlier migration stay in localStorage. Retry them on every
+ * start: a newer app version may be able to read them. A save is only added when
+ * no v2 dex with its id exists, so nothing the user changed since gets overwritten.
+ */
+async function retrySkipped(
+	repository: DexRepository,
+	source: V1Source,
+	catalog: Catalog
+): Promise<MigrationResult> {
+	const info = await repository.getMeta('v1Migration')
+	if (!info || info.skipped.length === 0)
+		return { status: 'up-to-date', skipped: [], recovered: [] }
+
+	const existing = await repository.listDexes()
+	const hasDefault = existing.some((dex) => dex.isDefault)
+	const dexes: DexRecord[] = []
+	const entries: DexEntry[] = []
+	const stillSkipped: Skipped = []
+
+	for (const item of info.skipped) {
+		const raw = source.getItem(item.key)
+		if (raw === null) continue // removed in the meantime: nothing left to rescue
+		try {
+			const converted = convertV1Save(parseV1Save(raw), catalog)
+			if (existing.some((dex) => dex.id === converted.dex.id)) continue
+			if (hasDefault) converted.dex.isDefault = false
+			dexes.push(converted.dex)
+			entries.push(...converted.entries)
+		} catch (error) {
+			stillSkipped.push({ key: item.key, error: errorMessage(error) })
+		}
+	}
+
+	if (dexes.length > 0 || stillSkipped.length !== info.skipped.length) {
+		ensureSingleDefault(dexes)
+		await repository.write({
+			putDexes: dexes,
+			putEntries: entries,
+			setMeta: {
+				v1Migration: {
+					...info,
+					dexIds: [...info.dexIds, ...dexes.map((dex) => dex.id)],
+					skipped: stillSkipped
+				}
+			}
+		})
+	}
+	return {
+		status: 'up-to-date',
+		skipped: stillSkipped,
+		recovered: dexes.map((dex) => dex.id)
+	}
+}
+
+function errorMessage(error: unknown): string {
+	return error instanceof Error ? error.message : String(error)
 }
 
 function listV1DexKeys(source: V1Source): string[] {

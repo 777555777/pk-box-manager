@@ -44,6 +44,17 @@ export interface DexRepository {
 	close(): void
 }
 
+/**
+ * The browser storage was deleted while the app was running. Nothing written
+ * afterwards could restore the other dexes, so every operation fails with this.
+ */
+export class StorageClearedError extends Error {
+	constructor() {
+		super('The browser storage was cleared while the app was open.')
+		this.name = 'StorageClearedError'
+	}
+}
+
 /** Shared key validation, so both implementations reject the same invalid data. */
 export function assertValidBatch(batch: WriteBatch): void {
 	for (const dex of batch.putDexes ?? []) {

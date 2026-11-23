@@ -1,3 +1,5 @@
+import { getLocalStorage } from './local-storage.ts'
+
 export type PersistenceState = 'persisted' | 'denied' | 'unsupported'
 
 type StoragePersistence = Pick<StorageManager, 'persist' | 'persisted'>
@@ -33,8 +35,9 @@ export async function requestPersistentStorage(
  */
 export function requestPersistentStorageOnce(
 	storage: StoragePersistence | undefined = globalThis.navigator?.storage,
-	flags: Pick<Storage, 'getItem' | 'setItem'> = localStorage
+	flags: Pick<Storage, 'getItem' | 'setItem'> | null = getLocalStorage()
 ): Promise<PersistenceState> | null {
+	if (!flags) return null
 	try {
 		if (flags.getItem(PERSIST_REQUESTED_KEY) !== null) return null
 		flags.setItem(PERSIST_REQUESTED_KEY, String(Date.now()))

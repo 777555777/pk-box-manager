@@ -68,7 +68,9 @@ describe.each(repositoryImplementations)('migrateFromV1 with %s repository', (_,
 		await repository.write({ putDexes: [makeDex('created-after-migration')] })
 
 		expect(await migrateFromV1(repository, localStorage, { now })).toEqual({
-			status: 'up-to-date'
+			status: 'up-to-date',
+			skipped: [],
+			recovered: []
 		})
 		expect(await repository.listDexes()).toHaveLength(5)
 		repository.close()
@@ -102,6 +104,54 @@ describe.each(repositoryImplementations)('migrateFromV1 with %s repository', (_,
 		])
 		expect(await repository.getDex(ids.gen1Filled)).toBeDefined()
 		repository.close()
+	})
+})
+
+describe('migrateFromV1 – skipped saves (review S1/S2)', () => {
+	it('retries skipped saves on later starts and adds them once they can be read', async () => {
+		const ids = seedV1LocalStorage()
+		const raw = localStorage.getItem(`dex:${ids.gen3}`)!
+		localStorage.setItem(`dex:${ids.gen3}`, '{ broken')
+		const repository = createMemoryRepository()
+		await migrateFromV1(repository, localStorage, { now })
+
+		// still broken on the next start
+		expect(await migrateFromV1(repository, localStorage, { now })).toMatchObject({
+			status: 'up-to-date',
+			skipped: [{ key: `dex:${ids.gen3}` }],
+			recovered: []
+		})
+
+		// readable again (e.g. a newer parser after an app update)
+		localStorage.setItem(`dex:${ids.gen3}`, raw)
+		const result = await migrateFromV1(repository, localStorage, { now })
+
+		expect(result).toEqual({ status: 'up-to-date', skipped: [], recovered: [ids.gen3] })
+		expect((await repository.getDex(ids.gen3))?.isDefault).toBe(false)
+		expect((await repository.getMeta('v1Migration'))?.skipped).toEqual([])
+		expect((await repository.getMeta('v1Migration'))?.dexIds).toContain(ids.gen3)
+	})
+
+	it('never overwrites a v2 dex with a recovered v1 save', async () => {
+		const ids = seedV1LocalStorage()
+		const raw = localStorage.getItem(`dex:${ids.gen3}`)!
+		localStorage.setItem(`dex:${ids.gen3}`, '{ broken')
+		const repository = createMemoryRepository()
+		await migrateFromV1(repository, localStorage, { now })
+		await repository.write({ putDexes: [makeDex(ids.gen3, { name: 'Created in v2' })] })
+
+		localStorage.setItem(`dex:${ids.gen3}`, raw)
+		await migrateFromV1(repository, localStorage, { now })
+
+		expect((await repository.getDex(ids.gen3))?.name).toBe('Created in v2')
+	})
+
+	it('does not set the marker when nothing was stored for good', async () => {
+		seedV1LocalStorage()
+
+		await migrateFromV1(createMemoryRepository(), localStorage, { now, persistent: false })
+
+		expect(localStorage.getItem(V1_MIGRATED_MARKER)).toBeNull()
 	})
 })
 

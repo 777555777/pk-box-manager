@@ -62,4 +62,11 @@ describe('requestPersistentStorageOnce', () => {
 		expect(requestPersistentStorageOnce(storage, flags)).toBeNull()
 		expect(storage.persist).not.toHaveBeenCalled()
 	})
+
+	it('does not ask when localStorage is blocked completely', () => {
+		const storage = storageManager(true)
+
+		expect(requestPersistentStorageOnce(storage, null)).toBeNull()
+		expect(storage.persist).not.toHaveBeenCalled()
+	})
 })

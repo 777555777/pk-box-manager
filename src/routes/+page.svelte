@@ -2,7 +2,7 @@
 	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
 	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
 	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
-	import { appState } from '$lib/state/app-state.svelte'
+	import PkStorageNotice from '$lib/components/ui/pk-storage-notice.svelte'
 	import { dexStore } from '$lib/state/app'
 	import { onMount } from 'svelte'
 
@@ -67,6 +67,8 @@
 
 	<PkSidebar />
 </main>
+
+<PkStorageNotice />
 
 <style>
 	main {

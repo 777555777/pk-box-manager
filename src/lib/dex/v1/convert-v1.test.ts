@@ -7,6 +7,7 @@ import pkStats from '../../data/pk-stats.json' with { type: 'json' }
 import pokedexBoxes from '../../data/pokedex-boxes.json' with { type: 'json' }
 import { presetDefinitions } from '../../catalog/presets.ts'
 import { DexEntrySchema, DexRecordSchema } from '../schemas.ts'
+import { createDexExport, parseDexImport } from '../transfer.ts'
 import type { BoxTemplate } from '../../catalog/types.ts'
 import type { PokemonEntry } from '../../models/data-models.ts'
 import {
@@ -28,7 +29,9 @@ const EMPTY_REPORT = {
 	renamedEntries: [],
 	duplicateEntries: [],
 	orphanedEntries: [],
-	unmatchedBoxes: []
+	unmatchedBoxes: [],
+	invalidEntries: [],
+	removedSlots: []
 }
 
 describe('convertV1Save – fixtures', () => {
@@ -260,5 +263,100 @@ describe('convertV1Save – edge cases', () => {
 		expect(report.duplicateEntries).toEqual(['0025-pikachu'])
 		expect(entries.find((e) => e.pokemonId === '0025-pikachu')?.originalTrainer).toBe('Ash')
 		expect(entries.find((e) => e.pokemonId === '0026-raichu')?.captured).toBe(true)
+	})
+})
+
+describe('convertV1Save – older and damaged v1 data (review S1)', () => {
+	it('reads saves from before 2025-08-25 (config.id, no isSystemDefault)', () => {
+		const v1 = JSON.parse(readV1DexRaw('gen1-filled'))
+		v1.config.id = v1.config.presetId
+		delete v1.config.presetId
+		delete v1.meta.isSystemDefault
+
+		const { dex, entries, report } = convertV1Save(parseV1Save(v1))
+
+		expect(dex.layout).toEqual({ kind: 'preset', presetId: 'generation-1', tags: ['normal'] })
+		expect(dex.isDefault).toBe(false)
+		expect(entries).toHaveLength(9)
+		expect(report.layoutFallback).toBeNull()
+	})
+
+	it('uses defaults for null fields', () => {
+		const v1 = JSON.parse(readV1DexRaw('gen1-filled'))
+		v1.state.pokemon['0025-pikachu'].ability = null
+		v1.state.pokemon['0025-pikachu'].ribbons = null
+
+		const pikachu = convertV1Save(parseV1Save(v1)).entries.find(
+			(e) => e.pokemonId === '0025-pikachu'
+		)
+
+		expect(pikachu).toMatchObject({ ability: '', ribbons: [], originalTrainer: 'Ash' })
+	})
+
+	it('skips a single unreadable entry instead of the whole dex', () => {
+		const v1 = JSON.parse(readV1DexRaw('gen1-filled'))
+		v1.state.pokemon['0001-bulbasaur'].ribbons = 'not a list'
+
+		const { entries, report } = convertV1Save(parseV1Save(v1))
+
+		expect(report.invalidEntries).toEqual(['0001-bulbasaur'])
+		expect(entries.map((e) => e.pokemonId)).not.toContain('0001-bulbasaur')
+		expect(entries).toHaveLength(8)
+	})
+
+	it('falls back to a name when the v1 name is empty', () => {
+		const v1 = JSON.parse(readV1DexRaw('gen1-filled'))
+		v1.config.displayName = '  '
+
+		expect(convertV1Save(parseV1Save(v1)).dex.name).toBe('Generation 1')
+	})
+})
+
+describe('convertV1Save – custom layouts stay valid (review S3)', () => {
+	function brokenCustomSave() {
+		const v1 = JSON.parse(readV1DexRaw('gen1-filled'))
+		v1.config.presetId = 'removed-preset'
+		v1.state.boxes[0].pokemon[1] = '9999-missingno'
+		v1.state.boxes[0].pokemon[2] = '0001-bulbasaur' // shown twice
+		v1.state.boxes[1].id = 'box-001' // duplicate box id
+		v1.state.boxes[4].id = 'box-001-2' // would collide with the naive repair
+		v1.state.boxes[2].title = ''
+		v1.state.boxes[3].pokemon.push('0252-treecko') // 31st slot
+		return v1
+	}
+
+	it('repairs the layout and reports what was removed', () => {
+		const { dex, report } = convertV1Save(parseV1Save(brokenCustomSave()))
+
+		expect(dex.layout.kind).toBe('custom')
+		if (dex.layout.kind !== 'custom') return
+		expect(catalog.validateCustomLayout(dex.layout)).toEqual([])
+		expect(dex.layout.boxes.map((box) => box.id).slice(0, 2)).toEqual(['box-001', 'box-001-2'])
+		expect(dex.layout.boxes[4].id).toBe('box-001-2-2')
+		expect(dex.layout.boxes[2].title).toBe('Box 3')
+		expect(dex.layout.boxes[0].slots.slice(0, 3)).toEqual(['0001-bulbasaur', null, null])
+		expect(report.removedSlots).toEqual([
+			{ boxId: 'box-001', pokemonId: '9999-missingno', reason: 'unknown' },
+			{ boxId: 'box-001', pokemonId: '0001-bulbasaur', reason: 'duplicate' },
+			{ boxId: 'box-004', pokemonId: '0252-treecko', reason: 'overflow' }
+		])
+		// the wallpaper of the second v1 box follows the repaired box id
+		expect(dex.boxSettings).toEqual({ 'box-001-2': { wallpaper: '05-crag' } })
+	})
+
+	it('produces dexes that survive export and import', () => {
+		const candidates = [
+			brokenCustomSave(),
+			...V1_DEX_FIXTURES.map((name) => JSON.parse(readV1DexRaw(name))),
+			...realExports.map(({ raw }) => JSON.parse(raw))
+		]
+
+		for (const v1 of candidates) {
+			const { dex, entries } = convertV1Save(parseV1Save(v1))
+			const reimported = parseDexImport(JSON.stringify(createDexExport(dex, entries, 1)))
+
+			expect(reimported.dex).toEqual(dex)
+			expect(reimported.entries).toEqual(entries)
+		}
 	})
 })

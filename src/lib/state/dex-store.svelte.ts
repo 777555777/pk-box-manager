@@ -50,6 +50,19 @@ export interface DexStoreOptions {
 	 * i.e. still inside the click/input handler that caused it.
 	 */
 	onUserChange?: () => void
+	/** First retry after a failed write (doubles up to 30 s). */
+	retryDelayMs?: number
+}
+
+const MAX_RETRY_DELAY_MS = 30_000
+
+/** Queued changes that are not stored yet. */
+interface PendingChanges {
+	/** Dexes to delete together with all their entries, before anything is put. */
+	deletes: Set<string>
+	dexes: Map<string, DexRecord>
+	/** Key: dexId + NUL + pokemonId. Without `entry` the entry gets deleted. */
+	entries: Map<string, { dexId: string; pokemonId: PokemonId; entry?: DexEntry }>
 }
 
 const ENTRY_DATA_KEYS = Object.keys(emptyEntryData()) as (keyof EntryData)[]
@@ -64,6 +77,7 @@ export class DexStore {
 	#selection: NonNullable<DexStoreOptions['selection']>
 	#onPersistError: (error: unknown) => void
 	#onUserChange: () => void
+	#initialRetryDelay: number
 
 	/** All dexes (default first, then by creation). */
 	dexes: DexRecord[] = $state([])
@@ -87,12 +101,11 @@ export class DexStore {
 	)
 
 	// write queue: internal bookkeeping, intentionally not reactive
-	// eslint-disable-next-line svelte/prefer-svelte-reactivity
-	#pendingDexes = new Map<string, DexRecord>()
-	// eslint-disable-next-line svelte/prefer-svelte-reactivity
-	#pendingEntries = new Map<string, { dexId: string; pokemonId: PokemonId; entry?: DexEntry }>()
+	#pending: PendingChanges = emptyPending()
 	#flushScheduled = false
 	#writeChain: Promise<unknown> = Promise.resolve()
+	#retryTimer: ReturnType<typeof setTimeout> | null = null
+	#retryDelay = 0
 
 	constructor(options: DexStoreOptions = {}) {
 		this.#catalog = options.catalog ?? defaultCatalog
@@ -103,6 +116,8 @@ export class DexStore {
 		this.#onPersistError =
 			options.onPersistError ?? ((error) => console.error('Saving failed:', error))
 		this.#onUserChange = options.onUserChange ?? (() => {})
+		this.#initialRetryDelay = options.retryDelayMs ?? 1000
+		this.#retryDelay = this.#initialRetryDelay
 	}
 
 	// ================
@@ -126,22 +141,33 @@ export class DexStore {
 		}
 
 		this.dexes = sortDexes(dexes)
+		this.#ensureDefault()
 		const remembered = this.#selection.load()
 		const target =
-			dexes.find((dex) => dex.id === remembered) ??
-			dexes.find((dex) => dex.isDefault) ??
+			this.dexes.find((dex) => dex.id === remembered) ??
+			this.dexes.find((dex) => dex.isDefault) ??
 			this.dexes[0]
 		await this.#activate(target.id)
 	}
 
-	/** Writes all queued changes. Resolves when everything written so far is stored. */
+	/**
+	 * Writes all queued changes. Never rejects: failures are reported via
+	 * `persistError`, the changes stay queued and are retried automatically.
+	 */
 	flush(): Promise<void> {
-		const batch = this.#takePending()
-		if (!batch) return this.#writeChain.then(() => {})
-		return this.#write(batch).catch((error) => {
-			this.persistError = error
-			this.#onPersistError(error)
-		})
+		return this.#flushStrict().catch(() => {})
+	}
+
+	/** True while changes are waiting to be stored (e.g. after a failed write). */
+	get hasUnsavedChanges(): boolean {
+		return !isEmpty(this.#pending)
+	}
+
+	/** Manual retry (e.g. from a "try again" button). */
+	async retrySaving(): Promise<void> {
+		await this.flush()
+		// a failed dex operation (create/import) leaves nothing queued: clear its message
+		if (!this.hasUnsavedChanges) this.persistError = null
 	}
 
 	// ================
@@ -247,20 +273,26 @@ export class DexStore {
 		return this.dexes.some((dex) => dex.id === dexId)
 	}
 
+	/**
+	 * All dex operations first store every queued change. If that fails they are
+	 * aborted (nothing in memory is replaced), so no unsaved change gets lost.
+	 */
 	async switchDex(dexId: string): Promise<void> {
 		this.#requireDex(dexId)
 		if (dexId === this.activeId) return
-		await this.flush()
+		await this.#flushStrict()
 		await this.#activate(dexId)
 	}
 
 	async createDex(options: NewDexOptions): Promise<string> {
 		const dex = this.#newDex(options)
 		this.#onUserChange()
-		await this.flush()
-		await this.#write({ putDexes: [dex] })
+		await this.#flushStrict()
+
+		this.#pending.dexes.set(dex.id, structuredClone(dex))
 		this.dexes = sortDexes([...this.dexes, dex])
-		await this.#activate(dex.id)
+		this.#activateWith(dex.id, [])
+		await this.#flushStrict()
 		return dex.id
 	}
 
@@ -268,32 +300,41 @@ export class DexStore {
 	async resetDex(dexId: string): Promise<void> {
 		const dex = this.#requireDex(dexId)
 		this.#onUserChange()
-		await this.flush()
+		await this.#flushStrict()
 
+		// from here on synchronous: memory and queue agree, "reset wins"
+		this.#dropPending(dexId)
 		dex.boxSettings = {}
 		dex.stats = { ...dex.stats, caught: 0, shiny: 0 }
 		dex.updatedAt = this.#now()
-		await this.#write({ deleteDexes: [dexId], putDexes: [$state.snapshot(dex)] })
-
 		if (dexId === this.activeId) {
 			this.#entries = {}
 			this.selectedId = null
 		}
+		this.#pending.deletes.add(dexId)
+		this.#pending.dexes.set(dexId, $state.snapshot(dex))
+		await this.#flushStrict()
 	}
 
 	async deleteDex(dexId: string): Promise<void> {
 		const dex = this.#requireDex(dexId)
 		if (dex.isDefault) throw new Error('The default dex cannot be deleted.')
+		if (this.dexes.length <= 1) throw new Error('The last dex cannot be deleted.')
 		this.#onUserChange()
+		await this.#flushStrict()
 
-		await this.flush()
-		await this.#write({ deleteDexes: [dexId] })
+		this.#dropPending(dexId)
+		this.#pending.deletes.add(dexId)
 		this.dexes = this.dexes.filter((d) => d.id !== dexId)
+		const written = this.#flushStrict()
+		// awaited below; avoid an "unhandled rejection" while activating (review NEU-4)
+		written.catch(() => {})
 
 		if (dexId === this.activeId) {
 			const fallback = this.dexes.find((d) => d.isDefault) ?? this.dexes[0]
 			await this.#activate(fallback.id)
 		}
+		await written
 	}
 
 	/**
@@ -307,19 +348,29 @@ export class DexStore {
 			...structuredClone(dex),
 			isDefault: existing ? existing.isDefault : !hasOtherDefault
 		}
+		const importedEntries = entries.map((entry) => ({ ...structuredClone(entry), dexId: dex.id }))
 		this.#onUserChange()
+		await this.#flushStrict()
 
-		await this.flush()
-		await this.#write({
-			deleteDexes: [dex.id],
-			putDexes: [imported],
-			putEntries: entries.map((entry) => ({ ...structuredClone(entry), dexId: dex.id }))
-		})
+		this.#dropPending(dex.id)
+		this.#pending.deletes.add(dex.id)
+		this.#pending.dexes.set(dex.id, structuredClone(imported))
+		for (const entry of importedEntries) {
+			this.#pending.entries.set(entryKey(dex.id, entry.pokemonId), {
+				dexId: dex.id,
+				pokemonId: entry.pokemonId,
+				entry: structuredClone(entry)
+			})
+		}
 		this.dexes = sortDexes([...this.dexes.filter((d) => d.id !== dex.id), imported])
-		await this.#activate(dex.id)
+		this.#activateWith(dex.id, importedEntries)
+		await this.#flushStrict()
 	}
 
-	/** Current data of a dex, e.g. for an export. */
+	/**
+	 * Current data of a dex, e.g. for an export. Also works while saving fails:
+	 * the active dex comes from memory, so an export can rescue unsaved changes.
+	 */
 	async getDexData(dexId: string): Promise<DexData> {
 		const dex = this.#requireDex(dexId)
 		await this.flush()
@@ -339,10 +390,19 @@ export class DexStore {
 
 	async #activate(dexId: string): Promise<void> {
 		const entries = await this.#requireRepository().getEntries(dexId)
+		this.#activateWith(dexId, entries)
+	}
+
+	#activateWith(dexId: string, entries: DexEntry[]): void {
 		this.#entries = Object.fromEntries(entries.map((entry) => [entry.pokemonId, entry]))
 		this.activeId = dexId
 		this.selectedId = null
-		this.#selection.save(dexId)
+		try {
+			this.#selection.save(dexId)
+		} catch (error) {
+			// remembering the selection is a convenience, never a reason to fail
+			console.error('Could not remember the selected dex:', error)
+		}
 
 		// the catalog may have changed since the last save (e.g. new pokemon in an app update)
 		const dex = this.#requireActive()
@@ -351,6 +411,18 @@ export class DexStore {
 			dex.stats = stats
 			this.#queueDex(dex)
 		}
+	}
+
+	/** v1 always had a default dex; make sure that stays true (e.g. after odd imports). */
+	#ensureDefault(): void {
+		if (this.dexes.length === 0 || this.dexes.some((dex) => dex.isDefault)) return
+		const fallback =
+			this.dexes.find(
+				(dex) => dex.layout.kind === 'preset' && dex.layout.presetId === 'national'
+			) ?? this.dexes[0]
+		fallback.isDefault = true
+		this.#queueDex(fallback)
+		this.dexes = sortDexes(this.dexes)
 	}
 
 	#setEntry(pokemonId: PokemonId, entry: DexEntry | undefined): void {
@@ -373,7 +445,7 @@ export class DexStore {
 		} else {
 			delete this.#entries[pokemonId]
 		}
-		this.#pendingEntries.set(`${dex.id}\u0000${pokemonId}`, {
+		this.#pending.entries.set(entryKey(dex.id, pokemonId), {
 			dexId: dex.id,
 			pokemonId,
 			entry: entry && structuredClone(entry)
@@ -389,8 +461,16 @@ export class DexStore {
 	}
 
 	#queueDex(dex: DexRecord): void {
-		this.#pendingDexes.set(dex.id, $state.snapshot(dex))
+		this.#pending.dexes.set(dex.id, $state.snapshot(dex))
 		this.#scheduleFlush()
+	}
+
+	/** Forgets queued changes of a dex that is about to be replaced or deleted. */
+	#dropPending(dexId: string): void {
+		this.#pending.dexes.delete(dexId)
+		for (const [key, change] of this.#pending.entries) {
+			if (change.dexId === dexId) this.#pending.entries.delete(key)
+		}
 	}
 
 	#scheduleFlush(): void {
@@ -402,28 +482,66 @@ export class DexStore {
 		})
 	}
 
-	#takePending(): WriteBatch | null {
-		if (this.#pendingDexes.size === 0 && this.#pendingEntries.size === 0) return null
+	/** Writes the queue. Rejects when the write fails (the changes stay queued). */
+	async #flushStrict(): Promise<void> {
+		// Wait until no write is in flight anymore: another flush may have taken the
+		// queue meanwhile, and its failure puts the changes back (review NEU-2).
+		let chain: Promise<unknown>
+		do {
+			chain = this.#writeChain
+			await chain
+		} while (chain !== this.#writeChain)
+		if (isEmpty(this.#pending)) return
 
-		const pending = [...this.#pendingEntries.values()]
-		const batch: WriteBatch = {
-			putDexes: [...this.#pendingDexes.values()],
-			putEntries: pending.flatMap((p) => (p.entry ? [p.entry] : [])),
-			deleteEntries: pending
-				.filter((p) => !p.entry)
-				.map((p) => ({ dexId: p.dexId, pokemonIds: [p.pokemonId] }))
-		}
-		this.#pendingDexes.clear()
-		this.#pendingEntries.clear()
-		return batch
+		const taken = this.#pending
+		this.#pending = emptyPending()
+		await this.#write(toBatch(taken), taken)
 	}
 
-	/** Appends a write to the chain, so writes never overtake each other. */
-	#write(batch: WriteBatch): Promise<void> {
+	/**
+	 * Appends a write to the chain, so writes never overtake each other.
+	 * When it fails, `requeue` is put back into the queue (newer changes win).
+	 */
+	#write(batch: WriteBatch, requeue?: PendingChanges): Promise<void> {
 		const repository = this.#requireRepository()
-		const run = this.#writeChain.then(() => repository.write(batch))
+		const run = this.#writeChain
+			.then(() => repository.write(batch))
+			.then(
+				() => this.#markSaved(),
+				(error: unknown) => {
+					if (requeue) this.#requeue(requeue)
+					this.#reportError(error)
+					throw error
+				}
+			)
 		this.#writeChain = run.catch(() => {})
 		return run
+	}
+
+	#requeue(failed: PendingChanges): void {
+		for (const dexId of failed.deletes) this.#pending.deletes.add(dexId)
+		for (const [dexId, dex] of failed.dexes) {
+			if (!this.#pending.dexes.has(dexId)) this.#pending.dexes.set(dexId, dex)
+		}
+		for (const [key, change] of failed.entries) {
+			if (!this.#pending.entries.has(key)) this.#pending.entries.set(key, change)
+		}
+	}
+
+	#markSaved(): void {
+		this.persistError = null
+		this.#retryDelay = this.#initialRetryDelay
+	}
+
+	#reportError(error: unknown): void {
+		this.persistError = error
+		this.#onPersistError(error)
+		if (isEmpty(this.#pending) || this.#retryTimer) return
+		this.#retryTimer = setTimeout(() => {
+			this.#retryTimer = null
+			void this.flush()
+		}, this.#retryDelay)
+		this.#retryDelay = Math.min(this.#retryDelay * 2, MAX_RETRY_DELAY_MS)
 	}
 
 	#newDex({ presetId, tags, name }: NewDexOptions): DexRecord {
@@ -464,6 +582,31 @@ export class DexStore {
 		if (!this.#repository) throw new Error('DexStore.init() has not been called.')
 		return this.#repository
 	}
+}
+
+function emptyPending(): PendingChanges {
+	// internal bookkeeping, intentionally not reactive
+	return { deletes: new Set(), dexes: new Map(), entries: new Map() }
+}
+
+function isEmpty(pending: PendingChanges): boolean {
+	return pending.deletes.size === 0 && pending.dexes.size === 0 && pending.entries.size === 0
+}
+
+function toBatch(pending: PendingChanges): WriteBatch {
+	const changes = [...pending.entries.values()]
+	return {
+		deleteDexes: [...pending.deletes],
+		putDexes: [...pending.dexes.values()],
+		putEntries: changes.flatMap((c) => (c.entry ? [c.entry] : [])),
+		deleteEntries: changes
+			.filter((c) => !c.entry)
+			.map((c) => ({ dexId: c.dexId, pokemonIds: [c.pokemonId] }))
+	}
+}
+
+function entryKey(dexId: string, pokemonId: PokemonId): string {
+	return `${dexId}\u0000${pokemonId}`
 }
 
 /** Copies only the known entry fields that are present (drops dexId, ids and unknown keys). */

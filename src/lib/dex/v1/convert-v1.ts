@@ -3,11 +3,12 @@
  * no storage access, the input is not mutated.
  */
 import {
+	BOX_SIZE,
 	catalog as defaultCatalog,
 	DEFAULT_WALLPAPER,
 	type Catalog
 } from '../../catalog/catalog.ts'
-import type { BoxSettings, DexLayout, PokemonId } from '../../catalog/types.ts'
+import type { BoxSettings, CustomLayout, DexLayout, PokemonId } from '../../catalog/types.ts'
 import { computeStats } from '../stats.ts'
 import type { DexEntry, DexRecord } from '../types.ts'
 import type { V1Save } from './v1-save.ts'
@@ -28,6 +29,17 @@ export interface V1ConversionReport {
 	orphanedEntries: PokemonId[]
 	/** Titles of v1 boxes with a custom wallpaper that has no matching v2 box. */
 	unmatchedBoxes: string[]
+	/** v1 entries that could not be read at all (see parseV1Save). */
+	invalidEntries: string[]
+	/**
+	 * Slots removed from a custom layout so it stays valid (unknown pokemon,
+	 * a pokemon shown twice, more than BOX_SIZE slots). Their entries are kept.
+	 */
+	removedSlots: {
+		boxId: string
+		pokemonId: PokemonId
+		reason: 'unknown' | 'duplicate' | 'overflow'
+	}[]
 }
 
 export interface V1Conversion {
@@ -42,7 +54,9 @@ export function convertV1Save(save: V1Save, catalog: Catalog = defaultCatalog): 
 		renamedEntries: [],
 		duplicateEntries: [],
 		orphanedEntries: [],
-		unmatchedBoxes: []
+		unmatchedBoxes: [],
+		invalidEntries: [...(save.invalidEntries ?? [])],
+		removedSlots: []
 	}
 
 	const layout = convertLayout(save, catalog, report)
@@ -60,7 +74,10 @@ export function convertV1Save(save: V1Save, catalog: Catalog = defaultCatalog): 
 
 	const dex: DexRecord = {
 		id: save.id,
-		name: save.config.displayName,
+		name:
+			save.config.displayName.trim() ||
+			(layout.kind === 'preset' ? catalog.getPreset(layout.presetId)?.name : undefined) ||
+			'Pokédex',
 		coverImage: save.config.coverImage,
 		layout,
 		boxSettings,
@@ -80,16 +97,53 @@ function convertLayout(save: V1Save, catalog: Catalog, report: V1ConversionRepor
 		return { kind: 'preset', presetId, tags: [...new Set(tags)] }
 	}
 
-	// Keep the exact v1 order. v1 box ids ("box-001") are stable within this dex.
+	// Keep the v1 order. v1 box ids ("box-001") are stable within this dex.
 	report.layoutFallback = type === 'custom' ? 'custom-dex' : 'unknown-preset'
-	return {
-		kind: 'custom',
-		boxes: save.state.boxes.map((box) => ({
-			id: box.id,
-			title: box.title,
-			slots: box.pokemon.map((pokemonId) => catalog.resolvePokemonId(pokemonId))
-		}))
-	}
+	return sanitizeCustomLayout(save, catalog, report)
+}
+
+/**
+ * Builds a custom layout that passes `catalog.validateCustomLayout`, so every
+ * converted dex can be exported and imported again. Problematic slots become empty.
+ */
+function sanitizeCustomLayout(
+	save: V1Save,
+	catalog: Catalog,
+	report: V1ConversionReport
+): CustomLayout {
+	const usedBoxIds = new Set<string>()
+	const usedPokemon = new Set<PokemonId>()
+
+	const boxes = save.state.boxes.map((box, index) => {
+		const baseId = box.id.trim() || `box-${String(index + 1).padStart(3, '0')}`
+		let id = baseId
+		for (let n = 2; usedBoxIds.has(id); n++) id = `${baseId}-${n}`
+		usedBoxIds.add(id)
+
+		const slots = box.pokemon.map((rawId, slot): PokemonId | null => {
+			const pokemonId = catalog.resolvePokemonId(rawId)
+			const reason = !catalog.hasPokemon(pokemonId)
+				? 'unknown'
+				: usedPokemon.has(pokemonId)
+					? 'duplicate'
+					: slot >= BOX_SIZE
+						? 'overflow'
+						: null
+			if (reason) {
+				report.removedSlots.push({ boxId: id, pokemonId, reason })
+				return null
+			}
+			usedPokemon.add(pokemonId)
+			return pokemonId
+		})
+
+		return {
+			id,
+			title: box.title.trim() || `Box ${index + 1}`,
+			slots: slots.slice(0, BOX_SIZE)
+		}
+	})
+	return { kind: 'custom', boxes }
 }
 
 /** v1 box ids are positional, so preset boxes are matched by their (unique) title. */
@@ -102,11 +156,12 @@ function convertBoxSettings(
 	const boxIdByTitle = new Map(resolvedBoxes.map((box) => [box.title, box.id]))
 	const boxSettings: BoxSettings = {}
 
-	for (const box of save.state.boxes) {
+	for (const [index, box] of save.state.boxes.entries()) {
 		const wallpaper = box.settings.wallpaper
 		if (!wallpaper || wallpaper === DEFAULT_WALLPAPER) continue
 
-		const boxId = layout.kind === 'custom' ? box.id : boxIdByTitle.get(box.title)
+		// custom layouts keep the v1 boxes 1:1 in order (ids may have been repaired)
+		const boxId = layout.kind === 'custom' ? resolvedBoxes[index]?.id : boxIdByTitle.get(box.title)
 		if (boxId) {
 			boxSettings[boxId] = { wallpaper }
 		} else {

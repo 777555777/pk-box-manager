@@ -463,3 +463,207 @@ describe('onUserChange', () => {
 		expect(onUserChange).toHaveBeenCalledTimes(9)
 	})
 })
+
+describe('failed writes (review B1)', () => {
+	const failing = () => new Error('QuotaExceededError')
+
+	it('keeps changes of a failed write and stores them with the next write', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 60_000 } })
+		const write = vi.spyOn(repository, 'write').mockRejectedValue(failing())
+
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await store.flush()
+		await vi.waitFor(() => expect(store.hasUnsavedChanges).toBe(true))
+		expect(store.persistError).toEqual(failing())
+
+		write.mockRestore()
+		store.updatePokemon('0008-wartortle', { captured: true })
+		await store.flush()
+
+		const stored = (await repository.getEntries(store.activeId)).map((e) => e.pokemonId)
+		expect(stored).toEqual(expect.arrayContaining(['0007-squirtle', '0008-wartortle']))
+		expect(store.persistError).toBeNull()
+		expect(store.hasUnsavedChanges).toBe(false)
+		expect((await repository.getDex(store.activeId))?.stats).toEqual(store.active?.stats)
+	})
+
+	it('retries automatically', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 5 } })
+		vi.spyOn(repository, 'write').mockRejectedValueOnce(failing())
+
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await store.flush()
+		await vi.waitFor(() => expect(store.persistError).toBeNull())
+
+		const stored = await repository.getEntries(store.activeId)
+		expect(stored.some((e) => e.pokemonId === '0007-squirtle')).toBe(true)
+	})
+
+	it('lets newer changes win over the failed batch', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 60_000 } })
+		vi.spyOn(repository, 'write').mockRejectedValueOnce(failing())
+
+		store.updatePokemon('0007-squirtle', { comment: 'old' })
+		await store.flush()
+		store.updatePokemon('0007-squirtle', { comment: 'new' })
+		await store.flush()
+
+		const squirtle = (await repository.getEntries(store.activeId)).find(
+			(e) => e.pokemonId === '0007-squirtle'
+		)
+		expect(squirtle?.comment).toBe('new')
+	})
+
+	it('keeps a deleted entry deleted when its delete failed', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 60_000 } })
+		vi.spyOn(repository, 'write').mockRejectedValueOnce(failing())
+
+		store.resetPokemon('0025-pikachu')
+		await store.flush()
+		await store.flush()
+
+		const stored = await repository.getEntries(store.activeId)
+		expect(stored.some((e) => e.pokemonId === '0025-pikachu')).toBe(false)
+	})
+
+	it('does not switch, create, reset, delete or import while changes cannot be stored', async () => {
+		const { store, repository, ids } = await setup({ options: { retryDelayMs: 60_000 } })
+		const write = vi.spyOn(repository, 'write').mockRejectedValue(failing())
+		store.updatePokemon('0007-squirtle', { captured: true })
+
+		await expect(store.switchDex(ids.gen3)).rejects.toThrow('QuotaExceededError')
+		await expect(
+			store.createDex({ presetId: 'generation-2', tags: ['normal'], name: 'J' })
+		).rejects.toThrow()
+		await expect(store.resetDex(store.activeId)).rejects.toThrow()
+		await expect(store.deleteDex(ids.gen3)).rejects.toThrow()
+		await expect(store.importDex({ dex: makeDex('x'), entries: [] })).rejects.toThrow()
+
+		// nothing was replaced in memory
+		expect(store.activeId).toBe(ids.gen1Filled)
+		expect(store.getPokemon('0007-squirtle').captured).toBe(true)
+		expect(store.dexes).toHaveLength(4)
+
+		write.mockRestore()
+		await store.flush()
+		const stored = await repository.getEntries(ids.gen1Filled)
+		expect(stored.some((e) => e.pokemonId === '0007-squirtle')).toBe(true)
+	})
+
+	it('does not switch while a write taken over by another flush fails (review NEU-2)', async () => {
+		const { store, repository, ids } = await setup({ options: { retryDelayMs: 60_000 } })
+		let calls = 0
+		vi.spyOn(repository, 'write').mockImplementation(async () => {
+			calls++
+			if (calls === 1) return new Promise((resolve) => setTimeout(resolve, 20))
+			throw failing()
+		})
+
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await new Promise((resolve) => setTimeout(resolve, 5)) // first write is in flight
+		store.updatePokemon('0008-wartortle', { captured: true }) // its flush waits for it
+
+		await expect(store.switchDex(ids.gen3)).rejects.toThrow('QuotaExceededError')
+		expect(store.activeId).toBe(ids.gen1Filled)
+		expect(store.hasUnsavedChanges).toBe(true)
+	})
+
+	it('exports from memory while saving fails', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 60_000 } })
+		vi.spyOn(repository, 'write').mockRejectedValue(failing())
+
+		store.updatePokemon('0007-squirtle', { comment: 'rescue me' })
+		const { entries } = await store.getDexData(store.activeId)
+
+		expect(entries.find((e) => e.pokemonId === '0007-squirtle')?.comment).toBe('rescue me')
+	})
+
+	it('clears the message on a manual retry when nothing is left to store', async () => {
+		const { store, repository } = await setup({ options: { retryDelayMs: 60_000 } })
+		vi.spyOn(repository, 'write').mockRejectedValueOnce(failing())
+
+		await expect(
+			store.createDex({ presetId: 'generation-2', tags: ['normal'], name: 'J' })
+		).rejects.toThrow()
+		await store.retrySaving()
+
+		expect(store.persistError).toBeNull()
+	})
+})
+
+describe('changes during dex operations (review N1)', () => {
+	it('lets a reset win over clicks made while it runs', async () => {
+		const { store, repository, ids } = await setup()
+
+		const reset = store.resetDex(ids.gen1Filled)
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await reset
+		await store.flush()
+
+		expect(store.getPokemon('0007-squirtle').hasEntry).toBe(false)
+		expect(await repository.getEntries(ids.gen1Filled)).toEqual([])
+		expect(store.active?.stats.caught).toBe(0)
+	})
+
+	it('stores clicks made right after a reset', async () => {
+		const { store, repository, ids } = await setup()
+
+		await store.resetDex(ids.gen1Filled)
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await store.flush()
+
+		expect((await repository.getEntries(ids.gen1Filled)).map((e) => e.pokemonId)).toEqual([
+			'0007-squirtle'
+		])
+		expect(store.active?.stats.caught).toBe(1)
+	})
+
+	it('shows exactly what was imported, also for clicks during the import', async () => {
+		const { store, repository, ids } = await setup()
+		const data = {
+			dex: makeDex(ids.gen1Filled, { name: 'Imported' }),
+			entries: [makeEntry(ids.gen1Filled, '0001-bulbasaur')]
+		}
+
+		const imported = store.importDex(data)
+		store.updatePokemon('0007-squirtle', { captured: true })
+		await imported
+		await store.flush()
+
+		const memory = (await store.getDexData(ids.gen1Filled)).entries
+		expect(memory.map((e) => e.pokemonId)).toEqual(['0001-bulbasaur'])
+		expect(await repository.getEntries(ids.gen1Filled)).toEqual(memory)
+	})
+})
+
+describe('default dex (review N3)', () => {
+	it('never deletes the last dex', async () => {
+		const repository = createMemoryRepository()
+		await repository.write({ putDexes: [makeDex('a'), makeDex('b')] })
+		const { store } = await setup({ v1Session: false, repository, remembered: 'b' })
+
+		expect(store.dexes.find((dex) => dex.id === 'a')?.isDefault).toBe(true) // promoted
+		await expect(store.deleteDex('b')).resolves.toBeUndefined()
+		await expect(store.deleteDex('a')).rejects.toThrow()
+		expect(store.activeId).toBe('a')
+	})
+
+	it('promotes a national dex to default when none is marked', async () => {
+		const repository = createMemoryRepository()
+		await repository.write({
+			putDexes: [
+				makeDex('a', { createdAt: 1 }),
+				makeDex('n', {
+					createdAt: 2,
+					layout: { kind: 'preset', presetId: 'national', tags: ['normal'] }
+				})
+			]
+		})
+
+		const { store } = await setup({ v1Session: false, repository })
+		await store.flush()
+
+		expect(store.dexes[0].id).toBe('n')
+		expect((await repository.getDex('n'))?.isDefault).toBe(true)
+	})
+})

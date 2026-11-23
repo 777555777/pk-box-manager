@@ -60,8 +60,25 @@ export function initialAppDefaults(): AppDefaults {
 	}
 }
 
+/**
+ * Settings are a convenience: a failing write (quota, storage blocked) must never
+ * break the app. v1 data stays in localStorage after the migration, so it can be full.
+ */
+function writeItem(key: string, value: string): void {
+	try {
+		localStorage.setItem(key, value)
+	} catch (error) {
+		console.error(`Could not store "${key}" in localStorage:`, error)
+	}
+}
+
 function readJson(key: string): Record<string, unknown> | undefined {
-	const raw = localStorage.getItem(key)
+	let raw: string | null
+	try {
+		raw = localStorage.getItem(key)
+	} catch {
+		return undefined
+	}
 	if (raw === null) return undefined
 	try {
 		const parsed = JSON.parse(raw)
@@ -73,7 +90,7 @@ function readJson(key: string): Record<string, unknown> | undefined {
 }
 
 export function saveAppSettings(settings: AppSettings): void {
-	localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+	writeItem(SETTINGS_KEY, JSON.stringify(settings))
 }
 
 /** Loads the settings, merges in defaults added by newer app versions and writes them back. */
@@ -93,7 +110,7 @@ export function loadAppSettings(): AppSettings {
 }
 
 export function saveAppDefaults(defaults: AppDefaults): void {
-	localStorage.setItem(DEFAULTS_KEY, JSON.stringify(defaults))
+	writeItem(DEFAULTS_KEY, JSON.stringify(defaults))
 }
 
 export function loadAppDefaults(): AppDefaults {
@@ -104,9 +121,13 @@ export function loadAppDefaults(): AppDefaults {
 }
 
 export function loadSelectedDexId(): string | null {
-	return localStorage.getItem(SELECTED_DEX_KEY)
+	try {
+		return localStorage.getItem(SELECTED_DEX_KEY)
+	} catch {
+		return null
+	}
 }
 
 export function saveSelectedDexId(dexId: string): void {
-	localStorage.setItem(SELECTED_DEX_KEY, dexId)
+	writeItem(SELECTED_DEX_KEY, dexId)
 }

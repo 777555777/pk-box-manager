@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { IDBFactory } from 'fake-indexeddb'
-import type { DexRepository } from './repository.ts'
+import { StorageClearedError, type DexRepository } from './repository.ts'
 import {
 	makeDex,
 	makeEntry,
@@ -171,6 +171,52 @@ describe('indexeddb repository', () => {
 		expect(await second.getEntries('a')).toHaveLength(1)
 		expect(await second.getMeta('schemaVersion')).toBe(2)
 		second.close()
+	})
+
+	it('fails loudly when the database was deleted while the app was open (review NEU-1)', async () => {
+		const factory = new IDBFactory()
+		const repository = await openFakeIndexedDbRepository(factory, 'cleared')
+		await repository.write({ putDexes: [makeDex('a'), makeDex('b')] })
+
+		// e.g. DevTools, another tab or eviction: our connection gets a versionchange event
+		await new Promise((resolve, reject) => {
+			const request = factory.deleteDatabase('cleared')
+			request.onsuccess = resolve
+			request.onerror = reject
+		})
+
+		await expect(repository.write({ putDexes: [makeDex('c')] })).rejects.toThrow(
+			StorageClearedError
+		)
+		await expect(repository.listDexes()).rejects.toThrow(StorageClearedError)
+		repository.close()
+	})
+
+	it('reopens a connection that was closed while the database still exists', async () => {
+		const factory = new IDBFactory()
+		const repository = await openFakeIndexedDbRepository(factory, 'reopen')
+		await repository.write({ putDexes: [makeDex('a')] })
+
+		// another tab opens the same database with a newer version → versionchange closes ours
+		await new Promise((resolve, reject) => {
+			const request = factory.open('reopen', 2)
+			request.onsuccess = () => {
+				request.result.close()
+				resolve(null)
+			}
+			request.onerror = reject
+		})
+
+		// our version (1) is outdated now: reopening fails instead of writing silently
+		await expect(repository.write({ putDexes: [makeDex('b')] })).rejects.toThrow()
+		repository.close()
+	})
+
+	it('rejects operations after close()', async () => {
+		const repository = await openFakeIndexedDbRepository()
+		repository.close()
+
+		await expect(repository.listDexes()).rejects.toThrow('The storage was closed.')
 	})
 
 	it('fails with a clear message when IndexedDB is not available', async () => {

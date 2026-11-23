@@ -59,6 +59,7 @@ describe('parseV1Save', () => {
 			isCustomized: false
 		})
 		expect(save.meta).toEqual({ createdAt: 0, updatedAt: 0, isSystemDefault: false })
+		expect(save.invalidEntries).toEqual([])
 	})
 
 	it('rejects invalid JSON', () => {
@@ -73,11 +74,13 @@ describe('parseV1Save', () => {
 		expect(() => parseV1Save({})).toThrow('Invalid v1 save')
 	})
 
-	it('rejects unknown box tags', () => {
+	it('drops unknown box tags', () => {
 		const dex = loadV1Dex('gen1-filled') as unknown as { config: { tags: string[] } }
 		dex.config.tags = ['normal', 'shiny']
+		expect(parseV1Save(dex).config.tags).toEqual(['normal'])
 
-		expect(() => parseV1Save(dex)).toThrow('Invalid v1 save')
+		dex.config.tags = ['shiny']
+		expect(parseV1Save(dex).config.tags).toEqual(['normal'])
 	})
 })
 
