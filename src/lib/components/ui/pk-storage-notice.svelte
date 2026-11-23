@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { dexStore } from '$lib/state/app'
 	import { storageStatus } from '$lib/state/storage-status.svelte'
+	import { StorageClearedError } from '$lib/storage/repository'
 
 	const DISMISSED_KEY = 'v1SkippedNoticeDismissed'
 
@@ -11,17 +12,14 @@
 
 	type Notice = 'memory' | 'storage-cleared' | 'save-failed' | 'v1-skipped' | null
 
-	let notice: Notice = $derived(
-		!storageStatus.persistent
-			? 'memory'
-			: (dexStore.persistError as { name?: string } | null)?.name === 'StorageClearedError'
-				? 'storage-cleared'
-				: dexStore.persistError
-					? 'save-failed'
-					: skippedKeys && dismissedSkipped !== skippedKeys
-						? 'v1-skipped'
-						: null
-	)
+	// one notice at a time, the most important first
+	let notice: Notice = $derived.by(() => {
+		if (!storageStatus.persistent) return 'memory'
+		if (dexStore.persistError instanceof StorageClearedError) return 'storage-cleared'
+		if (dexStore.persistError) return 'save-failed'
+		if (skippedKeys && dismissedSkipped !== skippedKeys) return 'v1-skipped'
+		return null
+	})
 
 	function readDismissed(): string | null {
 		try {

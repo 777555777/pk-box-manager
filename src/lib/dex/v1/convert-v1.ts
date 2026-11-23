@@ -13,6 +13,8 @@ import { computeStats } from '../stats.ts'
 import type { DexEntry, DexRecord } from '../types.ts'
 import type { V1Save } from './v1-save.ts'
 
+type RemovalReason = 'unknown' | 'duplicate' | 'overflow'
+
 export interface V1ConversionReport {
 	/**
 	 * Why the dex became a custom layout instead of a live preset:
@@ -38,7 +40,7 @@ export interface V1ConversionReport {
 	removedSlots: {
 		boxId: string
 		pokemonId: PokemonId
-		reason: 'unknown' | 'duplicate' | 'overflow'
+		reason: RemovalReason
 	}[]
 }
 
@@ -120,15 +122,16 @@ function sanitizeCustomLayout(
 		for (let n = 2; usedBoxIds.has(id); n++) id = `${baseId}-${n}`
 		usedBoxIds.add(id)
 
+		const removalReason = (pokemonId: PokemonId, slot: number): RemovalReason | null => {
+			if (!catalog.hasPokemon(pokemonId)) return 'unknown'
+			if (usedPokemon.has(pokemonId)) return 'duplicate'
+			if (slot >= BOX_SIZE) return 'overflow'
+			return null
+		}
+
 		const slots = box.pokemon.map((rawId, slot): PokemonId | null => {
 			const pokemonId = catalog.resolvePokemonId(rawId)
-			const reason = !catalog.hasPokemon(pokemonId)
-				? 'unknown'
-				: usedPokemon.has(pokemonId)
-					? 'duplicate'
-					: slot >= BOX_SIZE
-						? 'overflow'
-						: null
+			const reason = removalReason(pokemonId, slot)
 			if (reason) {
 				report.removedSlots.push({ boxId: id, pokemonId, reason })
 				return null
