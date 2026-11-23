@@ -68,7 +68,6 @@ type DexLayout =
 interface CustomBox {
 	id: string // stabil, z. B. UUID
 	title: string
-	wallpaper?: string
 	slots: (PokemonId | null)[] // max. 30, null = bewusst leerer Slot
 }
 
@@ -101,7 +100,7 @@ Regel: Eine `PokemonId` kommt pro Dex höchstens einmal vor. Das gilt auch für 
 
 ```ts
 interface ResolvedBox { id: string; title: string; wallpaper: string; slots: (PokemonId | null)[] }
-resolveLayout(layout, catalog): ResolvedBox[]
+catalog.resolveLayout(layout, boxSettings): ResolvedBox[] // src/lib/catalog/catalog.ts
 ```
 
 Preset-Boxen nutzen die Template-ID (`kanto-1`) als Box-ID. Damit hängen Wallpaper an der Box selbst und nicht an ihrer Position.
@@ -110,10 +109,11 @@ Preset-Boxen nutzen die Template-ID (`kanto-1`) als Box-ID. Damit hängen Wallpa
 
 1. Sprites in `project-data/images/...` ablegen, `npm run sprites`
 2. Einträge in `pk-stats.json` ergänzen
-3. Neue Box-Templates in `pokedex-boxes.json` ergänzen und an die Presets anhängen (z. B. National)
-4. Fertig: Bestehende Preset-Dexe zeigen die neuen Boxen automatisch, ohne Migration.
+3. Neue Box-Templates in `pokedex-boxes.json` ergänzen und in `src/lib/catalog/presets.ts` hinten an `NATIONAL_BOXES` anhängen (Generations-Presets sind als „National bis Box X“ definiert und bleiben unverändert)
+4. `npm test` prüft die Katalog-Integrität (Box existiert, ≤ 30 Pokémon, jede ID genau einmal, Stats und Sprite vorhanden)
+5. Fertig: Bestehende Preset-Dexe zeigen die neuen Boxen automatisch, ohne Migration.
 
-Sollte sich eine bestehende ID einmal ändern, kommt ein Eintrag in `aliases`. Beim Laden werden Einträge dann umgeschlüsselt.
+Sollte sich eine bestehende ID einmal ändern, kommt ein Eintrag in `src/lib/data/pokemon-aliases.json` (alte ID → neue ID, Ketten werden verfolgt). Beim Laden werden Einträge dann umgeschlüsselt.
 
 ## Storage
 
@@ -195,8 +195,8 @@ Die Tests liegen neben dem Code (`src/**/*.test.ts`), die bestehenden Katalog-Te
 
 Jeder Schritt ist für sich lauffähig und wird einzeln committet.
 
-1. Vitest-Setup, v1-Fixtures, Tests für das heutige Verhalten
-2. Katalog-Modul: `resolveLayout`, Presets ohne Mutation, Aliases
+1. ✅ Vitest-Setup, v1-Fixtures, Tests für das heutige Verhalten
+2. ✅ Katalog-Modul (`src/lib/catalog/`): `resolveLayout`, Presets ohne Mutation, Aliases. Die v1-Helfer (`getDexConfig` & Co.) laufen bereits über den Katalog
 3. v2-Typen, valibot-Schemas, `convertV1Save` + Tests
 4. Repository (IDB + Memory), Migrations-Runner, `storage.persist()`
 5. `pkState` auf Repository umbauen (In-Memory als Wahrheit, gebündeltes Schreiben), async Start

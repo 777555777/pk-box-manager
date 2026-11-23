@@ -8,6 +8,7 @@ import {
 } from './pokedex-config-utils.ts'
 import { getIdentifier } from '../spriteheet-helper.ts'
 import type { BoxTags, DexConfig } from '../models/data-models.ts'
+import { loadV1PresetResolution } from '../../../tests/helpers/v1-fixtures.ts'
 
 function countPokemon(config: DexConfig) {
 	return config.pokemonOrder.reduce((sum, box) => sum + box.pokemon.length, 0)
@@ -85,13 +86,43 @@ describe('getDexConfig', () => {
 		expect(config.presetId).toBe('national')
 	})
 
-	// Known v1 bug (fixed with data model v2): the shared preset objects are mutated and returned.
-	it.fails('returns independent configs that do not mutate the presets', () => {
+	// Was a v1 bug until the catalog module: the shared preset objects were mutated and returned.
+	it('returns independent configs that do not mutate the presets', () => {
 		const baseOnly = getDexConfig('generation-1', ['normal'])
-		getDexConfig('generation-1', ['normal', 'forms'])
+		const withForms = getDexConfig('generation-1', ['normal', 'forms'])
+		withForms.boxList.push('paldea-1')
 
+		expect(baseOnly).not.toBe(withForms)
 		expect(baseOnly.tags).toEqual(['normal'])
+		expect(dexPresets.gen1Dex.tags).toEqual(['normal'])
 		expect(dexPresets.gen1Dex.pokemonOrder).toEqual([])
+		expect(dexPresets.gen1Dex.boxList).toHaveLength(8)
+	})
+
+	it.each(Object.entries(loadV1PresetResolution().resolutions))(
+		'resolves %s exactly like v1',
+		(key, expected) => {
+			const [presetId, tagList] = key.split('|')
+			const config = getDexConfig(presetId, (tagList ? tagList.split(',') : []) as BoxTags[])
+			const ids = config.pokemonOrder.flatMap((box) => box.pokemon.map(getIdentifier))
+
+			expect(boxTitles(config)).toEqual(expected.boxes)
+			expect(ids).toHaveLength(expected.count)
+			if (expected.count > 0) expect([ids[0], ids.at(-1)]).toEqual(expected.firstAndLast)
+		}
+	)
+})
+
+describe('v1 presets', () => {
+	it.each(loadV1PresetResolution().presets)('keeps preset $presetId unchanged', (v1Preset) => {
+		const preset = Object.values(dexPresets).find((p) => p.presetId === v1Preset.presetId)
+
+		expect(preset).toMatchObject({
+			displayName: v1Preset.displayName,
+			coverImage: v1Preset.coverImage,
+			sortOrder: v1Preset.sortOrder,
+			boxList: v1Preset.boxList
+		})
 	})
 })
 

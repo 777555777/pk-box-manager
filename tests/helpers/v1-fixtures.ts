@@ -33,6 +33,26 @@ export function loadV1Session(): V1Session {
 	return JSON.parse(readFileSync(`${FIXTURE_DIR}session.json`, 'utf-8'))
 }
 
+export interface V1PresetResolution {
+	/** Tag order as returned by v1 getAllPossibleTags(). */
+	allTags: string[]
+	presets: {
+		presetId: string
+		displayName: string
+		coverImage: string
+		sortOrder: number
+		boxList: string[]
+		availableTags: string[]
+	}[]
+	/** Key: "<presetId>|<comma separated tags>" for every preset × tag subset. */
+	resolutions: Record<string, { boxes: string[]; firstAndLast: string[]; count: number }>
+}
+
+/** How v1 resolved every preset with every combination of tags (box titles, counts). */
+export function loadV1PresetResolution(): V1PresetResolution {
+	return JSON.parse(readFileSync(`${FIXTURE_DIR}preset-resolution.json`, 'utf-8'))
+}
+
 /**
  * Fills localStorage with the complete v1 session: all dex fixtures plus
  * `selectedDex`, `appSettings` and `appDefaults`.
