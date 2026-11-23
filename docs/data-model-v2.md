@@ -117,34 +117,45 @@ Sollte sich eine bestehende ID einmal ändern, kommt ein Eintrag in `src/lib/dat
 
 ## Storage
 
-IndexedDB, nativ, mit einem dünnen eigenen Promise-Wrapper (ca. 50 Zeilen).
+IndexedDB, nativ, mit einem dünnen eigenen Promise-Wrapper (`src/lib/storage/indexeddb-repository.ts`), Datenbank `pk-box-manager`, Version 1.
 
-| Store     | keyPath                  | Index               |
-| --------- | ------------------------ | ------------------- |
-| `dexes`   | `id`                     | –                   |
-| `entries` | `['dexId', 'pokemonId']` | `byDex` auf `dexId` |
-| `meta`    | `key`                    | –                   |
+| Store     | Key                                          | Hinweis                                                                                |
+| --------- | -------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `dexes`   | keyPath `id`                                 |                                                                                        |
+| `entries` | keyPath `['dexId', 'pokemonId']`             | Alle Einträge eines Dex sind ein Key-Bereich `[dexId] … [dexId, []]`, kein Index nötig |
+| `meta`    | eigene Keys (`schemaVersion`, `v1Migration`) |                                                                                        |
 
-Die App spricht nur mit einem Interface. Für Tests gibt es eine In-Memory-Implementierung.
+Die App spricht nur mit einem Interface (`src/lib/storage/repository.ts`). Für Tests gibt es eine In-Memory-Implementierung, beide laufen gegen dieselben Vertragstests (IndexedDB über `fake-indexeddb`, zusätzlich einmal in Chromium geprüft).
 
 ```ts
 interface DexRepository {
 	listDexes(): Promise<DexRecord[]>
-	getDex(id: string): Promise<DexRecord | undefined>
-	putDex(dex: DexRecord): Promise<void>
-	deleteDex(id: string): Promise<void> // inkl. Einträge
+	getDex(dexId: string): Promise<DexRecord | undefined>
 	getEntries(dexId: string): Promise<DexEntry[]>
-	putEntries(entries: DexEntry[]): Promise<void>
-	deleteEntries(dexId: string, ids?: PokemonId[]): Promise<void>
+	getMeta(key: 'schemaVersion' | 'v1Migration'): Promise<…>
+	write(batch: WriteBatch): Promise<void> // atomar: alles oder nichts
+	close(): void
+}
+
+interface WriteBatch {
+	deleteDexes?: string[] // inkl. aller Einträge
+	deleteEntries?: { dexId: string; pokemonIds: PokemonId[] }[]
+	putDexes?: DexRecord[]
+	putEntries?: DexEntry[]
+	setMeta?: Partial<StorageMeta>
 }
 ```
+
+Reihenfolge innerhalb eines Batches: löschen vor schreiben. So lässt sich ein Dex in einem Schritt komplett ersetzen (z. B. beim Import).
+
+**Wichtig für Schritt 5:** Svelte-`$state`-Proxys lassen sich nicht in IndexedDB speichern (`DataCloneError`). Vor dem Schreiben immer `$state.snapshot()` verwenden. Der Batch wird in diesem Fall komplett abgebrochen.
 
 **Laufzeit:**
 
 - Der aktive Dex liegt vollständig im Svelte-State. Das ist die einzige Quelle der Wahrheit.
 - Änderungen werden als „dirty“ markiert und gebündelt geschrieben (Microtask/Debounce, zusätzlich bei `visibilitychange`/`pagehide`).
 - Die Zähler werden schrittweise mitgeführt. Es werden nie mehr alle Dexe geparst.
-- Beim Start: `navigator.storage.persist()` anfragen.
+- Beim Start: `requestPersistentStorage()` (`src/lib/storage/persist.ts`) fragt `navigator.storage.persist()` an, wirft nie.
 
 **Bleibt in localStorage:** `appSettings`, `appDefaults`, `selectedDex`. Die sind klein und werden beim Start synchron gebraucht, damit nichts flackert.
 
@@ -152,7 +163,7 @@ interface DexRepository {
 
 Läuft beim Start, bevor der State aufgebaut wird (`+page.ts` `load`, async).
 
-1. `meta.schemaVersion` ist bereits 2? Dann nichts tun.
+1. `meta.schemaVersion` ist bereits 2? Dann nichts tun (`up-to-date`). Keine `dex:*`-Keys vorhanden: nur `schemaVersion = 2` setzen (`fresh`).
 2. Alle `dex:*`-Keys aus localStorage lesen und mit `parseV1Save` (`src/lib/dex/v1/v1-save.ts`) tolerant prüfen: Fehlende Felder wie `originalTrainer` bekommen Defaults, nicht benötigte Felder (`idEntry`, `pokemonOrder`) werden ignoriert. Kaputte Einträge überspringen und loggen.
 3. `convertV1Save(save, catalog)` (`src/lib/dex/v1/convert-v1.ts`, reine Funktion) liefert `{ dex, entries, report }`:
    - `id` übernehmen, damit `selectedDex` weiter stimmt
@@ -162,8 +173,8 @@ Läuft beim Start, bevor der State aufgebaut wird (`+page.ts` `load`, async).
    - Pokémon mit `captured || isCustomized` werden zu `DexEntry` (`updatedAt = meta.updatedAt`). IDs über `aliases` auflösen (`report.renamedEntries`, bei Kollision gewinnt der erste: `report.duplicateEntries`). Einträge, deren Pokémon nicht im Layout ist, bleiben erhalten (`report.orphanedEntries`)
    - `stats` neu berechnen (verwaiste Einträge zählen nicht)
    - Geprüft gegen alle Fixtures und echte Exporte: gleiche Boxen, gleiche Reihenfolge, gleiche Wallpaper, identische Userdaten, gleiche Zähler
-4. Alles in **einer** IDB-Transaktion schreiben, danach `schemaVersion = 2` setzen.
-5. **v1-Daten in localStorage nicht löschen**, sondern nur als migriert markieren. Aufräumen erst in einem späteren Release.
+4. Alles in **einem** atomaren Batch schreiben, inklusive `schemaVersion = 2` und `v1Migration` (Zeitpunkt, Dex-IDs, übersprungene Keys). Schlägt das fehl, wird nichts gespeichert und beim nächsten Start erneut migriert. Höchstens ein Dex bleibt `isDefault`.
+5. **v1-Daten in localStorage nicht löschen**, sondern nur den Marker `v1MigratedAt` setzen. Aufräumen erst in einem späteren Release.
 
 Der Import nutzt denselben Konverter. v1-Exportdateien werden erkannt (`config` + `state` vorhanden) und konvertiert.
 
@@ -200,7 +211,7 @@ Jeder Schritt ist für sich lauffähig und wird einzeln committet.
 1. ✅ Vitest-Setup, v1-Fixtures, Tests für das heutige Verhalten
 2. ✅ Katalog-Modul (`src/lib/catalog/`): `resolveLayout`, Presets ohne Mutation, Aliases. Die v1-Helfer (`getDexConfig` & Co.) laufen bereits über den Katalog
 3. ✅ v2-Typen und Schemas (`src/lib/dex/`), toleranter v1-Parser, `convertV1Save` + Tests. Nebenbei: Das v1-Import-Schema behält jetzt den OT
-4. Repository (IDB + Memory), Migrations-Runner, `storage.persist()`
+4. ✅ Repository (IDB + Memory), Migrations-Lauf `migrateFromV1` (`src/lib/storage/migrate-v1.ts`), `storage.persist()`
 5. `pkState` auf Repository umbauen (In-Memory als Wahrheit, gebündeltes Schreiben), async Start
 6. Import/Export v2 (v1 weiterhin lesbar)
 7. _Später:_ Editor für Custom-Dexe, ausgeblendete Bänder, Sync, `adapter-static`
