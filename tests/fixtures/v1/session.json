@@ -1,0 +1,14 @@
+{
+  "description": "Non-dex localStorage entries (raw strings) of the session that created the dex fixtures.",
+  "dexIds": {
+    "national": "preset-national-normal-female-forms-gigantamax",
+    "gen1Empty": "preset-generation-1-normal-female-forms-1740832800000",
+    "gen1Filled": "preset-generation-1-normal-1740832860000",
+    "gen3": "preset-generation-3-normal-forms-1740834120000"
+  },
+  "localStorage": {
+    "selectedDex": "preset-generation-1-normal-1740832860000",
+    "appSettings": "{\"language\":\"de\",\"boxSprites\":\"default\",\"font\":\"pixel\",\"badgeCycleOption\":\"default\",\"badgeDisplay\":\"ball\",\"conditionalBadgeDisplay\":{\"ribbon\":\"001-national-ribbon\",\"mark\":\"absent-minded-mark\"},\"sidebarExpanded\":[\"catch\"],\"wikiLinkConfig\":[\"bulbapedia\",\"pokewiki\",\"bisafans\"]}",
+    "appDefaults": "{\"ball\":\"01-poke-ball\",\"shiny\":false,\"caughtIn\":\"\",\"comment\":\"\",\"originalTrainer\":\"\",\"ribbons\":[],\"marks\":[]}"
+  }
+}

@@ -2,3 +2,6 @@
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Test-Fixtures sind exakte Rohdaten (z. B. localStorage-Werte) und dürfen nicht umformatiert werden
+tests/fixtures/**/*.json

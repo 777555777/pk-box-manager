@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 
 
 .source-assets
+# Private Test-Dexe (echte Userdaten, nicht einchecken)
+/.testdata
