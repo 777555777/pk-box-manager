@@ -26,6 +26,8 @@ rsync -a --delete ./build/ "$DEPLOY_SERVER_PATH/build/"
 scp Dockerfile $DEPLOY_SERVER_PATH
 
 echo "Starte Container neu..."
-ssh $SERVER_PART "cd ./docker && docker compose down pk-box-manager && docker compose up --build pk-box-manager -d"
+# --pull fetches the current node:26-alpine instead of reusing an old cached base image.
+# Building before the restart keeps the old container running if the build fails.
+ssh $SERVER_PART "cd ./docker && docker compose build --pull pk-box-manager && docker compose up -d pk-box-manager"
 
 echo "Deployment abgeschlossen!"

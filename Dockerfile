@@ -1,5 +1,6 @@
 # Dockerfile
-FROM node:22-alpine
+# Current Node LTS (26 "Lithium", supported until 2029-04); SvelteKit 3 needs Node >= 22.17
+FROM node:26-alpine
 
 # curl for healthcheck
 RUN apk add --no-cache curl
