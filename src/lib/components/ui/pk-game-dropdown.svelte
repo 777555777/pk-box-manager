@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { appState } from '$lib/state/app-state.svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	export type DropdownOption = [
 		string,

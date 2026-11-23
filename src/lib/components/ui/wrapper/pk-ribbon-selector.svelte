@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PkItemSelector from '$lib/components/ui/base/pk-item-selector.svelte'
-	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
+	import PkItemSelector from '#lib/components/ui/base/pk-item-selector.svelte'
+	import { Ribbons, type RibbonsType } from '#lib/models/ribbons-models.ts'
 
 	let {
 		selectedRibbon,

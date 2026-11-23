@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
-	import { appState } from '$lib/state/app-state.svelte'
-	import { dexStore } from '$lib/state/app'
+	import { getPokemonSpriteData, setCssPosition } from '#lib/spriteheet-helper.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import { dexStore } from '#lib/state/app.ts'
 	import PkBadge from './pk-badge.svelte'
 
 	let { pokemonIdentifier }: { pokemonIdentifier: string } = $props()

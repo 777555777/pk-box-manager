@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { type WallpapersType } from '$lib/models/wallpapers-models'
-	import { Titles, type TitlesType } from '$lib/models/titles-models'
-	import { getBackgroundStyle, setCssPosition } from '$lib/spriteheet-helper'
-	import { appState } from '$lib/state/app-state.svelte'
+	import { type WallpapersType } from '#lib/models/wallpapers-models.ts'
+	import { Titles, type TitlesType } from '#lib/models/titles-models.ts'
+	import { getBackgroundStyle, setCssPosition } from '#lib/spriteheet-helper.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
 	import PkPagination from '../ui/pk-pagination.svelte'
 
 	let {

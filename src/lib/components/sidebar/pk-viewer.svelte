@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getPokemonSpriteData, setCssPosition } from '$lib/spriteheet-helper'
+	import { getPokemonSpriteData, setCssPosition } from '#lib/spriteheet-helper.ts'
 
 	let { identifier, shiny = false }: { identifier: string; shiny: boolean } = $props()
 	let selectedPokemonSpriteData = $derived(getPokemonSpriteData(identifier))

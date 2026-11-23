@@ -1,11 +1,11 @@
 <script lang="ts">
-	import PkSlot from '$lib/components/box/pk-slot.svelte'
-	import { getBackgroundStyle } from '$lib/spriteheet-helper'
-	import { Wallpapers, type WallpapersType } from '$lib/models/wallpapers-models'
+	import PkSlot from '#lib/components/box/pk-slot.svelte'
+	import { getBackgroundStyle } from '#lib/spriteheet-helper.ts'
+	import { Wallpapers, type WallpapersType } from '#lib/models/wallpapers-models.ts'
 	import PkWallpaperSelector from './pk-wallpaper-selector.svelte'
-	import { dexStore } from '$lib/state/app'
-	import { appState } from '$lib/state/app-state.svelte'
-	import type { ResolvedBox } from '$lib/catalog/types'
+	import { dexStore } from '#lib/state/app.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import type { ResolvedBox } from '#lib/catalog/types.ts'
 
 	let { box }: { box: ResolvedBox } = $props()
 

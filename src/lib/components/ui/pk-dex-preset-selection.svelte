@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { catalog } from '$lib/catalog/catalog'
-	import { formatTagName } from '$lib/catalog/tags'
-	import type { BoxTag } from '$lib/catalog/types'
-	import type { NewDexOptions } from '$lib/state/dex-store.svelte'
-	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
+	import { catalog } from '#lib/catalog/catalog.ts'
+	import { formatTagName } from '#lib/catalog/tags.ts'
+	import type { BoxTag } from '#lib/catalog/types.ts'
+	import type { NewDexOptions } from '#lib/state/dex-store.svelte.ts'
+	import PkToggle from '#lib/components/ui/pk-toggle.svelte'
 
 	let { onSelect, presetId }: { onSelect: (options: NewDexOptions) => void; presetId: string } =
 		$props()

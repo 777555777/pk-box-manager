@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { dexStore } from '$lib/state/app'
-	import { storageStatus } from '$lib/state/storage-status.svelte'
-	import { StorageClearedError } from '$lib/storage/repository'
+	import { dexStore } from '#lib/state/app.ts'
+	import { storageStatus } from '#lib/state/storage-status.svelte.ts'
+	import { StorageClearedError } from '#lib/storage/repository.ts'
 
 	const DISMISSED_KEY = 'v1SkippedNoticeDismissed'
 

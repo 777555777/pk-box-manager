@@ -1,8 +1,8 @@
 <script lang="ts">
-	import PkStatMeter from '$lib/components/ui/pk-stat-meter.svelte'
-	import PkTypeBadge from '$lib/components/ui/pk-type-badge.svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import pkStats from '$lib/data/pk-stats.json' with { type: 'json' }
+	import PkStatMeter from '#lib/components/ui/pk-stat-meter.svelte'
+	import PkTypeBadge from '#lib/components/ui/pk-type-badge.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
+	import pkStats from '#lib/data/pk-stats.json' with { type: 'json' }
 
 	let { identifier }: { identifier: string } = $props()
 

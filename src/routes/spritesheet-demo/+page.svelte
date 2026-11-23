@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Pokemon } from '$lib/models/pokemon-models'
-	import { setCssPosition } from '$lib/spriteheet-helper'
+	import { Pokemon } from '#lib/models/pokemon-models.ts'
+	import { setCssPosition } from '#lib/spriteheet-helper.ts'
 </script>
 
 <section>

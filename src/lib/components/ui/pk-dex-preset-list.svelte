@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { catalog } from '$lib/catalog/catalog'
+	import { catalog } from '#lib/catalog/catalog.ts'
 
 	let { selectedPreset = $bindable() }: { selectedPreset: string | null } = $props()
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { hotkeyManager } from '$lib/state/hotkey-state.svelte'
+	import { hotkeyManager } from '#lib/state/hotkey-state.svelte.ts'
 	import type { Snippet } from 'svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	type ConfirmCallback = () => void
 	type DismissCallback = () => void

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
-	import { setCssPosition } from '$lib/spriteheet-helper'
-	import { appState } from '$lib/state/app-state.svelte'
-	import PkMarkSelector from '$lib/components/ui/wrapper/pk-mark-selector.svelte'
-	import PkRadioGroup from '$lib/components/ui/pk-radio-group.svelte'
-	import PkRibbonSelector from '$lib/components/ui/wrapper/pk-ribbon-selector.svelte'
-	import { type RibbonsType } from '$lib/models/ribbons-models'
-	import { type MarksType } from '$lib/models/marks-models'
+	import PkDialog, { type PkDialogElement } from '#lib/components/ui/pk-dialog.svelte'
+	import { setCssPosition } from '#lib/spriteheet-helper.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import PkMarkSelector from '#lib/components/ui/wrapper/pk-mark-selector.svelte'
+	import PkRadioGroup from '#lib/components/ui/pk-radio-group.svelte'
+	import PkRibbonSelector from '#lib/components/ui/wrapper/pk-ribbon-selector.svelte'
+	import { type RibbonsType } from '#lib/models/ribbons-models.ts'
+	import { type MarksType } from '#lib/models/marks-models.ts'
 	import PkToggle from '../ui/pk-toggle.svelte'
-	import type { WikiLink } from '$lib/state/settings-storage'
+	import type { WikiLink } from '#lib/state/settings-storage.ts'
 
 	let appSettingsDialog: PkDialogElement
 

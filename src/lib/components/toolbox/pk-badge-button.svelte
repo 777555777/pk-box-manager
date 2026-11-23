@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { appState } from '$lib/state/app-state.svelte'
-	import { Balls, type BallsType } from '$lib/models/balls-models'
-	import { Marks, type MarksType } from '$lib/models/marks-models'
-	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
-	import { setCssPosition } from '$lib/spriteheet-helper'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import { Balls, type BallsType } from '#lib/models/balls-models.ts'
+	import { Marks, type MarksType } from '#lib/models/marks-models.ts'
+	import { Ribbons, type RibbonsType } from '#lib/models/ribbons-models.ts'
+	import { setCssPosition } from '#lib/spriteheet-helper.ts'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	let badgeDisplay = $derived(appState.getAppSettings().badgeDisplay)
 

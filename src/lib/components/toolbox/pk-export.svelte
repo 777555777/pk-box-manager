@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { dexStore } from '$lib/state/app'
-	import { createDexExport, exportFileName } from '$lib/dex/transfer'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import { dexStore } from '#lib/state/app.ts'
+	import { createDexExport, exportFileName } from '#lib/dex/transfer.ts'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	let {
 		dexSaveId,

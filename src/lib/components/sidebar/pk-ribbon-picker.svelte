@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
-	import PkIconGrid from '$lib/components/ui/base/pk-icon-grid.svelte'
+	import { Ribbons, type RibbonsType } from '#lib/models/ribbons-models.ts'
+	import PkIconGrid from '#lib/components/ui/base/pk-icon-grid.svelte'
 
 	let { onUpdate = () => {}, disabled = false, selectedRibbons = [] } = $props()
 

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import PkTextarea from '$lib/components/ui/pk-textarea.svelte'
-	import PkBallSelector from '$lib/components/ui/wrapper/pk-ball-selector.svelte'
-	import { appState } from '$lib/state/app-state.svelte'
-	import type { GameType } from '$lib/models/data-models'
-	import { Game, Generations } from '$lib/models/data-models'
+	import PkToggle from '#lib/components/ui/pk-toggle.svelte'
+	import PkTextarea from '#lib/components/ui/pk-textarea.svelte'
+	import PkBallSelector from '#lib/components/ui/wrapper/pk-ball-selector.svelte'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import type { GameType } from '#lib/models/data-models.ts'
+	import { Game, Generations } from '#lib/models/data-models.ts'
 	import PkDialog, { type PkDialogElement } from '../ui/pk-dialog.svelte'
-	import { type BallsType } from '$lib/models/balls-models'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import PkDropdown from '$lib/components/ui/pk-game-dropdown.svelte'
+	import { type BallsType } from '#lib/models/balls-models.ts'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
+	import PkDropdown from '#lib/components/ui/pk-game-dropdown.svelte'
 
 	let defaultsDialog: PkDialogElement
 

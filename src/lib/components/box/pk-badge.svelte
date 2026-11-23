@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Balls, type BallsType } from '$lib/models/balls-models'
-	import type { EntryData } from '$lib/dex/types'
-	import { Marks, type MarksType } from '$lib/models/marks-models'
-	import { Ribbons, type RibbonsType } from '$lib/models/ribbons-models'
-	import { setCssPosition } from '$lib/spriteheet-helper'
-	import { appState } from '$lib/state/app-state.svelte'
-	import type { BadgeDisplayMode } from '$lib/state/settings-storage'
+	import { Balls, type BallsType } from '#lib/models/balls-models.ts'
+	import type { EntryData } from '#lib/dex/types.ts'
+	import { Marks, type MarksType } from '#lib/models/marks-models.ts'
+	import { Ribbons, type RibbonsType } from '#lib/models/ribbons-models.ts'
+	import { setCssPosition } from '#lib/spriteheet-helper.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import type { BadgeDisplayMode } from '#lib/state/settings-storage.ts'
 
 	let { pokemonState, badgeDisplay }: { pokemonState: EntryData; badgeDisplay: BadgeDisplayMode } =
 		$props()

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	let {
 		icon = '',

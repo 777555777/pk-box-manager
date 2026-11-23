@@ -1,8 +1,8 @@
 <script lang="ts">
-	import PkDialog, { type PkDialogElement } from '$lib/components/ui/pk-dialog.svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import { parseDexImport, type ImportedDex } from '$lib/dex/transfer'
-	import { dexStore } from '$lib/state/app'
+	import PkDialog, { type PkDialogElement } from '#lib/components/ui/pk-dialog.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
+	import { parseDexImport, type ImportedDex } from '#lib/dex/transfer.ts'
+	import { dexStore } from '#lib/state/app.ts'
 
 	let fileInput: HTMLInputElement
 	let pendingImport: ImportedDex | null = null

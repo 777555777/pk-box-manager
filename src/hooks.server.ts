@@ -1,7 +1,11 @@
-// SvelteKit global error handler for logging and custom error responses
-import type { HandleServerError } from '@sveltejs/kit'
+import type { HandleServerError } from '@sveltejs/kit/hooks'
 
-export const handleError: HandleServerError = ({ error, event }) => {
+// SvelteKit global error handler for logging and custom error responses
+export const handleError: HandleServerError = ({ kind, error, event }) => {
+	// Since SvelteKit 3 this hook also receives expected errors (e.g. 404s for unknown paths).
+	// Keep SvelteKit's default status and message for those, and only log unexpected errors.
+	if (kind !== 'unknown') return
+
 	// Log error details to the server console
 	console.error('[SvelteKit Error]', {
 		url: event.url.href,

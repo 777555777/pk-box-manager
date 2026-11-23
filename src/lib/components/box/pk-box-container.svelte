@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PkBox from '$lib/components/box/pk-box.svelte'
-	import type { ResolvedBox } from '$lib/catalog/types'
+	import PkBox from '#lib/components/box/pk-box.svelte'
+	import type { ResolvedBox } from '#lib/catalog/types.ts'
 
 	let { boxes }: { boxes: ResolvedBox[] } = $props()
 </script>

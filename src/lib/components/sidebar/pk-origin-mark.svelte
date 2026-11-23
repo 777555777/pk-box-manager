@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Game, type GameType } from '$lib/models/data-models'
+	import { Game, type GameType } from '#lib/models/data-models.ts'
 
 	let {
 		caughtIn,

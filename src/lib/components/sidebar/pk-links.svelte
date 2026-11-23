@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PokemonEntry } from '$lib/models/data-models'
-	import { appState } from '$lib/state/app-state.svelte'
+	import type { PokemonEntry } from '#lib/models/data-models.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
 
 	let { idEntry }: { idEntry: PokemonEntry } = $props()
 

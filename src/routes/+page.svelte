@@ -1,9 +1,9 @@
 <script lang="ts">
-	import PkBoxContainer from '$lib/components/box/pk-box-container.svelte'
-	import PkSidebar from '$lib/components/sidebar/pk-sidebar.svelte'
-	import PkToolBox from '$lib/components/toolbox/pk-toolbox.svelte'
-	import PkStorageNotice from '$lib/components/ui/pk-storage-notice.svelte'
-	import { dexStore } from '$lib/state/app'
+	import PkBoxContainer from '#lib/components/box/pk-box-container.svelte'
+	import PkSidebar from '#lib/components/sidebar/pk-sidebar.svelte'
+	import PkToolBox from '#lib/components/toolbox/pk-toolbox.svelte'
+	import PkStorageNotice from '#lib/components/ui/pk-storage-notice.svelte'
+	import { dexStore } from '#lib/state/app.ts'
 	import { onMount } from 'svelte'
 
 	let boxes = $derived(dexStore.boxes)

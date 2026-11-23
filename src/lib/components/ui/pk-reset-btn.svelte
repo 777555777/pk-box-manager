@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { dexStore } from '$lib/state/app'
-	import { createHotkeyHandler } from '$lib/hotkey-utils'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import { appState } from '$lib/state/app-state.svelte'
+	import { dexStore } from '#lib/state/app.ts'
+	import { createHotkeyHandler } from '#lib/hotkey-utils.ts'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
+	import { appState } from '#lib/state/app-state.svelte.ts'
 
 	let { identifier, disabled } = $props()
 

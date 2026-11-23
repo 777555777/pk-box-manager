@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PokemonEntry } from '$lib/models/data-models'
+	import type { PokemonEntry } from '#lib/models/data-models.ts'
 
 	let { idEntry, isSelectionValid }: { idEntry: PokemonEntry; isSelectionValid: boolean } = $props()
 

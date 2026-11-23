@@ -1,9 +1,9 @@
 <script lang="ts">
-	import PkExport from '$lib/components/toolbox/pk-export.svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
-	import PkProgressBar from '$lib/components/ui/pk-progress-bar.svelte'
-	import { formatTagName } from '$lib/catalog/tags'
-	import { appState } from '$lib/state/app-state.svelte'
+	import PkExport from '#lib/components/toolbox/pk-export.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
+	import PkProgressBar from '#lib/components/ui/pk-progress-bar.svelte'
+	import { formatTagName } from '#lib/catalog/tags.ts'
+	import { appState } from '#lib/state/app-state.svelte.ts'
 	import PkDialog, { type PkDialogElement } from './pk-dialog.svelte'
 
 	let {

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PkItemSelector from '$lib/components/ui/base/pk-item-selector.svelte'
-	import { Marks, type MarksType } from '$lib/models/marks-models'
+	import PkItemSelector from '#lib/components/ui/base/pk-item-selector.svelte'
+	import { Marks, type MarksType } from '#lib/models/marks-models.ts'
 
 	let {
 		selectedMark,

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { appState } from '$lib/state/app-state.svelte'
-	import { createHotkeyHandler } from '$lib/hotkey-utils'
-	import PkDefaults from '$lib/components/toolbox/pk-defaults.svelte'
-	import PkToggle from '$lib/components/ui/pk-toggle.svelte'
-	import PkPokedex from '$lib/components/toolbox/pk-pokedex.svelte'
+	import { appState } from '#lib/state/app-state.svelte.ts'
+	import { createHotkeyHandler } from '#lib/hotkey-utils.ts'
+	import PkDefaults from '#lib/components/toolbox/pk-defaults.svelte'
+	import PkToggle from '#lib/components/ui/pk-toggle.svelte'
+	import PkPokedex from '#lib/components/toolbox/pk-pokedex.svelte'
 	import PkAppSettings from './pk-app-settings.svelte'
 	import PkBadgeButton from './pk-badge-button.svelte'
-	import PkIcon from '$lib/components/ui/pk-icon.svelte'
+	import PkIcon from '#lib/components/ui/pk-icon.svelte'
 
 	interface PkDefaultsDialogElement {
 		showDefaultsDialog: Function
