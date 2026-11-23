@@ -423,3 +423,43 @@ describe('importDex', () => {
 		expect(store.dexes).toHaveLength(1 + realExports.length)
 	})
 })
+
+describe('onUserChange', () => {
+	it('is not called while loading, switching or correcting counters', async () => {
+		const onUserChange = vi.fn()
+		const repository = createMemoryRepository()
+		await repository.write({
+			putDexes: [makeDex('d', { isDefault: true, stats: { total: 1, caught: 0, shiny: 0 } })]
+		})
+
+		const { store, ids } = await setup({ repository, remembered: 'd', options: { onUserChange } })
+		expect(store.active?.stats.total).toBe(151) // counters were corrected on activation
+		await store.switchDex(ids.gen3)
+		await store.flush()
+
+		expect(onUserChange).not.toHaveBeenCalled()
+	})
+
+	it('is called synchronously for every change made by the user', async () => {
+		const onUserChange = vi.fn()
+		const { store, ids } = await setup({ options: { onUserChange } })
+
+		store.updatePokemon('0007-squirtle', { captured: true })
+		expect(onUserChange).toHaveBeenCalledTimes(1) // still inside the "click"
+
+		store.toggleRibbon('0025-pikachu', '002-earth-ribbon')
+		store.resetPokemon('0001-bulbasaur')
+		store.updateBoxWallpaper('kanto-1', '09-beach')
+		store.renameDex(ids.gen3, 'Hoenn')
+		expect(onUserChange).toHaveBeenCalledTimes(5)
+
+		const created = store.createDex({ presetId: 'generation-2', tags: ['normal'], name: 'J' })
+		expect(onUserChange).toHaveBeenCalledTimes(6) // before the first await
+		const id = await created
+
+		await store.resetDex(ids.gen3)
+		await store.deleteDex(id)
+		await store.importDex({ dex: makeDex('imported'), entries: [] })
+		expect(onUserChange).toHaveBeenCalledTimes(9)
+	})
+})

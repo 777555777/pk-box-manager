@@ -45,6 +45,11 @@ export interface DexStoreOptions {
 	/** Remembers the active dex across reloads. */
 	selection?: { load(): string | null; save(dexId: string): void }
 	onPersistError?: (error: unknown) => void
+	/**
+	 * Called synchronously on every change made by the user (not on loading),
+	 * i.e. still inside the click/input handler that caused it.
+	 */
+	onUserChange?: () => void
 }
 
 const ENTRY_DATA_KEYS = Object.keys(emptyEntryData()) as (keyof EntryData)[]
@@ -58,6 +63,7 @@ export class DexStore {
 	#getAppDefaults: () => Partial<EntryData>
 	#selection: NonNullable<DexStoreOptions['selection']>
 	#onPersistError: (error: unknown) => void
+	#onUserChange: () => void
 
 	/** All dexes (default first, then by creation). */
 	dexes: DexRecord[] = $state([])
@@ -96,6 +102,7 @@ export class DexStore {
 		this.#selection = options.selection ?? { load: () => null, save: () => {} }
 		this.#onPersistError =
 			options.onPersistError ?? ((error) => console.error('Saving failed:', error))
+		this.#onUserChange = options.onUserChange ?? (() => {})
 	}
 
 	// ================
@@ -249,6 +256,7 @@ export class DexStore {
 
 	async createDex(options: NewDexOptions): Promise<string> {
 		const dex = this.#newDex(options)
+		this.#onUserChange()
 		await this.flush()
 		await this.#write({ putDexes: [dex] })
 		this.dexes = sortDexes([...this.dexes, dex])
@@ -259,6 +267,7 @@ export class DexStore {
 	/** Removes all entries and box settings of a dex. */
 	async resetDex(dexId: string): Promise<void> {
 		const dex = this.#requireDex(dexId)
+		this.#onUserChange()
 		await this.flush()
 
 		dex.boxSettings = {}
@@ -275,6 +284,7 @@ export class DexStore {
 	async deleteDex(dexId: string): Promise<void> {
 		const dex = this.#requireDex(dexId)
 		if (dex.isDefault) throw new Error('The default dex cannot be deleted.')
+		this.#onUserChange()
 
 		await this.flush()
 		await this.#write({ deleteDexes: [dexId] })
@@ -297,6 +307,7 @@ export class DexStore {
 			...structuredClone(dex),
 			isDefault: existing ? existing.isDefault : !hasOtherDefault
 		}
+		this.#onUserChange()
 
 		await this.flush()
 		await this.#write({
@@ -370,9 +381,11 @@ export class DexStore {
 		this.#touch(dex)
 	}
 
+	/** A change made by the user: new timestamp, queue the write. */
 	#touch(dex: DexRecord): void {
 		dex.updatedAt = this.#now()
 		this.#queueDex(dex)
+		this.#onUserChange()
 	}
 
 	#queueDex(dex: DexRecord): void {

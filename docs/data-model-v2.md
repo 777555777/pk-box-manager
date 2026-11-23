@@ -156,8 +156,7 @@ Reihenfolge innerhalb eines Batches: löschen vor schreiben. So lässt sich ein 
 
 1. IndexedDB öffnen (nicht verfügbar → In-Memory mit Fehlermeldung in der Konsole, Änderungen gehen dann beim Neuladen verloren)
 2. `migrateFromV1`
-3. `requestPersistentStorage()` (`src/lib/storage/persist.ts`) fragt `navigator.storage.persist()` an, wirft nie
-4. `dexStore.init()`: Dexe laden, beim ersten Start den Default-National-Dex anlegen, zuletzt aktiven Dex (`selectedDex`) aktivieren
+3. `dexStore.init()`: Dexe laden, beim ersten Start den Default-National-Dex anlegen, zuletzt aktiven Dex (`selectedDex`) aktivieren
 
 - Der aktive Dex liegt vollständig im Svelte-State. Das ist die einzige Quelle der Wahrheit.
 - Jede Änderung wird sofort im State angewendet und in eine Warteschlange gelegt. Die Warteschlange wird einmal pro Tick (Microtask) als **ein** Batch geschrieben, zusätzlich bei `pagehide` und `visibilitychange`. Alle Schreibvorgänge laufen strikt nacheinander.
@@ -165,6 +164,7 @@ Reihenfolge innerhalb eines Batches: löschen vor schreiben. So lässt sich ein 
 - Die Zähler werden schrittweise mitgeführt. Beim Aktivieren eines Dex werden sie gegen den aktuellen Katalog neu berechnet (neue Pokémon nach App-Updates).
 - Schlägt ein Schreibvorgang fehl, steht der Fehler in `dexStore.persistError` (noch ohne Anzeige in der UI).
 - Der Default-Dex kann nur zurückgesetzt, nicht gelöscht werden.
+- **Dauerhafter Speicher:** `navigator.storage.persist()` wird nicht beim Start angefragt, sondern bei der **ersten Änderung durch den Nutzer** (`onUserChange` des `DexStore`, synchron im Klick-Handler) und nur **einmal pro Browser** (Merker `persistentStorageRequested` in localStorage, `requestPersistentStorageOnce` in `src/lib/storage/persist.ts`). Firefox zeigt dafür einen Dialog, Chromium entscheidet still. Wird abgelehnt, funktioniert alles weiter, der Speicher bleibt nur „best effort“ (wie localStorage in v1).
 
 **Bleibt in localStorage:** `appSettings`, `appDefaults`, `selectedDex`. Die sind klein und werden beim Start synchron gebraucht, damit nichts flackert.
 
